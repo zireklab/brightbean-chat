@@ -78,6 +78,21 @@ _I18N_TEMPLATES = [
     "channels/_messenger_posts.html",
     "channels/_sms_segments.html",
     "channels/partials/_whatsapp_template_preview.html",
+    # Phase 2b (inbox)
+    "inbox/list.html",
+    "inbox/_card.html",
+    "inbox/_composer.html",
+    "inbox/_conversation_rows.html",
+    "inbox/_deferred.html",
+    "inbox/_label_rows.html",
+    "inbox/_rule_form.html",
+    "inbox/_rule_rows.html",
+    "inbox/_rule_test.html",
+    "inbox/_sidebar.html",
+    "inbox/_thread_body.html",
+    "inbox/_thread_header.html",
+    "inbox/label_settings.html",
+    "inbox/rule_settings.html",
 ]
 
 #: Every Python module a landed phase put gettext/gettext_lazy copy in.
@@ -114,6 +129,12 @@ _I18N_MODULES = [
     "apps/channels/views_sms.py",
     "apps/channels/views_telegram.py",
     "apps/channels/views_whatsapp.py",
+    # Phase 2b (inbox)
+    "apps/inbox/codes.py",
+    "apps/inbox/rendering.py",
+    "apps/inbox/rules.py",
+    "apps/inbox/services.py",
+    "apps/inbox/views.py",
 ]
 
 

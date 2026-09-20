@@ -6,9 +6,9 @@ Every value in here arrived from a stranger (SECURITY-BASELINE §2): the
 contact's name, the message preview, the channel's display name. All of it
 renders under Django's default autoescaping and none of it is marked safe.
 {% endcomment %}
-{% load common_extras %}
+{% load common_extras i18n %}
 {% if not conversations %}
-  <p class="p-4 text-xs" style="color: var(--text-tertiary);">No conversations match these filters.</p>
+  <p class="p-4 text-xs" style="color: var(--text-tertiary);">{% translate "No conversations match these filters." %}</p>
 {% else %}
   {% for row in conversations %}
     <div class="ib-row-wrap">
@@ -35,8 +35,9 @@ renders under Django's default autoescaping and none of it is marked safe.
       underneath a half-made selection and x-bind restores every tick. The same
       arrangement contacts/list.html uses, for the same reason.
     {% endcomment %}
+    {% blocktranslate asvar select_contact_label with name=row.conversation.contact.display_name %}Select {{ name }}{% endblocktranslate %}
     <input type="checkbox" class="ib-row-select"
-           aria-label="Select {{ row.conversation.contact.display_name }}"
+           aria-label="{{ select_contact_label }}"
            x-bind:checked="isSelected('{{ row.conversation.id }}')"
            x-on:change="toggle('{{ row.conversation.id }}', $event.target.checked)">
     <a href="{% url 'inbox:thread' workspace_id=request.workspace.id conversation_id=row.conversation.id %}"
@@ -57,14 +58,14 @@ renders under Django's default autoescaping and none of it is marked safe.
       </span>
       <span class="flex items-center gap-2">
         <span class="ib-row-name flex-1 min-w-0 truncate">{{ row.conversation.contact.display_name }}</span>
-        {% if row.unread %}<span class="ib-dot" role="img" aria-label="Unread"></span>{% endif %}
+        {% if row.unread %}<span class="ib-dot" role="img" aria-label="{% translate 'Unread' %}"></span>{% endif %}
       </span>
       <span class="ib-row-preview mt-0.5 block">
-        {% if row.last_internal %}<span class="ib-chip">Note</span> {% endif %}{{ row.preview }}
+        {% if row.last_internal %}<span class="ib-chip">{% translate "Note" %}</span> {% endif %}{{ row.preview }}
       </span>
       <span class="ib-row-meta mt-0.5 flex items-center gap-2">
-        {% if row.conversation.last_message_at %}<span>{{ row.conversation.last_message_at|timesince }} ago</span>{% endif %}
-        {% if row.conversation.state == "done" %}<span class="ib-chip">Done</span>{% endif %}
+        {% if row.conversation.last_message_at %}<span>{% blocktranslate with time=row.conversation.last_message_at|timesince %}{{ time }} ago{% endblocktranslate %}</span>{% endif %}
+        {% if row.conversation.state == "done" %}<span class="ib-chip">{% translate "Done" %}</span>{% endif %}
         {% if row.conversation.assignee %}<span class="ib-chip">{{ row.conversation.assignee.display_name }}</span>{% endif %}
         {% comment %}
           A glyph, not a countdown. selectors.list_version hashes what this row
@@ -72,7 +73,7 @@ renders under Django's default autoescaping and none of it is marked safe.
           every row in the inbox once a minute for every open tab — over markup
           that shows a dot. The thread is where the countdown belongs.
         {% endcomment %}
-        {% if row.has_pending %}<span class="ib-chip" title="Something is scheduled on this conversation">Scheduled</span>{% endif %}
+        {% if row.has_pending %}<span class="ib-chip" title="{% translate 'Something is scheduled on this conversation' %}">{% translate "Scheduled" %}</span>{% endif %}
       </span>
       {% if row.labels %}
         {% comment %}

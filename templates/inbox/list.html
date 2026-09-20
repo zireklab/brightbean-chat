@@ -21,14 +21,14 @@ No inline event handlers: the CSP allows 'unsafe-eval' for Alpine's x-*
 expressions but NOT 'unsafe-inline', so an onclick= attribute is silently
 inert.
 {% endcomment %}
-{% load common_extras %}
+{% load common_extras i18n %}
 
-{% block title %}Inbox · BrightBean Chat{% endblock %}
+{% block title %}{% translate "Inbox" %} · BrightBean Chat{% endblock %}
 
 {% block page_header %}
   <div class="mb-5">
-    <h1 class="page-title">Inbox</h1>
-    <p class="page-lede mt-1.5">Every conversation across your connected channels.</p>
+    <h1 class="page-title">{% translate "Inbox" %}</h1>
+    <p class="page-lede mt-1.5">{% translate "Every conversation across your connected channels." %}</p>
   </div>
 {% endblock %}
 
@@ -97,8 +97,10 @@ inert.
       {{ view.label }}{% if view.count %}<span style="opacity: .65;">{{ view.count }}</span>{% endif %}
     </button>
     {% endfor %}
-    {% ui_select model="connection" options=connections placeholder="All channels" icon="channel" value_field="id" label_field="display_name" icon_field="platform" onchange="reload()" %}
-    {% ui_select model="label" options=label_options placeholder="Any label" icon="tag" onchange="reload()" %}
+    {% translate "All channels" as all_channels_placeholder %}
+    {% translate "Any label" as any_label_placeholder %}
+    {% ui_select model="connection" options=connections placeholder=all_channels_placeholder icon="channel" value_field="id" label_field="display_name" icon_field="platform" onchange="reload()" %}
+    {% ui_select model="label" options=label_options placeholder=any_label_placeholder icon="tag" onchange="reload()" %}
   </form>
 
   <div class="ib-shell">
@@ -125,15 +127,16 @@ inert.
           <template x-for="id in ids" :key="id">
             <input type="hidden" name="conversation" :value="id">
           </template>
-          <span class="text-xs" x-text="count + (count === 1 ? ' selected' : ' selected')"></span>
-          <label class="sr-only" for="bulk-label">Label</label>
+          {% translate "selected" as selected_word %}
+          <span class="text-xs" x-text="count + ' {{ selected_word|escapejs }}'"></span>
+          <label class="sr-only" for="bulk-label">{% translate "Label" %}</label>
           <select id="bulk-label" class="bb-select" name="label" required>
-            <option value="">Choose a label…</option>
+            <option value="">{% translate "Choose a label…" %}</option>
             {% for option in label_options %}<option value="{{ option.value }}">{{ option.label }}</option>{% endfor %}
           </select>
-          <button type="submit" class="btn-outline btn-inline" name="action" value="add">Add</button>
-          <button type="submit" class="btn-outline btn-inline" name="action" value="remove">Remove</button>
-          <button type="button" class="btn-link btn-inline" @click="clear()">Clear</button>
+          <button type="submit" class="btn-outline btn-inline" name="action" value="add">{% translate "Add" %}</button>
+          <button type="submit" class="btn-outline btn-inline" name="action" value="remove">{% translate "Remove" %}</button>
+          <button type="button" class="btn-link btn-inline" @click="clear()">{% translate "Clear" %}</button>
         </form>
       {% endif %}
       <div id="inbox-list" class="ib-rail-scroll"
@@ -157,7 +160,7 @@ inert.
       {% if conversation %}
         {% include "inbox/_thread.html" %}
       {% else %}
-        <div class="ib-thread"><div class="ib-empty">Pick a conversation to read it.</div></div>
+        <div class="ib-thread"><div class="ib-empty">{% translate "Pick a conversation to read it." %}</div></div>
       {% endif %}
     </section>
   </div>
@@ -165,6 +168,8 @@ inert.
 {% endblock %}
 
 {% block alpine_components %}
+{% translate "The media library could not be reached." as media_library_unavailable %}
+{% translate "That is as many attachments as one message can carry." as max_attachments_reached %}
 <script nonce="{{ request.csp_nonce }}">
   (function () {
     // SPEC §14's 304s, client half. See the comment at the top of this file.
@@ -330,7 +335,7 @@ inert.
             );
           })
           .catch(() => {
-            this.picker.error = 'The media library could not be reached.';
+            this.picker.error = '{{ media_library_unavailable|escapejs }}';
             this.picker.results = [];
           })
           .finally(() => {
@@ -343,7 +348,7 @@ inert.
       // signed one at send time.
       attach(asset) {
         if (this.items.length >= config.max) {
-          this.picker.error = 'That is as many attachments as one message can carry.';
+          this.picker.error = '{{ max_attachments_reached|escapejs }}';
           return;
         }
         if (!this.items.some((item) => item.id === asset.id)) {

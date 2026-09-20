@@ -11,6 +11,9 @@ than by widening another app's table for a case that app cannot cause.
 so callers need only one function.
 """
 
+from django.utils.functional import Promise
+from django.utils.translation import gettext_lazy as _
+
 from apps.messaging.codes import describe
 
 __all__ = ["EMPTY_BODY", "describe_inbox_failure"]
@@ -20,11 +23,12 @@ __all__ = ["EMPTY_BODY", "describe_inbox_failure"]
 #: terminal either way — no number of retries gives it something to send.
 EMPTY_BODY = "empty_body"
 
-_COPY: dict[str, str] = {
-    EMPTY_BODY: "That scheduled reply had nothing left to send.",
+_COPY: dict[str, str | Promise] = {
+    EMPTY_BODY: _("That scheduled reply had nothing left to send."),
 }
 
 
 def describe_inbox_failure(code: str) -> str:
     """The sentence for ``code``, from this app's table or messaging's."""
-    return _COPY.get(code) or describe(code)
+    copy = _COPY.get(code)
+    return str(copy) if copy else describe(code)

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 12:51+0600\n"
+"POT-Creation-Date: 2026-09-20 13:09+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ky\n"
@@ -45,7 +45,7 @@ msgstr "Байланыш ырааттуулуктан чыгарылды"
 msgid "Broadcast finished"
 msgstr "Жайылтуу аяктады"
 
-#: apps/api/models.py:75
+#: apps/api/models.py:75 templates/inbox/_thread_body.html:149
 msgid "Read"
 msgstr "Окуу"
 
@@ -61,7 +61,7 @@ msgstr "Өчүрүү"
 msgid "Succeeded"
 msgstr "Ийгиликтүү"
 
-#: apps/api/models.py:89
+#: apps/api/models.py:89 templates/inbox/_thread_body.html:152
 msgid "Failed"
 msgstr "Ката"
 
@@ -290,6 +290,7 @@ msgstr ""
 #: apps/channels/forms.py:47 templates/accounts/settings.html:32
 #: templates/api/keys_list.html:39
 #: templates/channels/whatsapp_templates.html:26
+#: templates/inbox/_label_rows.html:46 templates/inbox/_rule_form.html:24
 #: templates/organizations/settings.html:27
 #: templates/organizations/settings.html:49
 #: templates/workspaces/settings.html:36
@@ -456,6 +457,7 @@ msgid "Needs reconnection"
 msgstr "Кайра туташуу керек"
 
 #: apps/channels/models.py:105 templates/api/webhooks_list.html:65
+#: templates/inbox/_rule_rows.html:38
 msgid "Disabled"
 msgstr "Өчүрүлгөн"
 
@@ -669,7 +671,7 @@ msgstr ""
 " бул жасалмайынча куттуктоо триггери иштебейт. docs/channels/messenger.md "
 "караңыз."
 
-#: apps/channels/views_messenger.py:372 apps/channels/views_whatsapp.py:180
+#: apps/channels/views_messenger.py:372 apps/channels/views_whatsapp.py:181
 #, python-format
 msgid "Connected %(name)s. Send it a message to check it works."
 msgstr "%(name)s туташтырылды. Иштээрин текшерүү үчүн ага билдирүү жөнөтүңүз."
@@ -724,10 +726,7 @@ msgstr "BotFather берген токенди чаптаңыз."
 msgid "Connected @%(username)s. Send it /start to check it works."
 msgstr "@%(username)s туташтырылды. Иштээрин текшерүү үчүн /start жөнөтүңүз."
 
-#: apps/channels/views_whatsapp.py:60
-#| msgid ""
-#| "A system user token with whatsapp_business_messaging and "
-#| "whatsapp_business_management."
+#: apps/channels/views_whatsapp.py:61
 msgid ""
 "Meta did not accept those details. Check the phone number ID and that the "
 "system user token has whatsapp_business_messaging and "
@@ -738,7 +737,7 @@ msgstr ""
 "whatsapp_business_management укуктары бар экенин текшерип, кайра аракет "
 "кылыңыз."
 
-#: apps/channels/views_whatsapp.py:68
+#: apps/channels/views_whatsapp.py:69
 msgid ""
 "Those credentials work, but this app could not be subscribed to the WhatsApp"
 " Business Account's webhooks. Nothing will be delivered until it is; see "
@@ -748,33 +747,33 @@ msgstr ""
 "Account вебхуктарына жаздыруу мүмкүн болгон жок. Бул жасалмайынча эч нерсе "
 "жеткирилбейт; docs/channels/whatsapp.md караңыз."
 
-#: apps/channels/views_whatsapp.py:266
+#: apps/channels/views_whatsapp.py:267
 msgid "This number already has a template with that name and language."
 msgstr "Бул номерде мындай ат жана тил менен шаблон мурунтан эле бар."
 
-#: apps/channels/views_whatsapp.py:270
+#: apps/channels/views_whatsapp.py:271
 #, python-format
 msgid "Saved %(name)s. Submit it when you are ready for Meta to review it."
 msgstr "%(name)s сакталды. Meta карап чыгышы үчүн даяр болгондо жөнөтүңүз."
 
-#: apps/channels/views_whatsapp.py:355
+#: apps/channels/views_whatsapp.py:356
 #, python-format
 msgid "Meta would not accept %(name)s: %(exc)s"
 msgstr "Meta %(name)s кабыл алган жок: %(exc)s"
 
-#: apps/channels/views_whatsapp.py:360
+#: apps/channels/views_whatsapp.py:361
 #, python-format
 msgid "%(name)s is with Meta for review. This usually takes minutes to a day."
 msgstr ""
 "%(name)s Meta'да каралууда. Бул адатта бир нече мүнөттөн бир күнгө чейин "
 "убакыт алат."
 
-#: apps/channels/views_whatsapp.py:373
+#: apps/channels/views_whatsapp.py:374
 #, python-format
 msgid "Deleted %(name)s."
 msgstr "%(name)s өчүрүлдү."
 
-#: apps/channels/views_whatsapp.py:402
+#: apps/channels/views_whatsapp.py:403
 msgid "Saved the cost estimates."
 msgstr "Баа болжолдору сакталды."
 
@@ -787,7 +786,7 @@ msgid "General"
 msgstr "Жалпы"
 
 #: apps/common/context_processors.py:251 templates/channels/list.html:24
-#: templates/channels/list.html:31
+#: templates/channels/list.html:31 templates/inbox/_sidebar.html:20
 #: templates/partials/_sidebar_channels.html:35
 msgid "Channels"
 msgstr "Каналдар"
@@ -796,19 +795,22 @@ msgstr "Каналдар"
 msgid "Library"
 msgstr "Медиа китепканасы"
 
-#: apps/common/context_processors.py:307
+#: apps/common/context_processors.py:307 templates/inbox/_sidebar.html:70
 msgid "Tags"
 msgstr "Тегдер"
 
 #: apps/common/context_processors.py:315
+#: templates/inbox/label_settings.html:12
+#: templates/inbox/label_settings.html:19
 msgid "Labels"
 msgstr "Белгилер"
 
-#: apps/common/context_processors.py:323
+#: apps/common/context_processors.py:323 templates/inbox/rule_settings.html:3
+#: templates/inbox/rule_settings.html:29
 msgid "Inbox rules"
 msgstr "Кирүүчү кат эрежелери"
 
-#: apps/common/context_processors.py:335
+#: apps/common/context_processors.py:335 templates/inbox/_sidebar.html:109
 msgid "Fields"
 msgstr "Талаалар"
 
@@ -858,7 +860,8 @@ msgstr "Жеке ырастоолор"
 msgid "Home"
 msgstr "Башкы бет"
 
-#: apps/common/context_processors.py:442
+#: apps/common/context_processors.py:442 templates/inbox/list.html:26
+#: templates/inbox/list.html:30
 msgid "Inbox"
 msgstr "Кирүүчү кабарлар"
 
@@ -891,8 +894,8 @@ msgid "Templates"
 msgstr "Шаблондор"
 
 #: apps/common/tests/test_templatetags.py:166
-#: templates/api/webhooks_list.html:71
-#: templates/organizations/workspaces.html:61
+#: templates/api/webhooks_list.html:71 templates/inbox/_card.html:19
+#: templates/inbox/_sidebar.html:17 templates/organizations/workspaces.html:61
 msgid "Open"
 msgstr "Ачуу"
 
@@ -904,6 +907,10 @@ msgstr "Түс #3B82F6 сыяктуу 6 орундуу hex мааниси бол
 msgid "Hi! Thanks for getting in touch — how can we help?"
 msgstr "Салам! Кайрылганыңыз үчүн рахмат — эмне менен жардам бере алабыз?"
 
+#: apps/inbox/codes.py:27
+msgid "That scheduled reply had nothing left to send."
+msgstr "Бул пландалган жооп жөнөтө турган эч нерсе калбады."
+
 #: apps/inbox/notifications.py:35
 #, python-brace-format
 msgid "Scheduled reply to {contact_name} was not sent"
@@ -912,6 +919,466 @@ msgstr "{contact_name} үчүн пландалган жооп жөнөтүлгө
 #: apps/inbox/notifications.py:46
 msgid "A scheduled reply was not sent"
 msgstr "Пландалган жооп жөнөтүлгөн жок"
+
+#: apps/inbox/rendering.py:103
+msgid "This message was deleted."
+msgstr "Бул билдирүү өчүрүлдү."
+
+#: apps/inbox/rendering.py:104
+msgid "[deleted]"
+msgstr "[өчүрүлдү]"
+
+#: apps/inbox/rendering.py:136
+msgid "Attached image"
+msgstr "Тиркелген сүрөт"
+
+#: apps/inbox/rendering.py:173
+msgid "Attachment"
+msgstr "Тиркеме"
+
+#: apps/inbox/rendering.py:382
+msgid "This message has no displayable content."
+msgstr "Бул билдирүүдө көрсөтүлө турган мазмун жок."
+
+#: apps/inbox/rendering.py:464
+msgid "Unreadable content."
+msgstr "Окулбай турган мазмун."
+
+#: apps/inbox/rendering.py:468
+msgid "Empty message."
+msgstr "Бош билдирүү."
+
+#: apps/inbox/rendering.py:482
+msgid "Empty gallery."
+msgstr "Бош галерея."
+
+#: apps/inbox/rendering.py:483
+msgid "Unsupported content."
+msgstr "Колдоого алынбаган мазмун."
+
+#: apps/inbox/rendering.py:511
+msgid "An attachment was recorded without an identifier."
+msgstr "Тиркеме идентификаторсуз жазылган."
+
+#: apps/inbox/rendering.py:525
+msgid "An attachment could not be linked."
+msgstr "Тиркемеге шилтеме түзүү мүмкүн болгон жок."
+
+#: apps/inbox/rendering.py:618
+msgid "It could not be sent."
+msgstr "Жөнөтүү мүмкүн болгон жок."
+
+#: apps/inbox/rendering.py:644
+#, python-format
+msgid "Channel is %(list)s"
+msgstr "Канал: %(list)s"
+
+#: apps/inbox/rendering.py:647
+#, python-format
+msgid "Connection is %(list)s"
+msgstr "Туташуу: %(list)s"
+
+#: apps/inbox/rendering.py:651
+#, python-format
+msgid "Message mentions %(list)s"
+msgstr "Билдирүү %(list)s эскерет"
+
+#: apps/inbox/rendering.py:656
+msgid "all"
+msgstr "баарына"
+
+#: apps/inbox/rendering.py:656
+msgid "any"
+msgstr "каалаганына"
+
+#: apps/inbox/rendering.py:659
+#, python-format
+msgid "Contact matches %(mode)s of %(count)s condition"
+msgid_plural "Contact matches %(mode)s of %(count)s conditions"
+msgstr[0] "Байланыш %(count)s шарттын %(mode)s дал келет"
+
+#: apps/inbox/rendering.py:673
+#, python-format
+msgid "Add label %(label)s"
+msgstr "%(label)s меткасын кошуу"
+
+#: apps/inbox/rendering.py:677
+#, python-format
+msgid "Assign to %(member)s"
+msgstr "%(member)sга дайындоо"
+
+#: apps/inbox/rendering.py:680 templates/inbox/_rule_form.html:141
+#: templates/inbox/_thread_header.html:44
+msgid "Mark done"
+msgstr "Аткарылды деп белгилөө"
+
+#: apps/inbox/rendering.py:694
+msgid "(deleted)"
+msgstr "(өчүрүлдү)"
+
+#: apps/inbox/rendering.py:701 apps/inbox/views.py:846
+#, python-format
+msgid "%(list)s or %(last)s"
+msgstr "%(list)s же %(last)s"
+
+#: apps/inbox/rendering.py:706
+msgid "someone who has left"
+msgstr "кеткен адам"
+
+#: apps/inbox/rendering.py:707
+msgid "a teammate"
+msgstr "кесиптеш"
+
+#: apps/inbox/rules.py:231
+msgid "A rule condition must be an object."
+msgstr "Эрежедин шарты объект болушу керек."
+
+#: apps/inbox/rules.py:234
+#, python-format
+msgid "Unknown condition keys: %(keys)s."
+msgstr "Белгисиз шарт ачкычтары: %(keys)s."
+
+#: apps/inbox/rules.py:236
+msgid "That condition is too large."
+msgstr "Бул шарт өтө чоң."
+
+#: apps/inbox/rules.py:262
+msgid ""
+"A rule needs at least one condition: a channel, a keyword or something about"
+" the contact."
+msgstr ""
+"Эрежеге жок дегенде бир шарт керек: канал, ачкыч сөз же байланыш жөнүндө бир"
+" нерсе."
+
+#: apps/inbox/rules.py:277
+msgid "Rule actions must be a list."
+msgstr "Эреженин аракеттери тизме болушу керек."
+
+#: apps/inbox/rules.py:279
+msgid "A rule needs at least one action."
+msgstr "Эрежеге жок дегенде бир аракет керек."
+
+#: apps/inbox/rules.py:281
+#, python-format
+msgid "A rule may have at most %(max)s actions."
+msgstr "Эреже эң көп %(max)s аракетти камтый алат."
+
+#: apps/inbox/rules.py:287
+msgid "Each action must be an object."
+msgstr "Ар бир аракет объект болушу керек."
+
+#: apps/inbox/rules.py:290
+#, python-format
+msgid "Unknown action %(kind)r."
+msgstr "Белгисиз аракет %(kind)r."
+
+#: apps/inbox/rules.py:294
+msgid "That label no longer exists."
+msgstr "Бул метка мындан ары жок."
+
+#: apps/inbox/rules.py:300 apps/inbox/views.py:1033
+msgid "That person is not a member of this workspace."
+msgstr "Бул адам бул иш мейкиндигинин мүчөсү эмес."
+
+#: apps/inbox/rules.py:309
+msgid "That rule repeats an action."
+msgstr "Бул эреже аракетти кайталайт."
+
+#: apps/inbox/rules.py:324
+msgid "The channel condition must be an object."
+msgstr "Канал шарты объект болушу керек."
+
+#: apps/inbox/rules.py:327
+#, python-format
+msgid "Unknown channel keys: %(keys)s."
+msgstr "Белгисиз канал ачкычтары: %(keys)s."
+
+#: apps/inbox/rules.py:334
+#, python-format
+msgid "Unknown platform %(platform)r."
+msgstr "Белгисиз платформа %(platform)r."
+
+#: apps/inbox/rules.py:337
+msgid "Too many connections in one rule."
+msgstr "Бир эреже үчүн өтө көп туташуу."
+
+#: apps/inbox/rules.py:351
+msgid "Keywords must be a list."
+msgstr "Ачкыч сөздөр тизме болушу керек."
+
+#: apps/inbox/rules.py:353
+#, python-format
+msgid "A rule may have at most %(max)s keywords."
+msgstr "Эреже эң көп %(max)s ачкыч сөздү камтый алат."
+
+#: apps/inbox/rules.py:359
+msgid "Each keyword must be an object."
+msgstr "Ар бир ачкыч сөз объект болушу керек."
+
+#: apps/inbox/rules.py:362
+#, python-format
+msgid "Unknown keyword keys: %(keys)s."
+msgstr "Белгисиз ачкыч сөз ачкычтары: %(keys)s."
+
+#: apps/inbox/rules.py:367
+msgid "That keyword is too long."
+msgstr "Бул ачкыч сөз өтө узун."
+
+#: apps/inbox/services.py:128 apps/inbox/services.py:142
+msgid "That label is not valid."
+msgstr "Бул метка жарактуу эмес."
+
+#: apps/inbox/services.py:157
+#, python-format
+msgid "A conversation can carry at most %(max)s labels."
+msgstr "Маек эң көп %(max)s меткага ээ боло алат."
+
+#: apps/inbox/services.py:244 apps/inbox/services.py:292
+#: apps/inbox/services.py:321
+msgid "Pick a time in the future."
+msgstr "Келечектеги убакытты тандаңыз."
+
+#: apps/inbox/services.py:256
+msgid "That reminder is not valid."
+msgstr "Бул эскертүү жарактуу эмес."
+
+#: apps/inbox/services.py:319
+msgid "That reply has already been sent or cancelled."
+msgstr "Бул жооп мурунтан жөнөтүлгөн же жокко чыгарылган."
+
+#: apps/inbox/views.py:795
+msgid "Nothing to send"
+msgstr "Жөнөтүүчү эч нерсе жок"
+
+#: apps/inbox/views.py:810 templates/inbox/_deferred.html:54
+msgid "Not sent"
+msgstr "Жөнөтүлгөн жок"
+
+#: apps/inbox/views.py:811
+msgid "Note added"
+msgstr "Эскертүү кошулду"
+
+#: apps/inbox/views.py:811
+msgid "Reply sent"
+msgstr "Жооп жөнөтүлдү"
+
+#: apps/inbox/views.py:819
+#, python-format
+msgid "%(platform)s cannot carry %(items)s, so that was left off."
+msgstr "%(platform)s %(items)s алып жүрө албайт, ошондуктан ал калтырылды."
+
+#: apps/inbox/views.py:834
+msgid "an image"
+msgstr "сүрөт"
+
+#: apps/inbox/views.py:835
+msgid "an audio file"
+msgstr "аудио файл"
+
+#: apps/inbox/views.py:836
+msgid "a video"
+msgstr "видео"
+
+#: apps/inbox/views.py:837
+msgid "a file"
+msgstr "файл"
+
+#: apps/inbox/views.py:908
+msgid "Still not sent"
+msgstr "Дагы деле жөнөтүлгөн жок"
+
+#: apps/inbox/views.py:910 templates/inbox/_thread_body.html:151
+msgid "Sent"
+msgstr "Жөнөтүлдү"
+
+#: apps/inbox/views.py:1023 templates/inbox/_thread_header.html:54
+msgid "Unassigned"
+msgstr "Дайындалган жок"
+
+#: apps/inbox/views.py:1032
+msgid "Cannot assign"
+msgstr "Дайындоо мүмкүн эмес"
+
+#: apps/inbox/views.py:1038
+#, python-format
+msgid "Assigned to %(name)s"
+msgstr "%(name)sга дайындалды"
+
+#: apps/inbox/views.py:1052
+msgid "Marked done"
+msgstr "Аткарылды деп белгиленди"
+
+#: apps/inbox/views.py:1062
+msgid "Reopened"
+msgstr "Кайра ачылды"
+
+#: apps/inbox/views.py:1064
+msgid "Unknown state"
+msgstr "Белгисиз абал"
+
+#: apps/inbox/views.py:1064
+msgid "A conversation is either open or done."
+msgstr "Маек же ачык, же аяктаган болот."
+
+#: apps/inbox/views.py:1081
+msgid "Automation resumed"
+msgstr "Автоматташтыруу улантылды"
+
+#: apps/inbox/views.py:1083
+msgid "Automation paused"
+msgstr "Автоматташтыруу тыныгууда"
+
+#: apps/inbox/views.py:1105
+msgid "Nothing running"
+msgstr "Эч нерсе иштебейт"
+
+#: apps/inbox/views.py:1106
+msgid "Automation stopped"
+msgstr "Автоматташтыруу токтотулду"
+
+#: apps/inbox/views.py:1127
+msgid "No tag selected"
+msgstr "Тег тандалган жок"
+
+#: apps/inbox/views.py:1131
+msgid "Tag removed"
+msgstr "Тег алынды"
+
+#: apps/inbox/views.py:1133
+msgid "Tag added"
+msgstr "Тег кошулду"
+
+#: apps/inbox/views.py:1157
+msgid "Not labelled"
+msgstr "Метка коюлган жок"
+
+#: apps/inbox/views.py:1158
+msgid "Labelled"
+msgstr "Меткаланды"
+
+#: apps/inbox/views.py:1169
+msgid "Label removed"
+msgstr "Метка алынды"
+
+#: apps/inbox/views.py:1205
+#, python-format
+msgid "Label removed from %(count)s conversation"
+msgid_plural "Label removed from %(count)s conversations"
+msgstr[0] "Метка %(count)s маектен алынды"
+
+#: apps/inbox/views.py:1207
+#, python-format
+#| msgid "%(count)s conversation unassigned"
+#| msgid_plural "%(count)s conversations unassigned"
+msgid "Label added to %(count)s conversation"
+msgid_plural "Label added to %(count)s conversations"
+msgstr[0] "Метка %(count)s маекке кошулду"
+
+#: apps/inbox/views.py:1229 apps/inbox/views.py:1249
+msgid "No reminder set"
+msgstr "Эскертүү коюлган жок"
+
+#: apps/inbox/views.py:1229 apps/inbox/views.py:1280
+msgid "Pick a date and time."
+msgstr "Күндү жана убакытты тандаңыз."
+
+#: apps/inbox/views.py:1250
+msgid "Reminder set"
+msgstr "Эскертүү коюлду"
+
+#: apps/inbox/views.py:1262 apps/inbox/views.py:1331
+msgid "Already gone"
+msgstr "Мурунтан жок болуп кетти"
+
+#: apps/inbox/views.py:1263
+msgid "Reminder cancelled"
+msgstr "Эскертүү жокко чыгарылды"
+
+#: apps/inbox/views.py:1280 apps/inbox/views.py:1284 apps/inbox/views.py:1294
+msgid "Not scheduled"
+msgstr "Пландалган жок"
+
+#: apps/inbox/views.py:1295
+msgid "Reply scheduled"
+msgstr "Жооп пландалды"
+
+#: apps/inbox/views.py:1312 apps/inbox/views.py:1316
+msgid "Not changed"
+msgstr "Өзгөртүлгөн жок"
+
+#: apps/inbox/views.py:1317
+msgid "Scheduled reply updated"
+msgstr "Пландалган жооп жаңыртылды"
+
+#: apps/inbox/views.py:1332
+msgid "Scheduled reply cancelled"
+msgstr "Пландалган жооп жокко чыгарылды"
+
+#: apps/inbox/views.py:1422
+msgid "That message is too long."
+msgstr "Бул билдирүү өтө узун."
+
+#: apps/inbox/views.py:1431
+#, python-format
+msgid "%(platform)s cannot carry that attachment."
+msgstr "%(platform)s бул тиркемени алып жүрө албайт."
+
+#: apps/inbox/views.py:1434
+msgid "Write something first."
+msgstr "Адегенде бир нерсе жазыңыз."
+
+#: apps/inbox/views.py:1463
+msgid "One of those attachments is no longer in the library."
+msgstr "Бул тиркемелердин бири китепканада жок болуп калды."
+
+#: apps/inbox/views.py:1545
+msgid "Not created"
+msgstr "Түзүлгөн жок"
+
+#: apps/inbox/views.py:1546
+msgid "Label created"
+msgstr "Метка түзүлдү"
+
+#: apps/inbox/views.py:1557 apps/inbox/views.py:1691 apps/inbox/views.py:1696
+#: apps/inbox/views.py:1717
+msgid "Not saved"
+msgstr "Сакталган жок"
+
+#: apps/inbox/views.py:1558
+msgid "Label saved"
+msgstr "Метка сакталды"
+
+#: apps/inbox/views.py:1575
+msgid "Label deleted"
+msgstr "Метка өчүрүлдү"
+
+#: apps/inbox/views.py:1691
+msgid "A rule needs a name."
+msgstr "Эрежеге ат керек."
+
+#: apps/inbox/views.py:1719 apps/inbox/views.py:1722
+msgid "Rule saved"
+msgstr "Эреже сакталды"
+
+#: apps/inbox/views.py:1736
+msgid "Not enabled"
+msgstr "Күйгүзүлгөн жок"
+
+#: apps/inbox/views.py:1739
+msgid "Rule enabled"
+msgstr "Эреже күйгүзүлдү"
+
+#: apps/inbox/views.py:1743
+msgid "Rule disabled"
+msgstr "Эреже өчүрүлдү"
+
+#: apps/inbox/views.py:1752
+msgid "Rule deleted"
+msgstr "Эреже өчүрүлдү"
+
+#: apps/inbox/views.py:1767
+msgid "Order updated"
+msgstr "Тартип жаңыртылды"
 
 #: apps/members/roles.py:40
 msgid "Owner"
@@ -1444,6 +1911,7 @@ msgstr "API справочнигин окуу"
 
 #: templates/api/key_created.html:26 templates/api/webhook_secret.html:22
 #: templates/channels/secret.html:57
+#: templates/inbox/_conversation_rows.html:71
 msgid "Done"
 msgstr "Бүттү"
 
@@ -1488,6 +1956,8 @@ msgid "Issue key"
 msgstr "Ачкыч чыгаруу"
 
 #: templates/api/keys_list.html:62 templates/api/webhooks_list.html:52
+#: templates/inbox/_deferred.html:31 templates/inbox/_deferred.html:46
+#: templates/inbox/_label_rows.html:51 templates/inbox/label_settings.html:41
 #: templates/members/list.html:65 templates/members/list.html:108
 #: templates/organizations/workspaces.html:40
 msgid "Cancel"
@@ -1525,7 +1995,8 @@ msgstr "эч качан колдонулган эмес"
 msgid "revoked %(revoked_at)s"
 msgstr "%(revoked_at)s жокко чыгарылды"
 
-#: templates/api/keys_list.html:101 templates/members/list.html:88
+#: templates/api/keys_list.html:101 templates/inbox/_label_rows.html:35
+#: templates/inbox/_rule_rows.html:62 templates/members/list.html:88
 #: templates/organizations/workspaces.html:65
 #, python-format
 msgid "More actions for %(name)s"
@@ -1582,12 +2053,14 @@ msgid "Events"
 msgstr "Окуялар"
 
 #: templates/api/webhook_detail.html:42 templates/api/webhooks_list.html:65
+#: templates/inbox/_rule_form.html:30
 msgid "Enabled"
 msgstr "Күйгүзүлгөн"
 
 #: templates/api/webhook_detail.html:45 templates/channels/detail.html:112
 #: templates/channels/sms_settings.html:70
 #: templates/channels/whatsapp_cost_hints.html:17
+#: templates/inbox/_label_rows.html:50
 msgid "Save"
 msgstr "Сактоо"
 
@@ -1664,6 +2137,7 @@ msgstr "Азырынча эч нерсе жеткирилген жок."
 
 #: templates/api/webhook_detail.html:91
 #: templates/channels/whatsapp_templates.html:70
+#: templates/inbox/_label_rows.html:42 templates/inbox/_rule_rows.html:70
 msgid "Delete"
 msgstr "Өчүрүү"
 
@@ -3213,6 +3687,7 @@ msgid "≈ %(currency)s %(cost)s per message"
 msgstr "≈ %(currency)s %(cost)s ар бир билдирүү үчүн"
 
 #: templates/channels/whatsapp_templates.html:60
+#: templates/inbox/_label_rows.html:33 templates/inbox/_rule_rows.html:61
 msgid "Edit"
 msgstr "Түзөтүү"
 
@@ -3241,6 +3716,586 @@ msgstr ""
 "администраторлоруна билдирет; четке кагылган шаблон жогорудан Meta'нын "
 "себебин көрсөтөт жана түзөтүлүп, кайра жөнөтүлсө болот. Маркетинг шаблондору"
 " эң катуу текшерилет жана жөнөтүү үчүн эң кымбат турат."
+
+#: templates/inbox/_composer.html:33
+msgid "Reply"
+msgstr "Жооп"
+
+#: templates/inbox/_composer.html:42
+msgid "Write a reply…"
+msgstr "Жооп жазыңыз…"
+
+#: templates/inbox/_composer.html:58
+msgid "Remove attachment"
+msgstr "Тиркемени өчүрүү"
+
+#: templates/inbox/_composer.html:81
+msgid "Search the media library…"
+msgstr "Медиа китепканадан издөө…"
+
+#: templates/inbox/_composer.html:83
+msgid "Search the library"
+msgstr "Китепканадан издөө"
+
+#: templates/inbox/_composer.html:87
+msgid "Close the picker"
+msgstr "Тандагычты жабуу"
+
+#: templates/inbox/_composer.html:89
+msgid "Loading…"
+msgstr "Жүктөлүүдө…"
+
+#: templates/inbox/_composer.html:105
+msgid "Nothing in the library this channel can carry."
+msgstr "Бул канал алып жүрө турган эч нерсе китепканада жок."
+
+#: templates/inbox/_composer.html:109
+msgid "Send"
+msgstr "Жөнөтүү"
+
+#: templates/inbox/_composer.html:119
+msgid "Add note"
+msgstr "Эскертүү кошуу"
+
+#: templates/inbox/_composer.html:123
+msgid "Attach"
+msgstr "Тиркөө"
+
+#: templates/inbox/_composer.html:133
+msgid "Send later"
+msgstr "Кийинчерээк жөнөтүү"
+
+#: templates/inbox/_composer.html:134
+#, python-format
+msgid "A reply pauses automation for %(minutes)s minute."
+msgid_plural "A reply pauses automation for %(minutes)s minutes."
+msgstr[0] "Жооп автоматташтырууну %(minutes)s мүнөткө тыныктырат."
+
+#: templates/inbox/_composer.html:138
+msgid "Send at"
+msgstr "Жөнөтүү убактысы"
+
+#: templates/inbox/_composer.html:144
+msgid "Schedule"
+msgstr "Пландоо"
+
+#: templates/inbox/_composer.html:158
+msgid "Remind at"
+msgstr "Эскертүү убактысы"
+
+#: templates/inbox/_composer.html:160 templates/inbox/_composer.html:177
+msgid "Remind"
+msgstr "Эскертүү"
+
+#: templates/inbox/_composer.html:162
+msgid "Me"
+msgstr "Мага"
+
+#: templates/inbox/_composer.html:167
+#: templates/inbox/_conversation_rows.html:67
+msgid "Note"
+msgstr "Эскертүү"
+
+#: templates/inbox/_composer.html:168
+msgid "Chase the refund"
+msgstr "Акча кайтарууну эскертүү"
+
+#: templates/inbox/_composer.html:181
+msgid "You can read this inbox but not reply to it."
+msgstr "Сиз бул кирген катты оки аласыз, бирок жооп бере албайсыз."
+
+#: templates/inbox/_conversation_rows.html:11
+msgid "No conversations match these filters."
+msgstr "Бул чыпкаларга дал келген маек жок."
+
+#: templates/inbox/_conversation_rows.html:40
+#, python-format
+msgid "Select %(name)s"
+msgstr "%(name)sды тандоо"
+
+#: templates/inbox/_conversation_rows.html:64
+msgid "Unread"
+msgstr "Окулган жок"
+
+#: templates/inbox/_conversation_rows.html:70
+#, python-format
+msgid "%(time)s ago"
+msgstr "%(time)s мурун"
+
+#: templates/inbox/_conversation_rows.html:80
+msgid "Something is scheduled on this conversation"
+msgstr "Бул маекке бир нерсе пландалган"
+
+#: templates/inbox/_conversation_rows.html:80
+#: templates/inbox/_deferred.html:39
+msgid "Scheduled"
+msgstr "Пландалды"
+
+#: templates/inbox/_deferred.html:21
+msgid "Reminder"
+msgstr "Эскертүү"
+
+#: templates/inbox/_deferred.html:23
+msgid "You"
+msgstr "Сиз"
+
+#: templates/inbox/_deferred.html:24
+#, python-format
+msgid "%(due_in)s from now"
+msgstr "%(due_in)sдан кийин"
+
+#: templates/inbox/_deferred.html:40
+#, python-format
+msgid "Sending %(due_in)s from now · %(preview)s"
+msgstr "%(due_in)sдан кийин жөнөтүлөт · %(preview)s"
+
+#: templates/inbox/_deferred.html:61
+msgid "Dismiss"
+msgstr "Жабуу"
+
+#: templates/inbox/_label_rows.html:30
+#, python-format
+msgid "On %(used)s conversation"
+msgid_plural "On %(used)s conversations"
+msgstr[0] "%(used)s маекте"
+
+#: templates/inbox/_label_rows.html:41
+#, python-format
+msgid ""
+"Delete “%(name)s”? It is removed from %(used)s conversation. Rules that add "
+"it keep running and will show it as deleted."
+msgid_plural ""
+"Delete “%(name)s”? It is removed from %(used)s conversations. Rules that add"
+" it keep running and will show it as deleted."
+msgstr[0] ""
+"«%(name)s» өчүрүлсүнбү? Ал %(used)s маектен алынат. Аны кошуучу эрежелер "
+"иштей берет жана аны өчүрүлгөн катары көрсөтөт."
+
+#: templates/inbox/_label_rows.html:48 templates/inbox/label_settings.html:37
+msgid "Colour"
+msgstr "Түс"
+
+#: templates/inbox/_label_rows.html:58
+msgid "No labels yet"
+msgstr "Азырынча меткалар жок"
+
+#: templates/inbox/_label_rows.html:60
+msgid ""
+"A label files one conversation — \"waiting on shipping\", \"needs a refund\" — and stops being\n"
+"      true when the thread is answered."
+msgstr ""
+"Метка бир маекти файлдайт — «жеткирүүнү күтүүдө», «акча кайтаруу керек» — "
+"жана маекке жооп берилгенде туура болбой калат."
+
+#: templates/inbox/_label_rows.html:63 templates/inbox/label_settings.html:27
+msgid "New label"
+msgstr "Жаңы метка"
+
+#: templates/inbox/_rule_form.html:23
+msgid "Refund requests to the billing team"
+msgstr "Эсеп-фактура командасына акча кайтаруу суроо-талаптары"
+
+#: templates/inbox/_rule_form.html:34
+msgid "When a message arrives"
+msgstr "Билдирүү келгенде"
+
+#: templates/inbox/_rule_form.html:36
+msgid ""
+"A rule needs at least one condition. Every condition it carries has to\n"
+"        match; a condition it leaves empty is not a filter."
+msgstr ""
+"Эрежеге жок дегенде бир шарт керек. Ал камтыган ар бир шарт дал келиши "
+"керек; бош калтырылган шарт чыпка болуп саналбайт."
+
+#: templates/inbox/_rule_form.html:40
+msgid "On these channels"
+msgstr "Бул каналдарда"
+
+#: templates/inbox/_rule_form.html:48
+msgid "On these connections"
+msgstr "Бул туташууларда"
+
+#: templates/inbox/_rule_form.html:59
+msgid "Containing any of these words"
+msgstr "Бул сөздөрдүн каалаганын камтыган"
+
+#: templates/inbox/_rule_form.html:67
+msgid "contains"
+msgstr "камтыйт"
+
+#: templates/inbox/_rule_form.html:68
+msgid "is exactly"
+msgstr "так дал келет"
+
+#: templates/inbox/_rule_form.html:69
+msgid "as a whole word"
+msgstr "бүтүн сөз катары"
+
+#: templates/inbox/_rule_form.html:72 templates/inbox/_rule_form.html:84
+msgid "Keyword"
+msgstr "Ачкыч сөз"
+
+#: templates/inbox/_rule_form.html:75 templates/inbox/_rule_form.html:87
+msgid "Match mode"
+msgstr "Дал келүү режими"
+
+#: templates/inbox/_rule_form.html:85
+msgid "refund"
+msgstr "кайтаруу"
+
+#: templates/inbox/_rule_form.html:97
+msgid "And the contact matches"
+msgstr "Жана байланыш дал келет"
+
+#: templates/inbox/_rule_form.html:109
+msgid "Then"
+msgstr "Анда"
+
+#: templates/inbox/_rule_form.html:110
+msgid "Add these labels"
+msgstr "Бул меткаларды кошуу"
+
+#: templates/inbox/_rule_form.html:127
+msgid "Assign to"
+msgstr "Дайындоо"
+
+#: templates/inbox/_rule_form.html:129
+msgid "Nobody"
+msgstr "Эч ким"
+
+#: templates/inbox/_rule_form.html:137
+msgid ""
+"Only when nobody has the conversation already. A rule never takes a thread "
+"off a colleague."
+msgstr ""
+"Маек эч кимге дайындалбаган болсо гана. Эреже эч качан маекти кесиптештен "
+"тартып албайт."
+
+#: templates/inbox/_rule_form.html:144
+msgid ""
+"An automated reply reopens a conversation, so “mark done” means done\n"
+"        unless a flow answers it."
+msgstr ""
+"Автоматтык жооп маекти кайра ачат, ошондуктан «аткарылды деп белгилөө» "
+"дегени, сценарий жооп бербесе, аткарылганын билдирет."
+
+#: templates/inbox/_rule_form.html:149
+msgid "Save rule"
+msgstr "Эрежени сактоо"
+
+#: templates/inbox/_rule_form.html:154
+msgid "Test against recent messages"
+msgstr "Акыркы билдирүүлөрдө текшерүү"
+
+#: templates/inbox/_rule_rows.html:42
+msgid "No conditions"
+msgstr "Шарттар жок"
+
+#: templates/inbox/_rule_rows.html:46
+msgid "No actions"
+msgstr "Аракеттер жок"
+
+#: templates/inbox/_rule_rows.html:57
+#, python-format
+msgid "Move %(name)s earlier"
+msgstr "%(name)sды мурунураак жылдыруу"
+
+#: templates/inbox/_rule_rows.html:58
+#, python-format
+msgid "Move %(name)s later"
+msgstr "%(name)sды кийинчерээк жылдыруу"
+
+#: templates/inbox/_rule_rows.html:67
+msgid "Disable this rule"
+msgstr "Бул эрежени өчүрүү"
+
+#: templates/inbox/_rule_rows.html:67
+msgid "Enable this rule"
+msgstr "Бул эрежени күйгүзүү"
+
+#: templates/inbox/_rule_rows.html:69
+#, python-format
+msgid ""
+"Delete “%(name)s”? Conversations it has already labelled keep their labels."
+msgstr ""
+"«%(name)s» өчүрүлсүнбү? Ал мурунтан белгилеген маектер өз белгилерин "
+"сактайт."
+
+#: templates/inbox/_rule_rows.html:79
+msgid "No rules yet"
+msgstr "Азырынча эрежелер жок"
+
+#: templates/inbox/_rule_rows.html:81
+msgid ""
+"A rule reads an inbound message and files, assigns or closes the conversation it belongs to,\n"
+"      before any flow replies."
+msgstr ""
+"Эреже кирген билдирүүнү окуйт жана ага таандык маекти файлдайт, дайындайт же"
+" жабат, кандайдыр бир сценарий жооп бергенге чейин."
+
+#: templates/inbox/_rule_rows.html:84 templates/inbox/rule_settings.html:36
+msgid "New rule"
+msgstr "Жаңы эреже"
+
+#: templates/inbox/_rule_test.html:14
+msgid "No inbound messages yet, so there is nothing to test against."
+msgstr ""
+"Азырынча кирген билдирүүлөр жок, ошондуктан текшере турган эч нерсе жок."
+
+#: templates/inbox/_rule_test.html:17
+#, python-format
+msgid ""
+"Matched %(matched)s of the last %(sample)s inbound message.\n"
+"      This scores today's contact details against older messages, so it is a\n"
+"      preview rather than a replay of what would have happened at the time."
+msgid_plural ""
+"Matched %(matched)s of the last %(sample)s inbound messages.\n"
+"      This scores today's contact details against older messages, so it is a\n"
+"      preview rather than a replay of what would have happened at the time."
+msgstr[0] ""
+"Акыркы %(sample)s кирген билдирүүнүн %(matched)sи дал келди. Бул бүгүнкү "
+"байланыш маалыматтарын эски билдирүүлөр менен салыштырат, ошондуктан бул "
+"ошол учурда эмне болушу мүмкүн экенин кайра ойнотуу эмес, алдын ала көрүү."
+
+#: templates/inbox/_sidebar.html:31
+#, python-format
+msgid "Opted out %(date)s"
+msgstr "%(date)s баш тартты"
+
+#: templates/inbox/_sidebar.html:33
+#, python-format
+msgid "Opted in via %(source)s"
+msgstr "%(source)s аркылуу макул болду"
+
+#: templates/inbox/_sidebar.html:33
+msgid "Opted in"
+msgstr "Макул болду"
+
+#: templates/inbox/_sidebar.html:35
+msgid "No opt-in recorded"
+msgstr "Макулдук катталган жок"
+
+#: templates/inbox/_sidebar.html:38
+#, python-format
+msgid "· window closes %(time)s"
+msgstr "· терезе %(time)s жабылат"
+
+#: templates/inbox/_sidebar.html:40
+msgid "not yet linked to a connection"
+msgstr "азырынча туташууга байланган эмес"
+
+#: templates/inbox/_sidebar.html:44
+msgid "No channel addresses recorded."
+msgstr "Канал даректери катталган эмес."
+
+#: templates/inbox/_sidebar.html:47
+msgid "Automation"
+msgstr "Автоматташтыруу"
+
+#: templates/inbox/_sidebar.html:56
+msgid "Stop automation"
+msgstr "Автоматташтырууну токтотуу"
+
+#: templates/inbox/_sidebar.html:60
+msgid "Nothing running for this contact."
+msgstr "Бул байланыш үчүн эч нерсе иштебейт."
+
+#: templates/inbox/_sidebar.html:66
+msgid "Resume automation"
+msgstr "Автоматташтырууну улантуу"
+
+#: templates/inbox/_sidebar.html:66
+msgid "Pause automation"
+msgstr "Автоматташтырууну тыныктыруу"
+
+#: templates/inbox/_sidebar.html:78
+msgid "Remove tag"
+msgstr "Тегди алып салуу"
+
+#: templates/inbox/_sidebar.html:84
+msgid "None yet."
+msgstr "Азырынча жок."
+
+#: templates/inbox/_sidebar.html:100
+msgid "Add a tag"
+msgstr "Тег кошуу"
+
+#: templates/inbox/_sidebar.html:102
+msgid "Add a tag…"
+msgstr "Тег кошуу…"
+
+#: templates/inbox/_thread_body.html:47
+#, python-format
+msgid ""
+"Automation is paused until %(time)s. Flows will not reply to this contact."
+msgstr ""
+"Автоматташтыруу %(time)sга чейин тыныктырылды. Сценарийлер бул байланышка "
+"жооп бербейт."
+
+#: templates/inbox/_thread_body.html:52
+msgid "Resume"
+msgstr "Улантуу"
+
+#: templates/inbox/_thread_body.html:75
+msgid "Load earlier messages"
+msgstr "Мурунку билдирүүлөрдү жүктөө"
+
+#: templates/inbox/_thread_body.html:77
+#, python-format
+msgid "Showing the most recent %(limit)s message."
+msgid_plural "Showing the most recent %(limit)s messages."
+msgstr[0] "Акыркы %(limit)s билдирүү көрсөтүлдү."
+
+#: templates/inbox/_thread_body.html:137
+msgid "Internal note: never sent"
+msgstr "Ички эскертүү: эч качан жөнөтүлбөйт"
+
+#: templates/inbox/_thread_body.html:138
+#, python-format
+msgid "Pressed: %(id)s"
+msgstr "Басылды: %(id)s"
+
+#: templates/inbox/_thread_body.html:139
+#, python-format
+msgid "Ref: %(ref)s"
+msgstr "Шилтеме: %(ref)s"
+
+#: templates/inbox/_thread_body.html:150
+msgid "Delivered"
+msgstr "Жеткирилди"
+
+#: templates/inbox/_thread_body.html:153
+msgid "Queued"
+msgstr "Кезекте"
+
+#: templates/inbox/_thread_body.html:172
+msgid "Try again"
+msgstr "Кайра аракет кылуу"
+
+#: templates/inbox/_thread_body.html:179
+msgid "No messages yet."
+msgstr "Азырынча билдирүүлөр жок."
+
+#: templates/inbox/_thread_header.html:23
+msgid "Back to conversations"
+msgstr "Маектерге кайтуу"
+
+#: templates/inbox/_thread_header.html:41
+msgid "Reopen"
+msgstr "Кайра ачуу"
+
+#: templates/inbox/_thread_header.html:52
+msgid "Assignee"
+msgstr "Дайындалган адам"
+
+#: templates/inbox/_thread_header.html:61
+msgid "Read only"
+msgstr "Окуу үчүн гана"
+
+#: templates/inbox/_thread_header.html:78
+#, python-format
+msgid "Remove label %(name)s"
+msgstr "%(name)s меткасын алып салуу"
+
+#: templates/inbox/_thread_header.html:92
+msgid "Add a label"
+msgstr "Метка кошуу"
+
+#: templates/inbox/_thread_header.html:94
+msgid "Add a label…"
+msgstr "Метка кошуу…"
+
+#: templates/inbox/label_settings.html:21
+msgid ""
+"Labels file a conversation. They are the inbox's own filing system, and they are not\n"
+"                contact tags: a tag like \"VIP\" follows a person across every channel they use, while\n"
+"                a label like \"waiting on shipping\" is true of one thread and stops being true when\n"
+"                it is answered. Inbox rules can add labels automatically."
+msgstr ""
+"Меткалар маекти файлдайт. Бул кирген каттын өз картотека системасы, жана бул"
+" байланыш тегдери эмес: «VIP» сыяктуу тег адамды ал колдонгон бардык "
+"каналдар аркылуу ээрчийт, ал эми «жеткирүүнү күтүүдө» сыяктуу метка бир маек"
+" үчүн туура жана ага жооп берилгенде туура болбой калат. Кирген кат "
+"эрежелери меткаларды автоматтык түрдө кошо алат."
+
+#: templates/inbox/label_settings.html:30
+msgid "Waiting on shipping"
+msgstr "Жеткирүүнү күтүүдө"
+
+#: templates/inbox/label_settings.html:33
+msgid "What is the label called?"
+msgstr "Метка кандай аталат?"
+
+#: templates/inbox/label_settings.html:40
+msgid "Add it"
+msgstr "Кошуу"
+
+#: templates/inbox/list.html:31
+msgid "Every conversation across your connected channels."
+msgstr "Туташтырылган бардык каналдардагы бардык маектер."
+
+#: templates/inbox/list.html:101
+msgid "All channels"
+msgstr "Бардык каналдар"
+
+#: templates/inbox/list.html:102
+msgid "Any label"
+msgstr "Каалаган метка"
+
+#: templates/inbox/list.html:133
+msgid "selected"
+msgstr "тандалды"
+
+#: templates/inbox/list.html:135
+msgid "Label"
+msgstr "Метка"
+
+#: templates/inbox/list.html:137
+msgid "Choose a label…"
+msgstr "Метканы тандаңыз…"
+
+#: templates/inbox/list.html:140
+msgid "Add"
+msgstr "Кошуу"
+
+#: templates/inbox/list.html:141
+msgid "Remove"
+msgstr "Алып салуу"
+
+#: templates/inbox/list.html:142 templates/workspaces/settings.html:73
+#: templates/workspaces/settings.html:83
+msgid "Clear"
+msgstr "Тазалоо"
+
+#: templates/inbox/list.html:167
+msgid "Pick a conversation to read it."
+msgstr "Окуу үчүн маекти тандаңыз."
+
+#: templates/inbox/list.html:175
+msgid "The media library could not be reached."
+msgstr "Медиа китепканага жетүү мүмкүн болгон жок."
+
+#: templates/inbox/list.html:176
+msgid "That is as many attachments as one message can carry."
+msgstr "Бул бир билдирүү алып жүрө турган тиркемелердин эң көп саны."
+
+#: templates/inbox/rule_settings.html:31
+msgid ""
+"A rule reads every message that arrives and files, assigns or closes the conversation it\n"
+"        belongs to. It runs before any flow replies, and it keeps running even where somebody has\n"
+"        paused automation on a thread."
+msgstr ""
+"Эреже келген ар бир билдирүүнү окуйт жана ага таандык маекти файлдайт, "
+"дайындайт же жабат. Ал кандайдыр бир сценарий жооп бергенге чейин иштейт "
+"жана бирөө маектеги автоматташтырууну тынымга чейин деле иштей берет."
+
+#: templates/inbox/rule_settings.html:40
+msgid ""
+"Triggers stop at the first match. Rules do not: <strong>every</strong> rule that matches\n"
+"    applies, in the order below."
+msgstr ""
+"Триггерлер биринчи дал келгенде токтойт. Эрежелер токтобойт: дал келген "
+"<strong>ар бир</strong> эреже төмөндөгү тартипте колдонулат."
 
 #: templates/members/_accept_invite_body.html:2
 #, python-format
@@ -3800,10 +4855,6 @@ msgstr "Негизги"
 #: templates/workspaces/settings.html:71
 msgid "Pick the primary colour"
 msgstr "Негизги түстү тандоо"
-
-#: templates/workspaces/settings.html:73 templates/workspaces/settings.html:83
-msgid "Clear"
-msgstr "Тазалоо"
 
 #: templates/workspaces/settings.html:75
 msgid "Leave it blank to use the BrightBean orange."

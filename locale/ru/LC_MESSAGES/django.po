@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 12:51+0600\n"
+"POT-Creation-Date: 2026-09-20 13:09+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ru\n"
@@ -45,7 +45,7 @@ msgstr "Контакт отписан от цепочки"
 msgid "Broadcast finished"
 msgstr "Рассылка завершена"
 
-#: apps/api/models.py:75
+#: apps/api/models.py:75 templates/inbox/_thread_body.html:149
 msgid "Read"
 msgstr "Чтение"
 
@@ -61,7 +61,7 @@ msgstr "Удаление"
 msgid "Succeeded"
 msgstr "Успешно"
 
-#: apps/api/models.py:89
+#: apps/api/models.py:89 templates/inbox/_thread_body.html:152
 msgid "Failed"
 msgstr "Ошибка"
 
@@ -305,6 +305,7 @@ msgstr ""
 #: apps/channels/forms.py:47 templates/accounts/settings.html:32
 #: templates/api/keys_list.html:39
 #: templates/channels/whatsapp_templates.html:26
+#: templates/inbox/_label_rows.html:46 templates/inbox/_rule_form.html:24
 #: templates/organizations/settings.html:27
 #: templates/organizations/settings.html:49
 #: templates/workspaces/settings.html:36
@@ -471,6 +472,7 @@ msgid "Needs reconnection"
 msgstr "Требуется переподключение"
 
 #: apps/channels/models.py:105 templates/api/webhooks_list.html:65
+#: templates/inbox/_rule_rows.html:38
 msgid "Disabled"
 msgstr "Отключено"
 
@@ -681,7 +683,7 @@ msgstr ""
 "приветственный триггер не сработает, пока это не будет сделано. См. "
 "docs/channels/messenger.md."
 
-#: apps/channels/views_messenger.py:372 apps/channels/views_whatsapp.py:180
+#: apps/channels/views_messenger.py:372 apps/channels/views_whatsapp.py:181
 #, python-format
 msgid "Connected %(name)s. Send it a message to check it works."
 msgstr ""
@@ -736,10 +738,7 @@ msgstr "Вставьте токен, который дал BotFather."
 msgid "Connected @%(username)s. Send it /start to check it works."
 msgstr "Подключено: @%(username)s. Отправьте /start, чтобы проверить работу."
 
-#: apps/channels/views_whatsapp.py:60
-#| msgid ""
-#| "A system user token with whatsapp_business_messaging and "
-#| "whatsapp_business_management."
+#: apps/channels/views_whatsapp.py:61
 msgid ""
 "Meta did not accept those details. Check the phone number ID and that the "
 "system user token has whatsapp_business_messaging and "
@@ -749,7 +748,7 @@ msgstr ""
 "системного пользователя имеет права whatsapp_business_messaging и "
 "whatsapp_business_management, затем попробуйте снова."
 
-#: apps/channels/views_whatsapp.py:68
+#: apps/channels/views_whatsapp.py:69
 msgid ""
 "Those credentials work, but this app could not be subscribed to the WhatsApp"
 " Business Account's webhooks. Nothing will be delivered until it is; see "
@@ -759,35 +758,35 @@ msgstr ""
 "вебхуки WhatsApp Business Account. Ничего не будет доставлено, пока это не "
 "будет сделано; см. docs/channels/whatsapp.md."
 
-#: apps/channels/views_whatsapp.py:266
+#: apps/channels/views_whatsapp.py:267
 msgid "This number already has a template with that name and language."
 msgstr "У этого номера уже есть шаблон с таким именем и языком."
 
-#: apps/channels/views_whatsapp.py:270
+#: apps/channels/views_whatsapp.py:271
 #, python-format
 msgid "Saved %(name)s. Submit it when you are ready for Meta to review it."
 msgstr ""
 "Сохранено: %(name)s. Отправьте на проверку, когда будете готовы, чтобы Meta "
 "её рассмотрела."
 
-#: apps/channels/views_whatsapp.py:355
+#: apps/channels/views_whatsapp.py:356
 #, python-format
 msgid "Meta would not accept %(name)s: %(exc)s"
 msgstr "Meta не приняла %(name)s: %(exc)s"
 
-#: apps/channels/views_whatsapp.py:360
+#: apps/channels/views_whatsapp.py:361
 #, python-format
 msgid "%(name)s is with Meta for review. This usually takes minutes to a day."
 msgstr ""
 "%(name)s отправлен на проверку в Meta. Обычно это занимает от нескольких "
 "минут до суток."
 
-#: apps/channels/views_whatsapp.py:373
+#: apps/channels/views_whatsapp.py:374
 #, python-format
 msgid "Deleted %(name)s."
 msgstr "%(name)s удалён."
 
-#: apps/channels/views_whatsapp.py:402
+#: apps/channels/views_whatsapp.py:403
 msgid "Saved the cost estimates."
 msgstr "Оценки стоимости сохранены."
 
@@ -800,7 +799,7 @@ msgid "General"
 msgstr "Общее"
 
 #: apps/common/context_processors.py:251 templates/channels/list.html:24
-#: templates/channels/list.html:31
+#: templates/channels/list.html:31 templates/inbox/_sidebar.html:20
 #: templates/partials/_sidebar_channels.html:35
 msgid "Channels"
 msgstr "Каналы"
@@ -809,19 +808,22 @@ msgstr "Каналы"
 msgid "Library"
 msgstr "Медиатека"
 
-#: apps/common/context_processors.py:307
+#: apps/common/context_processors.py:307 templates/inbox/_sidebar.html:70
 msgid "Tags"
 msgstr "Теги"
 
 #: apps/common/context_processors.py:315
+#: templates/inbox/label_settings.html:12
+#: templates/inbox/label_settings.html:19
 msgid "Labels"
 msgstr "Метки"
 
-#: apps/common/context_processors.py:323
+#: apps/common/context_processors.py:323 templates/inbox/rule_settings.html:3
+#: templates/inbox/rule_settings.html:29
 msgid "Inbox rules"
 msgstr "Правила входящих"
 
-#: apps/common/context_processors.py:335
+#: apps/common/context_processors.py:335 templates/inbox/_sidebar.html:109
 msgid "Fields"
 msgstr "Поля"
 
@@ -871,7 +873,8 @@ msgstr "Настройки"
 msgid "Home"
 msgstr "Главная"
 
-#: apps/common/context_processors.py:442
+#: apps/common/context_processors.py:442 templates/inbox/list.html:26
+#: templates/inbox/list.html:30
 msgid "Inbox"
 msgstr "Входящие"
 
@@ -904,8 +907,8 @@ msgid "Templates"
 msgstr "Шаблоны"
 
 #: apps/common/tests/test_templatetags.py:166
-#: templates/api/webhooks_list.html:71
-#: templates/organizations/workspaces.html:61
+#: templates/api/webhooks_list.html:71 templates/inbox/_card.html:19
+#: templates/inbox/_sidebar.html:17 templates/organizations/workspaces.html:61
 msgid "Open"
 msgstr "Открыть"
 
@@ -917,6 +920,10 @@ msgstr "Цвет должен быть 6-значным hex-значением, 
 msgid "Hi! Thanks for getting in touch — how can we help?"
 msgstr "Привет! Спасибо, что написали — чем можем помочь?"
 
+#: apps/inbox/codes.py:27
+msgid "That scheduled reply had nothing left to send."
+msgstr "Этот запланированный ответ не содержит ничего, что можно отправить."
+
 #: apps/inbox/notifications.py:35
 #, python-brace-format
 msgid "Scheduled reply to {contact_name} was not sent"
@@ -925,6 +932,476 @@ msgstr "Запланированный ответ для {contact_name} не б�
 #: apps/inbox/notifications.py:46
 msgid "A scheduled reply was not sent"
 msgstr "Запланированный ответ не был отправлен"
+
+#: apps/inbox/rendering.py:103
+msgid "This message was deleted."
+msgstr "Это сообщение было удалено."
+
+#: apps/inbox/rendering.py:104
+msgid "[deleted]"
+msgstr "[удалено]"
+
+#: apps/inbox/rendering.py:136
+msgid "Attached image"
+msgstr "Прикреплённое изображение"
+
+#: apps/inbox/rendering.py:173
+msgid "Attachment"
+msgstr "Вложение"
+
+#: apps/inbox/rendering.py:382
+msgid "This message has no displayable content."
+msgstr "Это сообщение не содержит отображаемого содержимого."
+
+#: apps/inbox/rendering.py:464
+msgid "Unreadable content."
+msgstr "Нечитаемое содержимое."
+
+#: apps/inbox/rendering.py:468
+msgid "Empty message."
+msgstr "Пустое сообщение."
+
+#: apps/inbox/rendering.py:482
+msgid "Empty gallery."
+msgstr "Пустая галерея."
+
+#: apps/inbox/rendering.py:483
+msgid "Unsupported content."
+msgstr "Неподдерживаемое содержимое."
+
+#: apps/inbox/rendering.py:511
+msgid "An attachment was recorded without an identifier."
+msgstr "Вложение было записано без идентификатора."
+
+#: apps/inbox/rendering.py:525
+msgid "An attachment could not be linked."
+msgstr "Не удалось создать ссылку на вложение."
+
+#: apps/inbox/rendering.py:618
+msgid "It could not be sent."
+msgstr "Не удалось отправить."
+
+#: apps/inbox/rendering.py:644
+#, python-format
+msgid "Channel is %(list)s"
+msgstr "Канал: %(list)s"
+
+#: apps/inbox/rendering.py:647
+#, python-format
+msgid "Connection is %(list)s"
+msgstr "Подключение: %(list)s"
+
+#: apps/inbox/rendering.py:651
+#, python-format
+msgid "Message mentions %(list)s"
+msgstr "Сообщение упоминает %(list)s"
+
+#: apps/inbox/rendering.py:656
+msgid "all"
+msgstr "всем"
+
+#: apps/inbox/rendering.py:656
+msgid "any"
+msgstr "любому"
+
+#: apps/inbox/rendering.py:659
+#, python-format
+msgid "Contact matches %(mode)s of %(count)s condition"
+msgid_plural "Contact matches %(mode)s of %(count)s conditions"
+msgstr[0] "Контакт соответствует %(mode)s из %(count)s условия"
+msgstr[1] "Контакт соответствует %(mode)s из %(count)s условий"
+msgstr[2] "Контакт соответствует %(mode)s из %(count)s условий"
+msgstr[3] "Контакт соответствует %(mode)s из %(count)s условий"
+
+#: apps/inbox/rendering.py:673
+#, python-format
+msgid "Add label %(label)s"
+msgstr "Добавить метку %(label)s"
+
+#: apps/inbox/rendering.py:677
+#, python-format
+msgid "Assign to %(member)s"
+msgstr "Назначить %(member)s"
+
+#: apps/inbox/rendering.py:680 templates/inbox/_rule_form.html:141
+#: templates/inbox/_thread_header.html:44
+msgid "Mark done"
+msgstr "Отметить как выполненное"
+
+#: apps/inbox/rendering.py:694
+msgid "(deleted)"
+msgstr "(удалено)"
+
+#: apps/inbox/rendering.py:701 apps/inbox/views.py:846
+#, python-format
+msgid "%(list)s or %(last)s"
+msgstr "%(list)s или %(last)s"
+
+#: apps/inbox/rendering.py:706
+msgid "someone who has left"
+msgstr "тот, кто покинул пространство"
+
+#: apps/inbox/rendering.py:707
+msgid "a teammate"
+msgstr "коллега"
+
+#: apps/inbox/rules.py:231
+msgid "A rule condition must be an object."
+msgstr "Условие правила должно быть объектом."
+
+#: apps/inbox/rules.py:234
+#, python-format
+msgid "Unknown condition keys: %(keys)s."
+msgstr "Неизвестные ключи условия: %(keys)s."
+
+#: apps/inbox/rules.py:236
+msgid "That condition is too large."
+msgstr "Это условие слишком большое."
+
+#: apps/inbox/rules.py:262
+msgid ""
+"A rule needs at least one condition: a channel, a keyword or something about"
+" the contact."
+msgstr ""
+"Правилу нужно хотя бы одно условие: канал, ключевое слово или что-то о "
+"контакте."
+
+#: apps/inbox/rules.py:277
+msgid "Rule actions must be a list."
+msgstr "Действия правила должны быть списком."
+
+#: apps/inbox/rules.py:279
+msgid "A rule needs at least one action."
+msgstr "Правилу нужно хотя бы одно действие."
+
+#: apps/inbox/rules.py:281
+#, python-format
+msgid "A rule may have at most %(max)s actions."
+msgstr "Правило может содержать не более %(max)s действий."
+
+#: apps/inbox/rules.py:287
+msgid "Each action must be an object."
+msgstr "Каждое действие должно быть объектом."
+
+#: apps/inbox/rules.py:290
+#, python-format
+msgid "Unknown action %(kind)r."
+msgstr "Неизвестное действие %(kind)r."
+
+#: apps/inbox/rules.py:294
+msgid "That label no longer exists."
+msgstr "Этой метки больше не существует."
+
+#: apps/inbox/rules.py:300 apps/inbox/views.py:1033
+msgid "That person is not a member of this workspace."
+msgstr "Этот человек не является участником этого пространства."
+
+#: apps/inbox/rules.py:309
+msgid "That rule repeats an action."
+msgstr "Это правило повторяет действие."
+
+#: apps/inbox/rules.py:324
+msgid "The channel condition must be an object."
+msgstr "Условие канала должно быть объектом."
+
+#: apps/inbox/rules.py:327
+#, python-format
+msgid "Unknown channel keys: %(keys)s."
+msgstr "Неизвестные ключи канала: %(keys)s."
+
+#: apps/inbox/rules.py:334
+#, python-format
+msgid "Unknown platform %(platform)r."
+msgstr "Неизвестная платформа %(platform)r."
+
+#: apps/inbox/rules.py:337
+msgid "Too many connections in one rule."
+msgstr "Слишком много подключений в одном правиле."
+
+#: apps/inbox/rules.py:351
+msgid "Keywords must be a list."
+msgstr "Ключевые слова должны быть списком."
+
+#: apps/inbox/rules.py:353
+#, python-format
+msgid "A rule may have at most %(max)s keywords."
+msgstr "Правило может содержать не более %(max)s ключевых слов."
+
+#: apps/inbox/rules.py:359
+msgid "Each keyword must be an object."
+msgstr "Каждое ключевое слово должно быть объектом."
+
+#: apps/inbox/rules.py:362
+#, python-format
+msgid "Unknown keyword keys: %(keys)s."
+msgstr "Неизвестные ключи ключевого слова: %(keys)s."
+
+#: apps/inbox/rules.py:367
+msgid "That keyword is too long."
+msgstr "Это ключевое слово слишком длинное."
+
+#: apps/inbox/services.py:128 apps/inbox/services.py:142
+msgid "That label is not valid."
+msgstr "Эта метка недействительна."
+
+#: apps/inbox/services.py:157
+#, python-format
+msgid "A conversation can carry at most %(max)s labels."
+msgstr "Диалог может нести не более %(max)s меток."
+
+#: apps/inbox/services.py:244 apps/inbox/services.py:292
+#: apps/inbox/services.py:321
+msgid "Pick a time in the future."
+msgstr "Выберите время в будущем."
+
+#: apps/inbox/services.py:256
+msgid "That reminder is not valid."
+msgstr "Это напоминание недействительно."
+
+#: apps/inbox/services.py:319
+msgid "That reply has already been sent or cancelled."
+msgstr "Этот ответ уже отправлен или отменён."
+
+#: apps/inbox/views.py:795
+msgid "Nothing to send"
+msgstr "Нечего отправлять"
+
+#: apps/inbox/views.py:810 templates/inbox/_deferred.html:54
+msgid "Not sent"
+msgstr "Не отправлено"
+
+#: apps/inbox/views.py:811
+msgid "Note added"
+msgstr "Заметка добавлена"
+
+#: apps/inbox/views.py:811
+msgid "Reply sent"
+msgstr "Ответ отправлен"
+
+#: apps/inbox/views.py:819
+#, python-format
+msgid "%(platform)s cannot carry %(items)s, so that was left off."
+msgstr ""
+"%(platform)s не может передавать %(items)s, поэтому это было пропущено."
+
+#: apps/inbox/views.py:834
+msgid "an image"
+msgstr "изображение"
+
+#: apps/inbox/views.py:835
+msgid "an audio file"
+msgstr "аудиофайл"
+
+#: apps/inbox/views.py:836
+msgid "a video"
+msgstr "видео"
+
+#: apps/inbox/views.py:837
+msgid "a file"
+msgstr "файл"
+
+#: apps/inbox/views.py:908
+msgid "Still not sent"
+msgstr "Всё ещё не отправлено"
+
+#: apps/inbox/views.py:910 templates/inbox/_thread_body.html:151
+msgid "Sent"
+msgstr "Отправлено"
+
+#: apps/inbox/views.py:1023 templates/inbox/_thread_header.html:54
+msgid "Unassigned"
+msgstr "Не назначено"
+
+#: apps/inbox/views.py:1032
+msgid "Cannot assign"
+msgstr "Невозможно назначить"
+
+#: apps/inbox/views.py:1038
+#, python-format
+msgid "Assigned to %(name)s"
+msgstr "Назначено: %(name)s"
+
+#: apps/inbox/views.py:1052
+msgid "Marked done"
+msgstr "Отмечено как выполненное"
+
+#: apps/inbox/views.py:1062
+msgid "Reopened"
+msgstr "Снова открыт"
+
+#: apps/inbox/views.py:1064
+msgid "Unknown state"
+msgstr "Неизвестное состояние"
+
+#: apps/inbox/views.py:1064
+msgid "A conversation is either open or done."
+msgstr "Диалог может быть либо открытым, либо завершённым."
+
+#: apps/inbox/views.py:1081
+msgid "Automation resumed"
+msgstr "Автоматизация возобновлена"
+
+#: apps/inbox/views.py:1083
+msgid "Automation paused"
+msgstr "Автоматизация приостановлена"
+
+#: apps/inbox/views.py:1105
+msgid "Nothing running"
+msgstr "Ничего не запущено"
+
+#: apps/inbox/views.py:1106
+msgid "Automation stopped"
+msgstr "Автоматизация остановлена"
+
+#: apps/inbox/views.py:1127
+msgid "No tag selected"
+msgstr "Тег не выбран"
+
+#: apps/inbox/views.py:1131
+msgid "Tag removed"
+msgstr "Тег удалён"
+
+#: apps/inbox/views.py:1133
+msgid "Tag added"
+msgstr "Тег добавлен"
+
+#: apps/inbox/views.py:1157
+msgid "Not labelled"
+msgstr "Метка не добавлена"
+
+#: apps/inbox/views.py:1158
+msgid "Labelled"
+msgstr "Помечено"
+
+#: apps/inbox/views.py:1169
+msgid "Label removed"
+msgstr "Метка удалена"
+
+#: apps/inbox/views.py:1205
+#, python-format
+msgid "Label removed from %(count)s conversation"
+msgid_plural "Label removed from %(count)s conversations"
+msgstr[0] "Метка удалена из %(count)s диалога"
+msgstr[1] "Метка удалена из %(count)s диалогов"
+msgstr[2] "Метка удалена из %(count)s диалогов"
+msgstr[3] "Метка удалена из %(count)s диалогов"
+
+#: apps/inbox/views.py:1207
+#, python-format
+#| msgid "%(count)s conversation unassigned"
+#| msgid_plural "%(count)s conversations unassigned"
+msgid "Label added to %(count)s conversation"
+msgid_plural "Label added to %(count)s conversations"
+msgstr[0] "Метка добавлена в %(count)s диалог"
+msgstr[1] "Метка добавлена в %(count)s диалога"
+msgstr[2] "Метка добавлена в %(count)s диалогов"
+msgstr[3] "Метка добавлена в %(count)s диалогов"
+
+#: apps/inbox/views.py:1229 apps/inbox/views.py:1249
+msgid "No reminder set"
+msgstr "Напоминание не установлено"
+
+#: apps/inbox/views.py:1229 apps/inbox/views.py:1280
+msgid "Pick a date and time."
+msgstr "Выберите дату и время."
+
+#: apps/inbox/views.py:1250
+msgid "Reminder set"
+msgstr "Напоминание установлено"
+
+#: apps/inbox/views.py:1262 apps/inbox/views.py:1331
+msgid "Already gone"
+msgstr "Уже отменено"
+
+#: apps/inbox/views.py:1263
+msgid "Reminder cancelled"
+msgstr "Напоминание отменено"
+
+#: apps/inbox/views.py:1280 apps/inbox/views.py:1284 apps/inbox/views.py:1294
+msgid "Not scheduled"
+msgstr "Не запланировано"
+
+#: apps/inbox/views.py:1295
+msgid "Reply scheduled"
+msgstr "Ответ запланирован"
+
+#: apps/inbox/views.py:1312 apps/inbox/views.py:1316
+msgid "Not changed"
+msgstr "Не изменено"
+
+#: apps/inbox/views.py:1317
+msgid "Scheduled reply updated"
+msgstr "Запланированный ответ обновлён"
+
+#: apps/inbox/views.py:1332
+msgid "Scheduled reply cancelled"
+msgstr "Запланированный ответ отменён"
+
+#: apps/inbox/views.py:1422
+msgid "That message is too long."
+msgstr "Это сообщение слишком длинное."
+
+#: apps/inbox/views.py:1431
+#, python-format
+msgid "%(platform)s cannot carry that attachment."
+msgstr "%(platform)s не может передавать это вложение."
+
+#: apps/inbox/views.py:1434
+msgid "Write something first."
+msgstr "Сначала напишите что-нибудь."
+
+#: apps/inbox/views.py:1463
+msgid "One of those attachments is no longer in the library."
+msgstr "Одного из этих вложений больше нет в библиотеке."
+
+#: apps/inbox/views.py:1545
+msgid "Not created"
+msgstr "Не создано"
+
+#: apps/inbox/views.py:1546
+msgid "Label created"
+msgstr "Метка создана"
+
+#: apps/inbox/views.py:1557 apps/inbox/views.py:1691 apps/inbox/views.py:1696
+#: apps/inbox/views.py:1717
+msgid "Not saved"
+msgstr "Не сохранено"
+
+#: apps/inbox/views.py:1558
+msgid "Label saved"
+msgstr "Метка сохранена"
+
+#: apps/inbox/views.py:1575
+msgid "Label deleted"
+msgstr "Метка удалена"
+
+#: apps/inbox/views.py:1691
+msgid "A rule needs a name."
+msgstr "Правилу нужно имя."
+
+#: apps/inbox/views.py:1719 apps/inbox/views.py:1722
+msgid "Rule saved"
+msgstr "Правило сохранено"
+
+#: apps/inbox/views.py:1736
+msgid "Not enabled"
+msgstr "Не включено"
+
+#: apps/inbox/views.py:1739
+msgid "Rule enabled"
+msgstr "Правило включено"
+
+#: apps/inbox/views.py:1743
+msgid "Rule disabled"
+msgstr "Правило отключено"
+
+#: apps/inbox/views.py:1752
+msgid "Rule deleted"
+msgstr "Правило удалено"
+
+#: apps/inbox/views.py:1767
+msgid "Order updated"
+msgstr "Порядок обновлён"
 
 #: apps/members/roles.py:40
 msgid "Owner"
@@ -1460,6 +1937,7 @@ msgstr "Прочитать справочник по API"
 
 #: templates/api/key_created.html:26 templates/api/webhook_secret.html:22
 #: templates/channels/secret.html:57
+#: templates/inbox/_conversation_rows.html:71
 msgid "Done"
 msgstr "Готово"
 
@@ -1504,6 +1982,8 @@ msgid "Issue key"
 msgstr "Выпустить ключ"
 
 #: templates/api/keys_list.html:62 templates/api/webhooks_list.html:52
+#: templates/inbox/_deferred.html:31 templates/inbox/_deferred.html:46
+#: templates/inbox/_label_rows.html:51 templates/inbox/label_settings.html:41
 #: templates/members/list.html:65 templates/members/list.html:108
 #: templates/organizations/workspaces.html:40
 msgid "Cancel"
@@ -1541,7 +2021,8 @@ msgstr "никогда не использовался"
 msgid "revoked %(revoked_at)s"
 msgstr "отозван %(revoked_at)s"
 
-#: templates/api/keys_list.html:101 templates/members/list.html:88
+#: templates/api/keys_list.html:101 templates/inbox/_label_rows.html:35
+#: templates/inbox/_rule_rows.html:62 templates/members/list.html:88
 #: templates/organizations/workspaces.html:65
 #, python-format
 msgid "More actions for %(name)s"
@@ -1598,12 +2079,14 @@ msgid "Events"
 msgstr "События"
 
 #: templates/api/webhook_detail.html:42 templates/api/webhooks_list.html:65
+#: templates/inbox/_rule_form.html:30
 msgid "Enabled"
 msgstr "Включено"
 
 #: templates/api/webhook_detail.html:45 templates/channels/detail.html:112
 #: templates/channels/sms_settings.html:70
 #: templates/channels/whatsapp_cost_hints.html:17
+#: templates/inbox/_label_rows.html:50
 msgid "Save"
 msgstr "Сохранить"
 
@@ -1681,6 +2164,7 @@ msgstr "Пока ничего не доставлено."
 
 #: templates/api/webhook_detail.html:91
 #: templates/channels/whatsapp_templates.html:70
+#: templates/inbox/_label_rows.html:42 templates/inbox/_rule_rows.html:70
 msgid "Delete"
 msgstr "Удалить"
 
@@ -3232,6 +3716,7 @@ msgid "≈ %(currency)s %(cost)s per message"
 msgstr "≈ %(currency)s %(cost)s за сообщение"
 
 #: templates/channels/whatsapp_templates.html:60
+#: templates/inbox/_label_rows.html:33 templates/inbox/_rule_rows.html:61
 msgid "Edit"
 msgstr "Редактировать"
 
@@ -3260,6 +3745,621 @@ msgstr ""
 "пространства, когда приходит ответ; отклонённый шаблон показывает причину "
 "Meta выше и может быть отредактирован и отправлен повторно. Маркетинговые "
 "шаблоны проверяются строже всего и стоят дороже всего при отправке."
+
+#: templates/inbox/_composer.html:33
+msgid "Reply"
+msgstr "Ответ"
+
+#: templates/inbox/_composer.html:42
+msgid "Write a reply…"
+msgstr "Напишите ответ…"
+
+#: templates/inbox/_composer.html:58
+msgid "Remove attachment"
+msgstr "Удалить вложение"
+
+#: templates/inbox/_composer.html:81
+msgid "Search the media library…"
+msgstr "Поиск в медиатеке…"
+
+#: templates/inbox/_composer.html:83
+msgid "Search the library"
+msgstr "Поиск в библиотеке"
+
+#: templates/inbox/_composer.html:87
+msgid "Close the picker"
+msgstr "Закрыть выбор"
+
+#: templates/inbox/_composer.html:89
+msgid "Loading…"
+msgstr "Загрузка…"
+
+#: templates/inbox/_composer.html:105
+msgid "Nothing in the library this channel can carry."
+msgstr "В библиотеке нет ничего, что мог бы передать этот канал."
+
+#: templates/inbox/_composer.html:109
+msgid "Send"
+msgstr "Отправить"
+
+#: templates/inbox/_composer.html:119
+msgid "Add note"
+msgstr "Добавить заметку"
+
+#: templates/inbox/_composer.html:123
+msgid "Attach"
+msgstr "Прикрепить"
+
+#: templates/inbox/_composer.html:133
+msgid "Send later"
+msgstr "Отправить позже"
+
+#: templates/inbox/_composer.html:134
+#, python-format
+msgid "A reply pauses automation for %(minutes)s minute."
+msgid_plural "A reply pauses automation for %(minutes)s minutes."
+msgstr[0] "Ответ приостанавливает автоматизацию на %(minutes)s минуту."
+msgstr[1] "Ответ приостанавливает автоматизацию на %(minutes)s минуты."
+msgstr[2] "Ответ приостанавливает автоматизацию на %(minutes)s минут."
+msgstr[3] "Ответ приостанавливает автоматизацию на %(minutes)s минут."
+
+#: templates/inbox/_composer.html:138
+msgid "Send at"
+msgstr "Отправить в"
+
+#: templates/inbox/_composer.html:144
+msgid "Schedule"
+msgstr "Запланировать"
+
+#: templates/inbox/_composer.html:158
+msgid "Remind at"
+msgstr "Напомнить в"
+
+#: templates/inbox/_composer.html:160 templates/inbox/_composer.html:177
+msgid "Remind"
+msgstr "Напомнить"
+
+#: templates/inbox/_composer.html:162
+msgid "Me"
+msgstr "Мне"
+
+#: templates/inbox/_composer.html:167
+#: templates/inbox/_conversation_rows.html:67
+msgid "Note"
+msgstr "Заметка"
+
+#: templates/inbox/_composer.html:168
+msgid "Chase the refund"
+msgstr "Напомнить о возврате средств"
+
+#: templates/inbox/_composer.html:181
+msgid "You can read this inbox but not reply to it."
+msgstr "Вы можете читать этот почтовый ящик, но не отвечать в нём."
+
+#: templates/inbox/_conversation_rows.html:11
+msgid "No conversations match these filters."
+msgstr "Ни один диалог не соответствует этим фильтрам."
+
+#: templates/inbox/_conversation_rows.html:40
+#, python-format
+msgid "Select %(name)s"
+msgstr "Выбрать %(name)s"
+
+#: templates/inbox/_conversation_rows.html:64
+msgid "Unread"
+msgstr "Непрочитано"
+
+#: templates/inbox/_conversation_rows.html:70
+#, python-format
+msgid "%(time)s ago"
+msgstr "%(time)s назад"
+
+#: templates/inbox/_conversation_rows.html:80
+msgid "Something is scheduled on this conversation"
+msgstr "На этот диалог что-то запланировано"
+
+#: templates/inbox/_conversation_rows.html:80
+#: templates/inbox/_deferred.html:39
+msgid "Scheduled"
+msgstr "Запланировано"
+
+#: templates/inbox/_deferred.html:21
+msgid "Reminder"
+msgstr "Напоминание"
+
+#: templates/inbox/_deferred.html:23
+msgid "You"
+msgstr "Вы"
+
+#: templates/inbox/_deferred.html:24
+#, python-format
+msgid "%(due_in)s from now"
+msgstr "через %(due_in)s"
+
+#: templates/inbox/_deferred.html:40
+#, python-format
+msgid "Sending %(due_in)s from now · %(preview)s"
+msgstr "Отправка через %(due_in)s · %(preview)s"
+
+#: templates/inbox/_deferred.html:61
+msgid "Dismiss"
+msgstr "Отклонить"
+
+#: templates/inbox/_label_rows.html:30
+#, python-format
+msgid "On %(used)s conversation"
+msgid_plural "On %(used)s conversations"
+msgstr[0] "На %(used)s диалоге"
+msgstr[1] "На %(used)s диалогах"
+msgstr[2] "На %(used)s диалогах"
+msgstr[3] "На %(used)s диалогах"
+
+#: templates/inbox/_label_rows.html:41
+#, python-format
+msgid ""
+"Delete “%(name)s”? It is removed from %(used)s conversation. Rules that add "
+"it keep running and will show it as deleted."
+msgid_plural ""
+"Delete “%(name)s”? It is removed from %(used)s conversations. Rules that add"
+" it keep running and will show it as deleted."
+msgstr[0] ""
+"Удалить «%(name)s»? Метка будет удалена из %(used)s диалога. Правила, "
+"которые её добавляют, продолжат работать и будут показывать её как "
+"удалённую."
+msgstr[1] ""
+"Удалить «%(name)s»? Метка будет удалена из %(used)s диалогов. Правила, "
+"которые её добавляют, продолжат работать и будут показывать её как "
+"удалённую."
+msgstr[2] ""
+"Удалить «%(name)s»? Метка будет удалена из %(used)s диалогов. Правила, "
+"которые её добавляют, продолжат работать и будут показывать её как "
+"удалённую."
+msgstr[3] ""
+"Удалить «%(name)s»? Метка будет удалена из %(used)s диалогов. Правила, "
+"которые её добавляют, продолжат работать и будут показывать её как "
+"удалённую."
+
+#: templates/inbox/_label_rows.html:48 templates/inbox/label_settings.html:37
+msgid "Colour"
+msgstr "Цвет"
+
+#: templates/inbox/_label_rows.html:58
+msgid "No labels yet"
+msgstr "Пока нет меток"
+
+#: templates/inbox/_label_rows.html:60
+msgid ""
+"A label files one conversation — \"waiting on shipping\", \"needs a refund\" — and stops being\n"
+"      true when the thread is answered."
+msgstr ""
+"Метка файлирует один диалог — «ожидает доставки», «нужен возврат средств» — "
+"и перестаёт быть верной, когда на диалог отвечают."
+
+#: templates/inbox/_label_rows.html:63 templates/inbox/label_settings.html:27
+msgid "New label"
+msgstr "Новая метка"
+
+#: templates/inbox/_rule_form.html:23
+msgid "Refund requests to the billing team"
+msgstr "Запросы на возврат средств для команды биллинга"
+
+#: templates/inbox/_rule_form.html:34
+msgid "When a message arrives"
+msgstr "Когда приходит сообщение"
+
+#: templates/inbox/_rule_form.html:36
+msgid ""
+"A rule needs at least one condition. Every condition it carries has to\n"
+"        match; a condition it leaves empty is not a filter."
+msgstr ""
+"Правилу нужно хотя бы одно условие. Каждое условие, которое оно содержит, "
+"должно совпасть; условие, которое оставлено пустым, фильтром не является."
+
+#: templates/inbox/_rule_form.html:40
+msgid "On these channels"
+msgstr "На этих каналах"
+
+#: templates/inbox/_rule_form.html:48
+msgid "On these connections"
+msgstr "На этих подключениях"
+
+#: templates/inbox/_rule_form.html:59
+msgid "Containing any of these words"
+msgstr "Содержащие любое из этих слов"
+
+#: templates/inbox/_rule_form.html:67
+msgid "contains"
+msgstr "содержит"
+
+#: templates/inbox/_rule_form.html:68
+msgid "is exactly"
+msgstr "точно совпадает"
+
+#: templates/inbox/_rule_form.html:69
+msgid "as a whole word"
+msgstr "как целое слово"
+
+#: templates/inbox/_rule_form.html:72 templates/inbox/_rule_form.html:84
+msgid "Keyword"
+msgstr "Ключевое слово"
+
+#: templates/inbox/_rule_form.html:75 templates/inbox/_rule_form.html:87
+msgid "Match mode"
+msgstr "Режим совпадения"
+
+#: templates/inbox/_rule_form.html:85
+msgid "refund"
+msgstr "возврат"
+
+#: templates/inbox/_rule_form.html:97
+msgid "And the contact matches"
+msgstr "И контакт соответствует"
+
+#: templates/inbox/_rule_form.html:109
+msgid "Then"
+msgstr "Тогда"
+
+#: templates/inbox/_rule_form.html:110
+msgid "Add these labels"
+msgstr "Добавить эти метки"
+
+#: templates/inbox/_rule_form.html:127
+msgid "Assign to"
+msgstr "Назначить"
+
+#: templates/inbox/_rule_form.html:129
+msgid "Nobody"
+msgstr "Никто"
+
+#: templates/inbox/_rule_form.html:137
+msgid ""
+"Only when nobody has the conversation already. A rule never takes a thread "
+"off a colleague."
+msgstr ""
+"Только если диалог ещё никому не назначен. Правило никогда не забирает "
+"диалог у коллеги."
+
+#: templates/inbox/_rule_form.html:144
+msgid ""
+"An automated reply reopens a conversation, so “mark done” means done\n"
+"        unless a flow answers it."
+msgstr ""
+"Автоматический ответ снова открывает диалог, поэтому «отметить как "
+"выполненное» означает выполнено, если только сценарий не ответит на него."
+
+#: templates/inbox/_rule_form.html:149
+msgid "Save rule"
+msgstr "Сохранить правило"
+
+#: templates/inbox/_rule_form.html:154
+msgid "Test against recent messages"
+msgstr "Проверить на недавних сообщениях"
+
+#: templates/inbox/_rule_rows.html:42
+msgid "No conditions"
+msgstr "Нет условий"
+
+#: templates/inbox/_rule_rows.html:46
+msgid "No actions"
+msgstr "Нет действий"
+
+#: templates/inbox/_rule_rows.html:57
+#, python-format
+msgid "Move %(name)s earlier"
+msgstr "Переместить %(name)s раньше"
+
+#: templates/inbox/_rule_rows.html:58
+#, python-format
+msgid "Move %(name)s later"
+msgstr "Переместить %(name)s позже"
+
+#: templates/inbox/_rule_rows.html:67
+msgid "Disable this rule"
+msgstr "Отключить это правило"
+
+#: templates/inbox/_rule_rows.html:67
+msgid "Enable this rule"
+msgstr "Включить это правило"
+
+#: templates/inbox/_rule_rows.html:69
+#, python-format
+msgid ""
+"Delete “%(name)s”? Conversations it has already labelled keep their labels."
+msgstr ""
+"Удалить «%(name)s»? Диалоги, которые оно уже пометило, сохранят свои метки."
+
+#: templates/inbox/_rule_rows.html:79
+msgid "No rules yet"
+msgstr "Пока нет правил"
+
+#: templates/inbox/_rule_rows.html:81
+msgid ""
+"A rule reads an inbound message and files, assigns or closes the conversation it belongs to,\n"
+"      before any flow replies."
+msgstr ""
+"Правило читает входящее сообщение и файлирует, назначает или закрывает "
+"диалог, которому оно принадлежит, прежде чем ответит какой-либо сценарий."
+
+#: templates/inbox/_rule_rows.html:84 templates/inbox/rule_settings.html:36
+msgid "New rule"
+msgstr "Новое правило"
+
+#: templates/inbox/_rule_test.html:14
+msgid "No inbound messages yet, so there is nothing to test against."
+msgstr "Пока нет входящих сообщений, поэтому проверять не на чем."
+
+#: templates/inbox/_rule_test.html:17
+#, python-format
+msgid ""
+"Matched %(matched)s of the last %(sample)s inbound message.\n"
+"      This scores today's contact details against older messages, so it is a\n"
+"      preview rather than a replay of what would have happened at the time."
+msgid_plural ""
+"Matched %(matched)s of the last %(sample)s inbound messages.\n"
+"      This scores today's contact details against older messages, so it is a\n"
+"      preview rather than a replay of what would have happened at the time."
+msgstr[0] ""
+"Совпало %(matched)s из последних %(sample)s входящего сообщения. Это "
+"сопоставляет сегодняшние данные контакта со старыми сообщениями, поэтому это"
+" предпросмотр, а не воспроизведение того, что произошло бы в тот момент."
+msgstr[1] ""
+"Совпало %(matched)s из последних %(sample)s входящих сообщений. Это "
+"сопоставляет сегодняшние данные контакта со старыми сообщениями, поэтому это"
+" предпросмотр, а не воспроизведение того, что произошло бы в тот момент."
+msgstr[2] ""
+"Совпало %(matched)s из последних %(sample)s входящих сообщений. Это "
+"сопоставляет сегодняшние данные контакта со старыми сообщениями, поэтому это"
+" предпросмотр, а не воспроизведение того, что произошло бы в тот момент."
+msgstr[3] ""
+"Совпало %(matched)s из последних %(sample)s входящих сообщений. Это "
+"сопоставляет сегодняшние данные контакта со старыми сообщениями, поэтому это"
+" предпросмотр, а не воспроизведение того, что произошло бы в тот момент."
+
+#: templates/inbox/_sidebar.html:31
+#, python-format
+msgid "Opted out %(date)s"
+msgstr "Отказался %(date)s"
+
+#: templates/inbox/_sidebar.html:33
+#, python-format
+msgid "Opted in via %(source)s"
+msgstr "Согласился через %(source)s"
+
+#: templates/inbox/_sidebar.html:33
+msgid "Opted in"
+msgstr "Согласился"
+
+#: templates/inbox/_sidebar.html:35
+msgid "No opt-in recorded"
+msgstr "Согласие не зафиксировано"
+
+#: templates/inbox/_sidebar.html:38
+#, python-format
+msgid "· window closes %(time)s"
+msgstr "· окно закрывается %(time)s"
+
+#: templates/inbox/_sidebar.html:40
+msgid "not yet linked to a connection"
+msgstr "ещё не привязан к подключению"
+
+#: templates/inbox/_sidebar.html:44
+msgid "No channel addresses recorded."
+msgstr "Адреса каналов не зафиксированы."
+
+#: templates/inbox/_sidebar.html:47
+msgid "Automation"
+msgstr "Автоматизация"
+
+#: templates/inbox/_sidebar.html:56
+msgid "Stop automation"
+msgstr "Остановить автоматизацию"
+
+#: templates/inbox/_sidebar.html:60
+msgid "Nothing running for this contact."
+msgstr "Для этого контакта ничего не запущено."
+
+#: templates/inbox/_sidebar.html:66
+msgid "Resume automation"
+msgstr "Возобновить автоматизацию"
+
+#: templates/inbox/_sidebar.html:66
+msgid "Pause automation"
+msgstr "Приостановить автоматизацию"
+
+#: templates/inbox/_sidebar.html:78
+msgid "Remove tag"
+msgstr "Удалить тег"
+
+#: templates/inbox/_sidebar.html:84
+msgid "None yet."
+msgstr "Пока нет."
+
+#: templates/inbox/_sidebar.html:100
+msgid "Add a tag"
+msgstr "Добавить тег"
+
+#: templates/inbox/_sidebar.html:102
+msgid "Add a tag…"
+msgstr "Добавить тег…"
+
+#: templates/inbox/_thread_body.html:47
+#, python-format
+msgid ""
+"Automation is paused until %(time)s. Flows will not reply to this contact."
+msgstr ""
+"Автоматизация приостановлена до %(time)s. Сценарии не будут отвечать этому "
+"контакту."
+
+#: templates/inbox/_thread_body.html:52
+msgid "Resume"
+msgstr "Возобновить"
+
+#: templates/inbox/_thread_body.html:75
+msgid "Load earlier messages"
+msgstr "Загрузить более ранние сообщения"
+
+#: templates/inbox/_thread_body.html:77
+#, python-format
+msgid "Showing the most recent %(limit)s message."
+msgid_plural "Showing the most recent %(limit)s messages."
+msgstr[0] "Показаны последние %(limit)s сообщение."
+msgstr[1] "Показаны последние %(limit)s сообщения."
+msgstr[2] "Показаны последние %(limit)s сообщений."
+msgstr[3] "Показаны последние %(limit)s сообщений."
+
+#: templates/inbox/_thread_body.html:137
+msgid "Internal note: never sent"
+msgstr "Внутренняя заметка: никогда не отправляется"
+
+#: templates/inbox/_thread_body.html:138
+#, python-format
+msgid "Pressed: %(id)s"
+msgstr "Нажато: %(id)s"
+
+#: templates/inbox/_thread_body.html:139
+#, python-format
+msgid "Ref: %(ref)s"
+msgstr "Ссылка: %(ref)s"
+
+#: templates/inbox/_thread_body.html:150
+msgid "Delivered"
+msgstr "Доставлено"
+
+#: templates/inbox/_thread_body.html:153
+msgid "Queued"
+msgstr "В очереди"
+
+#: templates/inbox/_thread_body.html:172
+msgid "Try again"
+msgstr "Попробовать снова"
+
+#: templates/inbox/_thread_body.html:179
+msgid "No messages yet."
+msgstr "Пока нет сообщений."
+
+#: templates/inbox/_thread_header.html:23
+msgid "Back to conversations"
+msgstr "Назад к диалогам"
+
+#: templates/inbox/_thread_header.html:41
+msgid "Reopen"
+msgstr "Открыть снова"
+
+#: templates/inbox/_thread_header.html:52
+msgid "Assignee"
+msgstr "Исполнитель"
+
+#: templates/inbox/_thread_header.html:61
+msgid "Read only"
+msgstr "Только для чтения"
+
+#: templates/inbox/_thread_header.html:78
+#, python-format
+msgid "Remove label %(name)s"
+msgstr "Удалить метку %(name)s"
+
+#: templates/inbox/_thread_header.html:92
+msgid "Add a label"
+msgstr "Добавить метку"
+
+#: templates/inbox/_thread_header.html:94
+msgid "Add a label…"
+msgstr "Добавить метку…"
+
+#: templates/inbox/label_settings.html:21
+msgid ""
+"Labels file a conversation. They are the inbox's own filing system, and they are not\n"
+"                contact tags: a tag like \"VIP\" follows a person across every channel they use, while\n"
+"                a label like \"waiting on shipping\" is true of one thread and stops being true when\n"
+"                it is answered. Inbox rules can add labels automatically."
+msgstr ""
+"Метки файлируют диалог. Это собственная система картотеки почтового ящика, и"
+" это не теги контактов: тег вроде «VIP» следует за человеком через все "
+"каналы, которые он использует, а метка вроде «ожидает доставки» верна для "
+"одного диалога и перестаёт быть верной, когда на него отвечают. Правила "
+"почтового ящика могут добавлять метки автоматически."
+
+#: templates/inbox/label_settings.html:30
+msgid "Waiting on shipping"
+msgstr "Ожидает доставки"
+
+#: templates/inbox/label_settings.html:33
+msgid "What is the label called?"
+msgstr "Как называется метка?"
+
+#: templates/inbox/label_settings.html:40
+msgid "Add it"
+msgstr "Добавить"
+
+#: templates/inbox/list.html:31
+msgid "Every conversation across your connected channels."
+msgstr "Все диалоги во всех подключённых каналах."
+
+#: templates/inbox/list.html:101
+msgid "All channels"
+msgstr "Все каналы"
+
+#: templates/inbox/list.html:102
+msgid "Any label"
+msgstr "Любая метка"
+
+#: templates/inbox/list.html:133
+msgid "selected"
+msgstr "выбрано"
+
+#: templates/inbox/list.html:135
+msgid "Label"
+msgstr "Метка"
+
+#: templates/inbox/list.html:137
+msgid "Choose a label…"
+msgstr "Выберите метку…"
+
+#: templates/inbox/list.html:140
+msgid "Add"
+msgstr "Добавить"
+
+#: templates/inbox/list.html:141
+msgid "Remove"
+msgstr "Удалить"
+
+#: templates/inbox/list.html:142 templates/workspaces/settings.html:73
+#: templates/workspaces/settings.html:83
+msgid "Clear"
+msgstr "Очистить"
+
+#: templates/inbox/list.html:167
+msgid "Pick a conversation to read it."
+msgstr "Выберите диалог, чтобы прочитать его."
+
+#: templates/inbox/list.html:175
+msgid "The media library could not be reached."
+msgstr "Не удалось связаться с медиатекой."
+
+#: templates/inbox/list.html:176
+msgid "That is as many attachments as one message can carry."
+msgstr ""
+"Это максимальное количество вложений, которое может нести одно сообщение."
+
+#: templates/inbox/rule_settings.html:31
+msgid ""
+"A rule reads every message that arrives and files, assigns or closes the conversation it\n"
+"        belongs to. It runs before any flow replies, and it keeps running even where somebody has\n"
+"        paused automation on a thread."
+msgstr ""
+"Правило читает каждое приходящее сообщение и файлирует, назначает или "
+"закрывает диалог, которому оно принадлежит. Оно срабатывает до того, как "
+"ответит какой-либо сценарий, и продолжает работать, даже если кто-то "
+"приостановил автоматизацию на диалоге."
+
+#: templates/inbox/rule_settings.html:40
+msgid ""
+"Triggers stop at the first match. Rules do not: <strong>every</strong> rule that matches\n"
+"    applies, in the order below."
+msgstr ""
+"Триггеры останавливаются на первом совпадении. Правила — нет: "
+"<strong>каждое</strong> совпавшее правило применяется, в указанном ниже "
+"порядке."
 
 #: templates/members/_accept_invite_body.html:2
 #, python-format
@@ -3833,10 +4933,6 @@ msgstr "Основной"
 #: templates/workspaces/settings.html:71
 msgid "Pick the primary colour"
 msgstr "Выбрать основной цвет"
-
-#: templates/workspaces/settings.html:73 templates/workspaces/settings.html:83
-msgid "Clear"
-msgstr "Очистить"
 
 #: templates/workspaces/settings.html:75
 msgid "Leave it blank to use the BrightBean orange."

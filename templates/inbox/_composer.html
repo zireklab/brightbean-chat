@@ -8,7 +8,7 @@ keeping that decision in the URL rather than in a request flag means the note
 path is a different endpoint with its own test rather than a boolean somebody
 could flip by hand.
 {% endcomment %}
-{% load common_extras %}
+{% load common_extras i18n %}
 {% if can_reply %}
   <form class="ib-composer"
         x-data="inboxComposer({
@@ -29,7 +29,7 @@ could flip by hand.
       refetches this partial, which mints a new one.
     {% endcomment %}
     <input type="hidden" name="token" value="{{ compose_token }}">
-    <label class="sr-only" for="reply-{{ conversation.id }}">Reply</label>
+    <label class="sr-only" for="reply-{{ conversation.id }}">{% translate "Reply" %}</label>
     {% comment %}
       No `required`. It was right when text was the only thing a message could
       carry; with the attachment button beside it a picture on its own is a
@@ -37,11 +37,12 @@ could flip by hand.
       The server is the authority either way — _outbound_body raises
       _ComposeError for a message with no blocks at all, and the toast says so.
     {% endcomment %}
+    {% translate "Write a reply…" as reply_placeholder %}
     <textarea id="reply-{{ conversation.id }}" name="body" rows="2"
               maxlength="{{ max_chars }}"
               data-shortcut="reply"
               class="form-input-styled"
-              placeholder="Write a reply…"></textarea>
+              placeholder="{{ reply_placeholder }}"></textarea>
     {% comment %}
       Attachments picked from the library (#16). Ids only — the picker's contract
       says "Store `id`. Never store `url` — it is minted per request" — so the
@@ -51,13 +52,14 @@ could flip by hand.
       The button is offered only where the platform can carry media, read from
       apps.channels.capabilities in the view. No {% templatetag openblock %} if platform == … {% templatetag closeblock %} here, ever.
     {% endcomment %}
+    {% translate "Remove attachment" as remove_attachment_label %}
     <div class="ib-attachments" x-show="items.length" x-cloak>
       <template x-for="item in items" :key="item.id">
         <span class="ib-chip">
           <span x-text="item.name"></span>
           <input type="hidden" name="media" :value="item.id">
           <button type="button" class="btn-icon-hover" @click="drop(item.id)"
-                  :aria-label="'Remove attachment ' + item.name">×</button>
+                  :aria-label="'{{ remove_attachment_label|escapejs }} ' + item.name">×</button>
         </span>
       </template>
     </div>
@@ -72,14 +74,15 @@ could flip by hand.
       unreachable by filtering what already arrived.
     {% endcomment %}
     <div class="ib-picker" x-show="picker.open" x-cloak @keydown.escape.window="closePicker()">
+      {% translate "Search the media library…" as media_search_placeholder %}
       <div class="ib-picker-head">
-        <label class="sr-only" :for="'media-search-' + conversationId">Search the library</label>
+        <label class="sr-only" :for="'media-search-' + conversationId">{% translate "Search the library" %}</label>
         <input type="search" :id="'media-search-' + conversationId" class="form-input-styled"
-               placeholder="Search the media library…"
+               placeholder="{{ media_search_placeholder }}"
                x-model="picker.term" @input.debounce.300ms="loadPicker()">
-        <button type="button" class="btn-icon-hover" @click="closePicker()" aria-label="Close the picker">×</button>
+        <button type="button" class="btn-icon-hover" @click="closePicker()" aria-label="{% translate 'Close the picker' %}">×</button>
       </div>
-      <p class="muted text-xs" x-show="picker.loading">Loading…</p>
+      <p class="muted text-xs" x-show="picker.loading">{% translate "Loading…" %}</p>
       <p class="alert-error text-xs" x-show="picker.error" x-text="picker.error"></p>
       <ul class="ib-picker-list" x-show="!picker.loading && !picker.error">
         <template x-for="asset in picker.results" :key="asset.id">
@@ -95,11 +98,11 @@ could flip by hand.
         </template>
       </ul>
       <p class="muted text-xs" x-show="!picker.loading && !picker.error && !picker.results.length">
-        Nothing in the library this channel can carry.
+        {% translate "Nothing in the library this channel can carry." %}
       </p>
     </div>
     <div class="flex items-center gap-2 mt-2">
-      <button type="submit" class="btn-brand btn-inline">Send</button>
+      <button type="submit" class="btn-brand btn-inline">{% translate "Send" %}</button>
       {% comment %}
         hx-post on the button overrides the form's, so "Add note" submits the
         same fields to the note endpoint. Same token: whichever one the agent
@@ -108,11 +111,11 @@ could flip by hand.
       <button type="submit" class="btn-outline btn-inline"
               hx-post="{% url 'inbox:note' workspace_id=request.workspace.id conversation_id=conversation.id %}"
               hx-include="closest form"
-              hx-swap="none">Add note</button>
+              hx-swap="none">{% translate "Add note" %}</button>
       {% if media_kinds %}
         <button type="button" class="btn-outline btn-inline"
                 @click="togglePicker()"
-                :aria-expanded="picker.open ? 'true' : 'false'">Attach</button>
+                :aria-expanded="picker.open ? 'true' : 'false'">{% translate "Attach" %}</button>
       {% endif %}
       {% comment %}
         Compose now, send later (SPEC §14). The same fields, a different endpoint
@@ -121,18 +124,18 @@ could flip by hand.
       {% endcomment %}
       <button type="button" class="btn-outline btn-inline" @click="scheduling = !scheduling"
               :aria-expanded="scheduling ? 'true' : 'false'"
-              aria-controls="inbox-schedule-{{ conversation.id }}">Send later</button>
-      <span class="ml-auto text-xs" style="color: var(--text-ghost);">A reply pauses automation for {{ pause_minutes }} minutes.</span>
+              aria-controls="inbox-schedule-{{ conversation.id }}">{% translate "Send later" %}</button>
+      <span class="ml-auto text-xs" style="color: var(--text-ghost);">{% blocktranslate count minutes=pause_minutes %}A reply pauses automation for {{ minutes }} minute.{% plural %}A reply pauses automation for {{ minutes }} minutes.{% endblocktranslate %}</span>
     </div>
 
     <div id="inbox-schedule-{{ conversation.id }}" class="ib-schedule" x-show="scheduling" x-cloak>
-      <label for="send-at-{{ conversation.id }}">Send at</label>
+      <label for="send-at-{{ conversation.id }}">{% translate "Send at" %}</label>
       <input id="send-at-{{ conversation.id }}" class="form-datetime" type="datetime-local" name="send_at">
       <button type="submit" class="btn-outline btn-inline"
               hx-post="{% url 'inbox:create_scheduled_reply' workspace_id=request.workspace.id conversation_id=conversation.id %}"
               hx-include="closest form"
               hx-disabled-elt="this"
-              hx-swap="none">Schedule</button>
+              hx-swap="none">{% translate "Schedule" %}</button>
     </div>
   </form>
 
@@ -145,27 +148,28 @@ could flip by hand.
         hx-post="{% url 'inbox:create_reminder' workspace_id=request.workspace.id conversation_id=conversation.id %}"
         hx-swap="none">
     {% csrf_token %}
-    <label class="sr-only" for="remind-at-{{ conversation.id }}">Remind at</label>
+    <label class="sr-only" for="remind-at-{{ conversation.id }}">{% translate "Remind at" %}</label>
     <input id="remind-at-{{ conversation.id }}" class="form-datetime" type="datetime-local" name="remind_at">
-    <label class="sr-only" for="remind-who-{{ conversation.id }}">Remind</label>
+    <label class="sr-only" for="remind-who-{{ conversation.id }}">{% translate "Remind" %}</label>
     <select id="remind-who-{{ conversation.id }}" class="bb-select" name="recipient">
-      <option value="">Me</option>
+      <option value="">{% translate "Me" %}</option>
       {% for membership in members %}
         <option value="{{ membership.user_id }}">{{ membership.user.display_name }}</option>
       {% endfor %}
     </select>
-    <label class="sr-only" for="remind-note-{{ conversation.id }}">Note</label>
-    <input id="remind-note-{{ conversation.id }}" type="text" name="note" maxlength="500" placeholder="Chase the refund">
+    <label class="sr-only" for="remind-note-{{ conversation.id }}">{% translate "Note" %}</label>
+    {% translate "Chase the refund" as remind_note_placeholder %}
+    <input id="remind-note-{{ conversation.id }}" type="text" name="note" maxlength="500" placeholder="{{ remind_note_placeholder }}">
     {% comment %}
       hx-disabled-elt is the whole double-submit guard here, unlike the Schedule
       button beside it: this endpoint does not refetch the compose box, so its
       token would not rotate and a token guard would read a deliberate second
       reminder as a duplicate.
     {% endcomment %}
-    <button type="submit" class="btn-outline btn-inline" hx-disabled-elt="this">Remind</button>
+    <button type="submit" class="btn-outline btn-inline" hx-disabled-elt="this">{% translate "Remind" %}</button>
   </form>
 {% else %}
   <div class="ib-composer text-xs" style="color: var(--text-tertiary);">
-    You can read this inbox but not reply to it.
+    {% translate "You can read this inbox but not reply to it." %}
   </div>
 {% endif %}
