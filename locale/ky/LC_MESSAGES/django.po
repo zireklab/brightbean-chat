@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 19:03+0600\n"
+"POT-Creation-Date: 2026-09-20 19:55+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ky\n"
@@ -18,7 +18,6 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: apps/analytics/views.py:210
-#| msgid "Organization settings saved."
 msgid "Email tracking settings saved."
 msgstr "Email көзөмөл жөндөөлөрү сакталды."
 
@@ -289,7 +288,7 @@ msgid "Sending"
 msgstr "Жөнөтүлүүдө"
 
 #: apps/broadcasts/models.py:72 apps/broadcasts/models.py:92
-#: apps/inbox/views.py:910 templates/analytics/_counter_cards.html:21
+#: apps/inbox/views.py:912 templates/analytics/_counter_cards.html:21
 #: templates/analytics/flow_detail.html:58
 #: templates/analytics/flow_detail.html:93
 #: templates/analytics/overview.html:41 templates/analytics/overview.html:80
@@ -513,7 +512,6 @@ msgid "Minutes"
 msgstr "Мүнөт"
 
 #: apps/campaigns/models.py:78
-#| msgid "Colours"
 msgid "Hours"
 msgstr "Саат"
 
@@ -545,7 +543,6 @@ msgid "That %(name)s belongs to a different workspace than the step."
 msgstr "Бул %(name)s кадамдыкынан башка жумуш мейкиндигине таандык."
 
 #: apps/campaigns/models.py:187
-#| msgid "Deleted"
 msgid "Completed"
 msgstr "Аяктады"
 
@@ -554,12 +551,10 @@ msgid "Unsubscribed"
 msgstr "Жазылуудан чыгарылды"
 
 #: apps/campaigns/services.py:133
-#| msgid "That is not a field type."
 msgid "That is not a sequence status."
 msgstr "Бул цепочканын статусу эмес."
 
 #: apps/campaigns/services.py:135
-#| msgid "Add at least one rule, or pick a saved segment."
 msgid "Add at least one step before activating this sequence."
 msgstr "Бул цепочканы иштетүүдөн мурун жок дегенде бир кадам кошуңуз."
 
@@ -569,7 +564,6 @@ msgstr "Бул сценарий цепочкадыкынан башка жуму
 
 #: apps/campaigns/services.py:190
 #, python-format
-#| msgid "A rule may have at most %(max)s actions."
 msgid "A sequence may have at most %(max)s steps."
 msgstr "Цепочка эң көп дегенде %(max)s кадамды камтый алат."
 
@@ -606,23 +600,19 @@ msgid "The delay must be a whole number."
 msgstr "Кечигүү бүтүн сан болушу керек."
 
 #: apps/campaigns/services.py:490
-#| msgid "A price cannot be negative."
 msgid "The delay cannot be negative."
 msgstr "Кечигүү терс болушу мүмкүн эмес."
 
 #: apps/campaigns/services.py:493
 #, python-format
-#| msgid "That URL is too long (500 characters maximum)."
 msgid "That delay is too long (at most %(max)s %(unit)s)."
 msgstr "Бул кечигүү өтө узун (эң көп %(max)s %(unit)s)."
 
 #: apps/campaigns/views.py:80
-#| msgid "Monthly"
 msgid "Mon"
 msgstr "Дш"
 
 #: apps/campaigns/views.py:81
-#| msgid "True"
 msgid "Tue"
 msgstr "Ше"
 
@@ -639,7 +629,6 @@ msgid "Fri"
 msgstr "Жм"
 
 #: apps/campaigns/views.py:85
-#| msgid "Start"
 msgid "Sat"
 msgstr "Иш"
 
@@ -648,48 +637,39 @@ msgid "Sun"
 msgstr "Жк"
 
 #: apps/campaigns/views.py:140
-#| msgid "Could not update the sequence"
 msgid "Could not create the sequence"
 msgstr "Цепочка түзүлгөн жок"
 
 #: apps/campaigns/views.py:143
-#| msgid "Sequence"
 msgid "Sequence created"
 msgstr "Цепочка түзүлдү"
 
 #: apps/campaigns/views.py:144
 #, python-format
-#| msgid "%(name)s was created as a draft."
 msgid "%(name)s is ready for its first step."
 msgstr "%(name)s биринчи кадамга даяр."
 
 #: apps/campaigns/views.py:157
-#| msgid "Could not update the sequence"
 msgid "Could not rename the sequence"
 msgstr "Цепочканын аты өзгөртүлгөн жок"
 
 #: apps/campaigns/views.py:158
-#| msgid "Sequence"
 msgid "Sequence renamed"
 msgstr "Цепочканын аты өзгөртүлдү"
 
 #: apps/campaigns/views.py:169
-#| msgid "Could not create the tag"
 msgid "Could not change the status"
 msgstr "Статус өзгөртүлгөн жок"
 
 #: apps/campaigns/views.py:171
-#| msgid "Sequence"
 msgid "Sequence activated"
 msgstr "Цепочка активдештирилди"
 
 #: apps/campaigns/views.py:172
-#| msgid "Sequences"
 msgid "Sequence paused"
 msgstr "Цепочка тындырылды"
 
 #: apps/campaigns/views.py:173
-#| msgid "Sequence"
 msgid "Sequence archived"
 msgstr "Цепочка архивделди"
 
@@ -706,48 +686,40 @@ msgstr ""
 "өзгөрбөйт."
 
 #: apps/campaigns/views.py:192
-#| msgid "Segment deleted"
 msgid "Sequence deleted"
 msgstr "Цепочка өчүрүлдү"
 
 #: apps/campaigns/views.py:193
 #, python-format
-#| msgid "%(name)s and everything held about them are gone."
 msgid "%(name)s and everyone's progress through it."
 msgstr "%(name)s жана ар бир адамдын ал боюнча жетишкендиги."
 
 #: apps/campaigns/views.py:293
-#| msgid "Could not add the tag"
 msgid "Could not add the step"
 msgstr "Кадам кошулган жок"
 
 #: apps/campaigns/views.py:294
-#| msgid "Note added"
 msgid "Step added"
 msgstr "Кадам кошулду"
 
 #: apps/campaigns/views.py:312
-#| msgid "Could not save the segment"
 msgid "Could not save the step"
 msgstr "Кадам сакталган жок"
 
 #: apps/campaigns/views.py:313
-#| msgid "Not saved"
 msgid "Step saved"
 msgstr "Кадам сакталды"
 
 #: apps/campaigns/views.py:325
-#| msgid "Could not save the segment"
 msgid "Could not move the step"
 msgstr "Кадам жылдырылган жок"
 
 #: apps/campaigns/views.py:326 apps/flows/views_triggers.py:299
-#: apps/inbox/views.py:1767
+#: apps/inbox/views.py:1769
 msgid "Order updated"
 msgstr "Тартип жаңыртылды"
 
 #: apps/campaigns/views.py:337
-#| msgid "Label removed"
 msgid "Step removed"
 msgstr "Кадам өчүрүлдү"
 
@@ -756,29 +728,23 @@ msgid "Anyone waiting on it moves to whatever took its place."
 msgstr "Аны күткөндөрдүн баары анын ордун баскан нерсеге өтөт."
 
 #: apps/campaigns/views.py:430
-#| msgid "Could not save the contact"
 msgid "Could not subscribe that contact"
 msgstr "Бул контакт жаздырылган жок"
 
 #: apps/campaigns/views.py:433
-#| msgid "Unsubscribed"
 msgid "Contact subscribed"
 msgstr "Контакт жаздырылды"
 
 #: apps/campaigns/views.py:434
 #, python-format
-#| msgid "Everyone starts again at step 1."
 msgid "%(name)s starts at step 1."
 msgstr "%(name)s 1-кадамдан баштайт."
 
 #: apps/campaigns/views.py:450
-#| msgid "Contact unsubscribed from a sequence"
 msgid "Contact unsubscribed"
 msgstr "Контакт жазылуудан чыгарылды"
 
 #: apps/campaigns/views.py:451
-#| msgid ""
-#| "Unsubscribing stops future steps; anything already running finishes."
 msgid "Future steps are cancelled. Anything already running finishes."
 msgstr ""
 "Келечектеги кадамдар жокко чыгарылды. Мурунтан башталгандын баары аяктайт."
@@ -1522,8 +1488,9 @@ msgstr "Сапты өткөрүп жиберүү"
 msgid "Running"
 msgstr "Иштөөдө"
 
-#: apps/contacts/models.py:570 templates/api/key_created.html:26
-#: templates/api/webhook_secret.html:22 templates/channels/secret.html:57
+#: apps/contacts/models.py:570 apps/inbox/views.py:522
+#: templates/api/key_created.html:26 templates/api/webhook_secret.html:22
+#: templates/channels/secret.html:57
 #: templates/inbox/_conversation_rows.html:71
 msgid "Done"
 msgstr "Бүттү"
@@ -1614,7 +1581,7 @@ msgstr "Адегенде тег тандаңыз"
 msgid "Already tagged"
 msgstr "Мурунтан белгиленген"
 
-#: apps/contacts/views.py:664 apps/inbox/views.py:1133
+#: apps/contacts/views.py:664 apps/inbox/views.py:1135
 msgid "Tag added"
 msgstr "Тег кошулду"
 
@@ -1622,7 +1589,7 @@ msgstr "Тег кошулду"
 msgid "That tag was not on this contact"
 msgstr "Бул тег бул байланышта болгон эмес"
 
-#: apps/contacts/views.py:678 apps/inbox/views.py:1131
+#: apps/contacts/views.py:678 apps/inbox/views.py:1133
 msgid "Tag removed"
 msgstr "Тег алынды"
 
@@ -1650,7 +1617,7 @@ msgstr "Сценарий башталды"
 msgid "Nothing was running"
 msgstr "Эч нерсе иштеген жок"
 
-#: apps/contacts/views.py:791 apps/inbox/views.py:1106
+#: apps/contacts/views.py:791 apps/inbox/views.py:1108
 msgid "Automation stopped"
 msgstr "Автоматташтыруу токтотулду"
 
@@ -2480,7 +2447,8 @@ msgstr "Конфигурациянын деңгээли %(max)s чегинен �
 msgid "Unfiled"
 msgstr "Папкасыз"
 
-#: apps/flows/views.py:200 templates/flows/template_gallery.html:70
+#: apps/flows/views.py:200 apps/inbox/views.py:519
+#: templates/flows/template_gallery.html:70
 #: templates/media_library/library.html:107
 msgid "All"
 msgstr "Баары"
@@ -2822,7 +2790,7 @@ msgstr "Аткарылды деп белгилөө"
 msgid "(deleted)"
 msgstr "(өчүрүлдү)"
 
-#: apps/inbox/rendering.py:701 apps/inbox/views.py:846
+#: apps/inbox/rendering.py:701 apps/inbox/views.py:848
 #, python-format
 msgid "%(list)s or %(last)s"
 msgstr "%(list)s же %(last)s"
@@ -2882,7 +2850,7 @@ msgstr "Белгисиз аракет %(kind)r."
 msgid "That label no longer exists."
 msgstr "Бул метка мындан ары жок."
 
-#: apps/inbox/rules.py:300 apps/inbox/views.py:1033
+#: apps/inbox/rules.py:300 apps/inbox/views.py:1035
 msgid "That person is not a member of this workspace."
 msgstr "Бул адам бул иш мейкиндигинин мүчөсү эмес."
 
@@ -2952,230 +2920,237 @@ msgstr "Бул эскертүү жарактуу эмес."
 msgid "That reply has already been sent or cancelled."
 msgstr "Бул жооп мурунтан жөнөтүлгөн же жокко чыгарылган."
 
-#: apps/inbox/views.py:795
+#: apps/inbox/views.py:220
+#| msgid "Assigned to %(name)s"
+msgid "Assigned to me"
+msgstr "Мага дайындалган"
+
+#: apps/inbox/views.py:221 apps/inbox/views.py:520 apps/inbox/views.py:1025
+#: templates/inbox/_thread_header.html:54
+msgid "Unassigned"
+msgstr "Дайындалган жок"
+
+#: apps/inbox/views.py:521
+msgid "Mine"
+msgstr "Меники"
+
+#: apps/inbox/views.py:797
 msgid "Nothing to send"
 msgstr "Жөнөтүүчү эч нерсе жок"
 
-#: apps/inbox/views.py:810 templates/inbox/_deferred.html:54
+#: apps/inbox/views.py:812 templates/inbox/_deferred.html:54
 msgid "Not sent"
 msgstr "Жөнөтүлгөн жок"
 
-#: apps/inbox/views.py:811
+#: apps/inbox/views.py:813
 msgid "Note added"
 msgstr "Эскертүү кошулду"
 
-#: apps/inbox/views.py:811
+#: apps/inbox/views.py:813
 msgid "Reply sent"
 msgstr "Жооп жөнөтүлдү"
 
-#: apps/inbox/views.py:819
+#: apps/inbox/views.py:821
 #, python-format
 msgid "%(platform)s cannot carry %(items)s, so that was left off."
 msgstr "%(platform)s %(items)s алып жүрө албайт, ошондуктан ал калтырылды."
 
-#: apps/inbox/views.py:834
+#: apps/inbox/views.py:836
 msgid "an image"
 msgstr "сүрөт"
 
-#: apps/inbox/views.py:835
+#: apps/inbox/views.py:837
 msgid "an audio file"
 msgstr "аудио файл"
 
-#: apps/inbox/views.py:836
+#: apps/inbox/views.py:838
 msgid "a video"
 msgstr "видео"
 
-#: apps/inbox/views.py:837
+#: apps/inbox/views.py:839
 msgid "a file"
 msgstr "файл"
 
-#: apps/inbox/views.py:908
+#: apps/inbox/views.py:910
 msgid "Still not sent"
 msgstr "Дагы деле жөнөтүлгөн жок"
 
-#: apps/inbox/views.py:1023 templates/inbox/_thread_header.html:54
-msgid "Unassigned"
-msgstr "Дайындалган жок"
-
-#: apps/inbox/views.py:1032
+#: apps/inbox/views.py:1034
 msgid "Cannot assign"
 msgstr "Дайындоо мүмкүн эмес"
 
-#: apps/inbox/views.py:1038
+#: apps/inbox/views.py:1040
 #, python-format
 msgid "Assigned to %(name)s"
 msgstr "%(name)sга дайындалды"
 
-#: apps/inbox/views.py:1052
+#: apps/inbox/views.py:1054
 msgid "Marked done"
 msgstr "Аткарылды деп белгиленди"
 
-#: apps/inbox/views.py:1062
+#: apps/inbox/views.py:1064
 msgid "Reopened"
 msgstr "Кайра ачылды"
 
-#: apps/inbox/views.py:1064
+#: apps/inbox/views.py:1066
 msgid "Unknown state"
 msgstr "Белгисиз абал"
 
-#: apps/inbox/views.py:1064
+#: apps/inbox/views.py:1066
 msgid "A conversation is either open or done."
 msgstr "Маек же ачык, же аяктаган болот."
 
-#: apps/inbox/views.py:1081
+#: apps/inbox/views.py:1083
 msgid "Automation resumed"
 msgstr "Автоматташтыруу улантылды"
 
-#: apps/inbox/views.py:1083
+#: apps/inbox/views.py:1085
 msgid "Automation paused"
 msgstr "Автоматташтыруу тыныгууда"
 
-#: apps/inbox/views.py:1105
+#: apps/inbox/views.py:1107
 msgid "Nothing running"
 msgstr "Эч нерсе иштебейт"
 
-#: apps/inbox/views.py:1127
+#: apps/inbox/views.py:1129
 msgid "No tag selected"
 msgstr "Тег тандалган жок"
 
-#: apps/inbox/views.py:1157
+#: apps/inbox/views.py:1159
 msgid "Not labelled"
 msgstr "Метка коюлган жок"
 
-#: apps/inbox/views.py:1158
+#: apps/inbox/views.py:1160
 msgid "Labelled"
 msgstr "Меткаланды"
 
-#: apps/inbox/views.py:1169
+#: apps/inbox/views.py:1171
 msgid "Label removed"
 msgstr "Метка алынды"
 
-#: apps/inbox/views.py:1205
+#: apps/inbox/views.py:1207
 #, python-format
 msgid "Label removed from %(count)s conversation"
 msgid_plural "Label removed from %(count)s conversations"
 msgstr[0] "Метка %(count)s маектен алынды"
 
-#: apps/inbox/views.py:1207
+#: apps/inbox/views.py:1209
 #, python-format
 msgid "Label added to %(count)s conversation"
 msgid_plural "Label added to %(count)s conversations"
 msgstr[0] "Метка %(count)s маекке кошулду"
 
-#: apps/inbox/views.py:1229 apps/inbox/views.py:1249
+#: apps/inbox/views.py:1231 apps/inbox/views.py:1251
 msgid "No reminder set"
 msgstr "Эскертүү коюлган жок"
 
-#: apps/inbox/views.py:1229 apps/inbox/views.py:1280
+#: apps/inbox/views.py:1231 apps/inbox/views.py:1282
 msgid "Pick a date and time."
 msgstr "Күндү жана убакытты тандаңыз."
 
-#: apps/inbox/views.py:1250
+#: apps/inbox/views.py:1252
 msgid "Reminder set"
 msgstr "Эскертүү коюлду"
 
-#: apps/inbox/views.py:1262 apps/inbox/views.py:1331
+#: apps/inbox/views.py:1264 apps/inbox/views.py:1333
 msgid "Already gone"
 msgstr "Мурунтан жок болуп кетти"
 
-#: apps/inbox/views.py:1263
+#: apps/inbox/views.py:1265
 msgid "Reminder cancelled"
 msgstr "Эскертүү жокко чыгарылды"
 
-#: apps/inbox/views.py:1280 apps/inbox/views.py:1284 apps/inbox/views.py:1294
+#: apps/inbox/views.py:1282 apps/inbox/views.py:1286 apps/inbox/views.py:1296
 msgid "Not scheduled"
 msgstr "Пландалган жок"
 
-#: apps/inbox/views.py:1295
+#: apps/inbox/views.py:1297
 msgid "Reply scheduled"
 msgstr "Жооп пландалды"
 
-#: apps/inbox/views.py:1312 apps/inbox/views.py:1316
+#: apps/inbox/views.py:1314 apps/inbox/views.py:1318
 msgid "Not changed"
 msgstr "Өзгөртүлгөн жок"
 
-#: apps/inbox/views.py:1317
+#: apps/inbox/views.py:1319
 msgid "Scheduled reply updated"
 msgstr "Пландалган жооп жаңыртылды"
 
-#: apps/inbox/views.py:1332
+#: apps/inbox/views.py:1334
 msgid "Scheduled reply cancelled"
 msgstr "Пландалган жооп жокко чыгарылды"
 
-#: apps/inbox/views.py:1422
+#: apps/inbox/views.py:1424
 msgid "That message is too long."
 msgstr "Бул билдирүү өтө узун."
 
-#: apps/inbox/views.py:1431
+#: apps/inbox/views.py:1433
 #, python-format
 msgid "%(platform)s cannot carry that attachment."
 msgstr "%(platform)s бул тиркемени алып жүрө албайт."
 
-#: apps/inbox/views.py:1434
+#: apps/inbox/views.py:1436
 msgid "Write something first."
 msgstr "Адегенде бир нерсе жазыңыз."
 
-#: apps/inbox/views.py:1463
+#: apps/inbox/views.py:1465
 msgid "One of those attachments is no longer in the library."
 msgstr "Бул тиркемелердин бири китепканада жок болуп калды."
 
-#: apps/inbox/views.py:1545
+#: apps/inbox/views.py:1547
 msgid "Not created"
 msgstr "Түзүлгөн жок"
 
-#: apps/inbox/views.py:1546
+#: apps/inbox/views.py:1548
 msgid "Label created"
 msgstr "Метка түзүлдү"
 
-#: apps/inbox/views.py:1557 apps/inbox/views.py:1691 apps/inbox/views.py:1696
-#: apps/inbox/views.py:1717
+#: apps/inbox/views.py:1559 apps/inbox/views.py:1693 apps/inbox/views.py:1698
+#: apps/inbox/views.py:1719
 msgid "Not saved"
 msgstr "Сакталган жок"
 
-#: apps/inbox/views.py:1558
+#: apps/inbox/views.py:1560
 msgid "Label saved"
 msgstr "Метка сакталды"
 
-#: apps/inbox/views.py:1575
+#: apps/inbox/views.py:1577
 msgid "Label deleted"
 msgstr "Метка өчүрүлдү"
 
-#: apps/inbox/views.py:1691
+#: apps/inbox/views.py:1693
 msgid "A rule needs a name."
 msgstr "Эрежеге ат керек."
 
-#: apps/inbox/views.py:1719 apps/inbox/views.py:1722
+#: apps/inbox/views.py:1721 apps/inbox/views.py:1724
 msgid "Rule saved"
 msgstr "Эреже сакталды"
 
-#: apps/inbox/views.py:1736
+#: apps/inbox/views.py:1738
 msgid "Not enabled"
 msgstr "Күйгүзүлгөн жок"
 
-#: apps/inbox/views.py:1739
+#: apps/inbox/views.py:1741
 msgid "Rule enabled"
 msgstr "Эреже күйгүзүлдү"
 
-#: apps/inbox/views.py:1743
+#: apps/inbox/views.py:1745
 msgid "Rule disabled"
 msgstr "Эреже өчүрүлдү"
 
-#: apps/inbox/views.py:1752
+#: apps/inbox/views.py:1754
 msgid "Rule deleted"
 msgstr "Эреже өчүрүлдү"
 
 #: apps/media_library/mimes.py:48
-#| msgid "an image"
 msgid "Image"
 msgstr "Сүрөт"
 
 #: apps/media_library/mimes.py:49
-#| msgid "Audience"
 msgid "Audio"
 msgstr "Аудио"
 
 #: apps/media_library/mimes.py:50
-#| msgid "a video"
 msgid "Video"
 msgstr "Видео"
 
@@ -3197,7 +3172,6 @@ msgid "Markup documents are not accepted."
 msgstr "Белгилөө документтери кабыл алынбайт."
 
 #: apps/media_library/mimes.py:172
-#| msgid "That file could not be read"
 msgid "The file is empty or could not be read."
 msgstr "Файл бош же окулган жок."
 
@@ -3217,18 +3191,15 @@ msgid "Unrecognised file type. Accepted: images, audio, video and PDF."
 msgstr "Таанылбаган файл түрү. Кабыл алынат: сүрөттөр, аудио, видео жана PDF."
 
 #: apps/media_library/models.py:66
-#| msgid "A workspace with that name already exists."
 msgid "A folder with that name already exists here."
 msgstr "Мындай аталыштагы папка бул жерде мурунтан бар."
 
 #: apps/media_library/models.py:76
-#| msgid "A workspace with that name already exists."
 msgid "A folder with that name already exists."
 msgstr "Мындай аталыштагы папка мурунтан бар."
 
 #: apps/media_library/models.py:97
 #, python-format
-#| msgid "The configuration nests deeper than %(max)s levels."
 msgid "Folders cannot be nested more than %(max)s levels deep."
 msgstr "Папкалар %(max)s деңгээлден тереңирээк уялашпайт."
 
@@ -3247,18 +3218,15 @@ msgstr ""
 "%(incoming)s жүктөөдөн мурун бир нерсени өчүрүңүз."
 
 #: apps/media_library/services.py:70
-#| msgid "That message tag is not one this channel accepts."
 msgid "That file is larger than any media type this deployment accepts."
 msgstr "Бул файл бул орнотуу кабыл алган каалаган медиа түрүнөн чоңураак."
 
 #: apps/media_library/services.py:172 apps/media_library/services.py:195
-#| msgid "That form was for a different contact"
 msgid "That folder belongs to a different workspace."
 msgstr "Бул папка башка жумуш мейкиндигине таандык."
 
 #: apps/media_library/services.py:203
 #, python-format
-#| msgid "This workspace already has %(limit)s endpoints."
 msgid "This workspace already has the maximum of %(limit)s folders."
 msgstr "Бул жумуш мейкиндигинде мурунтан эле максимум %(limit)s папка бар."
 
@@ -3272,7 +3240,6 @@ msgstr ""
 "аталыштагы папка мурунтан бар. Адегенде алардын бирин атын өзгөртүңүз."
 
 #: apps/media_library/views.py:219
-#| msgid "No flows here yet"
 msgid "No files were sent."
 msgstr "Файлдар жөнөтүлгөн жок."
 
@@ -3283,28 +3250,23 @@ msgstr "Бир жүктөөгө %(max)s файлга чейин."
 
 #: apps/media_library/views.py:246
 #, python-format
-#| msgid "%(count)s updated"
 msgid "%(count)s uploaded"
 msgid_plural "%(count)s uploaded"
 msgstr[0] "%(count)s файл жүктөлдү"
 
 #: apps/media_library/views.py:248
-#| msgid "Nothing to save"
 msgid "Nothing uploaded"
 msgstr "Эч нерсе жүктөлгөн жок"
 
 #: apps/media_library/views.py:274
-#| msgid "Save"
 msgid "Saved"
 msgstr "Сакталды"
 
 #: apps/media_library/views.py:286
-#| msgid "Move down"
 msgid "Moved"
 msgstr "Жылдырылды"
 
 #: apps/media_library/views.py:286
-#| msgid "Search the library"
 msgid "Moved to the library root"
 msgstr "Китепкананын тамырына жылдырылды"
 
@@ -3316,22 +3278,18 @@ msgstr ""
 "иштебейт."
 
 #: apps/media_library/views.py:318 apps/media_library/views.py:334
-#| msgid "A flow needs a name."
 msgid "A folder needs a name."
 msgstr "Папкага ат керек."
 
 #: apps/media_library/views.py:324
-#| msgid "Field created"
 msgid "Folder created"
 msgstr "Папка түзүлдү"
 
 #: apps/media_library/views.py:339
-#| msgid "Field renamed"
 msgid "Folder renamed"
 msgstr "Папканын аты өзгөртүлдү"
 
 #: apps/media_library/views.py:368
-#| msgid "Field deleted"
 msgid "Folder deleted"
 msgstr "Папка өчүрүлдү"
 
@@ -3746,7 +3704,6 @@ msgid "404 Not Found"
 msgstr "404 Табылган жок"
 
 #: templates/404.html:5
-#| msgid "That tag does not exist"
 msgid "That page does not exist."
 msgstr "Бул барак жок."
 
@@ -3884,13 +3841,11 @@ msgid "%(rate)s%% clicks per send"
 msgstr "жөнөтүүгө %(rate)s%% клик"
 
 #: templates/analytics/_range.html:8
-#| msgid "Date and time"
 msgid "Date range"
 msgstr "Мезгил алкагы"
 
 #: templates/analytics/_range.html:12
 #, python-format
-#| msgid "%(count)s updated"
 msgid "%(count)s day"
 msgid_plural "%(count)s days"
 msgstr[0] "%(count)s күн"
@@ -3902,12 +3857,10 @@ msgid_plural "Counters for the last %(count)s days."
 msgstr[0] "Акыркы %(count)s күндүн эсептегичтери."
 
 #: templates/analytics/flow_detail.html:30
-#| msgid "All channels"
 msgid "All analytics"
 msgstr "Бардык аналитика"
 
 #: templates/analytics/flow_detail.html:31
-#| msgid "Open in inbox"
 msgid "Open in builder"
 msgstr "Редакторго ачуу"
 
@@ -3937,12 +3890,10 @@ msgid "Step"
 msgstr "Кадам"
 
 #: templates/analytics/flow_detail.html:63
-#| msgid "Clicked"
 msgid "Clicks/send"
 msgstr "Клик/жөнөтүү"
 
 #: templates/analytics/flow_detail.html:84
-#| msgid "This flow calls out to the internet"
 msgid "This flow has not sent anything in this range."
 msgstr "Бул сценарий бул мезгилде эч нерсе жөнөткөн жок."
 
@@ -3967,7 +3918,6 @@ msgid "No flow has sent anything in this range."
 msgstr "Бул мезгилде бир дагы сценарий эч нерсе жөнөткөн жок."
 
 #: templates/analytics/overview.html:70
-#| msgid "%(name)s deliverability"
 msgid "Deliverability"
 msgstr "Жеткирилиши"
 
@@ -3980,7 +3930,6 @@ msgstr ""
 "жоопторун жана API аркылуу жөнөтүүлөрдү кошо."
 
 #: templates/analytics/overview.html:78
-#| msgid "Connect"
 msgid "Connection"
 msgstr "Туташуу"
 
@@ -3989,7 +3938,6 @@ msgid "Messages"
 msgstr "Билдирүүлөр"
 
 #: templates/analytics/overview.html:83
-#| msgid "Delivered"
 msgid "Delivery rate"
 msgstr "Жеткирүү пайызы"
 
@@ -4818,7 +4766,6 @@ msgid "Any status"
 msgstr "Каалаган статус"
 
 #: templates/campaigns/_list_rows.html:8
-#| msgid "No flows here yet"
 msgid "No sequences here yet"
 msgstr "Бул жерде азырынча цепочка жок"
 
@@ -4844,15 +4791,12 @@ msgstr[0] "%(count)s кадам"
 
 #: templates/campaigns/_list_rows.html:38
 #, python-format
-#| msgid "%(count)s trigger"
-#| msgid_plural "%(count)s triggers"
 msgid "%(count)s subscriber"
 msgid_plural "%(count)s subscribers"
 msgstr[0] "%(count)s жазылуучу"
 
 #: templates/campaigns/_list_rows.html:39
 #, python-format
-#| msgid "Created %(when)s"
 msgid "updated %(when)s"
 msgstr "%(when)s жаңыртылды"
 
@@ -4879,20 +4823,15 @@ msgstr "Атын өзгөртүү"
 
 #: templates/campaigns/_list_rows.html:51
 #, python-format
-#| msgid "Delete “%(name)s”? %(count)s stored value will go with it."
-#| msgid_plural ""
-#| "Delete “%(name)s”? %(count)s stored values will go with it."
 msgid "Delete “%(name)s”? Everyone's progress through it goes with it."
 msgstr ""
 "«%(name)s»ды өчүрөсүзбү? Ар бир адамдын ал боюнча жетишкендиги да жок болот."
 
 #: templates/campaigns/_list_rows.html:68
-#| msgid "Sequence"
 msgid "Sequence name"
 msgstr "Цепочканын аты"
 
 #: templates/campaigns/_step_fields.html:14
-#| msgid "Waiting"
 msgid "Wait"
 msgstr "Күтүү"
 
@@ -4901,12 +4840,10 @@ msgid "Unit"
 msgstr "Бирдик"
 
 #: templates/campaigns/_step_fields.html:31
-#| msgid "Any status"
 msgid "then start"
 msgstr "андан кийин баштоо"
 
 #: templates/campaigns/_step_fields.html:33
-#| msgid "Choose a label…"
 msgid "Choose a flow…"
 msgstr "Сценарий тандаңыз…"
 
@@ -4923,7 +4860,6 @@ msgid "New flow"
 msgstr "Жаңы сценарий"
 
 #: templates/campaigns/_step_fields.html:46
-#| msgid "Send now"
 msgid "Send window"
 msgstr "Жөнөтүү терезеси"
 
@@ -4932,7 +4868,6 @@ msgid "Only start this step inside a window"
 msgstr "Бул кадамды терезенин ичинде гана баштоо"
 
 #: templates/campaigns/_step_fields.html:53
-#| msgid "From name"
 msgid "From"
 msgstr "Баштап"
 
@@ -4941,7 +4876,6 @@ msgid "to"
 msgstr "чейин"
 
 #: templates/campaigns/_step_fields.html:64
-#| msgid "And the contact matches"
 msgid "in the contact's own timezone"
 msgstr "контакттын өз убакыт алкагында"
 
@@ -4954,7 +4888,6 @@ msgstr ""
 "контакт жумуш мейкиндигинин убакыт алкагын колдонот."
 
 #: templates/campaigns/_steps.html:17
-#| msgid "No keys yet"
 msgid "No steps yet"
 msgstr "Азырынча кадам жок"
 
@@ -4969,25 +4902,20 @@ msgid "Wait %(delay)s"
 msgstr "%(delay)s күтүү"
 
 #: templates/campaigns/_steps.html:33
-#| msgid "And the contact matches"
 msgid "in the contact's timezone"
 msgstr "контакттын убакыт алкагында"
 
 #: templates/campaigns/_steps.html:34
 #, python-format
-#| msgid "%(count)s trigger"
-#| msgid_plural "%(count)s triggers"
 msgid "%(count)s waiting"
 msgid_plural "%(count)s waiting"
 msgstr[0] "%(count)s күтүүдө"
 
 #: templates/campaigns/_steps.html:42
-#| msgid "Move up"
 msgid "Move step up"
 msgstr "Кадамды жогору жылдыруу"
 
 #: templates/campaigns/_steps.html:45
-#| msgid "Move down"
 msgid "Move step down"
 msgstr "Кадамды төмөн жылдыруу"
 
@@ -5007,43 +4935,35 @@ msgid "Remove"
 msgstr "Алып салуу"
 
 #: templates/campaigns/_steps.html:62
-#| msgid "Save rule"
 msgid "Save step"
 msgstr "Кадамды сактоо"
 
 #: templates/campaigns/_steps.html:75
-#| msgid "Add a tag"
 msgid "Add a step"
 msgstr "Кадам кошуу"
 
 #: templates/campaigns/_steps.html:83
-#| msgid "Add text"
 msgid "Add step"
 msgstr "Кадам кошуу"
 
 #: templates/campaigns/_subscriber_suggestions.html:15
 #, python-format
-#| msgid "No tag matches “%(term)s”."
 msgid "Nobody matches “%(term)s”."
 msgstr "«%(term)s»га эч ким дал келбейт."
 
 #: templates/campaigns/_subscriber_suggestions.html:15
-#| msgid "Every tag is already on this contact."
 msgid "Everyone is already on this sequence."
 msgstr "Баары мурунтан эле бул цепочкада."
 
 #: templates/campaigns/_subscribers.html:13
-#| msgid "Subscribe"
 msgid "Subscribers"
 msgstr "Жазылуучулар"
 
 #: templates/campaigns/_subscribers.html:36
-#| msgid "Find a tag"
 msgid "Find a contact"
 msgstr "Контакт табуу"
 
 #: templates/campaigns/_subscribers.html:37
-#| msgid "And the contact matches"
 msgid "Find a contact to subscribe"
 msgstr "Жаздыруу үчүн контакт табуу"
 
@@ -5057,17 +4977,14 @@ msgstr ""
 "        <a href=\"%(contacts_list_url)s\" class=\"btn-text-hover-primary\">контакттар тизмесинен</a> адамдарды топтоп жаздырыңыз."
 
 #: templates/campaigns/_subscribers.html:51
-#| msgid "Deleted"
 msgid "completed"
 msgstr "аяктаган"
 
 #: templates/campaigns/_subscribers.html:52
-#| msgid "Unsubscribed"
 msgid "unsubscribed"
 msgstr "жазылуудан чыккан"
 
 #: templates/campaigns/_subscribers.html:53
-#| msgid "Active"
 msgid "active"
 msgstr "активдүү"
 
@@ -5078,7 +4995,6 @@ msgstr ""
 "Азыр эч ким «%(word)s» статусунда жок — бул цепочкада баары болуп %(count)s."
 
 #: templates/campaigns/_subscribers.html:69
-#| msgid "Nobody here yet"
 msgid "Nobody here yet."
 msgstr "Бул жерде азырынча эч ким жок."
 
@@ -5098,19 +5014,16 @@ msgstr "%(total)s (%(word)s)."
 
 #: templates/campaigns/_subscribers.html:106
 #, python-format
-#| msgid "Unsubscribe %(address)s?"
 msgid "Unsubscribed %(when)s"
 msgstr "%(when)s жазылуудан чыкты"
 
 #: templates/campaigns/_subscribers.html:108
 #, python-format
-#| msgid "Select %(name)s"
 msgid "Step %(n)s"
 msgstr "%(n)s-кадам"
 
 #: templates/campaigns/_subscribers.html:108
 #, python-format
-#| msgid "Created %(when)s"
 msgid "next %(when)s"
 msgstr "кийинкиси %(when)s"
 
@@ -5123,12 +5036,10 @@ msgstr ""
 "учурдан кечигүүсүн күтөт, андан кийин өз жөнөтүү терезесинде ачылат."
 
 #: templates/campaigns/detail.html:37
-#| msgid "Status"
 msgid "Save status"
 msgstr "Статусту сактоо"
 
 #: templates/campaigns/detail.html:64
-#| msgid "Loading triggers…"
 msgid "Loading subscribers…"
 msgstr "Жазылуучулар жүктөлүүдө…"
 
@@ -5145,12 +5056,10 @@ msgid "New sequence name"
 msgstr "Жаңы цепочканын аты"
 
 #: templates/campaigns/list.html:48
-#| msgid "Sequences"
 msgid "Search sequences"
 msgstr "Цепочкаларды издөө"
 
 #: templates/campaigns/list.html:53
-#| msgid "Any status"
 msgid "All statuses"
 msgstr "Бардык статустар"
 
@@ -8736,12 +8645,10 @@ msgstr ""
 "<strong>ар бир</strong> эреже төмөндөгү тартипте колдонулат."
 
 #: templates/layouts/error.html:27
-#| msgid "Welcome back to BrightBean Chat."
 msgid "Back to BrightBean Chat"
 msgstr "BrightBean Chat'ка кайтуу"
 
 #: templates/media_library/_asset_detail.html:18
-#| msgid "Size:"
 msgid "Size"
 msgstr "Өлчөм"
 
@@ -8751,22 +8658,18 @@ msgstr "Өлчөмдөр"
 
 #: templates/media_library/_asset_detail.html:23
 #, python-format
-#| msgid "(in %(name)s)"
 msgid "by %(name)s"
 msgstr "%(name)s тарабынан"
 
 #: templates/media_library/_asset_detail.html:24
-#| msgid "Media"
 msgid "Media id"
 msgstr "Медиа ID"
 
 #: templates/media_library/_asset_detail.html:45
-#| msgid "Subtitle"
 msgid "Title"
 msgstr "Аталыш"
 
 #: templates/media_library/_asset_detail.html:48
-#| msgid "Add text"
 msgid "Alt text"
 msgstr "Альтернативдик текст"
 
@@ -8779,12 +8682,10 @@ msgstr ""
 " платформаларга жөнөтүлөт."
 
 #: templates/media_library/_asset_detail.html:59
-#| msgid "All folders"
 msgid "No folder"
 msgstr "Папкасыз"
 
 #: templates/media_library/_asset_detail.html:64
-#| msgid "Move up"
 msgid "Move"
 msgstr "Жылдыруу"
 
@@ -8798,24 +8699,20 @@ msgstr ""
 "бул блокту жөнөтө албай калат."
 
 #: templates/media_library/_asset_grid.html:54
-#| msgid "Organisation"
 msgid "Pagination"
 msgstr "Барактарды которуштуруу"
 
 #: templates/media_library/_asset_grid.html:58
 #, python-format
-#| msgid "Page %(number)s of %(pages)s."
 msgid "Page %(number)s of %(total)s"
 msgstr "%(total)s'дан %(number)s-барак"
 
 #: templates/media_library/_asset_grid.html:71
 #, python-format
-#| msgid "No tag matches “%(term)s”."
 msgid "Nothing matches “%(query)s”."
 msgstr "«%(query)s»га эч нерсе дал келбейт."
 
 #: templates/media_library/_asset_grid.html:71
-#| msgid "Nobody here yet"
 msgid "No media here yet."
 msgstr "Бул жерде азырынча медиа жок."
 
@@ -8832,7 +8729,6 @@ msgstr ""
 " колдонууга даяр болот."
 
 #: templates/media_library/_folder_rail.html:14
-#| msgid "All folders"
 msgid "Media folders"
 msgstr "Медиа папкалары"
 
@@ -8841,13 +8737,11 @@ msgid "All media"
 msgstr "Бардык медиа"
 
 #: templates/media_library/_folder_rail.html:22
-#| msgid "Not enabled"
 msgid "Not in a folder"
 msgstr "Папкада эмес"
 
 #: templates/media_library/_folder_rail.html:34
 #, python-format
-#| msgid "Remove %(name)s"
 msgid "Rename %(name)s"
 msgstr "%(name)sдин атын өзгөртүү"
 
@@ -8862,18 +8756,15 @@ msgstr ""
 
 #: templates/media_library/_folder_rail.html:40
 #, python-format
-#| msgid "Deleted %(name)s."
 msgid "Delete %(name)s"
 msgstr "%(name)sди өчүрүү"
 
 #: templates/media_library/_folder_rail.html:48
 #, python-format
-#| msgid "Value for %(name)s"
 msgid "New name for %(name)s"
 msgstr "%(name)s үчүн жаңы ат"
 
 #: templates/media_library/_folder_rail.html:56
-#| msgid "No rules yet"
 msgid "No folders yet."
 msgstr "Азырынча папка жок."
 
@@ -8887,38 +8778,31 @@ msgstr ""
 
 #: templates/media_library/library.html:46
 #, python-format
-#| msgid "%(used)s of %(limit)s"
 msgid "%(used)s of %(quota)s used"
 msgstr "%(quota)s'дан %(used)s колдонулду"
 
 #: templates/media_library/library.html:49
 #, python-format
-#| msgid "%(used)s of %(limit)s"
 msgid "%(used)s of %(quota)s"
 msgstr "%(quota)s'дан %(used)s"
 
 #: templates/media_library/library.html:66
-#| msgid "Folder"
 msgid "Folders"
 msgstr "Папкалар"
 
 #: templates/media_library/library.html:80
-#| msgid "New follower"
 msgid "New folder name"
 msgstr "Жаңы папканын аты"
 
 #: templates/media_library/library.html:81
-#| msgid "New follower"
 msgid "New folder"
 msgstr "Жаңы папка"
 
 #: templates/media_library/library.html:85
-#| msgid "Create it"
 msgid "Create folder"
 msgstr "Папка түзүү"
 
 #: templates/media_library/library.html:99
-#| msgid "Search the library"
 msgid "Search media"
 msgstr "Медианы издөө"
 
@@ -9136,7 +9020,6 @@ msgstr "Аларды өчүрүү"
 
 #: templates/notifications/list.html:10
 #, python-format
-#| msgid "%(count)s created"
 msgid "%(count)s unread"
 msgid_plural "%(count)s unread"
 msgstr[0] "%(count)s окулбаган"
@@ -9147,23 +9030,19 @@ msgid "All caught up"
 msgstr "Баары окулду"
 
 #: templates/notifications/list.html:24
-#| msgid "Email"
 msgid "Email me"
 msgstr "Мага email жөнөтүү"
 
 #: templates/notifications/list.html:30
 #: templates/notifications/partials/_bell_panel.html:15
-#| msgid "Match all rules"
 msgid "Mark all read"
 msgstr "Баарын окулду деп белгилөө"
 
 #: templates/notifications/list.html:36
-#| msgid "Trigger type"
 msgid "Filter by type"
 msgstr "Түрү боюнча чыпкалоо"
 
 #: templates/notifications/list.html:39
-#| msgid "All imports"
 msgid "All types"
 msgstr "Бардык түрлөр"
 
@@ -9176,49 +9055,40 @@ msgid "Read and unread"
 msgstr "Окулган жана окулбаган"
 
 #: templates/notifications/list.html:48
-#| msgid "Read only"
 msgid "Unread only"
 msgstr "Жалгыз окулбагандар"
 
 #: templates/notifications/partials/_bell_panel.html:41
 #: templates/notifications/partials/_history_list.html:40
 #, python-format
-#| msgid "%(time)s ago"
 msgid "%(since)s ago"
 msgstr "%(since)s мурун"
 
 #: templates/notifications/partials/_bell_panel.html:51
-#| msgid "Nothing delivered yet."
 msgid "Nothing needs you right now."
 msgstr "Азыр эч нерсе көңүлүңүздү талап кылбайт."
 
 #: templates/notifications/partials/_bell_panel.html:59
-#| msgid "Notifications"
 msgid "View all notifications"
 msgstr "Бардык билдирүүлөрдү көрүү"
 
 #: templates/notifications/partials/_history_list.html:55
-#| msgid "Mark done"
 msgid "Mark read"
 msgstr "Окулду деп белгилөө"
 
 #: templates/notifications/partials/_history_list.html:66
-#| msgid "Viewer"
 msgid "Newer"
 msgstr "Жаңыраак"
 
 #: templates/notifications/partials/_history_list.html:71
-#| msgid "Folder"
 msgid "Older"
 msgstr "Эскирээк"
 
 #: templates/notifications/partials/_history_list.html:82
-#| msgid "Nothing selected"
 msgid "Nothing here"
 msgstr "Бул жерде эч нерсе жок"
 
 #: templates/notifications/partials/_history_list.html:84
-#| msgid "No contacts match this filter."
 msgid "No notifications match this filter."
 msgstr "Бул чыпкага бир дагы билдирүү дал келбейт."
 
@@ -9404,7 +9274,6 @@ msgstr "Чыгуу"
 
 #: templates/partials/_coming_soon_body.html:14
 #, python-format
-#| msgid "%(direction)r is not a direction."
 msgid "%(section)s is not ready yet"
 msgstr "%(section)s дагы даяр эмес"
 
@@ -9415,7 +9284,6 @@ msgstr ""
 "иштейт."
 
 #: templates/partials/_copy_field.html:32
-#| msgid "Copy link"
 msgid "Copy"
 msgstr "Көчүрүү"
 
@@ -9450,7 +9318,6 @@ msgid "Something went wrong. Please try again."
 msgstr "Бир нерсе туура эмес кетти. Кайра аракет кылыңыз."
 
 #: templates/partials/_toast_host.html:43
-#| msgid "Request headers"
 msgid "Request failed"
 msgstr "Сурам аткарылган жок"
 

@@ -33,7 +33,9 @@ from django.shortcuts import render
 from django.urls import NoReverseMatch, reverse
 from django.utils import timezone
 from django.utils.dateparse import parse_datetime
+from django.utils.functional import Promise
 from django.utils.translation import gettext, ngettext
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_GET, require_POST
 
 from apps.billing.entitlements import organization_locked
@@ -215,8 +217,8 @@ def _assignee_options(request: WorkspaceRequest) -> list[dict[str, str]]:
         .order_by("user__name", "user__email")
     )
     return [
-        {"value": selectors.ASSIGNEE_ME, "label": "Assigned to me"},
-        {"value": selectors.ASSIGNEE_UNASSIGNED, "label": "Unassigned"},
+        {"value": selectors.ASSIGNEE_ME, "label": gettext("Assigned to me")},
+        {"value": selectors.ASSIGNEE_UNASSIGNED, "label": gettext("Unassigned")},
         *({"value": str(m.user_id), "label": m.user.display_name} for m in members),
     ]
 
@@ -513,11 +515,11 @@ def _sidebar_context(request: WorkspaceRequest, conversation: Conversation) -> d
 #: the fields, so this is a re-presentation and not a new query language.
 #: Channel and label stay as selects beside them, because those genuinely are
 #: long lists.
-INBOX_VIEWS: tuple[tuple[str, str, str, str], ...] = (
-    ("all", "All", "", ""),
-    ("unassigned", "Unassigned", "", selectors.ASSIGNEE_UNASSIGNED),
-    ("mine", "Mine", "", selectors.ASSIGNEE_ME),
-    ("done", "Done", ConversationState.DONE, ""),
+INBOX_VIEWS: tuple[tuple[str, str | Promise, str, str], ...] = (
+    ("all", _("All"), "", ""),
+    ("unassigned", _("Unassigned"), "", selectors.ASSIGNEE_UNASSIGNED),
+    ("mine", _("Mine"), "", selectors.ASSIGNEE_ME),
+    ("done", _("Done"), ConversationState.DONE, ""),
 )
 
 

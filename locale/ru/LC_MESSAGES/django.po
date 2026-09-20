@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 19:03+0600\n"
+"POT-Creation-Date: 2026-09-20 19:55+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ru\n"
@@ -18,7 +18,6 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #: apps/analytics/views.py:210
-#| msgid "Organization settings saved."
 msgid "Email tracking settings saved."
 msgstr "Настройки отслеживания email сохранены."
 
@@ -305,7 +304,7 @@ msgid "Sending"
 msgstr "Отправляется"
 
 #: apps/broadcasts/models.py:72 apps/broadcasts/models.py:92
-#: apps/inbox/views.py:910 templates/analytics/_counter_cards.html:21
+#: apps/inbox/views.py:912 templates/analytics/_counter_cards.html:21
 #: templates/analytics/flow_detail.html:58
 #: templates/analytics/flow_detail.html:93
 #: templates/analytics/overview.html:41 templates/analytics/overview.html:80
@@ -529,7 +528,6 @@ msgid "Minutes"
 msgstr "Минуты"
 
 #: apps/campaigns/models.py:78
-#| msgid "Colours"
 msgid "Hours"
 msgstr "Часы"
 
@@ -570,7 +568,6 @@ msgid "That %(name)s belongs to a different workspace than the step."
 msgstr "Это %(name)s принадлежит другому рабочему пространству, чем шаг."
 
 #: apps/campaigns/models.py:187
-#| msgid "Deleted"
 msgid "Completed"
 msgstr "Завершено"
 
@@ -579,12 +576,10 @@ msgid "Unsubscribed"
 msgstr "Отписан"
 
 #: apps/campaigns/services.py:133
-#| msgid "That is not a field type."
 msgid "That is not a sequence status."
 msgstr "Это не статус цепочки."
 
 #: apps/campaigns/services.py:135
-#| msgid "Add at least one rule, or pick a saved segment."
 msgid "Add at least one step before activating this sequence."
 msgstr "Добавьте хотя бы один шаг перед активацией этой цепочки."
 
@@ -594,7 +589,6 @@ msgstr "Этот сценарий принадлежит другому рабо
 
 #: apps/campaigns/services.py:190
 #, python-format
-#| msgid "A rule may have at most %(max)s actions."
 msgid "A sequence may have at most %(max)s steps."
 msgstr "Цепочка может содержать не более %(max)s шагов."
 
@@ -628,23 +622,19 @@ msgid "The delay must be a whole number."
 msgstr "Задержка должна быть целым числом."
 
 #: apps/campaigns/services.py:490
-#| msgid "A price cannot be negative."
 msgid "The delay cannot be negative."
 msgstr "Задержка не может быть отрицательной."
 
 #: apps/campaigns/services.py:493
 #, python-format
-#| msgid "That URL is too long (500 characters maximum)."
 msgid "That delay is too long (at most %(max)s %(unit)s)."
 msgstr "Эта задержка слишком велика (максимум %(max)s %(unit)s)."
 
 #: apps/campaigns/views.py:80
-#| msgid "Monthly"
 msgid "Mon"
 msgstr "Пн"
 
 #: apps/campaigns/views.py:81
-#| msgid "True"
 msgid "Tue"
 msgstr "Вт"
 
@@ -661,7 +651,6 @@ msgid "Fri"
 msgstr "Пт"
 
 #: apps/campaigns/views.py:85
-#| msgid "Start"
 msgid "Sat"
 msgstr "Сб"
 
@@ -670,48 +659,39 @@ msgid "Sun"
 msgstr "Вс"
 
 #: apps/campaigns/views.py:140
-#| msgid "Could not update the sequence"
 msgid "Could not create the sequence"
 msgstr "Не удалось создать цепочку"
 
 #: apps/campaigns/views.py:143
-#| msgid "Sequence"
 msgid "Sequence created"
 msgstr "Цепочка создана"
 
 #: apps/campaigns/views.py:144
 #, python-format
-#| msgid "%(name)s was created as a draft."
 msgid "%(name)s is ready for its first step."
 msgstr "%(name)s готова к первому шагу."
 
 #: apps/campaigns/views.py:157
-#| msgid "Could not update the sequence"
 msgid "Could not rename the sequence"
 msgstr "Не удалось переименовать цепочку"
 
 #: apps/campaigns/views.py:158
-#| msgid "Sequence"
 msgid "Sequence renamed"
 msgstr "Цепочка переименована"
 
 #: apps/campaigns/views.py:169
-#| msgid "Could not create the tag"
 msgid "Could not change the status"
 msgstr "Не удалось изменить статус"
 
 #: apps/campaigns/views.py:171
-#| msgid "Sequence"
 msgid "Sequence activated"
 msgstr "Цепочка активирована"
 
 #: apps/campaigns/views.py:172
-#| msgid "Sequences"
 msgid "Sequence paused"
 msgstr "Цепочка приостановлена"
 
 #: apps/campaigns/views.py:173
-#| msgid "Sequence"
 msgid "Sequence archived"
 msgstr "Цепочка отправлена в архив"
 
@@ -728,48 +708,40 @@ msgstr ""
 "не затронуты."
 
 #: apps/campaigns/views.py:192
-#| msgid "Segment deleted"
 msgid "Sequence deleted"
 msgstr "Цепочка удалена"
 
 #: apps/campaigns/views.py:193
 #, python-format
-#| msgid "%(name)s and everything held about them are gone."
 msgid "%(name)s and everyone's progress through it."
 msgstr "%(name)s и весь прогресс каждого по ней."
 
 #: apps/campaigns/views.py:293
-#| msgid "Could not add the tag"
 msgid "Could not add the step"
 msgstr "Не удалось добавить шаг"
 
 #: apps/campaigns/views.py:294
-#| msgid "Note added"
 msgid "Step added"
 msgstr "Шаг добавлен"
 
 #: apps/campaigns/views.py:312
-#| msgid "Could not save the segment"
 msgid "Could not save the step"
 msgstr "Не удалось сохранить шаг"
 
 #: apps/campaigns/views.py:313
-#| msgid "Not saved"
 msgid "Step saved"
 msgstr "Шаг сохранён"
 
 #: apps/campaigns/views.py:325
-#| msgid "Could not save the segment"
 msgid "Could not move the step"
 msgstr "Не удалось переместить шаг"
 
 #: apps/campaigns/views.py:326 apps/flows/views_triggers.py:299
-#: apps/inbox/views.py:1767
+#: apps/inbox/views.py:1769
 msgid "Order updated"
 msgstr "Порядок обновлён"
 
 #: apps/campaigns/views.py:337
-#| msgid "Label removed"
 msgid "Step removed"
 msgstr "Шаг удалён"
 
@@ -778,29 +750,23 @@ msgid "Anyone waiting on it moves to whatever took its place."
 msgstr "Все, кто ждал этого шага, переходят к тому, что заняло его место."
 
 #: apps/campaigns/views.py:430
-#| msgid "Could not save the contact"
 msgid "Could not subscribe that contact"
 msgstr "Не удалось подписать этот контакт"
 
 #: apps/campaigns/views.py:433
-#| msgid "Unsubscribed"
 msgid "Contact subscribed"
 msgstr "Контакт подписан"
 
 #: apps/campaigns/views.py:434
 #, python-format
-#| msgid "Everyone starts again at step 1."
 msgid "%(name)s starts at step 1."
 msgstr "%(name)s начинает с шага 1."
 
 #: apps/campaigns/views.py:450
-#| msgid "Contact unsubscribed from a sequence"
 msgid "Contact unsubscribed"
 msgstr "Контакт отписан"
 
 #: apps/campaigns/views.py:451
-#| msgid ""
-#| "Unsubscribing stops future steps; anything already running finishes."
 msgid "Future steps are cancelled. Anything already running finishes."
 msgstr "Будущие шаги отменены. Всё уже запущенное завершится."
 
@@ -1540,8 +1506,9 @@ msgstr "Пропустить строку"
 msgid "Running"
 msgstr "Выполняется"
 
-#: apps/contacts/models.py:570 templates/api/key_created.html:26
-#: templates/api/webhook_secret.html:22 templates/channels/secret.html:57
+#: apps/contacts/models.py:570 apps/inbox/views.py:522
+#: templates/api/key_created.html:26 templates/api/webhook_secret.html:22
+#: templates/channels/secret.html:57
 #: templates/inbox/_conversation_rows.html:71
 msgid "Done"
 msgstr "Готово"
@@ -1632,7 +1599,7 @@ msgstr "Сначала выберите тег"
 msgid "Already tagged"
 msgstr "Уже помечен"
 
-#: apps/contacts/views.py:664 apps/inbox/views.py:1133
+#: apps/contacts/views.py:664 apps/inbox/views.py:1135
 msgid "Tag added"
 msgstr "Тег добавлен"
 
@@ -1640,7 +1607,7 @@ msgstr "Тег добавлен"
 msgid "That tag was not on this contact"
 msgstr "Этого тега не было на этом контакте"
 
-#: apps/contacts/views.py:678 apps/inbox/views.py:1131
+#: apps/contacts/views.py:678 apps/inbox/views.py:1133
 msgid "Tag removed"
 msgstr "Тег удалён"
 
@@ -1668,7 +1635,7 @@ msgstr "Сценарий запущен"
 msgid "Nothing was running"
 msgstr "Ничего не выполнялось"
 
-#: apps/contacts/views.py:791 apps/inbox/views.py:1106
+#: apps/contacts/views.py:791 apps/inbox/views.py:1108
 msgid "Automation stopped"
 msgstr "Автоматизация остановлена"
 
@@ -2539,7 +2506,8 @@ msgstr "Вложенность конфигурации глубже %(max)s у�
 msgid "Unfiled"
 msgstr "Без папки"
 
-#: apps/flows/views.py:200 templates/flows/template_gallery.html:70
+#: apps/flows/views.py:200 apps/inbox/views.py:519
+#: templates/flows/template_gallery.html:70
 #: templates/media_library/library.html:107
 msgid "All"
 msgstr "Все"
@@ -2894,7 +2862,7 @@ msgstr "Отметить как выполненное"
 msgid "(deleted)"
 msgstr "(удалено)"
 
-#: apps/inbox/rendering.py:701 apps/inbox/views.py:846
+#: apps/inbox/rendering.py:701 apps/inbox/views.py:848
 #, python-format
 msgid "%(list)s or %(last)s"
 msgstr "%(list)s или %(last)s"
@@ -2954,7 +2922,7 @@ msgstr "Неизвестное действие %(kind)r."
 msgid "That label no longer exists."
 msgstr "Этой метки больше не существует."
 
-#: apps/inbox/rules.py:300 apps/inbox/views.py:1033
+#: apps/inbox/rules.py:300 apps/inbox/views.py:1035
 msgid "That person is not a member of this workspace."
 msgstr "Этот человек не является участником этого пространства."
 
@@ -3024,106 +2992,116 @@ msgstr "Это напоминание недействительно."
 msgid "That reply has already been sent or cancelled."
 msgstr "Этот ответ уже отправлен или отменён."
 
-#: apps/inbox/views.py:795
+#: apps/inbox/views.py:220
+#| msgid "Assigned to %(name)s"
+msgid "Assigned to me"
+msgstr "Назначено мне"
+
+#: apps/inbox/views.py:221 apps/inbox/views.py:520 apps/inbox/views.py:1025
+#: templates/inbox/_thread_header.html:54
+msgid "Unassigned"
+msgstr "Не назначено"
+
+#: apps/inbox/views.py:521
+msgid "Mine"
+msgstr "Мои"
+
+#: apps/inbox/views.py:797
 msgid "Nothing to send"
 msgstr "Нечего отправлять"
 
-#: apps/inbox/views.py:810 templates/inbox/_deferred.html:54
+#: apps/inbox/views.py:812 templates/inbox/_deferred.html:54
 msgid "Not sent"
 msgstr "Не отправлено"
 
-#: apps/inbox/views.py:811
+#: apps/inbox/views.py:813
 msgid "Note added"
 msgstr "Заметка добавлена"
 
-#: apps/inbox/views.py:811
+#: apps/inbox/views.py:813
 msgid "Reply sent"
 msgstr "Ответ отправлен"
 
-#: apps/inbox/views.py:819
+#: apps/inbox/views.py:821
 #, python-format
 msgid "%(platform)s cannot carry %(items)s, so that was left off."
 msgstr ""
 "%(platform)s не может передавать %(items)s, поэтому это было пропущено."
 
-#: apps/inbox/views.py:834
+#: apps/inbox/views.py:836
 msgid "an image"
 msgstr "изображение"
 
-#: apps/inbox/views.py:835
+#: apps/inbox/views.py:837
 msgid "an audio file"
 msgstr "аудиофайл"
 
-#: apps/inbox/views.py:836
+#: apps/inbox/views.py:838
 msgid "a video"
 msgstr "видео"
 
-#: apps/inbox/views.py:837
+#: apps/inbox/views.py:839
 msgid "a file"
 msgstr "файл"
 
-#: apps/inbox/views.py:908
+#: apps/inbox/views.py:910
 msgid "Still not sent"
 msgstr "Всё ещё не отправлено"
 
-#: apps/inbox/views.py:1023 templates/inbox/_thread_header.html:54
-msgid "Unassigned"
-msgstr "Не назначено"
-
-#: apps/inbox/views.py:1032
+#: apps/inbox/views.py:1034
 msgid "Cannot assign"
 msgstr "Невозможно назначить"
 
-#: apps/inbox/views.py:1038
+#: apps/inbox/views.py:1040
 #, python-format
 msgid "Assigned to %(name)s"
 msgstr "Назначено: %(name)s"
 
-#: apps/inbox/views.py:1052
+#: apps/inbox/views.py:1054
 msgid "Marked done"
 msgstr "Отмечено как выполненное"
 
-#: apps/inbox/views.py:1062
+#: apps/inbox/views.py:1064
 msgid "Reopened"
 msgstr "Снова открыт"
 
-#: apps/inbox/views.py:1064
+#: apps/inbox/views.py:1066
 msgid "Unknown state"
 msgstr "Неизвестное состояние"
 
-#: apps/inbox/views.py:1064
+#: apps/inbox/views.py:1066
 msgid "A conversation is either open or done."
 msgstr "Диалог может быть либо открытым, либо завершённым."
 
-#: apps/inbox/views.py:1081
+#: apps/inbox/views.py:1083
 msgid "Automation resumed"
 msgstr "Автоматизация возобновлена"
 
-#: apps/inbox/views.py:1083
+#: apps/inbox/views.py:1085
 msgid "Automation paused"
 msgstr "Автоматизация приостановлена"
 
-#: apps/inbox/views.py:1105
+#: apps/inbox/views.py:1107
 msgid "Nothing running"
 msgstr "Ничего не запущено"
 
-#: apps/inbox/views.py:1127
+#: apps/inbox/views.py:1129
 msgid "No tag selected"
 msgstr "Тег не выбран"
 
-#: apps/inbox/views.py:1157
+#: apps/inbox/views.py:1159
 msgid "Not labelled"
 msgstr "Метка не добавлена"
 
-#: apps/inbox/views.py:1158
+#: apps/inbox/views.py:1160
 msgid "Labelled"
 msgstr "Помечено"
 
-#: apps/inbox/views.py:1169
+#: apps/inbox/views.py:1171
 msgid "Label removed"
 msgstr "Метка удалена"
 
-#: apps/inbox/views.py:1205
+#: apps/inbox/views.py:1207
 #, python-format
 msgid "Label removed from %(count)s conversation"
 msgid_plural "Label removed from %(count)s conversations"
@@ -3132,7 +3110,7 @@ msgstr[1] "Метка удалена из %(count)s диалогов"
 msgstr[2] "Метка удалена из %(count)s диалогов"
 msgstr[3] "Метка удалена из %(count)s диалогов"
 
-#: apps/inbox/views.py:1207
+#: apps/inbox/views.py:1209
 #, python-format
 msgid "Label added to %(count)s conversation"
 msgid_plural "Label added to %(count)s conversations"
@@ -3141,120 +3119,117 @@ msgstr[1] "Метка добавлена в %(count)s диалога"
 msgstr[2] "Метка добавлена в %(count)s диалогов"
 msgstr[3] "Метка добавлена в %(count)s диалогов"
 
-#: apps/inbox/views.py:1229 apps/inbox/views.py:1249
+#: apps/inbox/views.py:1231 apps/inbox/views.py:1251
 msgid "No reminder set"
 msgstr "Напоминание не установлено"
 
-#: apps/inbox/views.py:1229 apps/inbox/views.py:1280
+#: apps/inbox/views.py:1231 apps/inbox/views.py:1282
 msgid "Pick a date and time."
 msgstr "Выберите дату и время."
 
-#: apps/inbox/views.py:1250
+#: apps/inbox/views.py:1252
 msgid "Reminder set"
 msgstr "Напоминание установлено"
 
-#: apps/inbox/views.py:1262 apps/inbox/views.py:1331
+#: apps/inbox/views.py:1264 apps/inbox/views.py:1333
 msgid "Already gone"
 msgstr "Уже отменено"
 
-#: apps/inbox/views.py:1263
+#: apps/inbox/views.py:1265
 msgid "Reminder cancelled"
 msgstr "Напоминание отменено"
 
-#: apps/inbox/views.py:1280 apps/inbox/views.py:1284 apps/inbox/views.py:1294
+#: apps/inbox/views.py:1282 apps/inbox/views.py:1286 apps/inbox/views.py:1296
 msgid "Not scheduled"
 msgstr "Не запланировано"
 
-#: apps/inbox/views.py:1295
+#: apps/inbox/views.py:1297
 msgid "Reply scheduled"
 msgstr "Ответ запланирован"
 
-#: apps/inbox/views.py:1312 apps/inbox/views.py:1316
+#: apps/inbox/views.py:1314 apps/inbox/views.py:1318
 msgid "Not changed"
 msgstr "Не изменено"
 
-#: apps/inbox/views.py:1317
+#: apps/inbox/views.py:1319
 msgid "Scheduled reply updated"
 msgstr "Запланированный ответ обновлён"
 
-#: apps/inbox/views.py:1332
+#: apps/inbox/views.py:1334
 msgid "Scheduled reply cancelled"
 msgstr "Запланированный ответ отменён"
 
-#: apps/inbox/views.py:1422
+#: apps/inbox/views.py:1424
 msgid "That message is too long."
 msgstr "Это сообщение слишком длинное."
 
-#: apps/inbox/views.py:1431
+#: apps/inbox/views.py:1433
 #, python-format
 msgid "%(platform)s cannot carry that attachment."
 msgstr "%(platform)s не может передавать это вложение."
 
-#: apps/inbox/views.py:1434
+#: apps/inbox/views.py:1436
 msgid "Write something first."
 msgstr "Сначала напишите что-нибудь."
 
-#: apps/inbox/views.py:1463
+#: apps/inbox/views.py:1465
 msgid "One of those attachments is no longer in the library."
 msgstr "Одного из этих вложений больше нет в библиотеке."
 
-#: apps/inbox/views.py:1545
+#: apps/inbox/views.py:1547
 msgid "Not created"
 msgstr "Не создано"
 
-#: apps/inbox/views.py:1546
+#: apps/inbox/views.py:1548
 msgid "Label created"
 msgstr "Метка создана"
 
-#: apps/inbox/views.py:1557 apps/inbox/views.py:1691 apps/inbox/views.py:1696
-#: apps/inbox/views.py:1717
+#: apps/inbox/views.py:1559 apps/inbox/views.py:1693 apps/inbox/views.py:1698
+#: apps/inbox/views.py:1719
 msgid "Not saved"
 msgstr "Не сохранено"
 
-#: apps/inbox/views.py:1558
+#: apps/inbox/views.py:1560
 msgid "Label saved"
 msgstr "Метка сохранена"
 
-#: apps/inbox/views.py:1575
+#: apps/inbox/views.py:1577
 msgid "Label deleted"
 msgstr "Метка удалена"
 
-#: apps/inbox/views.py:1691
+#: apps/inbox/views.py:1693
 msgid "A rule needs a name."
 msgstr "Правилу нужно имя."
 
-#: apps/inbox/views.py:1719 apps/inbox/views.py:1722
+#: apps/inbox/views.py:1721 apps/inbox/views.py:1724
 msgid "Rule saved"
 msgstr "Правило сохранено"
 
-#: apps/inbox/views.py:1736
+#: apps/inbox/views.py:1738
 msgid "Not enabled"
 msgstr "Не включено"
 
-#: apps/inbox/views.py:1739
+#: apps/inbox/views.py:1741
 msgid "Rule enabled"
 msgstr "Правило включено"
 
-#: apps/inbox/views.py:1743
+#: apps/inbox/views.py:1745
 msgid "Rule disabled"
 msgstr "Правило отключено"
 
-#: apps/inbox/views.py:1752
+#: apps/inbox/views.py:1754
 msgid "Rule deleted"
 msgstr "Правило удалено"
 
 #: apps/media_library/mimes.py:48
-#| msgid "an image"
 msgid "Image"
 msgstr "Изображение"
 
 #: apps/media_library/mimes.py:49
-#| msgid "Audience"
 msgid "Audio"
 msgstr "Аудио"
 
 #: apps/media_library/mimes.py:50
-#| msgid "a video"
 msgid "Video"
 msgstr "Видео"
 
@@ -3277,7 +3252,6 @@ msgid "Markup documents are not accepted."
 msgstr "Документы разметки не принимаются."
 
 #: apps/media_library/mimes.py:172
-#| msgid "That file could not be read"
 msgid "The file is empty or could not be read."
 msgstr "Файл пуст или не удалось его прочитать."
 
@@ -3296,18 +3270,15 @@ msgstr ""
 "Нераспознанный тип файла. Принимаются: изображения, аудио, видео и PDF."
 
 #: apps/media_library/models.py:66
-#| msgid "A workspace with that name already exists."
 msgid "A folder with that name already exists here."
 msgstr "Папка с таким именем уже существует здесь."
 
 #: apps/media_library/models.py:76
-#| msgid "A workspace with that name already exists."
 msgid "A folder with that name already exists."
 msgstr "Папка с таким именем уже существует."
 
 #: apps/media_library/models.py:97
 #, python-format
-#| msgid "The configuration nests deeper than %(max)s levels."
 msgid "Folders cannot be nested more than %(max)s levels deep."
 msgstr "Папки не могут быть вложены глубже %(max)s уровней."
 
@@ -3328,18 +3299,15 @@ msgstr ""
 "объёма медиа. Удалите что-нибудь перед загрузкой %(incoming)s."
 
 #: apps/media_library/services.py:70
-#| msgid "That message tag is not one this channel accepts."
 msgid "That file is larger than any media type this deployment accepts."
 msgstr "Этот файл больше, чем принимает любой тип медиа в этой установке."
 
 #: apps/media_library/services.py:172 apps/media_library/services.py:195
-#| msgid "That form was for a different contact"
 msgid "That folder belongs to a different workspace."
 msgstr "Эта папка принадлежит другому рабочему пространству."
 
 #: apps/media_library/services.py:203
 #, python-format
-#| msgid "This workspace already has %(limit)s endpoints."
 msgid "This workspace already has the maximum of %(limit)s folders."
 msgstr "В этом рабочем пространстве уже максимум — %(limit)s папок."
 
@@ -3353,7 +3321,6 @@ msgstr ""
 "куда переместится содержимое. Сначала переименуйте одну из них."
 
 #: apps/media_library/views.py:219
-#| msgid "No flows here yet"
 msgid "No files were sent."
 msgstr "Файлы не были отправлены."
 
@@ -3364,7 +3331,6 @@ msgstr "До %(max)s файлов за одну загрузку."
 
 #: apps/media_library/views.py:246
 #, python-format
-#| msgid "%(count)s updated"
 msgid "%(count)s uploaded"
 msgid_plural "%(count)s uploaded"
 msgstr[0] "%(count)s файл загружен"
@@ -3373,22 +3339,18 @@ msgstr[2] "%(count)s файлов загружено"
 msgstr[3] "%(count)s файлов загружено"
 
 #: apps/media_library/views.py:248
-#| msgid "Nothing to save"
 msgid "Nothing uploaded"
 msgstr "Ничего не загружено"
 
 #: apps/media_library/views.py:274
-#| msgid "Save"
 msgid "Saved"
 msgstr "Сохранено"
 
 #: apps/media_library/views.py:286
-#| msgid "Move down"
 msgid "Moved"
 msgstr "Перемещено"
 
 #: apps/media_library/views.py:286
-#| msgid "Search the library"
 msgid "Moved to the library root"
 msgstr "Перемещено в корень библиотеки"
 
@@ -3398,22 +3360,18 @@ msgid "%(name)s is gone, and every delivery URL for it now fails."
 msgstr "%(name)s удалён, и теперь все ссылки на его доставку не работают."
 
 #: apps/media_library/views.py:318 apps/media_library/views.py:334
-#| msgid "A flow needs a name."
 msgid "A folder needs a name."
 msgstr "Папке нужно имя."
 
 #: apps/media_library/views.py:324
-#| msgid "Field created"
 msgid "Folder created"
 msgstr "Папка создана"
 
 #: apps/media_library/views.py:339
-#| msgid "Field renamed"
 msgid "Folder renamed"
 msgstr "Папка переименована"
 
 #: apps/media_library/views.py:368
-#| msgid "Field deleted"
 msgid "Folder deleted"
 msgstr "Папка удалена"
 
@@ -3832,7 +3790,6 @@ msgid "404 Not Found"
 msgstr "404 Страница не найдена"
 
 #: templates/404.html:5
-#| msgid "That tag does not exist"
 msgid "That page does not exist."
 msgstr "Этой страницы не существует."
 
@@ -3970,13 +3927,11 @@ msgid "%(rate)s%% clicks per send"
 msgstr "%(rate)s%% кликов на отправку"
 
 #: templates/analytics/_range.html:8
-#| msgid "Date and time"
 msgid "Date range"
 msgstr "Период"
 
 #: templates/analytics/_range.html:12
 #, python-format
-#| msgid "%(count)s updated"
 msgid "%(count)s day"
 msgid_plural "%(count)s days"
 msgstr[0] "%(count)s день"
@@ -3994,12 +3949,10 @@ msgstr[2] "Счётчики за последние %(count)s дней."
 msgstr[3] "Счётчики за последние %(count)s дней."
 
 #: templates/analytics/flow_detail.html:30
-#| msgid "All channels"
 msgid "All analytics"
 msgstr "Вся аналитика"
 
 #: templates/analytics/flow_detail.html:31
-#| msgid "Open in inbox"
 msgid "Open in builder"
 msgstr "Открыть в редакторе"
 
@@ -4030,12 +3983,10 @@ msgid "Step"
 msgstr "Шаг"
 
 #: templates/analytics/flow_detail.html:63
-#| msgid "Clicked"
 msgid "Clicks/send"
 msgstr "Кликов/отправка"
 
 #: templates/analytics/flow_detail.html:84
-#| msgid "This flow calls out to the internet"
 msgid "This flow has not sent anything in this range."
 msgstr "Этот сценарий ничего не отправлял за этот период."
 
@@ -4061,7 +4012,6 @@ msgid "No flow has sent anything in this range."
 msgstr "Ни один сценарий ничего не отправил за этот период."
 
 #: templates/analytics/overview.html:70
-#| msgid "%(name)s deliverability"
 msgid "Deliverability"
 msgstr "Доставляемость"
 
@@ -4074,7 +4024,6 @@ msgstr ""
 "отправки через API."
 
 #: templates/analytics/overview.html:78
-#| msgid "Connect"
 msgid "Connection"
 msgstr "Подключение"
 
@@ -4083,7 +4032,6 @@ msgid "Messages"
 msgstr "Сообщения"
 
 #: templates/analytics/overview.html:83
-#| msgid "Delivered"
 msgid "Delivery rate"
 msgstr "Процент доставки"
 
@@ -4910,7 +4858,6 @@ msgid "Any status"
 msgstr "Любой статус"
 
 #: templates/campaigns/_list_rows.html:8
-#| msgid "No flows here yet"
 msgid "No sequences here yet"
 msgstr "Здесь пока нет цепочек"
 
@@ -4939,8 +4886,6 @@ msgstr[3] "%(count)s шагов"
 
 #: templates/campaigns/_list_rows.html:38
 #, python-format
-#| msgid "%(count)s trigger"
-#| msgid_plural "%(count)s triggers"
 msgid "%(count)s subscriber"
 msgid_plural "%(count)s subscribers"
 msgstr[0] "%(count)s подписчик"
@@ -4950,7 +4895,6 @@ msgstr[3] "%(count)s подписчиков"
 
 #: templates/campaigns/_list_rows.html:39
 #, python-format
-#| msgid "Created %(when)s"
 msgid "updated %(when)s"
 msgstr "обновлено %(when)s"
 
@@ -4977,19 +4921,14 @@ msgstr "Переименовать"
 
 #: templates/campaigns/_list_rows.html:51
 #, python-format
-#| msgid "Delete “%(name)s”? %(count)s stored value will go with it."
-#| msgid_plural ""
-#| "Delete “%(name)s”? %(count)s stored values will go with it."
 msgid "Delete “%(name)s”? Everyone's progress through it goes with it."
 msgstr "Удалить «%(name)s»? Прогресс всех по ней будет удалён вместе с ней."
 
 #: templates/campaigns/_list_rows.html:68
-#| msgid "Sequence"
 msgid "Sequence name"
 msgstr "Название цепочки"
 
 #: templates/campaigns/_step_fields.html:14
-#| msgid "Waiting"
 msgid "Wait"
 msgstr "Ждать"
 
@@ -4998,12 +4937,10 @@ msgid "Unit"
 msgstr "Единица"
 
 #: templates/campaigns/_step_fields.html:31
-#| msgid "Any status"
 msgid "then start"
 msgstr "затем запустить"
 
 #: templates/campaigns/_step_fields.html:33
-#| msgid "Choose a label…"
 msgid "Choose a flow…"
 msgstr "Выберите сценарий…"
 
@@ -5020,7 +4957,6 @@ msgid "New flow"
 msgstr "Новый сценарий"
 
 #: templates/campaigns/_step_fields.html:46
-#| msgid "Send now"
 msgid "Send window"
 msgstr "Окно отправки"
 
@@ -5029,7 +4965,6 @@ msgid "Only start this step inside a window"
 msgstr "Запускать этот шаг только в окне"
 
 #: templates/campaigns/_step_fields.html:53
-#| msgid "From name"
 msgid "From"
 msgstr "С"
 
@@ -5038,7 +4973,6 @@ msgid "to"
 msgstr "до"
 
 #: templates/campaigns/_step_fields.html:64
-#| msgid "And the contact matches"
 msgid "in the contact's own timezone"
 msgstr "в собственном часовом поясе контакта"
 
@@ -5051,7 +4985,6 @@ msgstr ""
 "часового пояса использует часовой пояс рабочего пространства."
 
 #: templates/campaigns/_steps.html:17
-#| msgid "No keys yet"
 msgid "No steps yet"
 msgstr "Пока нет шагов"
 
@@ -5067,14 +5000,11 @@ msgid "Wait %(delay)s"
 msgstr "Ждать %(delay)s"
 
 #: templates/campaigns/_steps.html:33
-#| msgid "And the contact matches"
 msgid "in the contact's timezone"
 msgstr "в часовом поясе контакта"
 
 #: templates/campaigns/_steps.html:34
 #, python-format
-#| msgid "%(count)s trigger"
-#| msgid_plural "%(count)s triggers"
 msgid "%(count)s waiting"
 msgid_plural "%(count)s waiting"
 msgstr[0] "%(count)s ожидает"
@@ -5083,12 +5013,10 @@ msgstr[2] "%(count)s ожидают"
 msgstr[3] "%(count)s ожидают"
 
 #: templates/campaigns/_steps.html:42
-#| msgid "Move up"
 msgid "Move step up"
 msgstr "Переместить шаг вверх"
 
 #: templates/campaigns/_steps.html:45
-#| msgid "Move down"
 msgid "Move step down"
 msgstr "Переместить шаг вниз"
 
@@ -5108,43 +5036,35 @@ msgid "Remove"
 msgstr "Удалить"
 
 #: templates/campaigns/_steps.html:62
-#| msgid "Save rule"
 msgid "Save step"
 msgstr "Сохранить шаг"
 
 #: templates/campaigns/_steps.html:75
-#| msgid "Add a tag"
 msgid "Add a step"
 msgstr "Добавить шаг"
 
 #: templates/campaigns/_steps.html:83
-#| msgid "Add text"
 msgid "Add step"
 msgstr "Добавить шаг"
 
 #: templates/campaigns/_subscriber_suggestions.html:15
 #, python-format
-#| msgid "No tag matches “%(term)s”."
 msgid "Nobody matches “%(term)s”."
 msgstr "Никто не подходит под «%(term)s»."
 
 #: templates/campaigns/_subscriber_suggestions.html:15
-#| msgid "Every tag is already on this contact."
 msgid "Everyone is already on this sequence."
 msgstr "Все уже в этой цепочке."
 
 #: templates/campaigns/_subscribers.html:13
-#| msgid "Subscribe"
 msgid "Subscribers"
 msgstr "Подписчики"
 
 #: templates/campaigns/_subscribers.html:36
-#| msgid "Find a tag"
 msgid "Find a contact"
 msgstr "Найти контакт"
 
 #: templates/campaigns/_subscribers.html:37
-#| msgid "And the contact matches"
 msgid "Find a contact to subscribe"
 msgstr "Найти контакт для подписки"
 
@@ -5158,17 +5078,14 @@ msgstr ""
 "        <a href=\"%(contacts_list_url)s\" class=\"btn-text-hover-primary\">списка контактов</a>."
 
 #: templates/campaigns/_subscribers.html:51
-#| msgid "Deleted"
 msgid "completed"
 msgstr "завершённые"
 
 #: templates/campaigns/_subscribers.html:52
-#| msgid "Unsubscribed"
 msgid "unsubscribed"
 msgstr "отписанные"
 
 #: templates/campaigns/_subscribers.html:53
-#| msgid "Active"
 msgid "active"
 msgstr "активные"
 
@@ -5179,7 +5096,6 @@ msgstr ""
 "Сейчас никого нет со статусом «%(word)s» — всего в этой цепочке %(count)s."
 
 #: templates/campaigns/_subscribers.html:69
-#| msgid "Nobody here yet"
 msgid "Nobody here yet."
 msgstr "Здесь пока никого нет."
 
@@ -5199,19 +5115,16 @@ msgstr "%(total)s (%(word)s)."
 
 #: templates/campaigns/_subscribers.html:106
 #, python-format
-#| msgid "Unsubscribe %(address)s?"
 msgid "Unsubscribed %(when)s"
 msgstr "Отписан %(when)s"
 
 #: templates/campaigns/_subscribers.html:108
 #, python-format
-#| msgid "Select %(name)s"
 msgid "Step %(n)s"
 msgstr "Шаг %(n)s"
 
 #: templates/campaigns/_subscribers.html:108
 #, python-format
-#| msgid "Created %(when)s"
 msgid "next %(when)s"
 msgstr "следующий %(when)s"
 
@@ -5224,12 +5137,10 @@ msgstr ""
 "фактически сработал предыдущий шаг, затем открывается в своём окне отправки."
 
 #: templates/campaigns/detail.html:37
-#| msgid "Status"
 msgid "Save status"
 msgstr "Сохранить статус"
 
 #: templates/campaigns/detail.html:64
-#| msgid "Loading triggers…"
 msgid "Loading subscribers…"
 msgstr "Загрузка подписчиков…"
 
@@ -5247,12 +5158,10 @@ msgid "New sequence name"
 msgstr "Название новой цепочки"
 
 #: templates/campaigns/list.html:48
-#| msgid "Sequences"
 msgid "Search sequences"
 msgstr "Поиск цепочек"
 
 #: templates/campaigns/list.html:53
-#| msgid "Any status"
 msgid "All statuses"
 msgstr "Все статусы"
 
@@ -8917,12 +8826,10 @@ msgstr ""
 "порядке."
 
 #: templates/layouts/error.html:27
-#| msgid "Welcome back to BrightBean Chat."
 msgid "Back to BrightBean Chat"
 msgstr "Назад в BrightBean Chat"
 
 #: templates/media_library/_asset_detail.html:18
-#| msgid "Size:"
 msgid "Size"
 msgstr "Размер"
 
@@ -8932,22 +8839,18 @@ msgstr "Размеры"
 
 #: templates/media_library/_asset_detail.html:23
 #, python-format
-#| msgid "(in %(name)s)"
 msgid "by %(name)s"
 msgstr "автор — %(name)s"
 
 #: templates/media_library/_asset_detail.html:24
-#| msgid "Media"
 msgid "Media id"
 msgstr "ID медиа"
 
 #: templates/media_library/_asset_detail.html:45
-#| msgid "Subtitle"
 msgid "Title"
 msgstr "Заголовок"
 
 #: templates/media_library/_asset_detail.html:48
-#| msgid "Add text"
 msgid "Alt text"
 msgstr "Альтернативный текст"
 
@@ -8960,12 +8863,10 @@ msgstr ""
 " платформы, которые это поддерживают."
 
 #: templates/media_library/_asset_detail.html:59
-#| msgid "All folders"
 msgid "No folder"
 msgstr "Без папки"
 
 #: templates/media_library/_asset_detail.html:64
-#| msgid "Move up"
 msgid "Move"
 msgstr "Переместить"
 
@@ -8979,24 +8880,20 @@ msgstr ""
 "не смогут отправить этот блок."
 
 #: templates/media_library/_asset_grid.html:54
-#| msgid "Organisation"
 msgid "Pagination"
 msgstr "Постраничная навигация"
 
 #: templates/media_library/_asset_grid.html:58
 #, python-format
-#| msgid "Page %(number)s of %(pages)s."
 msgid "Page %(number)s of %(total)s"
 msgstr "Страница %(number)s из %(total)s"
 
 #: templates/media_library/_asset_grid.html:71
 #, python-format
-#| msgid "No tag matches “%(term)s”."
 msgid "Nothing matches “%(query)s”."
 msgstr "Ничего не соответствует «%(query)s»."
 
 #: templates/media_library/_asset_grid.html:71
-#| msgid "Nobody here yet"
 msgid "No media here yet."
 msgstr "Здесь пока нет медиа."
 
@@ -9013,7 +8910,6 @@ msgstr ""
 "сценарии, рассылке или письме."
 
 #: templates/media_library/_folder_rail.html:14
-#| msgid "All folders"
 msgid "Media folders"
 msgstr "Папки медиа"
 
@@ -9022,13 +8918,11 @@ msgid "All media"
 msgstr "Все медиа"
 
 #: templates/media_library/_folder_rail.html:22
-#| msgid "Not enabled"
 msgid "Not in a folder"
 msgstr "Не в папке"
 
 #: templates/media_library/_folder_rail.html:34
 #, python-format
-#| msgid "Remove %(name)s"
 msgid "Rename %(name)s"
 msgstr "Переименовать %(name)s"
 
@@ -9043,18 +8937,15 @@ msgstr ""
 
 #: templates/media_library/_folder_rail.html:40
 #, python-format
-#| msgid "Deleted %(name)s."
 msgid "Delete %(name)s"
 msgstr "Удалить %(name)s"
 
 #: templates/media_library/_folder_rail.html:48
 #, python-format
-#| msgid "Value for %(name)s"
 msgid "New name for %(name)s"
 msgstr "Новое имя для %(name)s"
 
 #: templates/media_library/_folder_rail.html:56
-#| msgid "No rules yet"
 msgid "No folders yet."
 msgstr "Пока нет папок."
 
@@ -9068,38 +8959,31 @@ msgstr ""
 
 #: templates/media_library/library.html:46
 #, python-format
-#| msgid "%(used)s of %(limit)s"
 msgid "%(used)s of %(quota)s used"
 msgstr "Использовано %(used)s из %(quota)s"
 
 #: templates/media_library/library.html:49
 #, python-format
-#| msgid "%(used)s of %(limit)s"
 msgid "%(used)s of %(quota)s"
 msgstr "%(used)s из %(quota)s"
 
 #: templates/media_library/library.html:66
-#| msgid "Folder"
 msgid "Folders"
 msgstr "Папки"
 
 #: templates/media_library/library.html:80
-#| msgid "New follower"
 msgid "New folder name"
 msgstr "Название новой папки"
 
 #: templates/media_library/library.html:81
-#| msgid "New follower"
 msgid "New folder"
 msgstr "Новая папка"
 
 #: templates/media_library/library.html:85
-#| msgid "Create it"
 msgid "Create folder"
 msgstr "Создать папку"
 
 #: templates/media_library/library.html:99
-#| msgid "Search the library"
 msgid "Search media"
 msgstr "Поиск медиа"
 
@@ -9321,7 +9205,6 @@ msgstr "Отключить их"
 
 #: templates/notifications/list.html:10
 #, python-format
-#| msgid "%(count)s created"
 msgid "%(count)s unread"
 msgid_plural "%(count)s unread"
 msgstr[0] "%(count)s непрочитанное"
@@ -9335,23 +9218,19 @@ msgid "All caught up"
 msgstr "Всё прочитано"
 
 #: templates/notifications/list.html:24
-#| msgid "Email"
 msgid "Email me"
 msgstr "Присылать мне на email"
 
 #: templates/notifications/list.html:30
 #: templates/notifications/partials/_bell_panel.html:15
-#| msgid "Match all rules"
 msgid "Mark all read"
 msgstr "Отметить всё как прочитанное"
 
 #: templates/notifications/list.html:36
-#| msgid "Trigger type"
 msgid "Filter by type"
 msgstr "Фильтр по типу"
 
 #: templates/notifications/list.html:39
-#| msgid "All imports"
 msgid "All types"
 msgstr "Все типы"
 
@@ -9364,49 +9243,40 @@ msgid "Read and unread"
 msgstr "Прочитанные и непрочитанные"
 
 #: templates/notifications/list.html:48
-#| msgid "Read only"
 msgid "Unread only"
 msgstr "Только непрочитанные"
 
 #: templates/notifications/partials/_bell_panel.html:41
 #: templates/notifications/partials/_history_list.html:40
 #, python-format
-#| msgid "%(time)s ago"
 msgid "%(since)s ago"
 msgstr "%(since)s назад"
 
 #: templates/notifications/partials/_bell_panel.html:51
-#| msgid "Nothing delivered yet."
 msgid "Nothing needs you right now."
 msgstr "Сейчас ничего не требует вашего внимания."
 
 #: templates/notifications/partials/_bell_panel.html:59
-#| msgid "Notifications"
 msgid "View all notifications"
 msgstr "Посмотреть все уведомления"
 
 #: templates/notifications/partials/_history_list.html:55
-#| msgid "Mark done"
 msgid "Mark read"
 msgstr "Отметить как прочитанное"
 
 #: templates/notifications/partials/_history_list.html:66
-#| msgid "Viewer"
 msgid "Newer"
 msgstr "Новее"
 
 #: templates/notifications/partials/_history_list.html:71
-#| msgid "Folder"
 msgid "Older"
 msgstr "Старее"
 
 #: templates/notifications/partials/_history_list.html:82
-#| msgid "Nothing selected"
 msgid "Nothing here"
 msgstr "Здесь ничего нет"
 
 #: templates/notifications/partials/_history_list.html:84
-#| msgid "No contacts match this filter."
 msgid "No notifications match this filter."
 msgstr "Ни одно уведомление не соответствует этому фильтру."
 
@@ -9591,7 +9461,6 @@ msgstr "Выйти"
 
 #: templates/partials/_coming_soon_body.html:14
 #, python-format
-#| msgid "%(direction)r is not a direction."
 msgid "%(section)s is not ready yet"
 msgstr "%(section)s ещё не готов"
 
@@ -9600,7 +9469,6 @@ msgid "It is being built. Everything else in settings works as normal."
 msgstr "Это разрабатывается. Всё остальное в настройках работает как обычно."
 
 #: templates/partials/_copy_field.html:32
-#| msgid "Copy link"
 msgid "Copy"
 msgstr "Скопировать"
 
@@ -9635,7 +9503,6 @@ msgid "Something went wrong. Please try again."
 msgstr "Что-то пошло не так. Попробуйте снова."
 
 #: templates/partials/_toast_host.html:43
-#| msgid "Request headers"
 msgid "Request failed"
 msgstr "Запрос не выполнен"
 
