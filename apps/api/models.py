@@ -28,6 +28,7 @@ from datetime import datetime
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from apps.common.encryption import EncryptedTextField
 from apps.common.scoping import WorkspaceScopedModel
@@ -71,9 +72,9 @@ class ApiScope(models.TextChoices):
     the issuance form from this enum intersected with ``SCOPE_PERMISSIONS``.
     """
 
-    READ = "read", "Read"
-    WRITE = "write", "Write"
-    ERASE = "erase", "Erase"
+    READ = "read", _("Read")
+    WRITE = "write", _("Write")
+    ERASE = "erase", _("Erase")
 
 
 class DeliveryStatus(models.TextChoices):
@@ -84,9 +85,9 @@ class DeliveryStatus(models.TextChoices):
     retrying a private-range target just repeats the same refusal.
     """
 
-    SUCCEEDED = "succeeded", "Succeeded"
-    FAILED = "failed", "Failed"
-    BLOCKED = "blocked", "Blocked"
+    SUCCEEDED = "succeeded", _("Succeeded")
+    FAILED = "failed", _("Failed")
+    BLOCKED = "blocked", _("Blocked")
 
 
 def generate_webhook_secret() -> str:

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 00:54+0600\n"
+"POT-Creation-Date: 2026-09-20 10:09+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ky\n"
@@ -17,126 +17,379 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: apps/broadcasts/notifications.py:40 apps/notifications/events.py:305
+#: apps/api/events.py:94
+msgid "Contact created"
+msgstr "Байланыш түзүлдү"
+
+#: apps/api/events.py:95
+msgid "Tag added to a contact"
+msgstr "Байланышка тег кошулду"
+
+#: apps/api/events.py:96
+msgid "Inbound message received"
+msgstr "Кирүүчү билдирүү алынды"
+
+#: apps/api/events.py:97
+msgid "Flow execution completed"
+msgstr "Сценарийдин аткарылышы аяктады"
+
+#: apps/api/events.py:98
+msgid "Contact subscribed to a sequence"
+msgstr "Байланыш ырааттуулукка жазылды"
+
+#: apps/api/events.py:99
+msgid "Contact unsubscribed from a sequence"
+msgstr "Байланыш ырааттуулуктан чыгарылды"
+
+#: apps/api/events.py:100
+msgid "Broadcast finished"
+msgstr "Жайылтуу аяктады"
+
+#: apps/api/models.py:75
+msgid "Read"
+msgstr "Окуу"
+
+#: apps/api/models.py:76
+msgid "Write"
+msgstr "Жазуу"
+
+#: apps/api/models.py:77
+msgid "Erase"
+msgstr "Өчүрүү"
+
+#: apps/api/models.py:88
+msgid "Succeeded"
+msgstr "Ийгиликтүү"
+
+#: apps/api/models.py:89
+msgid "Failed"
+msgstr "Ката"
+
+#: apps/api/models.py:90
+msgid "Blocked"
+msgstr "Бөгөттөлдү"
+
+#: apps/api/services.py:72
+msgid "Only an organization owner or admin can issue API keys."
+msgstr "API ачкычтарын уюмдун ээси же администратору гана чыгара алат."
+
+#: apps/api/services.py:76
+msgid ""
+"You need the manage_api_keys permission in that workspace to issue a key for"
+" it."
+msgstr "Бул мейкиндикте ачкыч чыгаруу үчүн manage_api_keys уруксаты керек."
+
+#: apps/api/services.py:82
+msgid "A key needs at least one scope."
+msgstr "Ачкычка кеминде бир мүмкүнчүлүк чөйрөсү керек."
+
+#: apps/api/services.py:85
+#, python-format
+msgid "Unknown scope: %(scopes)s."
+msgstr "Белгисиз мүмкүнчүлүк чөйрөсү: %(scopes)s."
+
+#: apps/api/services.py:92
+#, python-format
+msgid ""
+"You cannot grant the %(scope)s scope: it includes %(missing)s, which you do "
+"not hold."
+msgstr ""
+"%(scope)s чөйрөсүн бере албайсыз: анда сизде жок %(missing)s камтылган."
+
+#: apps/api/services.py:124
+msgid "Give the key a name so you can recognise it later."
+msgstr "Кийин таанып билүү үчүн ачкычка ат бериңиз."
+
+#: apps/api/services.py:126
+msgid "The name is too long (100 characters maximum)."
+msgstr "Аты өтө узун (эң көбү 100 белги)."
+
+#: apps/api/services.py:148
+#, python-format
+msgid ""
+"This workspace already has %(limit)s active keys. Revoke one before issuing "
+"another."
+msgstr ""
+"Бул мейкиндикте азырынча %(limit)s активдүү ачкыч бар. Жаңысын чыгаруудан "
+"мурун бирин жокко чыгарыңыз."
+
+#: apps/api/services.py:189
+#, python-format
+msgid "Unknown event: %(events)s."
+msgstr "Белгисиз окуя: %(events)s."
+
+#: apps/api/services.py:191
+msgid "Choose at least one event to send."
+msgstr "Жөнөтүү үчүн кеминде бир окуяны тандаңыз."
+
+#: apps/api/services.py:207
+msgid "Enter the URL deliveries should be sent to."
+msgstr "Жеткирүүлөр жөнөтүлүүчү URL дарегин көрсөтүңүз."
+
+#: apps/api/services.py:209
+msgid "That URL is too long (500 characters maximum)."
+msgstr "Бул URL өтө узун (эң көбү 500 белги)."
+
+#: apps/api/services.py:212
+msgid "The URL must start with http:// or https://."
+msgstr "URL http:// же https:// менен башталышы керек."
+
+#: apps/api/services.py:216
+msgid "The URL must not carry a username or password."
+msgstr "URL колдонуучунун атын же сырсөзүн камтыбашы керек."
+
+#: apps/api/services.py:218 apps/api/services.py:222
+msgid "That does not look like a valid URL."
+msgstr "Бул туура URL сыяктуу эмес."
+
+#: apps/api/services.py:249
+#, python-format
+msgid "This workspace already has %(limit)s endpoints."
+msgstr "Бул мейкиндикте азырынча %(limit)s эндпоинт бар."
+
+#: apps/api/views_keys.py:140
+msgid "Choose a workspace."
+msgstr "Мейкиндикти тандаңыз."
+
+#: apps/api/views_keys.py:182
+#, python-format
+msgid "Revoked “%(name)s”."
+msgstr "«%(name)s» жокко чыгарылды."
+
+#: apps/api/views_keys.py:184
+#, python-format
+msgid "“%(name)s” was already revoked."
+msgstr "«%(name)s» мурунтан эле жокко чыгарылган."
+
+#: apps/api/views_webhooks.py:115
+msgid "Endpoint created"
+msgstr "Эндпоинт түзүлдү"
+
+#: apps/api/views_webhooks.py:166
+msgid "Endpoint updated."
+msgstr "Эндпоинт жаңырды."
+
+#: apps/api/views_webhooks.py:189
+msgid "New signing secret"
+msgstr "Жаңы кол коюу сыры"
+
+#: apps/api/views_webhooks.py:207
+#, python-format
+msgid "Test delivered — the endpoint answered %(code)s."
+msgstr "Тест жеткирилди — эндпоинт %(code)s менен жооп берди."
+
+#: apps/api/views_webhooks.py:210
+#, python-format
+msgid "Test failed: %(reason)s."
+msgstr "Тест ишке ашкан жок: %(reason)s."
+
+#: apps/api/views_webhooks.py:222
+#, python-format
+msgid "Deleted %(url)s."
+msgstr "%(url)s өчүрүлдү."
+
+#: apps/billing/entitlements.py:345
+#, python-format
+msgid ""
+"Your plan connects %(limit)s channels. Upgrade to connect more, or disable "
+"one you are not using."
+msgstr ""
+"Тарифиңиз %(limit)s каналды туташтырууга уруксат берет. Дагы кошуу үчүн "
+"тарифти жогорулатыңыз же колдонулбаган каналды өчүрүңүз."
+
+#: apps/billing/entitlements.py:357
+#, python-format
+msgid ""
+"Your plan runs %(limit)s automations at once. Upgrade, or switch one off to "
+"free up a slot."
+msgstr ""
+"Тарифиңиз бир учурда %(limit)s автоматташтырууну иштетет. Тарифти "
+"жогорулатыңыз же бирин өчүрүп орун бошотуңуз."
+
+#: apps/billing/entitlements.py:370
+#, python-format
+msgid "Your plan includes %(limit)s user. Upgrade to add more."
+msgid_plural "Your plan includes %(limit)s users. Upgrade to add more."
+msgstr[0] ""
+"Тарифиңизге %(limit)s колдонуучу кирет. Дагы кошуу үчүн тарифти "
+"жогорулатыңыз."
+
+#: apps/billing/entitlements.py:386
+#, python-format
+msgid "Your plan includes %(limit)s workspace. Upgrade to add more."
+msgid_plural "Your plan includes %(limit)s workspaces. Upgrade to add more."
+msgstr[0] ""
+"Тарифиңизге %(limit)s мейкиндик кирет. Дагы кошуу үчүн тарифти "
+"жогорулатыңыз."
+
+#: apps/billing/entitlements.py:406
+msgid "The public API is available on the paid plan."
+msgstr "Ачык API акылуу тарифте жеткиликтүү."
+
+#: apps/billing/services.py:53
+msgid "Choose a monthly or yearly plan."
+msgstr "Айлык же жылдык тарифти тандаңыз."
+
+#: apps/billing/services.py:59
+msgid "That plan is not available right now."
+msgstr "Бул тариф азыр жеткиликсиз."
+
+#: apps/billing/services.py:104 apps/billing/services.py:207
+#: apps/billing/views.py:92
+msgid "We could not start checkout. Try again in a minute."
+msgstr ""
+"Төлөмдү баштоо мүмкүн болгон жок. Бир мүнөттөн кийин кайра аракет кылыңыз."
+
+#: apps/billing/services.py:129 apps/billing/services.py:145
+msgid "A checkout is already open. Finish it, or wait a minute and try again."
+msgstr ""
+"Төлөм терезеси мурунтан ачык. Аны бүтүрүңүз же бир мүнөт күтүп кайра аракет "
+"кылыңыз."
+
+#: apps/billing/services.py:173
+msgid "There is no billing account to manage yet."
+msgstr "Азырынча башкарууга биллинг аккаунту жок."
+
+#: apps/billing/views.py:75
+msgid "You are already on the paid plan."
+msgstr "Сиз мурунтан эле акылуу тарифтесиз."
+
+#: apps/billing/views.py:118
+msgid "We could not open the billing portal. Try again in a minute."
+msgstr ""
+"Төлөм порталын ачуу мүмкүн болгон жок. Бир мүнөттөн кийин кайра аракет "
+"кылыңыз."
+
+#: apps/broadcasts/notifications.py:40 apps/notifications/events.py:319
 #, python-brace-format
 msgid "Broadcast \"{broadcast_name}\" finished"
 msgstr "«{broadcast_name}» жайылтуусу аяктады"
 
-#: apps/broadcasts/notifications.py:41 apps/notifications/events.py:306
+#: apps/broadcasts/notifications.py:41 apps/notifications/events.py:320
 #, python-brace-format
 msgid "{sent} sent, {failed} failed, {skipped} skipped."
 msgstr "Жөнөтүлдү: {sent}, ката: {failed}, өткөрүп жиберилди: {skipped}."
 
-#: apps/common/context_processors.py:229
+#: apps/common/context_processors.py:238 templates/api/keys_list.html:43
 msgid "Workspace"
 msgstr "Жумуш мейкиндиги"
 
-#: apps/common/context_processors.py:234 apps/common/context_processors.py:359
+#: apps/common/context_processors.py:243 apps/common/context_processors.py:368
 msgid "General"
 msgstr "Жалпы"
 
-#: apps/common/context_processors.py:242
+#: apps/common/context_processors.py:251
 #: templates/partials/_sidebar_channels.html:35
 msgid "Channels"
 msgstr "Каналдар"
 
-#: apps/common/context_processors.py:278
+#: apps/common/context_processors.py:287
 msgid "Library"
 msgstr "Медиа китепканасы"
 
-#: apps/common/context_processors.py:298
+#: apps/common/context_processors.py:307
 msgid "Tags"
 msgstr "Тегдер"
 
-#: apps/common/context_processors.py:306
+#: apps/common/context_processors.py:315
 msgid "Labels"
 msgstr "Белгилер"
 
-#: apps/common/context_processors.py:314
+#: apps/common/context_processors.py:323
 msgid "Inbox rules"
 msgstr "Кирүүчү кат эрежелери"
 
-#: apps/common/context_processors.py:326
+#: apps/common/context_processors.py:335
 msgid "Fields"
 msgstr "Талаалар"
 
-#: apps/common/context_processors.py:334
+#: apps/common/context_processors.py:343
 msgid "Email tracking"
 msgstr "Катты көзөмөлдөө"
 
-#: apps/common/context_processors.py:346
+#: apps/common/context_processors.py:355 templates/api/webhooks_list.html:14
 msgid "Webhooks"
 msgstr "Вебхуктар"
 
-#: apps/common/context_processors.py:355
+#: apps/common/context_processors.py:364
 msgid "Organisation"
 msgstr "Уюм"
 
-#: apps/common/context_processors.py:366
+#: apps/common/context_processors.py:375
+#: templates/organizations/workspaces.html:15
+#: templates/organizations/workspaces.html:22
 msgid "Workspaces"
 msgstr "Жумуш мейкиндиктери"
 
-#: apps/common/context_processors.py:372
+#: apps/common/context_processors.py:381
 msgid "People & roles"
 msgstr "Адамдар жана ролдор"
 
-#: apps/common/context_processors.py:376
+#: apps/common/context_processors.py:385
+#: templates/organizations/billing.html:3
+#: templates/organizations/billing.html:9
 msgid "Plan & billing"
 msgstr "Тариф жана төлөм"
 
-#: apps/common/context_processors.py:384
+#: apps/common/context_processors.py:393
 msgid "Developers"
 msgstr "Иштеп чыгуучулар үчүн"
 
-#: apps/common/context_processors.py:396 templates/accounts/settings.html:14
+#: apps/common/context_processors.py:405 templates/accounts/settings.html:14
 #: templates/accounts/settings.html:19
 msgid "Profile"
 msgstr "Профиль"
 
-#: apps/common/context_processors.py:402 templates/accounts/preferences.html:8
+#: apps/common/context_processors.py:411 templates/accounts/preferences.html:8
 #: templates/accounts/preferences.html:14
 msgid "Preferences"
 msgstr "Жеке ырастоолор"
 
-#: apps/common/context_processors.py:426
+#: apps/common/context_processors.py:435
 msgid "Home"
 msgstr "Башкы бет"
 
-#: apps/common/context_processors.py:433
+#: apps/common/context_processors.py:442
 msgid "Inbox"
 msgstr "Кирүүчү кабарлар"
 
-#: apps/common/context_processors.py:446 apps/common/context_processors.py:517
+#: apps/common/context_processors.py:455 apps/common/context_processors.py:526
 msgid "Flows"
 msgstr "Сценарийлер"
 
-#: apps/common/context_processors.py:456
+#: apps/common/context_processors.py:465
 msgid "Broadcasts"
 msgstr "Жайылтуулар"
 
-#: apps/common/context_processors.py:464
+#: apps/common/context_processors.py:473
 msgid "Contacts"
 msgstr "Байланыштар"
 
-#: apps/common/context_processors.py:478
+#: apps/common/context_processors.py:487
 msgid "Insights"
 msgstr "Аналитика"
 
-#: apps/common/context_processors.py:496
+#: apps/common/context_processors.py:505
 msgid "Notifications"
 msgstr "Билдирүүлөр"
 
-#: apps/common/context_processors.py:525
+#: apps/common/context_processors.py:534
 msgid "Sequences"
 msgstr "Ырааттуулуктар"
 
-#: apps/common/context_processors.py:533
+#: apps/common/context_processors.py:542
 msgid "Templates"
 msgstr "Шаблондор"
 
 #: apps/common/tests/test_templatetags.py:166
+#: templates/api/webhooks_list.html:71
+#: templates/organizations/workspaces.html:61
 msgid "Open"
 msgstr "Ачуу"
+
+#: apps/common/validators.py:36
+msgid "Color must be a 6-digit hex value like #3B82F6."
+msgstr "Түс #3B82F6 сыяктуу 6 орундуу hex мааниси болушу керек."
 
 #: apps/flows/starter.py:45
 msgid "Hi! Thanks for getting in touch — how can we help?"
@@ -151,17 +404,204 @@ msgstr "{contact_name} үчүн пландалган жооп жөнөтүлгө
 msgid "A scheduled reply was not sent"
 msgstr "Пландалган жооп жөнөтүлгөн жок"
 
-#: apps/members/services.py:415
+#: apps/members/roles.py:40
+msgid "Owner"
+msgstr "Ээси"
+
+#: apps/members/roles.py:41 apps/members/roles.py:48
+msgid "Admin"
+msgstr "Администратор"
+
+#: apps/members/roles.py:42
+msgid "Member"
+msgstr "Мүчө"
+
+#: apps/members/roles.py:49
+msgid "Editor"
+msgstr "Редактор"
+
+#: apps/members/roles.py:50
+msgid "Agent"
+msgstr "Агент"
+
+#: apps/members/roles.py:51
+msgid "Viewer"
+msgstr "Көрүүчү"
+
+#: apps/members/services.py:143
+#, python-format
+msgid "You cannot %(verb)s a member whose role is higher than your own."
+msgstr "Ролу өзүңүздүкүнөн жогору мүчөнү %(verb)s албайсыз."
+
+#: apps/members/services.py:145
+#, python-format
+msgid "Only organization owners can %(verb)s an organization admin."
+msgstr "Уюм администраторун %(verb)s түзүн уюмдун ээлери гана иштете алат."
+
+#: apps/members/services.py:158
+msgid "That workspace does not belong to your organization."
+msgstr "Бул мейкиндик сиздин уюмуңузга таандык эмес."
+
+#: apps/members/services.py:160
+#, python-format
+msgid "Unknown workspace role: %(role)r."
+msgstr "Мейкиндикте белгисиз роль: %(role)r."
+
+#: apps/members/services.py:169
+msgid "You cannot manage members in that workspace."
+msgstr "Бул мейкиндикте мүчөлөрдү башкара албайсыз."
+
+#: apps/members/services.py:171
+msgid ""
+"You cannot grant a workspace role higher than your own in that workspace."
+msgstr "Бул мейкиндикте өзүңүздүн ролуңуздан жогору роль бере албайсыз."
+
+#: apps/members/services.py:187
+msgid ""
+"Cannot remove the last admin of a workspace. Promote someone else first."
+msgstr ""
+"Мейкиндиктин акыркы администраторун өчүрүүгө болбойт. Адегенде башкасын "
+"дайындаңыз."
+
+#: apps/members/services.py:207
+msgid "An email address is required."
+msgstr "Email дареги керек."
+
+#: apps/members/services.py:214
+msgid "This person is already a member of your organization."
+msgstr "Бул адам мурунтан эле уюмуңуздун мүчөсү."
+
+#: apps/members/services.py:218
+msgid ""
+"An invitation is already pending for this address. You can resend it "
+"instead."
+msgstr "Бул дарекке чакыруу мурунтан эле жөнөтүлгөн. Аны кайра жөнөтө аласыз."
+
+#: apps/members/services.py:221
+msgid "Cannot invite someone as an organization owner."
+msgstr "Кимдир бирөөнү уюм ээси катары чакырууга болбойт."
+
+#: apps/members/services.py:225 apps/members/services.py:482
+#, python-format
+msgid "Unknown org role: %(role)r."
+msgstr "Уюмда белгисиз роль: %(role)r."
+
+#: apps/members/services.py:230
+msgid "Only organization owners can invite someone as an admin."
+msgstr "Администратор катары чакырууну уюм ээлери гана иштете алат."
+
+#: apps/members/services.py:238
+msgid "Choose at least one workspace to invite this person into."
+msgstr "Бул адамды чакыруу үчүн кеминде бир мейкиндикти тандаңыз."
+
+#: apps/members/services.py:288
+msgid "This invitation is no longer available."
+msgstr "Бул чакыруу мындан ары жеткиликсиз."
+
+#: apps/members/services.py:292
+msgid "This invitation has already been accepted."
+msgstr "Бул чакыруу мурунтан эле кабыл алынган."
+
+#: apps/members/services.py:294
+msgid "This invitation has expired."
+msgstr "Чакыруунун мөөнөтү бүттү."
+
+#: apps/members/services.py:296
+msgid "This invitation was sent to a different email address."
+msgstr "Бул чакыруу башка email дарегине жөнөтүлгөн."
+
+#: apps/members/services.py:313
+#, python-format
+msgid ""
+"This account already belongs to %(org_name)s. BrightBean Chat supports one "
+"organization per account, so leave that one first or accept this invitation "
+"from a different account."
+msgstr ""
+"Бул аккаунт мурунтан эле %(org_name)s уюмуна таандык. BrightBean Chat бир "
+"аккаунтка бир уюмду гана колдойт — адегенде андан чыгыңыз же бул чакырууну "
+"башка аккаунттан кабыл алыңыз."
+
+#: apps/members/services.py:377
+msgid "Cannot resend an already accepted invitation."
+msgstr "Мурунтан эле кабыл алынган чакырууну кайра жөнөтүүгө болбойт."
+
+#: apps/members/services.py:388
+msgid "Cannot revoke an already accepted invitation."
+msgstr "Мурунтан эле кабыл алынган чакырууну жокко чыгарууга болбойт."
+
+#: apps/members/services.py:420
 #, python-format
 msgid "You have been invited to %(org_name)s on BrightBean Chat"
 msgstr "Сиз BrightBean Chat'та %(org_name)s уюмуна чакырылдыңыз"
 
-#: apps/notifications/events.py:211
+#: apps/members/services.py:443
+msgid "You cannot remove yourself from the organization."
+msgstr "Өзүңүздү уюмдан чыгара албайсыз."
+
+#: apps/members/services.py:455
+msgid "Cannot remove the last organization owner."
+msgstr "Уюмдун акыркы ээсин өчүрүүгө болбойт."
+
+#: apps/members/services.py:457
+msgid "remove"
+msgstr "чыгаруу"
+
+#: apps/members/services.py:478
+msgid "Cannot promote to owner. Transfer ownership instead."
+msgstr "Ээликке чейин көтөрүүгө болбойт. Анын ордуна ээликти өткөрүп бериңиз."
+
+#: apps/members/services.py:486
+msgid "change"
+msgstr "өзгөртүү"
+
+#: apps/members/services.py:488
+msgid "Only organization owners can promote someone to admin."
+msgstr "Администратор кылып көтөрүүнү уюм ээлери гана иштете алат."
+
+#: apps/members/services.py:493
+msgid "Cannot change the role of the last organization owner."
+msgstr "Уюмдун акыркы ээсинин ролун өзгөртүүгө болбойт."
+
+#: apps/members/services.py:534
+msgid ""
+"You cannot modify a workspace membership whose role is higher than your own."
+msgstr "Ролу өзүңүздүкүнөн жогору мейкиндик мүчөлүгүн өзгөртө албайсыз."
+
+#: apps/members/views.py:133
+msgid "Invitation sent."
+msgstr "Чакыруу жөнөтүлдү."
+
+#: apps/members/views.py:147
+msgid "Invitation resent."
+msgstr "Чакыруу кайра жөнөтүлдү."
+
+#: apps/members/views.py:161
+msgid "Invitation revoked."
+msgstr "Чакыруу жокко чыгарылды."
+
+#: apps/members/views.py:175
+msgid "Role updated."
+msgstr "Роль жаңырды."
+
+#: apps/members/views.py:189
+msgid "Member removed."
+msgstr "Мүчө чыгарылды."
+
+#: apps/members/views.py:218
+msgid "Workspace access updated."
+msgstr "Мейкиндикке мүмкүнчүлүк жаңырды."
+
+#: apps/members/views.py:275
+#, python-format
+msgid "You have joined %(name)s."
+msgstr "Сиз %(name)s кошулдуңуз."
+
+#: apps/notifications/events.py:225
 #, python-brace-format
 msgid "Flow \"{flow_name}\" hit the loop cap"
 msgstr "«{flow_name}» сценарийи циклдер чегине жетти"
 
-#: apps/notifications/events.py:213
+#: apps/notifications/events.py:227
 #, python-brace-format
 msgid ""
 "It ran 30 blocks without pausing for {contact_name} and was stopped. Open "
@@ -170,22 +610,22 @@ msgstr ""
 "Ал {contact_name} үчүн 30 блокту тыныгуусуз аткарып, токтотулду. Сценарийди "
 "ачып, күтүүсүз циклди табыңыз."
 
-#: apps/notifications/events.py:226
+#: apps/notifications/events.py:240
 #, python-brace-format
 msgid "Flow \"{flow_name}\" failed"
 msgstr "«{flow_name}» сценарийи катасы менен аяктады"
 
-#: apps/notifications/events.py:227
+#: apps/notifications/events.py:241
 #, python-brace-format
 msgid "The run for {contact_name} stopped at {node_label}: {error}"
 msgstr "{contact_name} үчүн аткаруу «{node_label}» жеринде токтоду: {error}"
 
-#: apps/notifications/events.py:242
+#: apps/notifications/events.py:256
 #, python-brace-format
 msgid "{channel_name} needs reconnecting"
 msgstr "{channel_name} каналын кайра туташтыруу керек"
 
-#: apps/notifications/events.py:244
+#: apps/notifications/events.py:258
 #, python-brace-format
 msgid ""
 "{platform_label} stopped accepting the stored credentials. Nothing will send"
@@ -195,11 +635,11 @@ msgstr ""
 " туташтырылганга чейин бул канал аркылуу эч нерсе жөнөтүлбөйт же кабыл "
 "алынбайт."
 
-#: apps/notifications/events.py:259
+#: apps/notifications/events.py:273
 msgid "Webhook disabled after repeated failures"
 msgstr "Вебхук кайталанган каталардан кийин өчүрүлдү"
 
-#: apps/notifications/events.py:261
+#: apps/notifications/events.py:275
 #, python-brace-format
 msgid ""
 "{url} failed {failure_count} times in a row and has been switched off. Re-"
@@ -208,23 +648,159 @@ msgstr ""
 "{url} катары менен {failure_count} жолу катага учурап, өчүрүлдү. Эндпоинт "
 "кайра иштей баштаганда аны кайра күйгүзүңүз."
 
-#: apps/notifications/events.py:277
+#: apps/notifications/events.py:291
 #, python-brace-format
 msgid "Reminder: {contact_name}"
 msgstr "Эскертүү: {contact_name}"
 
-#: apps/notifications/events.py:292
+#: apps/notifications/events.py:306
 #, python-brace-format
 msgid "{actor_name} mentioned you"
 msgstr "{actor_name} сизди эскерди"
 
-#: apps/notifications/events.py:318
+#: apps/notifications/events.py:332
 #, python-brace-format
 msgid "WhatsApp template \"{template_name}\" was {status}"
 msgstr "WhatsApp'тагы «{template_name}» шаблону {status} болду"
 
+#: apps/organizations/views.py:53
+msgid "An organization needs a name."
+msgstr "Уюмга ат керек."
+
+#: apps/organizations/views.py:62 apps/workspaces/views.py:368
+msgid "That is not a timezone we recognise."
+msgstr "Бул убакыт алкагы таанылган жок."
+
+#: apps/organizations/views.py:67
+msgid "Organization settings saved."
+msgstr "Уюм тууралоолору сакталды."
+
+#: apps/organizations/views.py:131 apps/workspaces/views.py:346
+msgid "A workspace needs a name."
+msgstr "Мейкиндикке ат керек."
+
+#: apps/organizations/views.py:134
+msgid "A workspace with that name already exists."
+msgstr "Мындай аттуу мейкиндик мурунтан эле бар."
+
+#: apps/organizations/views.py:149
+#, python-format
+msgid "Created %(name)s."
+msgstr "%(name)s түзүлдү."
+
+#: apps/organizations/views.py:182 apps/organizations/views.py:190
+#, python-format
+msgid "Restored %(name)s."
+msgstr "%(name)s калыбына келтирилди."
+
+#: apps/organizations/views.py:188
+#, python-format
+msgid "Archived %(name)s."
+msgstr "%(name)s архивделди."
+
+#: apps/workspaces/views.py:87
+msgid "Good morning"
+msgstr "Кутман таңыңыз"
+
+#: apps/workspaces/views.py:88
+msgid "Good afternoon"
+msgstr "Кутман күн"
+
+#: apps/workspaces/views.py:88
+msgid "Good evening"
+msgstr "Кутман кеч"
+
+#: apps/workspaces/views.py:182 apps/workspaces/views.py:184
+#: templates/partials/_sidebar_channels.html:44
+msgid "Connect a channel"
+msgstr "Канал кошуу"
+
+#: apps/workspaces/views.py:183
+msgid ""
+"Wherever people already message you: Telegram, Instagram, WhatsApp or email."
+msgstr "Сизге жазып жаткан жерлерде: Telegram, Instagram, WhatsApp же email."
+
+#: apps/workspaces/views.py:187
+msgid "Messages arrive here now."
+msgstr "Эми билдирүүлөр бул жерге келет."
+
+#: apps/workspaces/views.py:192
+msgid "Build your first flow"
+msgstr "Биринчи сценарийиңизди түзүңүз"
+
+#: apps/workspaces/views.py:193
+msgid "A template comes with its trigger and its replies already written."
+msgstr "Шаблондо триггер жана жооптор мурунтан эле даяр."
+
+#: apps/workspaces/views.py:194
+msgid "Pick a template"
+msgstr "Шаблон тандаңыз"
+
+#: apps/workspaces/views.py:197
+msgid "A flow is answering for you."
+msgstr "Сценарий сиздин ордуңузда жооп берүүдө."
+
+#: apps/workspaces/views.py:201
+msgid "Invite your team"
+msgstr "Командаңызды чакырыңыз"
+
+#: apps/workspaces/views.py:202
+msgid "Share the inbox so every reply does not land on you."
+msgstr "Ар бир жооп өзүңүзгө түшпөшү үчүн кирүүчүлөрдү бөлүшүңүз."
+
+#: apps/workspaces/views.py:203
+msgid "Invite people"
+msgstr "Адамдарды чакыруу"
+
+#: apps/workspaces/views.py:206
+msgid "Other people can answer too."
+msgstr "Эми башкалар да жооп бере алат."
+
+#: apps/workspaces/views.py:251
+#, python-format
+msgid "%(name)s needs reconnecting"
+msgstr "%(name)s кайра туташтыруу керек"
+
+#: apps/workspaces/views.py:252
+msgid "It stopped receiving messages. Reconnect to start again."
+msgstr ""
+"Ал билдирүүлөрдү алууну токтотту. Кайра баштоо үчүн кайра туташтырыңыз."
+
+#: apps/workspaces/views.py:271
+#, python-format
+msgid "%(count)s conversation unassigned"
+msgid_plural "%(count)s conversations unassigned"
+msgstr[0] "%(count)s маек дайындалган жок"
+
+#: apps/workspaces/views.py:274
+msgid "Nobody has picked these up yet."
+msgstr "Аларды азырынча эч ким колго алган жок."
+
+#: apps/workspaces/views.py:284
+#, python-format
+msgid "“%(name)s” is scheduled"
+msgstr "«%(name)s» пландалды"
+
+#: apps/workspaces/views.py:285
+msgid "Review it before it goes."
+msgstr "Жөнөтүлгөнгө чейин текшерип алыңыз."
+
+#: apps/workspaces/views.py:353
+msgid "Another workspace in this organization already has that name."
+msgstr "Бул уюмда мындай аттуу мейкиндик мурунтан эле бар."
+
+#: apps/workspaces/views.py:375
+msgid "Colours must be a 6-digit hex value like #3B82F6."
+msgstr "Түстөр #3B82F6 сыяктуу 6 орундуу hex мааниси болушу керек."
+
+#: apps/workspaces/views.py:382
+msgid "Workspace settings saved."
+msgstr "Мейкиндик тууралоолору сакталды."
+
 #: templates/account/login.html:4 templates/account/login.html:8
 #: templates/account/login.html:38
+#: templates/members/_accept_invite_body.html:13
+#: templates/members/_invite_expired_body.html:8
 msgid "Sign in"
 msgstr "Кирүү"
 
@@ -292,6 +868,8 @@ msgstr ""
 "тандай алат."
 
 #: templates/accounts/preferences.html:37 templates/accounts/settings.html:40
+#: templates/organizations/settings.html:42
+#: templates/workspaces/settings.html:89
 msgid "Save changes"
 msgstr "Өзгөртүүлөрдү сактоо"
 
@@ -299,7 +877,10 @@ msgstr "Өзгөртүүлөрдү сактоо"
 msgid "How you appear to your team and in internal notes."
 msgstr "Командаңызга жана ички белгилерде кандай көрүнөсүз."
 
-#: templates/accounts/settings.html:32
+#: templates/accounts/settings.html:32 templates/api/keys_list.html:39
+#: templates/organizations/settings.html:27
+#: templates/organizations/settings.html:49
+#: templates/workspaces/settings.html:36
 msgid "Name"
 msgstr "Аты"
 
@@ -324,9 +905,388 @@ msgstr "Сырсөздү өзгөртүү"
 msgid "Add another email"
 msgstr "Дагы бир email кошуу"
 
+#: templates/api/key_created.html:3 templates/api/key_created.html:4
+msgid "API key issued"
+msgstr "API ачкычы чыгарылды"
+
+#: templates/api/key_created.html:15
+msgid "Copy this key now. It is not shown again."
+msgstr "Бул ачкычты азыр көчүрүп алыңыз. Ал кайра көрсөтүлбөйт."
+
+#: templates/api/key_created.html:18
+msgid "Using it"
+msgstr "Кантип колдонуу керек"
+
+#: templates/api/key_created.html:19
+msgid "Send it as a bearer token on every request:"
+msgstr "Ар бир суроо-талапта аны bearer-токен катары жөнөтүңүз:"
+
+#: templates/api/key_created.html:22
+#, python-format
+msgid ""
+"“%(key_name)s” acts in <strong>%(workspace_name)s</strong> and nowhere else."
+" Revoking it takes effect on the very next request. If you lose it, revoke "
+"it and issue another. It cannot be recovered."
+msgstr ""
+"«%(key_name)s» <strong>%(workspace_name)s</strong> ичинде гана иштейт, башка"
+" жерде эмес. Жокко чыгаруу кийинки эле суроо-талаптан күчүнө кирет. Жоготуп "
+"алсаңыз, аны жокко чыгарып, жаңысын чыгарыңыз. Аны калыбына келтирүү мүмкүн "
+"эмес."
+
+#: templates/api/key_created.html:25
+msgid "Read the API reference"
+msgstr "API справочнигин окуу"
+
+#: templates/api/key_created.html:26 templates/api/webhook_secret.html:22
+msgid "Done"
+msgstr "Бүттү"
+
+#: templates/api/keys_list.html:14 templates/api/keys_list.html:21
+msgid "API keys"
+msgstr "API ачкычтары"
+
+#: templates/api/keys_list.html:24
+#, python-format
+msgid ""
+"A key authenticates calls to the <a href=\"%(api_docs_url)s\">public API</a>"
+" as one workspace. Keys are organization-level because they span every "
+"workspace in the organization, but each key acts inside exactly one."
+msgstr ""
+"Ачкыч <a href=\"%(api_docs_url)s\">ачык API</a> чакырууларын бир мейкиндик "
+"атынан ырастайт. Ачкычтар уюм деңгээлинде чыгарылат, анткени уюмдун бардык "
+"мейкиндиктерин камтыйт, бирок ар бир ачкыч бир гана мейкиндикте иштейт."
+
+#: templates/api/keys_list.html:28 templates/api/keys_list.html:37
+msgid "Issue a key"
+msgstr "Ачкыч чыгаруу"
+
+#: templates/api/keys_list.html:49
+msgid "Scopes"
+msgstr "Мүмкүнчүлүк чөйрөлөрү"
+
+#: templates/api/keys_list.html:57
+msgid ""
+"<strong>Read</strong> lists contacts, tags, fields and flows. "
+"<strong>Write</strong> adds creating and updating contacts, tagging, setting"
+" field values, starting flows and sending messages. No scope grants channel,"
+" member or key management."
+msgstr ""
+"<strong>Окуу</strong> байланыштардын, тегдердин, талаалардын жана "
+"сценарийлердин тизмесин берет. <strong>Жазуу</strong> байланыштарды түзүү "
+"жана өзгөртүү, тег коюу, талаа маанилерин коюу, сценарийлерди баштоо жана "
+"билдирүү жөнөтүүнү кошот. Эч бир чөйрө каналдарды, мүчөлөрдү же ачкычтарды "
+"башкарууга уруксат бербейт."
+
+#: templates/api/keys_list.html:61
+msgid "Issue key"
+msgstr "Ачкыч чыгаруу"
+
+#: templates/api/keys_list.html:62 templates/api/webhooks_list.html:52
+#: templates/members/list.html:65 templates/members/list.html:108
+#: templates/organizations/workspaces.html:40
+msgid "Cancel"
+msgstr "Жокко чыгаруу"
+
+#: templates/api/keys_list.html:73
+msgid ""
+"You are an organization admin, but you do not hold the "
+"<code>manage_api_keys</code> permission in any workspace, so there is "
+"nowhere to issue a key. A workspace admin can grant it."
+msgstr ""
+"Сиз уюм администраторусуз, бирок эч бир мейкиндикте "
+"<code>manage_api_keys</code> уруксатыңыз жок, ошондуктан ачкыч чыгарууга жер"
+" жок. Мейкиндик администратору муну бере алат."
+
+#: templates/api/keys_list.html:77
+msgid "Existing keys"
+msgstr "Учурдагы ачкычтар"
+
+#: templates/api/keys_list.html:87
+msgid "Active"
+msgstr "Активдүү"
+
+#: templates/api/keys_list.html:87
+msgid "Revoked"
+msgstr "Жокко чыгарылды"
+
+#: templates/api/keys_list.html:96
+#, python-format
+msgid "last used %(last_used)s"
+msgstr "акыркы жолу %(last_used)s колдонулду"
+
+#: templates/api/keys_list.html:96
+msgid "never used"
+msgstr "эч качан колдонулган эмес"
+
+#: templates/api/keys_list.html:96
+#, python-format
+msgid "revoked %(revoked_at)s"
+msgstr "%(revoked_at)s жокко чыгарылды"
+
+#: templates/api/keys_list.html:101 templates/members/list.html:88
+#: templates/organizations/workspaces.html:65
+#, python-format
+msgid "More actions for %(name)s"
+msgstr "%(name)s үчүн дагы аракеттер"
+
+#: templates/api/keys_list.html:108
+msgid "Revoke this key"
+msgstr "Бул ачкычты жокко чыгаруу"
+
+#: templates/api/keys_list.html:117
+msgid "No keys yet"
+msgstr "Азырынча ачкычтар жок"
+
+#: templates/api/keys_list.html:119
+msgid ""
+"A key lets something outside BrightBean Chat — a Zapier scenario, a script, "
+"your own backend — read and write in one workspace."
+msgstr ""
+"Ачкыч BrightBean Chat'дын сыртындагы нерсеге — Zapier сценарийине, скриптке,"
+" өз бэкендиңизге — бир мейкиндикте окуу жана жазууга уруксат берет."
+
+#: templates/api/webhook_detail.html:3
+msgid "Webhook"
+msgstr "Вебхук"
+
+#: templates/api/webhook_detail.html:4
+msgid "Webhook endpoint"
+msgstr "Вебхук эндпоинти"
+
+#: templates/api/webhook_detail.html:18
+#, python-format
+msgid "Switched off after %(limit)s consecutive failed deliveries."
+msgstr "%(limit)s ирет катарынан ишке ашпаган жеткирүүдөн кийин өчүрүлдү."
+
+#: templates/api/webhook_detail.html:19
+msgid ""
+"Fix the endpoint, then tick <em>Enabled</em> below to start delivering "
+"again."
+msgstr ""
+"Эндпоинтти оңдоп, кайра жеткирүүнү баштоо үчүн төмөндөгү "
+"<em>Күйгүзүлгөн</em> дегенди белгилеңиз."
+
+#: templates/api/webhook_detail.html:24
+#: templates/partials/_app_sidebar.html:217
+msgid "Settings"
+msgstr "Тууралоолор"
+
+#: templates/api/webhook_detail.html:27 templates/api/webhooks_list.html:36
+msgid "URL"
+msgstr "URL"
+
+#: templates/api/webhook_detail.html:31 templates/api/webhooks_list.html:40
+msgid "Events"
+msgstr "Окуялар"
+
+#: templates/api/webhook_detail.html:42 templates/api/webhooks_list.html:65
+msgid "Enabled"
+msgstr "Күйгүзүлгөн"
+
+#: templates/api/webhook_detail.html:45
+msgid "Save"
+msgstr "Сактоо"
+
+#: templates/api/webhook_detail.html:48
+msgid "Signing secret"
+msgstr "Кол коюу сыры"
+
+#: templates/api/webhook_detail.html:50
+msgid ""
+"Every delivery carries an HMAC of the body over this secret. Rotating it "
+"invalidates signatures immediately. Update your receiver first, or "
+"deliveries will start failing verification the moment you rotate."
+msgstr ""
+"Ар бир жеткирүү ушул сыр менен эсептелген HMAC телосун алып жүрөт. Сырды "
+"которуу кол тамгаларды дароо жараксыз кылат. Адегенде кабылдагычыңызды "
+"жаңыртыңыз — болбосо которгондон кийин жеткирүүлөр текшерүүдөн өтпөй калат."
+
+#: templates/api/webhook_detail.html:55
+msgid "Rotate secret"
+msgstr "Сырды которуу"
+
+#: templates/api/webhook_detail.html:58
+msgid "Test"
+msgstr "Тест"
+
+#: templates/api/webhook_detail.html:60
+msgid ""
+"Sends a <code>webhook.test</code> event to this endpoint right now. Test "
+"deliveries are not retried and never count towards the auto-disable limit."
+msgstr ""
+"Бул эндпоинтке азыр эле <code>webhook.test</code> окуясын жөнөтөт. Тесттик "
+"жеткирүүлөр кайталанбайт жана авто-өчүрүү чегине эсептелбейт."
+
+#: templates/api/webhook_detail.html:64
+msgid "Send test event"
+msgstr "Тесттик окуяны жөнөтүү"
+
+#: templates/api/webhook_detail.html:67
+msgid "Recent deliveries"
+msgstr "Акыркы жеткирүүлөр"
+
+#: templates/api/webhook_detail.html:70
+msgid "When"
+msgstr "Качан"
+
+#: templates/api/webhook_detail.html:70
+msgid "Event"
+msgstr "Окуя"
+
+#: templates/api/webhook_detail.html:70
+msgid "Result"
+msgstr "Натыйжа"
+
+#: templates/api/webhook_detail.html:70
+msgid "Code"
+msgstr "Код"
+
+#: templates/api/webhook_detail.html:70
+msgid "Duration"
+msgstr "Узактыгы"
+
+#: templates/api/webhook_detail.html:70
+msgid "Attempt"
+msgstr "Аракет"
+
+#: templates/api/webhook_detail.html:81
+#, python-format
+msgid "%(duration)s ms"
+msgstr "%(duration)s мс"
+
+#: templates/api/webhook_detail.html:88
+msgid "Nothing delivered yet."
+msgstr "Азырынча эч нерсе жеткирилген жок."
+
+#: templates/api/webhook_detail.html:91
+msgid "Delete"
+msgstr "Өчүрүү"
+
+#: templates/api/webhook_detail.html:94
+msgid "Delete endpoint"
+msgstr "Эндпоинтти өчүрүү"
+
+#: templates/api/webhook_detail.html:97
+msgid "Back to webhooks"
+msgstr "Вебхуктарга кайтуу"
+
+#: templates/api/webhook_secret.html:3
+msgid "Webhook secret"
+msgstr "Вебхук сыры"
+
+#: templates/api/webhook_secret.html:14
+msgid "Copy this secret into your receiver now."
+msgstr "Бул сырды азыр кабылдагычыңызга көчүрүп алыңыз."
+
+#: templates/api/webhook_secret.html:19
+#, python-format
+msgid ""
+"Deliveries to <code>%(webhook_url)s</code> carry <code>X-BrightBean-"
+"Signature</code>, an HMAC-SHA256 over the timestamp and the raw body keyed "
+"on this secret. The <a href=\"%(api_docs_url)s\">API reference</a> has a "
+"verification snippet you can paste into your receiver."
+msgstr ""
+"<code>%(webhook_url)s</code> дарегине жеткирүүлөр убакыт тамгасы менен сурам"
+" телосунан бул сыр аркылуу эсептелген HMAC-SHA256 болгон <code>X-BrightBean-"
+"Signature</code> аталышын алып жүрөт. <a href=\"%(api_docs_url)s\">API "
+"справочнигинде</a> кабылдагычыңызга коюуга боло турган текшерүү үлгүсү бар."
+
+#: templates/api/webhooks_list.html:21
+msgid "Outbound webhooks"
+msgstr "Чыгуучу вебхуктар"
+
+#: templates/api/webhooks_list.html:24
+#, python-format
+msgid ""
+"BrightBean Chat POSTs a signed JSON document to your endpoint when something"
+" happens in this workspace. See the <a href=\"%(api_docs_url)s\">API "
+"reference</a> for the payload shape and a signature-verification snippet."
+msgstr ""
+"Бул мейкиндикте бир нерсе болгондо, BrightBean Chat сиздин эндпоинтиңизге "
+"кол коюлган JSON документин жөнөтөт. Мазмундун түзүлүшү жана кол тамга "
+"текшерүү үлгүсү <a href=\"%(api_docs_url)s\">API справочнигинде</a>."
+
+#: templates/api/webhooks_list.html:27 templates/api/webhooks_list.html:34
+#: templates/api/webhooks_list.html:81
+msgid "Add an endpoint"
+msgstr "Эндпоинт кошуу"
+
+#: templates/api/webhooks_list.html:51
+msgid "Add endpoint"
+msgstr "Эндпоинт кошуу"
+
+#: templates/api/webhooks_list.html:56
+msgid "Endpoints"
+msgstr "Эндпоинттер"
+
+#: templates/api/webhooks_list.html:65
+msgid "Disabled"
+msgstr "Өчүрүлгөн"
+
+#: templates/api/webhooks_list.html:68
+#, python-format
+msgid "last delivery %(last_delivery)s"
+msgstr "акыркы жеткирүү %(last_delivery)s"
+
+#: templates/api/webhooks_list.html:68
+msgid "never delivered"
+msgstr "азырынча жеткирилген эмес"
+
+#: templates/api/webhooks_list.html:68
+msgid "disabled after repeated failures"
+msgstr "кайталанган каталардан кийин өчүрүлдү"
+
+#: templates/api/webhooks_list.html:77
+msgid "No endpoints yet"
+msgstr "Азырынча эндпоинттер жок"
+
+#: templates/api/webhooks_list.html:79
+msgid ""
+"An endpoint is how something outside BrightBean Chat hears about a new "
+"message, a finished flow or a tagged contact, as it happens."
+msgstr ""
+"Эндпоинт — BrightBean Chat'дын сыртындагы нерсе жаңы билдирүү, аяктаган "
+"сценарий же тегделген байланыш жөнүндө дароо билип турушунун жолу."
+
 #: templates/base.html:170
 msgid "Toggle menu"
 msgstr "Менюну ачуу/жабуу"
+
+#: templates/members/_accept_invite_body.html:2
+#, python-format
+msgid "You have been invited to %(org_name)s"
+msgstr "Сиз %(org_name)s уюмуна чакырылдыңыз"
+
+#: templates/members/_accept_invite_body.html:10
+#, python-format
+msgid "Create an account or sign in with %(email)s to accept."
+msgstr "Кабыл алуу үчүн аккаунт түзүңүз же %(email)s дареги менен кириңиз."
+
+#: templates/members/_accept_invite_body.html:12
+msgid "Create an account"
+msgstr "Аккаунт түзүү"
+
+#: templates/members/_accept_invite_body.html:18
+#, python-format
+msgid "Join %(org_name)s"
+msgstr "%(org_name)s кошулуу"
+
+#: templates/members/_invite_expired_body.html:6
+msgid "This invitation is no longer valid"
+msgstr "Бул чакыруу мындан ары жарактуу эмес"
+
+#: templates/members/_invite_expired_body.html:7
+msgid ""
+"It may have expired, been revoked, or already been used. Ask whoever invited"
+" you to send a new one."
+msgstr ""
+"Мөөнөтү бүткөн, жокко чыгарылган же мурунтан эле колдонулган болушу мүмкүн. "
+"Сизди чакырган адамдан жаңысын жөнөтүүнү сураңыз."
+
+#: templates/members/accept_invite.html:3
+#: templates/members/invite_expired.html:3
+msgid "Invitation"
+msgstr "Чакыруу"
 
 #: templates/members/email/invite.html:2
 #, python-format
@@ -355,6 +1315,117 @@ msgstr ""
 #, python-format
 msgid "%(inviter)s invited you to join %(org_name)s on BrightBean Chat."
 msgstr "%(inviter)s сизди BrightBean Chat'тагы %(org_name)s уюмуна чакырды."
+
+#: templates/members/list.html:15 templates/members/list.html:22
+msgid "Team members"
+msgstr "Команда мүчөлөрү"
+
+#: templates/members/list.html:24
+msgid ""
+"Everybody in this organization, what they can do across it, and which "
+"workspaces they can reach."
+msgstr ""
+"Бул уюмдагы бардык адамдар, алар эмне кыла алышат жана кайсы мейкиндиктерге "
+"жетише алышат."
+
+#: templates/members/list.html:28 templates/members/list.html:35
+msgid "Invite someone"
+msgstr "Чакыруу"
+
+#: templates/members/list.html:37
+msgid "Email"
+msgstr "Email"
+
+#: templates/members/list.html:41 templates/members/list.html:103
+msgid "Organization role"
+msgstr "Уюмдагы ролу"
+
+#: templates/members/list.html:47 templates/members/manage_workspaces.html:3
+msgid "Workspace access"
+msgstr "Мейкиндикке мүмкүнчүлүк"
+
+#: templates/members/list.html:54 templates/members/manage_workspaces.html:21
+#, python-format
+msgid "Role in %(name)s"
+msgstr "%(name)s ичиндеги ролу"
+
+#: templates/members/list.html:60
+msgid "You cannot manage members in any workspace yet."
+msgstr "Азырынча эч бир мейкиндикте мүчөлөрдү башкара албайсыз."
+
+#: templates/members/list.html:64
+msgid "Send invitation"
+msgstr "Чакырууну жөнөтүү"
+
+#: templates/members/list.html:70
+msgid "Members"
+msgstr "Мүчөлөр"
+
+#: templates/members/list.html:85
+msgid "Manage access"
+msgstr "Мүмкүнчүлүктү башкаруу"
+
+#: templates/members/list.html:93
+msgid "Change role…"
+msgstr "Ролду өзгөртүү…"
+
+#: templates/members/list.html:97
+msgid "Remove from organization"
+msgstr "Уюмдан чыгаруу"
+
+#: templates/members/list.html:107
+msgid "Update"
+msgstr "Жаңыртуу"
+
+#: templates/members/list.html:116
+msgid "Nobody here yet"
+msgstr "Бул жерде азырынча эч ким жок"
+
+#: templates/members/list.html:117
+msgid "Invite the people who answer messages with you."
+msgstr "Сиз менен билдирүүлөргө жооп берген адамдарды чакырыңыз."
+
+#: templates/members/list.html:121
+msgid "Pending invitations"
+msgstr "Күтүлүп жаткан чакыруулар"
+
+#: templates/members/list.html:132
+#, python-format
+msgid "Expires %(expires_at)s"
+msgstr "%(expires_at)s мөөнөтү бүтөт"
+
+#: templates/members/list.html:137
+msgid "Resend"
+msgstr "Кайра жөнөтүү"
+
+#: templates/members/list.html:141
+msgid "Revoke"
+msgstr "Жокко чыгаруу"
+
+#: templates/members/list.html:149
+msgid "No pending invitations"
+msgstr "Күтүлүп жаткан чакыруулар жок"
+
+#: templates/members/list.html:150
+msgid "Invitations you send appear here until they are accepted."
+msgstr "Сиз жөнөткөн чакыруулар кабыл алынганга чейин бул жерде көрүнөт."
+
+#: templates/members/manage_workspaces.html:4
+#, python-format
+msgid "Workspace access for %(name)s"
+msgstr "%(name)s үчүн мейкиндикке мүмкүнчүлүк"
+
+#: templates/members/manage_workspaces.html:29
+msgid "You cannot manage members in any workspace."
+msgstr "Эч бир мейкиндикте мүчөлөрдү башкара албайсыз."
+
+#: templates/members/manage_workspaces.html:31
+msgid "Save access"
+msgstr "Мүмкүнчүлүктү сактоо"
+
+#: templates/members/manage_workspaces.html:34
+msgid "Back to team members"
+msgstr "Команда мүчөлөрүнө кайтуу"
 
 #: templates/notifications/email/notification.html:58
 #, python-format
@@ -385,6 +1456,165 @@ msgstr ""
 msgid "Turn them off"
 msgstr "Аларды өчүрүү"
 
+#: templates/organizations/billing.html:10
+msgid "What this organization is on, and what it is using."
+msgstr "Уюм кайсы тарифте жана эмнени колдонуп жатат."
+
+#: templates/organizations/billing.html:13
+msgid "Checkout was cancelled. No charge was made."
+msgstr "Төлөм жокко чыгарылды. Эч нерсе эсептен алынган жок."
+
+#: templates/organizations/billing.html:16
+msgid ""
+"Your subscription is being activated. This usually takes a few seconds — "
+"refresh the page."
+msgstr ""
+"Жазылууңуз активдештирилүүдө. Бул адатта бир нече секунд алат — баракты "
+"жаңыртыңыз."
+
+#: templates/organizations/billing.html:32
+msgid "Current plan"
+msgstr "Учурдагы тариф"
+
+#: templates/organizations/billing.html:71
+msgid "Manage billing"
+msgstr "Төлөмдү башкаруу"
+
+#: templates/organizations/billing.html:95
+msgid "Billing interval"
+msgstr "Төлөм мезгили"
+
+#: templates/organizations/billing.html:100
+msgid "Monthly"
+msgstr "Айлык"
+
+#: templates/organizations/billing.html:102
+msgid "Yearly"
+msgstr "Жылдык"
+
+#: templates/organizations/billing.html:114
+msgid "Subscribe"
+msgstr "Жазылуу"
+
+#: templates/organizations/billing.html:129
+#, python-format
+msgid "Renews on %(renewal_date)s."
+msgstr "%(renewal_date)s жаңыртылат."
+
+#: templates/organizations/billing.html:132
+#, python-format
+msgid ""
+"Your plan ends on %(end_date)s. Nothing is deleted — you keep everything you"
+" have made."
+msgstr ""
+"Тарифиңиз %(end_date)s аяктайт. Эч нерсе өчүрүлбөйт — жараткандарыңыздын "
+"баары сизде калат."
+
+#: templates/organizations/billing.html:138
+msgid "Only organization admins can change the plan."
+msgstr "Тарифти уюм администраторлору гана өзгөртө алат."
+
+#: templates/organizations/billing.html:150
+msgid "Self-hosted"
+msgstr "Өзүн-өзү тейлөө"
+
+#: templates/organizations/billing.html:152
+msgid ""
+"Every feature is available, with no limits and nothing counted. There is no "
+"plan to be on and no payment provider to configure."
+msgstr ""
+"Бардык функциялар чектөөсүз жана эсепсиз жеткиликтүү. Тариф да, төлөм "
+"провайдерин тууралоо да керек эмес."
+
+#: templates/organizations/billing.html:158
+msgid "Usage"
+msgstr "Колдонуу"
+
+#: templates/organizations/billing.html:165
+#, python-format
+msgid "%(used)s of %(limit)s"
+msgstr "%(limit)s ичинен %(used)s"
+
+#: templates/organizations/settings.html:14
+#: templates/organizations/settings.html:19
+msgid "Organization"
+msgstr "Уюм"
+
+#: templates/organizations/settings.html:20
+msgid "The account every workspace in it belongs to."
+msgstr "Бардык мейкиндиктер таандык болгон аккаунт."
+
+#: templates/organizations/settings.html:31
+#: templates/organizations/settings.html:53
+msgid "Default timezone"
+msgstr "Демейки убакыт алкагы"
+
+#: templates/organizations/settings.html:35
+msgid "Every workspace that has not set its own clock keeps this one."
+msgstr "Өз убакыт алкагын коё элек ар бир мейкиндик ушуну колдонот."
+
+#: templates/organizations/settings.html:38
+msgid "Logo URL"
+msgstr "Логотип URL"
+
+#: templates/organizations/settings.html:38
+#: templates/workspaces/settings.html:40 templates/workspaces/settings.html:45
+msgid "optional"
+msgstr "милдеттүү эмес"
+
+#: templates/organizations/settings.html:57
+msgid "Only organization admins can change these."
+msgstr "Муну уюм администраторлору гана өзгөртө алат."
+
+#: templates/organizations/workspaces.html:24
+msgid ""
+"Each workspace has its own channels, contacts and inbox. Archiving one keeps"
+" everything and takes it out of the switcher."
+msgstr ""
+"Ар бир мейкиндиктин өз каналдары, байланыштары жана кирүүчүлөрү бар. "
+"Архивдөө баарын сактайт жана которгучтан алып салат."
+
+#: templates/organizations/workspaces.html:28
+#: templates/partials/_app_sidebar.html:164
+msgid "New workspace"
+msgstr "Жаңы жумуш мейкиндиги"
+
+#: templates/organizations/workspaces.html:36
+msgid "What is it called?"
+msgstr "Ал кандай аталат?"
+
+#: templates/organizations/workspaces.html:39
+msgid "Create"
+msgstr "Түзүү"
+
+#: templates/organizations/workspaces.html:53
+msgid "Archived"
+msgstr "Архивделген"
+
+#: templates/organizations/workspaces.html:56
+msgid "You are a member"
+msgstr "Сиз мүчөсүз"
+
+#: templates/organizations/workspaces.html:56
+msgid "You do not have access"
+msgstr "Сизде мүмкүнчүлүк жок"
+
+#: templates/organizations/workspaces.html:73
+msgid "Restore"
+msgstr "Калыбына келтирүү"
+
+#: templates/organizations/workspaces.html:73
+msgid "Archive"
+msgstr "Архивдөө"
+
+#: templates/organizations/workspaces.html:82
+msgid "No workspaces yet"
+msgstr "Азырынча мейкиндиктер жок"
+
+#: templates/organizations/workspaces.html:83
+msgid "A workspace is one shop, brand or team, with its own inbox."
+msgstr "Мейкиндик — бул өз кирүүчүлөрү бар бир дүкөн, бренд же команда."
+
 #: templates/partials/_app_sidebar.html:110
 #, python-format
 msgid "Back to %(name)s"
@@ -395,17 +1625,10 @@ msgstr "%(name)s мейкиндигине кайтуу"
 msgid "Switch workspace (currently %(name)s)"
 msgstr "Мейкиндикти которуу (учурда: %(name)s)"
 
-#: templates/partials/_app_sidebar.html:164
-msgid "New workspace"
-msgstr "Жаңы жумуш мейкиндиги"
-
 #: templates/partials/_app_sidebar.html:185
+#: templates/workspaces/settings.html:22 templates/workspaces/settings.html:27
 msgid "Workspace settings"
 msgstr "Мейкиндик тууралоолору"
-
-#: templates/partials/_app_sidebar.html:217
-msgid "Settings"
-msgstr "Тууралоолор"
 
 #: templates/partials/_app_sidebar.html:217
 msgid "Main"
@@ -430,10 +1653,6 @@ msgstr "Уюм тууралоолору"
 #: templates/partials/_app_sidebar.html:352
 msgid "Sign out"
 msgstr "Чыгуу"
-
-#: templates/partials/_sidebar_channels.html:44
-msgid "Connect a channel"
-msgstr "Канал кошуу"
 
 #: templates/partials/_sidebar_channels.html:53
 msgid "needs reconnecting"
@@ -460,3 +1679,154 @@ msgstr "Дагы каналдар"
 #: templates/partials/_sub_nav.html:13
 msgid "Section"
 msgstr "Бөлүм"
+
+#: templates/workspaces/dashboard.html:27
+#, python-format
+msgid "%(workspace_name)s. Your role here: %(role)s."
+msgstr "%(workspace_name)s. Бул жердеги ролуңуз: %(role)s."
+
+#: templates/workspaces/dashboard.html:31
+msgid "New flow"
+msgstr "Жаңы сценарий"
+
+#: templates/workspaces/dashboard.html:46
+msgid "Finish setting up"
+msgstr "Тууралоону бүтүрүңүз"
+
+#: templates/workspaces/dashboard.html:48
+#, python-format
+msgid "%(counter)s step left. About five minutes."
+msgid_plural "%(counter)s steps left. About five minutes."
+msgstr[0] "%(counter)s кадам калды. Болжол менен беш мүнөт."
+
+#: templates/workspaces/dashboard.html:55
+#, python-format
+msgid "%(done)s of %(total)s"
+msgstr "%(total)s ичинен %(done)s"
+
+#: templates/workspaces/dashboard.html:100
+msgid "Start from a template"
+msgstr "Шаблондон баштаңыз"
+
+#: templates/workspaces/dashboard.html:102
+#, python-format
+msgid ""
+"%(counter)s ready-made flow. Pick one and change the words to suit you."
+msgid_plural ""
+"%(counter)s ready-made flows. Pick one and change the words to suit you."
+msgstr[0] ""
+"%(counter)s даяр сценарий бар. Тандап алып, сөздөрдү өзүңүзгө ылайыктаңыз."
+
+#: templates/workspaces/dashboard.html:105
+#, python-format
+msgid "Browse all %(total)s"
+msgstr "Баарын көрүү (%(total)s)"
+
+#: templates/workspaces/dashboard.html:126
+msgid "Last 7 days"
+msgstr "Акыркы 7 күн"
+
+#: templates/workspaces/dashboard.html:129
+msgid "See insights"
+msgstr "Аналитиканы көрүү"
+
+#: templates/workspaces/dashboard.html:135
+msgid "Messages in"
+msgstr "Кирүүчү билдирүүлөр"
+
+#: templates/workspaces/dashboard.html:139
+msgid "Messages out"
+msgstr "Чыгуучу билдирүүлөр"
+
+#: templates/workspaces/dashboard.html:143
+msgid "New contacts"
+msgstr "Жаңы байланыштар"
+
+#: templates/workspaces/dashboard.html:147
+msgid "Live flows"
+msgstr "Активдүү сценарийлер"
+
+#: templates/workspaces/dashboard.html:158
+msgid "Messages received per day over the last seven days"
+msgstr "Акыркы жети күндөгү күн сайынкы билдирүүлөр"
+
+#: templates/workspaces/dashboard.html:171
+msgid "Needs you"
+msgstr "Сизди күтөт"
+
+#: templates/workspaces/dashboard.html:185
+msgid "Nothing is waiting on you."
+msgstr "Сизди эч нерсе күтпөйт."
+
+#: templates/workspaces/settings.html:28
+msgid "What this workspace is called, and what clock it keeps."
+msgstr "Бул мейкиндик кандай аталат жана кайсы убакыт алкагын колдонот."
+
+#: templates/workspaces/settings.html:34
+msgid "Name and description"
+msgstr "Аты жана баяндамасы"
+
+#: templates/workspaces/settings.html:40
+msgid "Icon"
+msgstr "Белги"
+
+#: templates/workspaces/settings.html:42
+msgid "One emoji. It sits beside the name in the workspace switcher."
+msgstr "Бир эмодзи. Мейкиндик которгучунда аттын жанында турат."
+
+#: templates/workspaces/settings.html:45
+msgid "Description"
+msgstr "Баяндама"
+
+#: templates/workspaces/settings.html:51
+msgid "Clock"
+msgstr "Убакыт алкагы"
+
+#: templates/workspaces/settings.html:53
+msgid ""
+"Scheduled broadcasts, sending windows and every \"today\" on a filter are "
+"read in this zone."
+msgstr ""
+"Пландалган жайылтуулар, жөнөтүү терезелери жана чыпчадагы ар бир «бүгүн» "
+"ушул убакыт алкагы боюнча эсептелет."
+
+#: templates/workspaces/settings.html:56
+msgid "Timezone"
+msgstr "Убакыт алкагы"
+
+#: templates/workspaces/settings.html:58
+#, python-format
+msgid "Use the organization default (%(default_tz)s)"
+msgstr "Уюмдун демейкисин колдонуу (%(default_tz)s)"
+
+#: templates/workspaces/settings.html:65
+msgid "Colours"
+msgstr "Түстөр"
+
+#: templates/workspaces/settings.html:66
+msgid "Kept for a white-labelled inbox."
+msgstr "White-label кирүүчүлөр үчүн сакталат."
+
+#: templates/workspaces/settings.html:69
+msgid "Primary"
+msgstr "Негизги"
+
+#: templates/workspaces/settings.html:71
+msgid "Pick the primary colour"
+msgstr "Негизги түстү тандоо"
+
+#: templates/workspaces/settings.html:73 templates/workspaces/settings.html:83
+msgid "Clear"
+msgstr "Тазалоо"
+
+#: templates/workspaces/settings.html:75
+msgid "Leave it blank to use the BrightBean orange."
+msgstr "BrightBean'дын кызгылт сары түсүн колдонуу үчүн бош калтырыңыз."
+
+#: templates/workspaces/settings.html:79
+msgid "Secondary"
+msgstr "Кошумча"
+
+#: templates/workspaces/settings.html:81
+msgid "Pick the secondary colour"
+msgstr "Кошумча түстү тандоо"

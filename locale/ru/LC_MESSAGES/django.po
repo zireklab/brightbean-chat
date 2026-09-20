@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 00:54+0600\n"
+"POT-Creation-Date: 2026-09-20 10:09+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ru\n"
@@ -17,126 +17,395 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: apps/broadcasts/notifications.py:40 apps/notifications/events.py:305
+#: apps/api/events.py:94
+msgid "Contact created"
+msgstr "Контакт создан"
+
+#: apps/api/events.py:95
+msgid "Tag added to a contact"
+msgstr "Тег контакту кошулду"
+
+#: apps/api/events.py:96
+msgid "Inbound message received"
+msgstr "Входящее сообщение получено"
+
+#: apps/api/events.py:97
+msgid "Flow execution completed"
+msgstr "Выполнение сценария завершено"
+
+#: apps/api/events.py:98
+msgid "Contact subscribed to a sequence"
+msgstr "Контакт подписан на цепочку"
+
+#: apps/api/events.py:99
+msgid "Contact unsubscribed from a sequence"
+msgstr "Контакт отписан от цепочки"
+
+#: apps/api/events.py:100
+msgid "Broadcast finished"
+msgstr "Рассылка завершена"
+
+#: apps/api/models.py:75
+msgid "Read"
+msgstr "Чтение"
+
+#: apps/api/models.py:76
+msgid "Write"
+msgstr "Запись"
+
+#: apps/api/models.py:77
+msgid "Erase"
+msgstr "Удаление"
+
+#: apps/api/models.py:88
+msgid "Succeeded"
+msgstr "Успешно"
+
+#: apps/api/models.py:89
+msgid "Failed"
+msgstr "Ошибка"
+
+#: apps/api/models.py:90
+msgid "Blocked"
+msgstr "Заблокировано"
+
+#: apps/api/services.py:72
+msgid "Only an organization owner or admin can issue API keys."
+msgstr ""
+"Выпускать API-ключи может только владелец или администратор организации."
+
+#: apps/api/services.py:76
+msgid ""
+"You need the manage_api_keys permission in that workspace to issue a key for"
+" it."
+msgstr "Для выпуска ключа в этом пространстве нужно право manage_api_keys."
+
+#: apps/api/services.py:82
+msgid "A key needs at least one scope."
+msgstr "Ключу нужна хотя бы одна область доступа."
+
+#: apps/api/services.py:85
+#, python-format
+msgid "Unknown scope: %(scopes)s."
+msgstr "Неизвестная область доступа: %(scopes)s."
+
+#: apps/api/services.py:92
+#, python-format
+msgid ""
+"You cannot grant the %(scope)s scope: it includes %(missing)s, which you do "
+"not hold."
+msgstr ""
+"Нельзя выдать область %(scope)s: она включает %(missing)s, чего у вас нет."
+
+#: apps/api/services.py:124
+msgid "Give the key a name so you can recognise it later."
+msgstr "Дайте ключу имя, чтобы потом его узнать."
+
+#: apps/api/services.py:126
+msgid "The name is too long (100 characters maximum)."
+msgstr "Имя слишком длинное (максимум 100 символов)."
+
+#: apps/api/services.py:148
+#, python-format
+msgid ""
+"This workspace already has %(limit)s active keys. Revoke one before issuing "
+"another."
+msgstr ""
+"В этом пространстве уже %(limit)s активных ключей. Отзовите один, прежде чем"
+" выпускать новый."
+
+#: apps/api/services.py:189
+#, python-format
+msgid "Unknown event: %(events)s."
+msgstr "Неизвестное событие: %(events)s."
+
+#: apps/api/services.py:191
+msgid "Choose at least one event to send."
+msgstr "Выберите хотя бы одно событие для отправки."
+
+#: apps/api/services.py:207
+msgid "Enter the URL deliveries should be sent to."
+msgstr "Укажите URL, на который отправлять доставки."
+
+#: apps/api/services.py:209
+msgid "That URL is too long (500 characters maximum)."
+msgstr "Этот URL слишком длинный (максимум 500 символов)."
+
+#: apps/api/services.py:212
+msgid "The URL must start with http:// or https://."
+msgstr "URL должен начинаться с http:// или https://."
+
+#: apps/api/services.py:216
+msgid "The URL must not carry a username or password."
+msgstr "URL не должен содержать имя пользователя или пароль."
+
+#: apps/api/services.py:218 apps/api/services.py:222
+msgid "That does not look like a valid URL."
+msgstr "Это не похоже на корректный URL."
+
+#: apps/api/services.py:249
+#, python-format
+msgid "This workspace already has %(limit)s endpoints."
+msgstr "В этом пространстве уже %(limit)s конечных точек."
+
+#: apps/api/views_keys.py:140
+msgid "Choose a workspace."
+msgstr "Выберите пространство."
+
+#: apps/api/views_keys.py:182
+#, python-format
+msgid "Revoked “%(name)s”."
+msgstr "Ключ «%(name)s» отозван."
+
+#: apps/api/views_keys.py:184
+#, python-format
+msgid "“%(name)s” was already revoked."
+msgstr "«%(name)s» уже был отозван."
+
+#: apps/api/views_webhooks.py:115
+msgid "Endpoint created"
+msgstr "Конечная точка создана"
+
+#: apps/api/views_webhooks.py:166
+msgid "Endpoint updated."
+msgstr "Конечная точка обновлена."
+
+#: apps/api/views_webhooks.py:189
+msgid "New signing secret"
+msgstr "Новый секрет подписи"
+
+#: apps/api/views_webhooks.py:207
+#, python-format
+msgid "Test delivered — the endpoint answered %(code)s."
+msgstr "Тест доставлен — конечная точка ответила %(code)s."
+
+#: apps/api/views_webhooks.py:210
+#, python-format
+msgid "Test failed: %(reason)s."
+msgstr "Тест не удался: %(reason)s."
+
+#: apps/api/views_webhooks.py:222
+#, python-format
+msgid "Deleted %(url)s."
+msgstr "%(url)s удалён."
+
+#: apps/billing/entitlements.py:345
+#, python-format
+msgid ""
+"Your plan connects %(limit)s channels. Upgrade to connect more, or disable "
+"one you are not using."
+msgstr ""
+"Ваш тариф позволяет подключить %(limit)s каналов. Перейдите на другой тариф "
+"или отключите неиспользуемый канал."
+
+#: apps/billing/entitlements.py:357
+#, python-format
+msgid ""
+"Your plan runs %(limit)s automations at once. Upgrade, or switch one off to "
+"free up a slot."
+msgstr ""
+"Ваш тариф позволяет запускать %(limit)s автоматизаций одновременно. "
+"Перейдите на другой тариф или отключите одну, чтобы освободить место."
+
+#: apps/billing/entitlements.py:370
+#, python-format
+msgid "Your plan includes %(limit)s user. Upgrade to add more."
+msgid_plural "Your plan includes %(limit)s users. Upgrade to add more."
+msgstr[0] ""
+"В ваш тариф входит %(limit)s пользователь. Перейдите на другой тариф, чтобы "
+"добавить ещё."
+msgstr[1] ""
+"В ваш тариф входит %(limit)s пользователя. Перейдите на другой тариф, чтобы "
+"добавить ещё."
+msgstr[2] ""
+"В ваш тариф входит %(limit)s пользователей. Перейдите на другой тариф, чтобы"
+" добавить ещё."
+msgstr[3] ""
+"В ваш тариф входит %(limit)s пользователей. Перейдите на другой тариф, чтобы"
+" добавить ещё."
+
+#: apps/billing/entitlements.py:386
+#, python-format
+msgid "Your plan includes %(limit)s workspace. Upgrade to add more."
+msgid_plural "Your plan includes %(limit)s workspaces. Upgrade to add more."
+msgstr[0] ""
+"В ваш тариф входит %(limit)s пространство. Перейдите на другой тариф, чтобы "
+"добавить ещё."
+msgstr[1] ""
+"В ваш тариф входит %(limit)s пространства. Перейдите на другой тариф, чтобы "
+"добавить ещё."
+msgstr[2] ""
+"В ваш тариф входит %(limit)s пространств. Перейдите на другой тариф, чтобы "
+"добавить ещё."
+msgstr[3] ""
+"В ваш тариф входит %(limit)s пространств. Перейдите на другой тариф, чтобы "
+"добавить ещё."
+
+#: apps/billing/entitlements.py:406
+msgid "The public API is available on the paid plan."
+msgstr "Публичный API доступен на платном тарифе."
+
+#: apps/billing/services.py:53
+msgid "Choose a monthly or yearly plan."
+msgstr "Выберите месячный или годовой тариф."
+
+#: apps/billing/services.py:59
+msgid "That plan is not available right now."
+msgstr "Этот тариф сейчас недоступен."
+
+#: apps/billing/services.py:104 apps/billing/services.py:207
+#: apps/billing/views.py:92
+msgid "We could not start checkout. Try again in a minute."
+msgstr "Не удалось начать оформление оплаты. Попробуйте через минуту."
+
+#: apps/billing/services.py:129 apps/billing/services.py:145
+msgid "A checkout is already open. Finish it, or wait a minute and try again."
+msgstr ""
+"Оформление оплаты уже открыто. Завершите его или подождите минуту и "
+"попробуйте снова."
+
+#: apps/billing/services.py:173
+msgid "There is no billing account to manage yet."
+msgstr "Пока нет платёжного аккаунта для управления."
+
+#: apps/billing/views.py:75
+msgid "You are already on the paid plan."
+msgstr "Вы уже на платном тарифе."
+
+#: apps/billing/views.py:118
+msgid "We could not open the billing portal. Try again in a minute."
+msgstr "Не удалось открыть портал оплаты. Попробуйте через минуту."
+
+#: apps/broadcasts/notifications.py:40 apps/notifications/events.py:319
 #, python-brace-format
 msgid "Broadcast \"{broadcast_name}\" finished"
 msgstr "Рассылка «{broadcast_name}» завершена"
 
-#: apps/broadcasts/notifications.py:41 apps/notifications/events.py:306
+#: apps/broadcasts/notifications.py:41 apps/notifications/events.py:320
 #, python-brace-format
 msgid "{sent} sent, {failed} failed, {skipped} skipped."
 msgstr "Отправлено: {sent}, ошибок: {failed}, пропущено: {skipped}."
 
-#: apps/common/context_processors.py:229
+#: apps/common/context_processors.py:238 templates/api/keys_list.html:43
 msgid "Workspace"
 msgstr "Рабочее пространство"
 
-#: apps/common/context_processors.py:234 apps/common/context_processors.py:359
+#: apps/common/context_processors.py:243 apps/common/context_processors.py:368
 msgid "General"
 msgstr "Общее"
 
-#: apps/common/context_processors.py:242
+#: apps/common/context_processors.py:251
 #: templates/partials/_sidebar_channels.html:35
 msgid "Channels"
 msgstr "Каналы"
 
-#: apps/common/context_processors.py:278
+#: apps/common/context_processors.py:287
 msgid "Library"
 msgstr "Медиатека"
 
-#: apps/common/context_processors.py:298
+#: apps/common/context_processors.py:307
 msgid "Tags"
 msgstr "Теги"
 
-#: apps/common/context_processors.py:306
+#: apps/common/context_processors.py:315
 msgid "Labels"
 msgstr "Метки"
 
-#: apps/common/context_processors.py:314
+#: apps/common/context_processors.py:323
 msgid "Inbox rules"
 msgstr "Правила входящих"
 
-#: apps/common/context_processors.py:326
+#: apps/common/context_processors.py:335
 msgid "Fields"
 msgstr "Поля"
 
-#: apps/common/context_processors.py:334
+#: apps/common/context_processors.py:343
 msgid "Email tracking"
 msgstr "Отслеживание писем"
 
-#: apps/common/context_processors.py:346
+#: apps/common/context_processors.py:355 templates/api/webhooks_list.html:14
 msgid "Webhooks"
 msgstr "Вебхуки"
 
-#: apps/common/context_processors.py:355
+#: apps/common/context_processors.py:364
 msgid "Organisation"
 msgstr "Организация"
 
-#: apps/common/context_processors.py:366
+#: apps/common/context_processors.py:375
+#: templates/organizations/workspaces.html:15
+#: templates/organizations/workspaces.html:22
 msgid "Workspaces"
 msgstr "Рабочие пространства"
 
-#: apps/common/context_processors.py:372
+#: apps/common/context_processors.py:381
 msgid "People & roles"
 msgstr "Люди и роли"
 
-#: apps/common/context_processors.py:376
+#: apps/common/context_processors.py:385
+#: templates/organizations/billing.html:3
+#: templates/organizations/billing.html:9
 msgid "Plan & billing"
 msgstr "Тариф и оплата"
 
-#: apps/common/context_processors.py:384
+#: apps/common/context_processors.py:393
 msgid "Developers"
 msgstr "Разработчикам"
 
-#: apps/common/context_processors.py:396 templates/accounts/settings.html:14
+#: apps/common/context_processors.py:405 templates/accounts/settings.html:14
 #: templates/accounts/settings.html:19
 msgid "Profile"
 msgstr "Профиль"
 
-#: apps/common/context_processors.py:402 templates/accounts/preferences.html:8
+#: apps/common/context_processors.py:411 templates/accounts/preferences.html:8
 #: templates/accounts/preferences.html:14
 msgid "Preferences"
 msgstr "Настройки"
 
-#: apps/common/context_processors.py:426
+#: apps/common/context_processors.py:435
 msgid "Home"
 msgstr "Главная"
 
-#: apps/common/context_processors.py:433
+#: apps/common/context_processors.py:442
 msgid "Inbox"
 msgstr "Входящие"
 
-#: apps/common/context_processors.py:446 apps/common/context_processors.py:517
+#: apps/common/context_processors.py:455 apps/common/context_processors.py:526
 msgid "Flows"
 msgstr "Сценарии"
 
-#: apps/common/context_processors.py:456
+#: apps/common/context_processors.py:465
 msgid "Broadcasts"
 msgstr "Рассылки"
 
-#: apps/common/context_processors.py:464
+#: apps/common/context_processors.py:473
 msgid "Contacts"
 msgstr "Контакты"
 
-#: apps/common/context_processors.py:478
+#: apps/common/context_processors.py:487
 msgid "Insights"
 msgstr "Аналитика"
 
-#: apps/common/context_processors.py:496
+#: apps/common/context_processors.py:505
 msgid "Notifications"
 msgstr "Уведомления"
 
-#: apps/common/context_processors.py:525
+#: apps/common/context_processors.py:534
 msgid "Sequences"
 msgstr "Цепочки"
 
-#: apps/common/context_processors.py:533
+#: apps/common/context_processors.py:542
 msgid "Templates"
 msgstr "Шаблоны"
 
 #: apps/common/tests/test_templatetags.py:166
+#: templates/api/webhooks_list.html:71
+#: templates/organizations/workspaces.html:61
 msgid "Open"
 msgstr "Открыть"
+
+#: apps/common/validators.py:36
+msgid "Color must be a 6-digit hex value like #3B82F6."
+msgstr "Цвет должен быть 6-значным hex-значением, например #3B82F6."
 
 #: apps/flows/starter.py:45
 msgid "Hi! Thanks for getting in touch — how can we help?"
@@ -151,17 +420,207 @@ msgstr "Запланированный ответ для {contact_name} не б�
 msgid "A scheduled reply was not sent"
 msgstr "Запланированный ответ не был отправлен"
 
-#: apps/members/services.py:415
+#: apps/members/roles.py:40
+msgid "Owner"
+msgstr "Владелец"
+
+#: apps/members/roles.py:41 apps/members/roles.py:48
+msgid "Admin"
+msgstr "Администратор"
+
+#: apps/members/roles.py:42
+msgid "Member"
+msgstr "Участник"
+
+#: apps/members/roles.py:49
+msgid "Editor"
+msgstr "Редактор"
+
+#: apps/members/roles.py:50
+msgid "Agent"
+msgstr "Агент"
+
+#: apps/members/roles.py:51
+msgid "Viewer"
+msgstr "Наблюдатель"
+
+#: apps/members/services.py:143
+#, python-format
+msgid "You cannot %(verb)s a member whose role is higher than your own."
+msgstr "Вы не можете %(verb)s участника с ролью выше вашей."
+
+#: apps/members/services.py:145
+#, python-format
+msgid "Only organization owners can %(verb)s an organization admin."
+msgstr ""
+"Только владельцы организации могут %(verb)s администратора организации."
+
+#: apps/members/services.py:158
+msgid "That workspace does not belong to your organization."
+msgstr "Это пространство не принадлежит вашей организации."
+
+#: apps/members/services.py:160
+#, python-format
+msgid "Unknown workspace role: %(role)r."
+msgstr "Неизвестная роль в пространстве: %(role)r."
+
+#: apps/members/services.py:169
+msgid "You cannot manage members in that workspace."
+msgstr "Вы не можете управлять участниками в этом пространстве."
+
+#: apps/members/services.py:171
+msgid ""
+"You cannot grant a workspace role higher than your own in that workspace."
+msgstr "Вы не можете выдать в этом пространстве роль выше вашей."
+
+#: apps/members/services.py:187
+msgid ""
+"Cannot remove the last admin of a workspace. Promote someone else first."
+msgstr ""
+"Нельзя удалить последнего администратора пространства. Сначала назначьте "
+"другого."
+
+#: apps/members/services.py:207
+msgid "An email address is required."
+msgstr "Нужен email-адрес."
+
+#: apps/members/services.py:214
+msgid "This person is already a member of your organization."
+msgstr "Этот человек уже состоит в вашей организации."
+
+#: apps/members/services.py:218
+msgid ""
+"An invitation is already pending for this address. You can resend it "
+"instead."
+msgstr ""
+"Приглашение для этого адреса уже отправлено. Вы можете отправить его "
+"повторно."
+
+#: apps/members/services.py:221
+msgid "Cannot invite someone as an organization owner."
+msgstr "Нельзя пригласить кого-то как владельца организации."
+
+#: apps/members/services.py:225 apps/members/services.py:482
+#, python-format
+msgid "Unknown org role: %(role)r."
+msgstr "Неизвестная роль в организации: %(role)r."
+
+#: apps/members/services.py:230
+msgid "Only organization owners can invite someone as an admin."
+msgstr "Только владельцы организации могут приглашать администраторов."
+
+#: apps/members/services.py:238
+msgid "Choose at least one workspace to invite this person into."
+msgstr "Выберите хотя бы одно пространство, чтобы пригласить этого человека."
+
+#: apps/members/services.py:288
+msgid "This invitation is no longer available."
+msgstr "Это приглашение больше недоступно."
+
+#: apps/members/services.py:292
+msgid "This invitation has already been accepted."
+msgstr "Это приглашение уже принято."
+
+#: apps/members/services.py:294
+msgid "This invitation has expired."
+msgstr "Срок действия приглашения истёк."
+
+#: apps/members/services.py:296
+msgid "This invitation was sent to a different email address."
+msgstr "Это приглашение было отправлено на другой email-адрес."
+
+#: apps/members/services.py:313
+#, python-format
+msgid ""
+"This account already belongs to %(org_name)s. BrightBean Chat supports one "
+"organization per account, so leave that one first or accept this invitation "
+"from a different account."
+msgstr ""
+"Этот аккаунт уже принадлежит организации %(org_name)s. BrightBean Chat "
+"поддерживает только одну организацию на аккаунт — сначала покиньте ту или "
+"примите это приглашение с другого аккаунта."
+
+#: apps/members/services.py:377
+msgid "Cannot resend an already accepted invitation."
+msgstr "Нельзя повторно отправить уже принятое приглашение."
+
+#: apps/members/services.py:388
+msgid "Cannot revoke an already accepted invitation."
+msgstr "Нельзя отозвать уже принятое приглашение."
+
+#: apps/members/services.py:420
 #, python-format
 msgid "You have been invited to %(org_name)s on BrightBean Chat"
 msgstr "Вас пригласили в %(org_name)s в BrightBean Chat"
 
-#: apps/notifications/events.py:211
+#: apps/members/services.py:443
+msgid "You cannot remove yourself from the organization."
+msgstr "Вы не можете удалить себя из организации."
+
+#: apps/members/services.py:455
+msgid "Cannot remove the last organization owner."
+msgstr "Нельзя удалить последнего владельца организации."
+
+#: apps/members/services.py:457
+msgid "remove"
+msgstr "удалить"
+
+#: apps/members/services.py:478
+msgid "Cannot promote to owner. Transfer ownership instead."
+msgstr "Нельзя повысить до владельца. Вместо этого передайте право владения."
+
+#: apps/members/services.py:486
+msgid "change"
+msgstr "изменить"
+
+#: apps/members/services.py:488
+msgid "Only organization owners can promote someone to admin."
+msgstr "Только владельцы организации могут назначать администраторов."
+
+#: apps/members/services.py:493
+msgid "Cannot change the role of the last organization owner."
+msgstr "Нельзя изменить роль последнего владельца организации."
+
+#: apps/members/services.py:534
+msgid ""
+"You cannot modify a workspace membership whose role is higher than your own."
+msgstr "Вы не можете изменить членство в пространстве с ролью выше вашей."
+
+#: apps/members/views.py:133
+msgid "Invitation sent."
+msgstr "Приглашение отправлено."
+
+#: apps/members/views.py:147
+msgid "Invitation resent."
+msgstr "Приглашение отправлено повторно."
+
+#: apps/members/views.py:161
+msgid "Invitation revoked."
+msgstr "Приглашение отозвано."
+
+#: apps/members/views.py:175
+msgid "Role updated."
+msgstr "Роль обновлена."
+
+#: apps/members/views.py:189
+msgid "Member removed."
+msgstr "Участник удалён."
+
+#: apps/members/views.py:218
+msgid "Workspace access updated."
+msgstr "Доступ к пространству обновлён."
+
+#: apps/members/views.py:275
+#, python-format
+msgid "You have joined %(name)s."
+msgstr "Вы присоединились к %(name)s."
+
+#: apps/notifications/events.py:225
 #, python-brace-format
 msgid "Flow \"{flow_name}\" hit the loop cap"
 msgstr "Сценарий «{flow_name}» достиг лимита циклов"
 
-#: apps/notifications/events.py:213
+#: apps/notifications/events.py:227
 #, python-brace-format
 msgid ""
 "It ran 30 blocks without pausing for {contact_name} and was stopped. Open "
@@ -170,22 +629,22 @@ msgstr ""
 "Он выполнил 30 блоков подряд без паузы для {contact_name} и был остановлен. "
 "Откройте сценарий и найдите цикл без ожидания."
 
-#: apps/notifications/events.py:226
+#: apps/notifications/events.py:240
 #, python-brace-format
 msgid "Flow \"{flow_name}\" failed"
 msgstr "Сценарий «{flow_name}» завершился с ошибкой"
 
-#: apps/notifications/events.py:227
+#: apps/notifications/events.py:241
 #, python-brace-format
 msgid "The run for {contact_name} stopped at {node_label}: {error}"
 msgstr "Выполнение для {contact_name} остановилось на «{node_label}»: {error}"
 
-#: apps/notifications/events.py:242
+#: apps/notifications/events.py:256
 #, python-brace-format
 msgid "{channel_name} needs reconnecting"
 msgstr "Канал {channel_name} нужно переподключить"
 
-#: apps/notifications/events.py:244
+#: apps/notifications/events.py:258
 #, python-brace-format
 msgid ""
 "{platform_label} stopped accepting the stored credentials. Nothing will send"
@@ -194,11 +653,11 @@ msgstr ""
 "{platform_label} перестал принимать сохранённые учётные данные. Пока канал "
 "не переподключат, отправка и приём сообщений через него невозможны."
 
-#: apps/notifications/events.py:259
+#: apps/notifications/events.py:273
 msgid "Webhook disabled after repeated failures"
 msgstr "Вебхук отключён после повторяющихся сбоев"
 
-#: apps/notifications/events.py:261
+#: apps/notifications/events.py:275
 #, python-brace-format
 msgid ""
 "{url} failed {failure_count} times in a row and has been switched off. Re-"
@@ -207,23 +666,161 @@ msgstr ""
 "{url} подряд дал сбой {failure_count} раз(а) и был отключён. Включите его "
 "снова, когда эндпоинт заработает."
 
-#: apps/notifications/events.py:277
+#: apps/notifications/events.py:291
 #, python-brace-format
 msgid "Reminder: {contact_name}"
 msgstr "Напоминание: {contact_name}"
 
-#: apps/notifications/events.py:292
+#: apps/notifications/events.py:306
 #, python-brace-format
 msgid "{actor_name} mentioned you"
 msgstr "{actor_name} упомянул(а) вас"
 
-#: apps/notifications/events.py:318
+#: apps/notifications/events.py:332
 #, python-brace-format
 msgid "WhatsApp template \"{template_name}\" was {status}"
 msgstr "Шаблон WhatsApp «{template_name}» получил статус: {status}"
 
+#: apps/organizations/views.py:53
+msgid "An organization needs a name."
+msgstr "Организации нужно имя."
+
+#: apps/organizations/views.py:62 apps/workspaces/views.py:368
+msgid "That is not a timezone we recognise."
+msgstr "Такой часовой пояс не распознан."
+
+#: apps/organizations/views.py:67
+msgid "Organization settings saved."
+msgstr "Настройки организации сохранены."
+
+#: apps/organizations/views.py:131 apps/workspaces/views.py:346
+msgid "A workspace needs a name."
+msgstr "Пространству нужно имя."
+
+#: apps/organizations/views.py:134
+msgid "A workspace with that name already exists."
+msgstr "Пространство с таким именем уже существует."
+
+#: apps/organizations/views.py:149
+#, python-format
+msgid "Created %(name)s."
+msgstr "%(name)s создано."
+
+#: apps/organizations/views.py:182 apps/organizations/views.py:190
+#, python-format
+msgid "Restored %(name)s."
+msgstr "%(name)s восстановлено."
+
+#: apps/organizations/views.py:188
+#, python-format
+msgid "Archived %(name)s."
+msgstr "%(name)s архивировано."
+
+#: apps/workspaces/views.py:87
+msgid "Good morning"
+msgstr "Доброе утро"
+
+#: apps/workspaces/views.py:88
+msgid "Good afternoon"
+msgstr "Добрый день"
+
+#: apps/workspaces/views.py:88
+msgid "Good evening"
+msgstr "Добрый вечер"
+
+#: apps/workspaces/views.py:182 apps/workspaces/views.py:184
+#: templates/partials/_sidebar_channels.html:44
+msgid "Connect a channel"
+msgstr "Подключить канал"
+
+#: apps/workspaces/views.py:183
+msgid ""
+"Wherever people already message you: Telegram, Instagram, WhatsApp or email."
+msgstr "Там, где вам уже пишут: Telegram, Instagram, WhatsApp или email."
+
+#: apps/workspaces/views.py:187
+msgid "Messages arrive here now."
+msgstr "Теперь сообщения приходят сюда."
+
+#: apps/workspaces/views.py:192
+msgid "Build your first flow"
+msgstr "Создайте свой первый сценарий"
+
+#: apps/workspaces/views.py:193
+msgid "A template comes with its trigger and its replies already written."
+msgstr "В шаблоне уже готовы триггер и ответы."
+
+#: apps/workspaces/views.py:194
+msgid "Pick a template"
+msgstr "Выберите шаблон"
+
+#: apps/workspaces/views.py:197
+msgid "A flow is answering for you."
+msgstr "Сценарий отвечает за вас."
+
+#: apps/workspaces/views.py:201
+msgid "Invite your team"
+msgstr "Пригласите команду"
+
+#: apps/workspaces/views.py:202
+msgid "Share the inbox so every reply does not land on you."
+msgstr "Поделитесь входящими, чтобы не все ответы падали на вас."
+
+#: apps/workspaces/views.py:203
+msgid "Invite people"
+msgstr "Пригласить людей"
+
+#: apps/workspaces/views.py:206
+msgid "Other people can answer too."
+msgstr "Теперь отвечать могут и другие."
+
+#: apps/workspaces/views.py:251
+#, python-format
+msgid "%(name)s needs reconnecting"
+msgstr "%(name)s нужно переподключить"
+
+#: apps/workspaces/views.py:252
+msgid "It stopped receiving messages. Reconnect to start again."
+msgstr "Он перестал получать сообщения. Переподключите, чтобы возобновить."
+
+#: apps/workspaces/views.py:271
+#, python-format
+msgid "%(count)s conversation unassigned"
+msgid_plural "%(count)s conversations unassigned"
+msgstr[0] "%(count)s диалог не назначен"
+msgstr[1] "%(count)s диалога не назначено"
+msgstr[2] "%(count)s диалогов не назначено"
+msgstr[3] "%(count)s диалогов не назначено"
+
+#: apps/workspaces/views.py:274
+msgid "Nobody has picked these up yet."
+msgstr "Их ещё никто не взял в работу."
+
+#: apps/workspaces/views.py:284
+#, python-format
+msgid "“%(name)s” is scheduled"
+msgstr "«%(name)s» запланирована"
+
+#: apps/workspaces/views.py:285
+msgid "Review it before it goes."
+msgstr "Проверьте её перед отправкой."
+
+#: apps/workspaces/views.py:353
+msgid "Another workspace in this organization already has that name."
+msgstr "В этой организации уже есть пространство с таким именем."
+
+#: apps/workspaces/views.py:375
+msgid "Colours must be a 6-digit hex value like #3B82F6."
+msgstr "Цвета должны быть 6-значным hex-значением, например #3B82F6."
+
+#: apps/workspaces/views.py:382
+msgid "Workspace settings saved."
+msgstr "Настройки пространства сохранены."
+
 #: templates/account/login.html:4 templates/account/login.html:8
 #: templates/account/login.html:38
+#: templates/members/_accept_invite_body.html:13
+#: templates/members/_invite_expired_body.html:8
 msgid "Sign in"
 msgstr "Войти"
 
@@ -291,6 +888,8 @@ msgstr ""
 "Меняет только то, что видите вы. У каждого из команды может быть свой язык."
 
 #: templates/accounts/preferences.html:37 templates/accounts/settings.html:40
+#: templates/organizations/settings.html:42
+#: templates/workspaces/settings.html:89
 msgid "Save changes"
 msgstr "Сохранить изменения"
 
@@ -298,7 +897,10 @@ msgstr "Сохранить изменения"
 msgid "How you appear to your team and in internal notes."
 msgstr "Как вы отображаетесь для команды и во внутренних заметках."
 
-#: templates/accounts/settings.html:32
+#: templates/accounts/settings.html:32 templates/api/keys_list.html:39
+#: templates/organizations/settings.html:27
+#: templates/organizations/settings.html:49
+#: templates/workspaces/settings.html:36
 msgid "Name"
 msgstr "Имя"
 
@@ -323,9 +925,388 @@ msgstr "Изменить пароль"
 msgid "Add another email"
 msgstr "Добавить ещё один email"
 
+#: templates/api/key_created.html:3 templates/api/key_created.html:4
+msgid "API key issued"
+msgstr "API-ключ выпущен"
+
+#: templates/api/key_created.html:15
+msgid "Copy this key now. It is not shown again."
+msgstr "Скопируйте этот ключ сейчас. Он больше не будет показан."
+
+#: templates/api/key_created.html:18
+msgid "Using it"
+msgstr "Как использовать"
+
+#: templates/api/key_created.html:19
+msgid "Send it as a bearer token on every request:"
+msgstr "Отправляйте его как bearer-токен в каждом запросе:"
+
+#: templates/api/key_created.html:22
+#, python-format
+msgid ""
+"“%(key_name)s” acts in <strong>%(workspace_name)s</strong> and nowhere else."
+" Revoking it takes effect on the very next request. If you lose it, revoke "
+"it and issue another. It cannot be recovered."
+msgstr ""
+"«%(key_name)s» действует только в <strong>%(workspace_name)s</strong> и "
+"нигде больше. Отзыв вступает в силу с самого следующего запроса. Если вы его"
+" потеряли — отзовите и выпустите новый. Восстановить его нельзя."
+
+#: templates/api/key_created.html:25
+msgid "Read the API reference"
+msgstr "Прочитать справочник по API"
+
+#: templates/api/key_created.html:26 templates/api/webhook_secret.html:22
+msgid "Done"
+msgstr "Готово"
+
+#: templates/api/keys_list.html:14 templates/api/keys_list.html:21
+msgid "API keys"
+msgstr "API-ключи"
+
+#: templates/api/keys_list.html:24
+#, python-format
+msgid ""
+"A key authenticates calls to the <a href=\"%(api_docs_url)s\">public API</a>"
+" as one workspace. Keys are organization-level because they span every "
+"workspace in the organization, but each key acts inside exactly one."
+msgstr ""
+"Ключ подтверждает вызовы к <a href=\"%(api_docs_url)s\">публичному API</a> "
+"от имени одного пространства. Ключи выпускаются на уровне организации, "
+"потому что охватывают все её пространства, но каждый ключ действует только в"
+" одном."
+
+#: templates/api/keys_list.html:28 templates/api/keys_list.html:37
+msgid "Issue a key"
+msgstr "Выпустить ключ"
+
+#: templates/api/keys_list.html:49
+msgid "Scopes"
+msgstr "Области доступа"
+
+#: templates/api/keys_list.html:57
+msgid ""
+"<strong>Read</strong> lists contacts, tags, fields and flows. "
+"<strong>Write</strong> adds creating and updating contacts, tagging, setting"
+" field values, starting flows and sending messages. No scope grants channel,"
+" member or key management."
+msgstr ""
+"<strong>Чтение</strong> позволяет получать список контактов, тегов, полей и "
+"сценариев. <strong>Запись</strong> добавляет создание и изменение контактов,"
+" теги, значения полей, запуск сценариев и отправку сообщений. Ни одна "
+"область не даёт управление каналами, участниками или ключами."
+
+#: templates/api/keys_list.html:61
+msgid "Issue key"
+msgstr "Выпустить ключ"
+
+#: templates/api/keys_list.html:62 templates/api/webhooks_list.html:52
+#: templates/members/list.html:65 templates/members/list.html:108
+#: templates/organizations/workspaces.html:40
+msgid "Cancel"
+msgstr "Отмена"
+
+#: templates/api/keys_list.html:73
+msgid ""
+"You are an organization admin, but you do not hold the "
+"<code>manage_api_keys</code> permission in any workspace, so there is "
+"nowhere to issue a key. A workspace admin can grant it."
+msgstr ""
+"Вы администратор организации, но у вас нет права "
+"<code>manage_api_keys</code> ни в одном пространстве, поэтому выпустить ключ"
+" негде. Администратор пространства может выдать это право."
+
+#: templates/api/keys_list.html:77
+msgid "Existing keys"
+msgstr "Существующие ключи"
+
+#: templates/api/keys_list.html:87
+msgid "Active"
+msgstr "Активен"
+
+#: templates/api/keys_list.html:87
+msgid "Revoked"
+msgstr "Отозван"
+
+#: templates/api/keys_list.html:96
+#, python-format
+msgid "last used %(last_used)s"
+msgstr "последний раз использован %(last_used)s"
+
+#: templates/api/keys_list.html:96
+msgid "never used"
+msgstr "никогда не использовался"
+
+#: templates/api/keys_list.html:96
+#, python-format
+msgid "revoked %(revoked_at)s"
+msgstr "отозван %(revoked_at)s"
+
+#: templates/api/keys_list.html:101 templates/members/list.html:88
+#: templates/organizations/workspaces.html:65
+#, python-format
+msgid "More actions for %(name)s"
+msgstr "Другие действия для %(name)s"
+
+#: templates/api/keys_list.html:108
+msgid "Revoke this key"
+msgstr "Отозвать этот ключ"
+
+#: templates/api/keys_list.html:117
+msgid "No keys yet"
+msgstr "Пока нет ключей"
+
+#: templates/api/keys_list.html:119
+msgid ""
+"A key lets something outside BrightBean Chat — a Zapier scenario, a script, "
+"your own backend — read and write in one workspace."
+msgstr ""
+"Ключ позволяет чему-то вне BrightBean Chat — сценарию Zapier, скрипту, "
+"вашему бэкенду — читать и писать в одном пространстве."
+
+#: templates/api/webhook_detail.html:3
+msgid "Webhook"
+msgstr "Вебхук"
+
+#: templates/api/webhook_detail.html:4
+msgid "Webhook endpoint"
+msgstr "Конечная точка вебхука"
+
+#: templates/api/webhook_detail.html:18
+#, python-format
+msgid "Switched off after %(limit)s consecutive failed deliveries."
+msgstr "Отключено после %(limit)s подряд неудачных доставок."
+
+#: templates/api/webhook_detail.html:19
+msgid ""
+"Fix the endpoint, then tick <em>Enabled</em> below to start delivering "
+"again."
+msgstr ""
+"Исправьте конечную точку, затем отметьте <em>Включено</em> ниже, чтобы "
+"возобновить доставку."
+
+#: templates/api/webhook_detail.html:24
+#: templates/partials/_app_sidebar.html:217
+msgid "Settings"
+msgstr "Настройки"
+
+#: templates/api/webhook_detail.html:27 templates/api/webhooks_list.html:36
+msgid "URL"
+msgstr "URL"
+
+#: templates/api/webhook_detail.html:31 templates/api/webhooks_list.html:40
+msgid "Events"
+msgstr "События"
+
+#: templates/api/webhook_detail.html:42 templates/api/webhooks_list.html:65
+msgid "Enabled"
+msgstr "Включено"
+
+#: templates/api/webhook_detail.html:45
+msgid "Save"
+msgstr "Сохранить"
+
+#: templates/api/webhook_detail.html:48
+msgid "Signing secret"
+msgstr "Секрет подписи"
+
+#: templates/api/webhook_detail.html:50
+msgid ""
+"Every delivery carries an HMAC of the body over this secret. Rotating it "
+"invalidates signatures immediately. Update your receiver first, or "
+"deliveries will start failing verification the moment you rotate."
+msgstr ""
+"Каждая доставка несёт HMAC тела, вычисленный с этим секретом. Смена секрета "
+"сразу делает подписи недействительными. Сначала обновите приёмник — иначе "
+"доставки начнут проваливать проверку сразу после смены."
+
+#: templates/api/webhook_detail.html:55
+msgid "Rotate secret"
+msgstr "Сменить секрет"
+
+#: templates/api/webhook_detail.html:58
+msgid "Test"
+msgstr "Тест"
+
+#: templates/api/webhook_detail.html:60
+msgid ""
+"Sends a <code>webhook.test</code> event to this endpoint right now. Test "
+"deliveries are not retried and never count towards the auto-disable limit."
+msgstr ""
+"Отправляет событие <code>webhook.test</code> на эту конечную точку прямо "
+"сейчас. Тестовые доставки не повторяются и не учитываются в лимите "
+"автоотключения."
+
+#: templates/api/webhook_detail.html:64
+msgid "Send test event"
+msgstr "Отправить тестовое событие"
+
+#: templates/api/webhook_detail.html:67
+msgid "Recent deliveries"
+msgstr "Недавние доставки"
+
+#: templates/api/webhook_detail.html:70
+msgid "When"
+msgstr "Когда"
+
+#: templates/api/webhook_detail.html:70
+msgid "Event"
+msgstr "Событие"
+
+#: templates/api/webhook_detail.html:70
+msgid "Result"
+msgstr "Результат"
+
+#: templates/api/webhook_detail.html:70
+msgid "Code"
+msgstr "Код"
+
+#: templates/api/webhook_detail.html:70
+msgid "Duration"
+msgstr "Длительность"
+
+#: templates/api/webhook_detail.html:70
+msgid "Attempt"
+msgstr "Попытка"
+
+#: templates/api/webhook_detail.html:81
+#, python-format
+msgid "%(duration)s ms"
+msgstr "%(duration)s мс"
+
+#: templates/api/webhook_detail.html:88
+msgid "Nothing delivered yet."
+msgstr "Пока ничего не доставлено."
+
+#: templates/api/webhook_detail.html:91
+msgid "Delete"
+msgstr "Удалить"
+
+#: templates/api/webhook_detail.html:94
+msgid "Delete endpoint"
+msgstr "Удалить конечную точку"
+
+#: templates/api/webhook_detail.html:97
+msgid "Back to webhooks"
+msgstr "Назад к вебхукам"
+
+#: templates/api/webhook_secret.html:3
+msgid "Webhook secret"
+msgstr "Секрет вебхука"
+
+#: templates/api/webhook_secret.html:14
+msgid "Copy this secret into your receiver now."
+msgstr "Скопируйте этот секрет в ваш приёмник сейчас."
+
+#: templates/api/webhook_secret.html:19
+#, python-format
+msgid ""
+"Deliveries to <code>%(webhook_url)s</code> carry <code>X-BrightBean-"
+"Signature</code>, an HMAC-SHA256 over the timestamp and the raw body keyed "
+"on this secret. The <a href=\"%(api_docs_url)s\">API reference</a> has a "
+"verification snippet you can paste into your receiver."
+msgstr ""
+"Доставки на <code>%(webhook_url)s</code> несут заголовок <code>X-BrightBean-"
+"Signature</code> — HMAC-SHA256 от метки времени и тела запроса на этом "
+"секрете. В <a href=\"%(api_docs_url)s\">справочнике API</a> есть фрагмент "
+"кода для проверки, который можно вставить в ваш приёмник."
+
+#: templates/api/webhooks_list.html:21
+msgid "Outbound webhooks"
+msgstr "Исходящие вебхуки"
+
+#: templates/api/webhooks_list.html:24
+#, python-format
+msgid ""
+"BrightBean Chat POSTs a signed JSON document to your endpoint when something"
+" happens in this workspace. See the <a href=\"%(api_docs_url)s\">API "
+"reference</a> for the payload shape and a signature-verification snippet."
+msgstr ""
+"BrightBean Chat отправляет подписанный JSON-документ на вашу конечную точку,"
+" когда что-то происходит в этом пространстве. Форма содержимого и фрагмент "
+"проверки подписи — в <a href=\"%(api_docs_url)s\">справочнике API</a>."
+
+#: templates/api/webhooks_list.html:27 templates/api/webhooks_list.html:34
+#: templates/api/webhooks_list.html:81
+msgid "Add an endpoint"
+msgstr "Добавить конечную точку"
+
+#: templates/api/webhooks_list.html:51
+msgid "Add endpoint"
+msgstr "Добавить конечную точку"
+
+#: templates/api/webhooks_list.html:56
+msgid "Endpoints"
+msgstr "Конечные точки"
+
+#: templates/api/webhooks_list.html:65
+msgid "Disabled"
+msgstr "Отключено"
+
+#: templates/api/webhooks_list.html:68
+#, python-format
+msgid "last delivery %(last_delivery)s"
+msgstr "последняя доставка %(last_delivery)s"
+
+#: templates/api/webhooks_list.html:68
+msgid "never delivered"
+msgstr "доставок ещё не было"
+
+#: templates/api/webhooks_list.html:68
+msgid "disabled after repeated failures"
+msgstr "отключено после повторных сбоев"
+
+#: templates/api/webhooks_list.html:77
+msgid "No endpoints yet"
+msgstr "Пока нет конечных точек"
+
+#: templates/api/webhooks_list.html:79
+msgid ""
+"An endpoint is how something outside BrightBean Chat hears about a new "
+"message, a finished flow or a tagged contact, as it happens."
+msgstr ""
+"Конечная точка — это способ, которым что-то вне BrightBean Chat сразу узнаёт"
+" о новом сообщении, завершённом сценарии или помеченном контакте."
+
 #: templates/base.html:170
 msgid "Toggle menu"
 msgstr "Открыть/закрыть меню"
+
+#: templates/members/_accept_invite_body.html:2
+#, python-format
+msgid "You have been invited to %(org_name)s"
+msgstr "Вас пригласили в %(org_name)s"
+
+#: templates/members/_accept_invite_body.html:10
+#, python-format
+msgid "Create an account or sign in with %(email)s to accept."
+msgstr "Создайте аккаунт или войдите с адресом %(email)s, чтобы принять."
+
+#: templates/members/_accept_invite_body.html:12
+msgid "Create an account"
+msgstr "Создать аккаунт"
+
+#: templates/members/_accept_invite_body.html:18
+#, python-format
+msgid "Join %(org_name)s"
+msgstr "Присоединиться к %(org_name)s"
+
+#: templates/members/_invite_expired_body.html:6
+msgid "This invitation is no longer valid"
+msgstr "Это приглашение больше недействительно"
+
+#: templates/members/_invite_expired_body.html:7
+msgid ""
+"It may have expired, been revoked, or already been used. Ask whoever invited"
+" you to send a new one."
+msgstr ""
+"Возможно, срок его действия истёк, оно было отозвано или уже использовано. "
+"Попросите пригласившего отправить новое."
+
+#: templates/members/accept_invite.html:3
+#: templates/members/invite_expired.html:3
+msgid "Invitation"
+msgstr "Приглашение"
 
 #: templates/members/email/invite.html:2
 #, python-format
@@ -357,6 +1338,118 @@ msgstr ""
 "%(inviter)s пригласил(а) вас присоединиться к %(org_name)s в BrightBean "
 "Chat."
 
+#: templates/members/list.html:15 templates/members/list.html:22
+msgid "Team members"
+msgstr "Участники команды"
+
+#: templates/members/list.html:24
+msgid ""
+"Everybody in this organization, what they can do across it, and which "
+"workspaces they can reach."
+msgstr ""
+"Все в этой организации, что они могут делать и к каким пространствам у них "
+"есть доступ."
+
+#: templates/members/list.html:28 templates/members/list.html:35
+msgid "Invite someone"
+msgstr "Пригласить"
+
+#: templates/members/list.html:37
+msgid "Email"
+msgstr "Email"
+
+#: templates/members/list.html:41 templates/members/list.html:103
+msgid "Organization role"
+msgstr "Роль в организации"
+
+#: templates/members/list.html:47 templates/members/manage_workspaces.html:3
+msgid "Workspace access"
+msgstr "Доступ к пространствам"
+
+#: templates/members/list.html:54 templates/members/manage_workspaces.html:21
+#, python-format
+msgid "Role in %(name)s"
+msgstr "Роль в %(name)s"
+
+#: templates/members/list.html:60
+msgid "You cannot manage members in any workspace yet."
+msgstr "Вы пока не можете управлять участниками ни в одном пространстве."
+
+#: templates/members/list.html:64
+msgid "Send invitation"
+msgstr "Отправить приглашение"
+
+#: templates/members/list.html:70
+msgid "Members"
+msgstr "Участники"
+
+#: templates/members/list.html:85
+msgid "Manage access"
+msgstr "Управление доступом"
+
+#: templates/members/list.html:93
+msgid "Change role…"
+msgstr "Изменить роль…"
+
+#: templates/members/list.html:97
+msgid "Remove from organization"
+msgstr "Удалить из организации"
+
+#: templates/members/list.html:107
+msgid "Update"
+msgstr "Обновить"
+
+#: templates/members/list.html:116
+msgid "Nobody here yet"
+msgstr "Здесь пока никого нет"
+
+#: templates/members/list.html:117
+msgid "Invite the people who answer messages with you."
+msgstr "Пригласите людей, которые отвечают на сообщения вместе с вами."
+
+#: templates/members/list.html:121
+msgid "Pending invitations"
+msgstr "Ожидающие приглашения"
+
+#: templates/members/list.html:132
+#, python-format
+msgid "Expires %(expires_at)s"
+msgstr "Истекает %(expires_at)s"
+
+#: templates/members/list.html:137
+msgid "Resend"
+msgstr "Отправить повторно"
+
+#: templates/members/list.html:141
+msgid "Revoke"
+msgstr "Отозвать"
+
+#: templates/members/list.html:149
+msgid "No pending invitations"
+msgstr "Нет ожидающих приглашений"
+
+#: templates/members/list.html:150
+msgid "Invitations you send appear here until they are accepted."
+msgstr ""
+"Отправленные вами приглашения отображаются здесь, пока не будут приняты."
+
+#: templates/members/manage_workspaces.html:4
+#, python-format
+msgid "Workspace access for %(name)s"
+msgstr "Доступ к пространствам для %(name)s"
+
+#: templates/members/manage_workspaces.html:29
+msgid "You cannot manage members in any workspace."
+msgstr "Вы не можете управлять участниками ни в одном пространстве."
+
+#: templates/members/manage_workspaces.html:31
+msgid "Save access"
+msgstr "Сохранить доступ"
+
+#: templates/members/manage_workspaces.html:34
+msgid "Back to team members"
+msgstr "Назад к участникам команды"
+
 #: templates/notifications/email/notification.html:58
 #, python-format
 msgid "Workspace: %(workspace_name)s"
@@ -387,6 +1480,166 @@ msgstr ""
 msgid "Turn them off"
 msgstr "Отключить их"
 
+#: templates/organizations/billing.html:10
+msgid "What this organization is on, and what it is using."
+msgstr "На каком тарифе организация и что она использует."
+
+#: templates/organizations/billing.html:13
+msgid "Checkout was cancelled. No charge was made."
+msgstr "Оформление оплаты отменено. Списание не производилось."
+
+#: templates/organizations/billing.html:16
+msgid ""
+"Your subscription is being activated. This usually takes a few seconds — "
+"refresh the page."
+msgstr ""
+"Ваша подписка активируется. Обычно это занимает несколько секунд — обновите "
+"страницу."
+
+#: templates/organizations/billing.html:32
+msgid "Current plan"
+msgstr "Текущий тариф"
+
+#: templates/organizations/billing.html:71
+msgid "Manage billing"
+msgstr "Управление оплатой"
+
+#: templates/organizations/billing.html:95
+msgid "Billing interval"
+msgstr "Периодичность оплаты"
+
+#: templates/organizations/billing.html:100
+msgid "Monthly"
+msgstr "Ежемесячно"
+
+#: templates/organizations/billing.html:102
+msgid "Yearly"
+msgstr "Ежегодно"
+
+#: templates/organizations/billing.html:114
+msgid "Subscribe"
+msgstr "Оформить подписку"
+
+#: templates/organizations/billing.html:129
+#, python-format
+msgid "Renews on %(renewal_date)s."
+msgstr "Продлится %(renewal_date)s."
+
+#: templates/organizations/billing.html:132
+#, python-format
+msgid ""
+"Your plan ends on %(end_date)s. Nothing is deleted — you keep everything you"
+" have made."
+msgstr ""
+"Ваш тариф закончится %(end_date)s. Ничего не удаляется — всё созданное "
+"остаётся с вами."
+
+#: templates/organizations/billing.html:138
+msgid "Only organization admins can change the plan."
+msgstr "Только администраторы организации могут менять тариф."
+
+#: templates/organizations/billing.html:150
+msgid "Self-hosted"
+msgstr "Самостоятельный хостинг"
+
+#: templates/organizations/billing.html:152
+msgid ""
+"Every feature is available, with no limits and nothing counted. There is no "
+"plan to be on and no payment provider to configure."
+msgstr ""
+"Все функции доступны без ограничений и без подсчёта. Не нужен ни тариф, ни "
+"настройка платёжного провайдера."
+
+#: templates/organizations/billing.html:158
+msgid "Usage"
+msgstr "Использование"
+
+#: templates/organizations/billing.html:165
+#, python-format
+msgid "%(used)s of %(limit)s"
+msgstr "%(used)s из %(limit)s"
+
+#: templates/organizations/settings.html:14
+#: templates/organizations/settings.html:19
+msgid "Organization"
+msgstr "Организация"
+
+#: templates/organizations/settings.html:20
+msgid "The account every workspace in it belongs to."
+msgstr "Аккаунт, которому принадлежат все пространства."
+
+#: templates/organizations/settings.html:31
+#: templates/organizations/settings.html:53
+msgid "Default timezone"
+msgstr "Часовой пояс по умолчанию"
+
+#: templates/organizations/settings.html:35
+msgid "Every workspace that has not set its own clock keeps this one."
+msgstr "Каждое пространство без своего часового пояса использует этот."
+
+#: templates/organizations/settings.html:38
+msgid "Logo URL"
+msgstr "URL логотипа"
+
+#: templates/organizations/settings.html:38
+#: templates/workspaces/settings.html:40 templates/workspaces/settings.html:45
+msgid "optional"
+msgstr "необязательно"
+
+#: templates/organizations/settings.html:57
+msgid "Only organization admins can change these."
+msgstr "Только администраторы организации могут это менять."
+
+#: templates/organizations/workspaces.html:24
+msgid ""
+"Each workspace has its own channels, contacts and inbox. Archiving one keeps"
+" everything and takes it out of the switcher."
+msgstr ""
+"У каждого пространства свои каналы, контакты и входящие. Архивация сохраняет"
+" всё и убирает его из переключателя."
+
+#: templates/organizations/workspaces.html:28
+#: templates/partials/_app_sidebar.html:164
+msgid "New workspace"
+msgstr "Новое пространство"
+
+#: templates/organizations/workspaces.html:36
+msgid "What is it called?"
+msgstr "Как оно называется?"
+
+#: templates/organizations/workspaces.html:39
+msgid "Create"
+msgstr "Создать"
+
+#: templates/organizations/workspaces.html:53
+msgid "Archived"
+msgstr "В архиве"
+
+#: templates/organizations/workspaces.html:56
+msgid "You are a member"
+msgstr "Вы участник"
+
+#: templates/organizations/workspaces.html:56
+msgid "You do not have access"
+msgstr "У вас нет доступа"
+
+#: templates/organizations/workspaces.html:73
+msgid "Restore"
+msgstr "Восстановить"
+
+#: templates/organizations/workspaces.html:73
+msgid "Archive"
+msgstr "В архив"
+
+#: templates/organizations/workspaces.html:82
+msgid "No workspaces yet"
+msgstr "Пока нет пространств"
+
+#: templates/organizations/workspaces.html:83
+msgid "A workspace is one shop, brand or team, with its own inbox."
+msgstr ""
+"Пространство — это один магазин, бренд или команда со своими входящими."
+
 #: templates/partials/_app_sidebar.html:110
 #, python-format
 msgid "Back to %(name)s"
@@ -397,17 +1650,10 @@ msgstr "Назад в %(name)s"
 msgid "Switch workspace (currently %(name)s)"
 msgstr "Сменить пространство (сейчас: %(name)s)"
 
-#: templates/partials/_app_sidebar.html:164
-msgid "New workspace"
-msgstr "Новое пространство"
-
 #: templates/partials/_app_sidebar.html:185
+#: templates/workspaces/settings.html:22 templates/workspaces/settings.html:27
 msgid "Workspace settings"
 msgstr "Настройки пространства"
-
-#: templates/partials/_app_sidebar.html:217
-msgid "Settings"
-msgstr "Настройки"
 
 #: templates/partials/_app_sidebar.html:217
 msgid "Main"
@@ -432,10 +1678,6 @@ msgstr "Настройки организации"
 #: templates/partials/_app_sidebar.html:352
 msgid "Sign out"
 msgstr "Выйти"
-
-#: templates/partials/_sidebar_channels.html:44
-msgid "Connect a channel"
-msgstr "Подключить канал"
 
 #: templates/partials/_sidebar_channels.html:53
 msgid "needs reconnecting"
@@ -462,3 +1704,163 @@ msgstr "Ещё каналы"
 #: templates/partials/_sub_nav.html:13
 msgid "Section"
 msgstr "Раздел"
+
+#: templates/workspaces/dashboard.html:27
+#, python-format
+msgid "%(workspace_name)s. Your role here: %(role)s."
+msgstr "%(workspace_name)s. Ваша роль здесь: %(role)s."
+
+#: templates/workspaces/dashboard.html:31
+msgid "New flow"
+msgstr "Новый сценарий"
+
+#: templates/workspaces/dashboard.html:46
+msgid "Finish setting up"
+msgstr "Завершите настройку"
+
+#: templates/workspaces/dashboard.html:48
+#, python-format
+msgid "%(counter)s step left. About five minutes."
+msgid_plural "%(counter)s steps left. About five minutes."
+msgstr[0] "Остался %(counter)s шаг. Около пяти минут."
+msgstr[1] "Осталось %(counter)s шага. Около пяти минут."
+msgstr[2] "Осталось %(counter)s шагов. Около пяти минут."
+msgstr[3] "Осталось %(counter)s шагов. Около пяти минут."
+
+#: templates/workspaces/dashboard.html:55
+#, python-format
+msgid "%(done)s of %(total)s"
+msgstr "%(done)s из %(total)s"
+
+#: templates/workspaces/dashboard.html:100
+msgid "Start from a template"
+msgstr "Начните с шаблона"
+
+#: templates/workspaces/dashboard.html:102
+#, python-format
+msgid ""
+"%(counter)s ready-made flow. Pick one and change the words to suit you."
+msgid_plural ""
+"%(counter)s ready-made flows. Pick one and change the words to suit you."
+msgstr[0] ""
+"Есть %(counter)s готовый сценарий. Выберите и измените текст под себя."
+msgstr[1] ""
+"Есть %(counter)s готовых сценария. Выберите и измените текст под себя."
+msgstr[2] ""
+"Есть %(counter)s готовых сценариев. Выберите и измените текст под себя."
+msgstr[3] ""
+"Есть %(counter)s готовых сценариев. Выберите и измените текст под себя."
+
+#: templates/workspaces/dashboard.html:105
+#, python-format
+msgid "Browse all %(total)s"
+msgstr "Смотреть все %(total)s"
+
+#: templates/workspaces/dashboard.html:126
+msgid "Last 7 days"
+msgstr "Последние 7 дней"
+
+#: templates/workspaces/dashboard.html:129
+msgid "See insights"
+msgstr "Смотреть аналитику"
+
+#: templates/workspaces/dashboard.html:135
+msgid "Messages in"
+msgstr "Входящие сообщения"
+
+#: templates/workspaces/dashboard.html:139
+msgid "Messages out"
+msgstr "Исходящие сообщения"
+
+#: templates/workspaces/dashboard.html:143
+msgid "New contacts"
+msgstr "Новые контакты"
+
+#: templates/workspaces/dashboard.html:147
+msgid "Live flows"
+msgstr "Активные сценарии"
+
+#: templates/workspaces/dashboard.html:158
+msgid "Messages received per day over the last seven days"
+msgstr "Сообщения по дням за последние семь дней"
+
+#: templates/workspaces/dashboard.html:171
+msgid "Needs you"
+msgstr "Ждёт вас"
+
+#: templates/workspaces/dashboard.html:185
+msgid "Nothing is waiting on you."
+msgstr "Вас ничего не ждёт."
+
+#: templates/workspaces/settings.html:28
+msgid "What this workspace is called, and what clock it keeps."
+msgstr "Как называется это пространство и какой часовой пояс оно использует."
+
+#: templates/workspaces/settings.html:34
+msgid "Name and description"
+msgstr "Имя и описание"
+
+#: templates/workspaces/settings.html:40
+msgid "Icon"
+msgstr "Значок"
+
+#: templates/workspaces/settings.html:42
+msgid "One emoji. It sits beside the name in the workspace switcher."
+msgstr "Один эмодзи. Отображается рядом с именем в переключателе пространств."
+
+#: templates/workspaces/settings.html:45
+msgid "Description"
+msgstr "Описание"
+
+#: templates/workspaces/settings.html:51
+msgid "Clock"
+msgstr "Часовой пояс"
+
+#: templates/workspaces/settings.html:53
+msgid ""
+"Scheduled broadcasts, sending windows and every \"today\" on a filter are "
+"read in this zone."
+msgstr ""
+"Запланированные рассылки, окна отправки и каждое «сегодня» в фильтре "
+"читаются в этом часовом поясе."
+
+#: templates/workspaces/settings.html:56
+msgid "Timezone"
+msgstr "Часовой пояс"
+
+#: templates/workspaces/settings.html:58
+#, python-format
+msgid "Use the organization default (%(default_tz)s)"
+msgstr "Использовать значение организации по умолчанию (%(default_tz)s)"
+
+#: templates/workspaces/settings.html:65
+msgid "Colours"
+msgstr "Цвета"
+
+#: templates/workspaces/settings.html:66
+msgid "Kept for a white-labelled inbox."
+msgstr "Сохраняется для white-label входящих."
+
+#: templates/workspaces/settings.html:69
+msgid "Primary"
+msgstr "Основной"
+
+#: templates/workspaces/settings.html:71
+msgid "Pick the primary colour"
+msgstr "Выбрать основной цвет"
+
+#: templates/workspaces/settings.html:73 templates/workspaces/settings.html:83
+msgid "Clear"
+msgstr "Очистить"
+
+#: templates/workspaces/settings.html:75
+msgid "Leave it blank to use the BrightBean orange."
+msgstr "Оставьте пустым, чтобы использовать фирменный оранжевый BrightBean."
+
+#: templates/workspaces/settings.html:79
+msgid "Secondary"
+msgstr "Дополнительный"
+
+#: templates/workspaces/settings.html:81
+msgid "Pick the secondary colour"
+msgstr "Выбрать дополнительный цвет"
