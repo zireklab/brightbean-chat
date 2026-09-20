@@ -127,6 +127,20 @@ _I18N_TEMPLATES = [
     "flows/triggers/_form_keyword.html",
     "flows/triggers/_form_ref_url.html",
     "flows/triggers/_form_rule.html",
+    # Phase 2e (broadcasts)
+    "broadcasts/_audience_preview.html",
+    "broadcasts/_compose_script.html",
+    "broadcasts/_counters.html",
+    "broadcasts/_recipients.html",
+    "broadcasts/_rows.html",
+    "broadcasts/_step_audience.html",
+    "broadcasts/_step_channel.html",
+    "broadcasts/_step_content.html",
+    "broadcasts/_step_schedule.html",
+    "broadcasts/_wizard.html",
+    "broadcasts/compose.html",
+    "broadcasts/detail.html",
+    "broadcasts/list.html",
 ]
 
 #: Every Python module a landed phase put gettext/gettext_lazy copy in.
@@ -186,6 +200,10 @@ _I18N_MODULES = [
     "apps/flows/portability/cards.py",
     "apps/flows/portability/imports.py",
     "apps/flows/portability/envelope.py",
+    # Phase 2e (broadcasts)
+    "apps/broadcasts/models.py",
+    "apps/broadcasts/services.py",
+    "apps/broadcasts/views.py",
 ]
 
 

@@ -1,4 +1,4 @@
-{% load common_extras %}
+{% load common_extras i18n %}
 {% comment %}
 Step 1 — the channel (SPEC §13.1).
 
@@ -12,8 +12,8 @@ as *data*; there is no platform name in this template and there must not be one.
       hx-swap="innerHTML">
     {% csrf_token %}
     <div class="bc-panel-head">
-        <span class="bc-panel-title">Which channel?</span>
-        <span class="bc-hint">Only channels whose platform permits broadcasts are listed.</span>
+        <span class="bc-panel-title">{% translate "Which channel?" %}</span>
+        <span class="bc-hint">{% translate "Only channels whose platform permits broadcasts are listed." %}</span>
     </div>
 
     {% for connection in connections %}
@@ -27,10 +27,10 @@ as *data*; there is no platform name in this template and there must not be one.
         </span>
     </label>
     {% empty %}
-    <p class="bc-hint">No channel in this workspace accepts broadcasts.</p>
+    <p class="bc-hint">{% translate "No channel in this workspace accepts broadcasts." %}</p>
     {% endfor %}
 
     <div class="bc-actions">
-        <button type="submit" class="btn-brand btn-inline" {% if not connections %}disabled{% endif %}>Continue</button>
+        <button type="submit" class="btn-brand btn-inline" {% if not connections %}disabled{% endif %}>{% translate "Continue" %}</button>
     </div>
 </form>

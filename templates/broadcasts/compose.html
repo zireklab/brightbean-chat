@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static i18n %}
 {% comment %}
 The composer page (SPEC §13.1). The page itself is a shell; everything inside
 `#broadcast-wizard` is _wizard.html, so a step's POST answers with the next
@@ -28,18 +28,18 @@ flatpickr since L1-B in anticipation.
     <a class="text-[13px] font-semibold inline-flex items-center gap-1.5" style="color: var(--text-tertiary);"
        href="{% url 'broadcasts:list' workspace_id=request.workspace.id %}">
         <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-        Broadcasts
+        {% translate "Broadcasts" %}
     </a>
     <h1 class="text-base font-bold" style="color: var(--text-primary);">{{ broadcast.name }}</h1>
     <span class="status-pill status-pill-{{ broadcast.status }}">{{ broadcast.get_status_display }}</span>
     <form class="ml-auto"
           hx-post="{% url 'broadcasts:delete' workspace_id=request.workspace.id broadcast_id=broadcast.id %}"
           hx-swap="none"
-          hx-confirm="Delete this draft? Nothing has been sent, and this cannot be undone."
+          hx-confirm="{% translate 'Delete this draft? Nothing has been sent, and this cannot be undone.' %}"
           @htmx:after-request="if (event.detail.successful) window.location = '{% url 'broadcasts:list' workspace_id=request.workspace.id %}'"
           x-data>
         {% csrf_token %}
-        <button type="submit" class="btn-pill-secondary btn-pill-sm" style="color: var(--error-700);">Delete draft</button>
+        <button type="submit" class="btn-pill-secondary btn-pill-sm" style="color: var(--error-700);">{% translate "Delete draft" %}</button>
     </form>
 </div>
 {% endblock %}

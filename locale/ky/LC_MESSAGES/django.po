@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 17:30+0600\n"
+"POT-Creation-Date: 2026-09-20 18:36+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ky\n"
@@ -61,8 +61,10 @@ msgstr "Өчүрүү"
 msgid "Succeeded"
 msgstr "Ийгиликтүү"
 
-#: apps/api/models.py:89 apps/contacts/models.py:411
-#: apps/contacts/models.py:571 templates/inbox/_thread_body.html:152
+#: apps/api/models.py:89 apps/broadcasts/models.py:93
+#: apps/contacts/models.py:411 apps/contacts/models.py:571
+#: templates/broadcasts/_counters.html:64 templates/broadcasts/detail.html:113
+#: templates/inbox/_thread_body.html:152
 msgid "Failed"
 msgstr "Ката"
 
@@ -261,6 +263,46 @@ msgstr ""
 "Төлөм порталын ачуу мүмкүн болгон жок. Бир мүнөттөн кийин кайра аракет "
 "кылыңыз."
 
+#: apps/broadcasts/models.py:69 apps/channels/models.py:566
+#: apps/flows/models.py:60 apps/flows/views.py:202
+#: templates/flows/_list_rows.html:53 templates/flows/edit.html:57
+msgid "Draft"
+msgstr "Долбоор"
+
+#: apps/broadcasts/models.py:70 templates/inbox/_conversation_rows.html:80
+#: templates/inbox/_deferred.html:39
+msgid "Scheduled"
+msgstr "Пландалды"
+
+#: apps/broadcasts/models.py:71
+#| msgid "Pending"
+msgid "Sending"
+msgstr "Жөнөтүлүүдө"
+
+#: apps/broadcasts/models.py:72 apps/broadcasts/models.py:92
+#: apps/inbox/views.py:910 templates/broadcasts/_counters.html:56
+#: templates/broadcasts/_rows.html:20 templates/contacts/_activity.html:99
+#: templates/inbox/_thread_body.html:151
+msgid "Sent"
+msgstr "Жөнөтүлдү"
+
+#: apps/broadcasts/models.py:73 apps/broadcasts/models.py:95
+#: templates/broadcasts/_counters.html:73
+#| msgid "Cancel"
+msgid "Cancelled"
+msgstr "Жокко чыгарылды"
+
+#: apps/broadcasts/models.py:91 apps/contacts/models.py:568
+#: templates/contacts/_channels.html:52
+msgid "Pending"
+msgstr "Күтүүдө"
+
+#: apps/broadcasts/models.py:94 templates/broadcasts/_counters.html:68
+#: templates/broadcasts/_rows.html:21
+#| msgid "Skip"
+msgid "Skipped"
+msgstr "Өткөрүп жиберилди"
+
 #: apps/broadcasts/notifications.py:40 apps/notifications/events.py:319
 #, python-brace-format
 msgid "Broadcast \"{broadcast_name}\" finished"
@@ -270,6 +312,195 @@ msgstr "«{broadcast_name}» жайылтуусу аяктады"
 #, python-brace-format
 msgid "{sent} sent, {failed} failed, {skipped} skipped."
 msgstr "Жөнөтүлдү: {sent}, ката: {failed}, өткөрүп жиберилди: {skipped}."
+
+#: apps/broadcasts/services.py:156 apps/broadcasts/services.py:177
+msgid "This channel does not allow broadcasts."
+msgstr "Бул канал жайылтууларды колдобойт."
+
+#: apps/broadcasts/services.py:202
+msgid "Add at least one rule, or pick a saved segment."
+msgstr "Жок дегенде бир эреже кошуңуз же сакталган сегментти тандаңыз."
+
+#: apps/broadcasts/services.py:250
+#, python-format
+#| msgid "Back to %(name)s"
+msgid "Broadcast: %(name)s"
+msgstr "Жайылтуу: %(name)s"
+
+#: apps/broadcasts/services.py:269
+#| msgid "That mapping cannot be used"
+msgid "That message cannot be sent as written."
+msgstr "Бул билдирүү ушул түрдө жөнөтүлбөйт."
+
+#: apps/broadcasts/services.py:288
+msgid "That template is not approved for use on this channel."
+msgstr "Бул шаблон бул каналда колдонууга бекитилген эмес."
+
+#: apps/broadcasts/services.py:307
+#, python-format
+#| msgid "This template has no variables."
+msgid "This template needs a value for %(slots)s."
+msgstr "Бул шаблонго %(slots)s үчүн маани керек."
+
+#: apps/broadcasts/services.py:332
+#| msgid "That tag was not on this contact"
+msgid "That message tag is not one this channel accepts."
+msgstr "Бул билдирүү теги бул канал тарабынан кабыл алынбайт."
+
+#: apps/broadcasts/services.py:347
+msgid " (copy)"
+msgstr " (көчүрмө)"
+
+#: apps/broadcasts/services.py:415
+msgid "Cancel this broadcast before deleting it."
+msgstr "Өчүрүүдөн мурун бул жайылтууну жокко чыгарыңыз."
+
+#: apps/broadcasts/services.py:452
+msgid "Only a draft can be scheduled."
+msgstr "Пландаштырууга болгону долбоорду коюуга болот."
+
+#: apps/broadcasts/services.py:454
+msgid "Add a message before sending."
+msgstr "Жөнөтүүдөн мурун билдирүү кошуңуз."
+
+#: apps/broadcasts/services.py:457
+msgid "Choose who this broadcast goes to."
+msgstr "Бул жайылтуу кимге бариларын тандаңыз."
+
+#: apps/broadcasts/services.py:468
+#| msgid "Nothing matches these filters."
+msgid "Nobody matches this audience."
+msgstr "Бул аудиторияга эч ким дал келбейт."
+
+#: apps/broadcasts/services.py:477
+msgid "Nobody in this audience can be messaged on this channel right now."
+msgstr "Азыр бул каналда бул аудиториядан эч кимге жазууга болбойт."
+
+#: apps/broadcasts/services.py:491
+msgid "This broadcast is already on its way."
+msgstr "Бул жайылтуу азыр эле жөнөтүлүп жатат."
+
+#: apps/broadcasts/services.py:531
+msgid ""
+"That template is no longer approved on this channel. Pick another one before"
+" sending."
+msgstr ""
+"Бул шаблон бул каналда мындан ары бекитилген эмес. Жөнөтүүдөн мурун башкасын"
+" тандаңыз."
+
+#: apps/broadcasts/services.py:548
+#, python-format
+msgid ""
+"%(count)s of these contacts are outside the messaging window, so this send "
+"needs a non-promotional message tag."
+msgstr ""
+"%(count)s контакт билдирүү терезесинен тышкары, ошондуктан бул жөнөтүү үчүн "
+"промо эмес билдирүү тегин талап кылат."
+
+#: apps/broadcasts/services.py:556
+#, python-format
+msgid ""
+"%(count)s of these contacts are outside the messaging window, so this send "
+"needs an approved template."
+msgstr ""
+"%(count)s контакт билдирүү терезесинен тышкары, ошондуктан бул жөнөтүү "
+"бекитилген шаблонду талап кылат."
+
+#: apps/broadcasts/services.py:594
+#| msgid "That reply has already been sent or cancelled."
+msgid "This broadcast has already been sent or scheduled."
+msgstr "Бул жайылтуу мурунтан эле жөнөтүлгөн же пландаштырылган."
+
+#: apps/broadcasts/services.py:624
+msgid "Only a scheduled or sending broadcast can be cancelled."
+msgstr ""
+"Жокко чыгарууга болгону пландаштырылган же жөнөтүлүп жаткан жайылтуу болот."
+
+#: apps/broadcasts/services.py:1013
+#, python-format
+msgid ""
+"This broadcast reaches %(eligible)s people and your plan has room for "
+"%(remaining)s more this month. Upgrade to send it."
+msgstr ""
+"Бул жайылтуу %(eligible)s адамга жетет, ал эми сиздин тарифиңизде бул айда "
+"дагы %(remaining)s үчүн орун бар. Жөнөтүү үчүн тарифти жогорулатыңыз."
+
+#: apps/broadcasts/views.py:103 templates/broadcasts/_rows.html:18
+#: templates/broadcasts/list.html:34 templates/flows/_trigger_form.html:49
+msgid "Channel"
+msgstr "Канал"
+
+#: apps/broadcasts/views.py:104
+#| msgid "Sequence"
+msgid "Audience"
+msgstr "Аудитория"
+
+#: apps/broadcasts/views.py:105 templates/broadcasts/_step_content.html:60
+#: templates/channels/sms_settings.html:86
+msgid "Message"
+msgstr "Билдирүү"
+
+#: apps/broadcasts/views.py:106 templates/inbox/_composer.html:144
+msgid "Schedule"
+msgstr "Пландоо"
+
+#: apps/broadcasts/views.py:186
+msgid "Untitled broadcast"
+msgstr "Аты жок жайылтуу"
+
+#: apps/broadcasts/views.py:192
+#| msgid "Could not create the tag"
+msgid "Could not create it"
+msgstr "Түзүлгөн жок"
+
+#: apps/broadcasts/views.py:604
+#| msgid "Could not add the tag"
+msgid "Could not cancel it"
+msgstr "Жокко чыгарылган жок"
+
+#: apps/broadcasts/views.py:607
+#| msgid "Broadcast finished"
+msgid "Broadcast cancelled"
+msgstr "Жайылтуу жокко чыгарылды"
+
+#: apps/broadcasts/views.py:608
+msgid "Sends that had not gone out yet were stopped."
+msgstr "Дагы жөнөтүлбөгөн жөнөтүүлөр токтотулду."
+
+#: apps/broadcasts/views.py:621
+#| msgid "Could not update the tags"
+msgid "Could not duplicate it"
+msgstr "Көчүрмөлөнгөн жок"
+
+#: apps/broadcasts/views.py:633
+#| msgid "Could not add the tag"
+msgid "Could not delete it"
+msgstr "Өчүрүлгөн жок"
+
+#: apps/broadcasts/views.py:634
+#| msgid "Contact deleted"
+msgid "Broadcast deleted"
+msgstr "Жайылтуу өчүрүлдү"
+
+#: apps/broadcasts/views.py:693
+#| msgid "That message is too long."
+msgid "That message is too large to store."
+msgstr "Бул билдирүү сактоо үчүн өтө чоң."
+
+#: apps/broadcasts/views.py:699 apps/broadcasts/views.py:701
+#| msgid "That template could not be read"
+msgid "That message could not be read."
+msgstr "Бул билдирүү окулган жок."
+
+#: apps/broadcasts/views.py:718
+#| msgid "Pick a date and time."
+msgid "Pick a date and time to send."
+msgstr "Жөнөтүү үчүн күн жана убакытты тандаңыз."
+
+#: apps/broadcasts/views.py:722
+#| msgid "That tag already exists"
+msgid "That time has already passed."
+msgstr "Бул убакыт мурунтан эле өтүп кетти."
 
 #: apps/channels/forms.py:27
 msgid ""
@@ -289,7 +520,7 @@ msgstr ""
 "форманын ордуна ошону колдонуңуз."
 
 #: apps/channels/forms.py:47 templates/accounts/settings.html:32
-#: templates/api/keys_list.html:39
+#: templates/api/keys_list.html:39 templates/broadcasts/_rows.html:17
 #: templates/channels/whatsapp_templates.html:26
 #: templates/contacts/_field_rows.html:54 templates/contacts/_rows.html:50
 #: templates/contacts/_tag_rows.html:56 templates/inbox/_label_rows.html:46
@@ -475,11 +706,6 @@ msgstr "Тейлөө"
 #: apps/channels/models.py:554
 msgid "Authentication"
 msgstr "Аутентификация"
-
-#: apps/channels/models.py:566 apps/flows/models.py:60 apps/flows/views.py:202
-#: templates/flows/_list_rows.html:53 templates/flows/edit.html:57
-msgid "Draft"
-msgstr "Долбоор"
 
 #: apps/channels/models.py:567
 msgid "In review"
@@ -881,7 +1107,9 @@ msgstr "Кирүүчү кабарлар"
 msgid "Flows"
 msgstr "Сценарийлер"
 
-#: apps/common/context_processors.py:465 templates/channels/detail.html:82
+#: apps/common/context_processors.py:465 templates/broadcasts/compose.html:31
+#: templates/broadcasts/list.html:14 templates/broadcasts/list.html:19
+#: templates/channels/detail.html:82
 msgid "Broadcasts"
 msgstr "Жайылтуулар"
 
@@ -1005,10 +1233,6 @@ msgstr "Баары бир экинчи байланыш түзүү"
 #: apps/contacts/models.py:429
 msgid "Skip the row"
 msgstr "Сапты өткөрүп жиберүү"
-
-#: apps/contacts/models.py:568 templates/contacts/_channels.html:52
-msgid "Pending"
-msgstr "Күтүүдө"
 
 #: apps/contacts/models.py:569
 msgid "Running"
@@ -1461,7 +1685,6 @@ msgid "Custom fields"
 msgstr "Атайын талаалар"
 
 #: apps/flows/portability/cards.py:31
-#| msgid "Segment saved"
 msgid "Segments"
 msgstr "Сегменттер"
 
@@ -1470,7 +1693,6 @@ msgid "Members"
 msgstr "Мүчөлөр"
 
 #: apps/flows/portability/cards.py:33
-#| msgid "Live flows"
 msgid "Other flows"
 msgstr "Башка сценарийлер"
 
@@ -1616,18 +1838,15 @@ msgid "The file is %(size)s bytes; the limit is %(max)s bytes."
 msgstr "Файл %(size)s байт; чек — %(max)s байт."
 
 #: apps/flows/portability/envelope.py:264
-#| msgid "That file is too large"
 msgid "The file is empty."
 msgstr "Файл бош."
 
 #: apps/flows/portability/envelope.py:272
-#| msgid "That label is not valid."
 msgid "The file is not valid JSON."
 msgstr "Файл жарактуу JSON эмес."
 
 #: apps/flows/portability/envelope.py:275
 #: apps/flows/portability/envelope.py:336
-#| msgid "A rule condition must be an object."
 msgid "A flow template must be a JSON object."
 msgstr "Сценарий шаблону JSON объектиси болушу керек."
 
@@ -1662,7 +1881,6 @@ msgstr ""
 
 #: apps/flows/portability/imports.py:664
 #, python-format
-#| msgid "A tag name is at most %(max)s characters."
 msgid "At most %(limit)s characters."
 msgstr "%(limit)s символдон ашык эмес."
 
@@ -1678,7 +1896,6 @@ msgstr "%(noun)s шаблондон түзүлбөйт; мурунтан бар�
 
 #: apps/flows/portability/imports.py:694
 #, python-format
-#| msgid "%(label)s settings for this workspace"
 msgid "Pick a %(noun)s in this workspace."
 msgstr "Бул жумуш мейкиндигинен %(noun)s тандаңыз."
 
@@ -1694,7 +1911,6 @@ msgid ""
 msgstr "«%(name)s» аталышындагы %(noun)s мурунтан бар — ошону колдонуңуз."
 
 #: apps/flows/portability/imports.py:749
-#| msgid "That is not an email address."
 msgid "That is not a field type."
 msgstr "Бул талаа түрү эмес."
 
@@ -1715,7 +1931,6 @@ msgid "Hi! Thanks for getting in touch — how can we help?"
 msgstr "Салам! Кайрылганыңыз үчүн рахмат — эмне менен жардам бере алабыз?"
 
 #: apps/flows/triggers/forms.py:100
-#| msgid "Each keyword must be an object."
 msgid "Each keyword needs a matching mode."
 msgstr "Ар бир ачкыч сөздүн дал келүү режими болушу керек."
 
@@ -1752,7 +1967,6 @@ msgid "when someone messages you for the first time"
 msgstr "бирөө сизге биринчи жолу жазганда"
 
 #: apps/flows/triggers/phrasing.py:48
-#| msgid "When a message arrives"
 msgid "when a message matches your rules"
 msgstr "билдирүү эрежелериңизге дал келгенде"
 
@@ -1774,7 +1988,6 @@ msgstr "«%(word)s» жана дагы %(count)s"
 
 #: apps/flows/triggers/phrasing.py:91
 #, python-format
-#| msgid "%(list)s or %(last)s"
 msgid "%(list)s or “%(last)s”"
 msgstr "%(list)s же «%(last)s»"
 
@@ -1799,7 +2012,6 @@ msgstr "Азырынча триггер жок, ошондуктан сиз ан
 
 #: apps/flows/triggers/phrasing.py:147
 #, python-format
-#| msgid "%(list)s or %(last)s"
 msgid "%(first)s, or %(second)s"
 msgstr "%(first)s же %(second)s"
 
@@ -1829,7 +2041,6 @@ msgstr ""
 "жооп берет."
 
 #: apps/flows/triggers/registry.py:147
-#| msgid "Stop automation"
 msgid "Story mention"
 msgstr "Историяда эскерүү"
 
@@ -1846,7 +2057,6 @@ msgid "Runs when someone replies to one of this account's stories."
 msgstr "Бирөө бул аккаунттун бир историясына жооп бергенде иштейт."
 
 #: apps/flows/triggers/registry.py:164
-#| msgid "New flow"
 msgid "New follower"
 msgstr "Жаңы жазылуучу"
 
@@ -1874,7 +2084,6 @@ msgid ""
 msgstr "Бирөө ушул шилтеме менен ссылка же QR-код аркылуу келгенде иштейт."
 
 #: apps/flows/triggers/registry.py:186
-#| msgid "Nothing selected"
 msgid "Nothing else matched"
 msgstr "Башка эч нерсе дал келген жок"
 
@@ -1903,7 +2112,6 @@ msgstr ""
 "Контакт менен бир нерсе болгондо иштейт — тег кошулганда, талаа өзгөргөндө."
 
 #: apps/flows/triggers/registry.py:212
-#| msgid "Add another email"
 msgid "Another system"
 msgstr "Башка система"
 
@@ -1922,7 +2130,6 @@ msgid "%(direction)r is not a direction."
 msgstr "%(direction)r багыт эмес."
 
 #: apps/flows/triggers/services.py:277
-#| msgid "No keys yet"
 msgid "No keywords yet"
 msgstr "Азырынча ачкыч сөз жок"
 
@@ -1933,7 +2140,6 @@ msgstr "%(shown)s жана дагы %(more)s"
 
 #: apps/flows/triggers/services.py:289
 #, python-format
-#| msgid "Create “%(term)s”"
 msgid "Reference “%(ref)s”"
 msgstr "«%(ref)s» шилтемеси"
 
@@ -1947,8 +2153,6 @@ msgstr "каалаган жазууда"
 
 #: apps/flows/triggers/services.py:309
 #, python-format
-#| msgid "%(count)s error"
-#| msgid_plural "%(count)s errors"
 msgid " and %(count)s more"
 msgstr " жана дагы %(count)s"
 
@@ -1981,7 +2185,6 @@ msgid "%(label)s triggers do not run on %(platform)s."
 msgstr "«%(label)s» триггерлери %(platform)s'до иштебейт."
 
 #: apps/flows/triggers/validation.py:66
-#| msgid "A rule condition must be an object."
 msgid "A trigger's configuration has to be an object."
 msgstr "Триггердин конфигурациясы объект болушу керек."
 
@@ -1992,17 +2195,14 @@ msgstr "Конфигурация %(size)s байт; чек — %(max)s."
 
 #: apps/flows/triggers/validation.py:81
 #, python-format
-#| msgid "A conversation can carry at most %(max)s labels."
 msgid "The configuration nests deeper than %(max)s levels."
 msgstr "Конфигурациянын деңгээли %(max)s чегинен тереңирээк."
 
 #: apps/flows/views.py:55
-#| msgid "Failed"
 msgid "Unfiled"
 msgstr "Папкасыз"
 
 #: apps/flows/views.py:200 templates/flows/template_gallery.html:70
-#| msgid "all"
 msgid "All"
 msgstr "Баары"
 
@@ -2016,12 +2216,10 @@ msgid "Name required"
 msgstr "Атын көрсөтүңүз"
 
 #: apps/flows/views.py:295
-#| msgid "Give the key a name so you can recognise it later."
 msgid "Give the flow a name to create it."
 msgstr "Сценарийди түзүү үчүн ага ат бериңиз."
 
 #: apps/flows/views.py:310
-#| msgid "Field created"
 msgid "Flow created"
 msgstr "Сценарий түзүлдү"
 
@@ -2031,28 +2229,23 @@ msgid "%(name)s starts with a first message — open it to edit."
 msgstr "%(name)s биринчи билдирүүдөн башталат — түзөтүү үчүн ачыңыз."
 
 #: apps/flows/views.py:323
-#| msgid "A rule needs a name."
 msgid "A flow needs a name."
 msgstr "Сценарийге ат керек."
 
 #: apps/flows/views.py:327
-#| msgid "Field renamed"
 msgid "Flow renamed"
 msgstr "Сценарийдин аты өзгөртүлдү"
 
 #: apps/flows/views.py:338
-#| msgid "Flow started"
 msgid "Flow duplicated"
 msgstr "Сценарий көчүрмөлөндү"
 
 #: apps/flows/views.py:339
 #, python-format
-#| msgid "%(name)s is connected"
 msgid "%(name)s was created as a draft."
 msgstr "%(name)s долбоор катары түзүлдү."
 
 #: apps/flows/views.py:352
-#| msgid "Flow started"
 msgid "Flow archived"
 msgstr "Сценарий архивделди"
 
@@ -2061,7 +2254,6 @@ msgid "Find it again with the Archived status filter."
 msgstr "Аны «Архивделген» статус чыпкасы менен кайра табыңыз."
 
 #: apps/flows/views.py:364
-#| msgid "Flow started"
 msgid "Flow restored"
 msgstr "Сценарий калыбына келтирилди"
 
@@ -2083,13 +2275,11 @@ msgstr "%(name)s окулган жок. Бул шаблондун көйгөйү
 
 #: apps/flows/views_portability.py:336
 #, python-format
-#| msgid "Move %(name)s later"
 msgid "From the %(name)s template."
 msgstr "%(name)s шаблонунан."
 
 #: apps/flows/views_portability.py:337
 #, python-format
-#| msgid "From name"
 msgid "From %(filename)s."
 msgstr "%(filename)s файлынан."
 
@@ -2104,7 +2294,6 @@ msgstr "Эч нерсе импорттолгон жок. %(exc)s"
 
 #: apps/flows/views_portability.py:358 apps/flows/views_portability.py:614
 #: apps/flows/views_portability.py:641
-#| msgid "This invitation has already been accepted."
 msgid "This file has already been imported."
 msgstr "Бул файл мурунтан эле импорттолгон."
 
@@ -2130,7 +2319,6 @@ msgstr[0] ""
 
 #: apps/flows/views_portability.py:614 apps/flows/views_portability.py:641
 #: apps/flows/views_portability.py:671
-#| msgid "Already tagged"
 msgid "Already imported"
 msgstr "Мурунтан импорттолгон"
 
@@ -2139,7 +2327,6 @@ msgid "Not ready to import"
 msgstr "Импорттоого даяр эмес"
 
 #: apps/flows/views_portability.py:625 apps/flows/views_portability.py:634
-#| msgid "Nothing was running"
 msgid "Nothing was imported"
 msgstr "Эч нерсе импорттолгон жок"
 
@@ -2149,7 +2336,6 @@ msgid "%(exc)s Re-check your answers and try again."
 msgstr "%(exc)s Жоопторуңузду кайра текшерип, дагы аракет кылыңыз."
 
 #: apps/flows/views_portability.py:648
-#| msgid "Import as"
 msgid "Imported as drafts"
 msgstr "Долбоор катары импорттолду"
 
@@ -2167,48 +2353,39 @@ msgid "An applied import is kept as a record."
 msgstr "Колдонулган импорт жазуу катары сакталат."
 
 #: apps/flows/views_portability.py:674
-#| msgid "Import started"
 msgid "Import discarded"
 msgstr "Импорт өчүрүлдү"
 
 #: apps/flows/views_triggers.py:66
-#| msgid "Tag added"
 msgid "A tag is added"
 msgstr "Тег кошулду"
 
 #: apps/flows/views_triggers.py:67
-#| msgid "Tag removed"
 msgid "A tag is removed"
 msgstr "Тег өчүрүлдү"
 
 #: apps/flows/views_triggers.py:68
-#| msgid "Save changes"
 msgid "A field changes"
 msgstr "Талаа өзгөрдү"
 
 #: apps/flows/views_triggers.py:69
-#| msgid "Contact subscribed to a sequence"
 msgid "Subscribed to a sequence"
 msgstr "Контакт цепочкага жазылды"
 
 #: apps/flows/views_triggers.py:70
-#| msgid "Contact unsubscribed from a sequence"
 msgid "Unsubscribed from a sequence"
 msgstr "Контакт цепочкадан чыгарылды"
 
 #: apps/flows/views_triggers.py:71
-#| msgid "Contact created"
 msgid "A contact is created"
 msgstr "Контакт түзүлдү"
 
 #: apps/flows/views_triggers.py:111 apps/flows/views_triggers.py:210
 #: apps/flows/views_triggers.py:247
-#| msgid "Unknown state"
 msgid "Unknown trigger type"
 msgstr "Белгисиз триггер түрү"
 
 #: apps/flows/views_triggers.py:111 apps/flows/views_triggers.py:210
-#| msgid "Pick one of the pages below."
 msgid "Pick one from the list."
 msgstr "Тизмеден бирин тандаңыз."
 
@@ -2217,22 +2394,18 @@ msgid "Keywords did not save"
 msgstr "Ачкыч сөздөр сакталган жок"
 
 #: apps/flows/views_triggers.py:221 apps/flows/views_triggers.py:257
-#| msgid "That label is not valid."
 msgid "That filter is not valid"
 msgstr "Бул чыпка жараксыз"
 
 #: apps/flows/views_triggers.py:236
-#| msgid "Tag added"
 msgid "Trigger added"
 msgstr "Триггер кошулду"
 
 #: apps/flows/views_triggers.py:272
-#| msgid "Segment saved"
 msgid "Trigger saved"
 msgstr "Триггер сакталды"
 
 #: apps/flows/views_triggers.py:284 templates/flows/_trigger_row.html:50
-#| msgid "Rule enabled"
 msgid "Trigger enabled"
 msgstr "Триггер күйгүзүлдү"
 
@@ -2245,17 +2418,14 @@ msgid "Order updated"
 msgstr "Тартип жаңыртылды"
 
 #: apps/flows/views_triggers.py:309
-#| msgid "Tag removed"
 msgid "Trigger removed"
 msgstr "Триггер өчүрүлдү"
 
 #: apps/flows/views_triggers.py:348
-#| msgid "Unsupported content."
 msgid "Unsupported format."
 msgstr "Колдоого алынбаган формат."
 
 #: apps/flows/views_triggers.py:459
-#| msgid "That file is too large"
 msgid "That reference is taken"
 msgstr "Бул шилтеме мурунтан алынган"
 
@@ -2265,7 +2435,6 @@ msgid "Another trigger in this workspace already uses “%(ref)s”."
 msgstr "Бул жумуш мейкиндигинде башка триггер «%(ref)s»ды мурунтан колдонот."
 
 #: apps/flows/views_triggers.py:467
-#| msgid "Segment saved"
 msgid "Trigger not saved"
 msgstr "Триггер сакталган жок"
 
@@ -2548,11 +2717,6 @@ msgstr "файл"
 #: apps/inbox/views.py:908
 msgid "Still not sent"
 msgstr "Дагы деле жөнөтүлгөн жок"
-
-#: apps/inbox/views.py:910 templates/contacts/_activity.html:99
-#: templates/inbox/_thread_body.html:151
-msgid "Sent"
-msgstr "Жөнөтүлдү"
 
 #: apps/inbox/views.py:1023 templates/inbox/_thread_header.html:54
 msgid "Unassigned"
@@ -3449,7 +3613,7 @@ msgstr "Тесттик окуяны жөнөтүү"
 msgid "Recent deliveries"
 msgstr "Акыркы жеткирүүлөр"
 
-#: templates/api/webhook_detail.html:70
+#: templates/api/webhook_detail.html:70 templates/broadcasts/_rows.html:22
 msgid "When"
 msgstr "Качан"
 
@@ -3577,6 +3741,473 @@ msgstr ""
 #: templates/base.html:170
 msgid "Toggle menu"
 msgstr "Менюну ачуу/жабуу"
+
+#: templates/broadcasts/_audience_preview.html:21
+msgid "will receive it"
+msgstr "алышат"
+
+#: templates/broadcasts/_audience_preview.html:25
+#| msgid "Nothing matches these filters."
+msgid "match the filter"
+msgstr "чыпкага дал келет"
+
+#: templates/broadcasts/_audience_preview.html:29
+msgid "will be skipped"
+msgstr "өткөрүлүп жиберилет"
+
+#: templates/broadcasts/_audience_preview.html:34
+#| msgid "Nobody has picked these up yet."
+msgid "Nobody matches these rules yet."
+msgstr "Азырынча бул эрежелерге эч ким дал келбейт."
+
+#: templates/broadcasts/_audience_preview.html:42
+msgid "e.g."
+msgstr "мисалы"
+
+#: templates/broadcasts/_audience_preview.html:50
+msgid "Add a rule to see who this reaches."
+msgstr "Бул кимге жетерин көрүү үчүн эреже кошуңуз."
+
+#: templates/broadcasts/_compose_script.html:23
+#| msgid "You have read-only access to this workspace."
+msgid "No per-message price is set for this workspace yet."
+msgstr "Бул жумуш мейкиндиги үчүн билдирүүгө баа дагы эле коюлган эмес."
+
+#: templates/broadcasts/_compose_script.html:24
+msgid "About"
+msgstr "Болжол менен"
+
+#: templates/broadcasts/_compose_script.html:25
+#| msgid "Empty message."
+msgid "per message."
+msgstr "билдирүү үчүн."
+
+#: templates/broadcasts/_counters.html:15
+#| msgid "From address"
+msgid "Progress"
+msgstr "Прогресс"
+
+#: templates/broadcasts/_counters.html:22
+msgid "Cancel this broadcast? Messages already sent cannot be recalled."
+msgstr ""
+"Бул жайылтууну жокко чыгарасызбы? Мурунтан жөнөтүлгөн билдирүүлөрдү "
+"кайтарууга болбойт."
+
+#: templates/broadcasts/_counters.html:24
+#| msgid "Broadcasts"
+msgid "Cancel broadcast"
+msgstr "Жайылтууну жокко чыгаруу"
+
+#: templates/broadcasts/_counters.html:37
+#: templates/broadcasts/_counters.html:44
+#| msgid "Broadcasts"
+msgid "Broadcast progress"
+msgstr "Жайылтуунун жүрүшү"
+
+#: templates/broadcasts/_counters.html:37
+msgid "Working out who this reaches"
+msgstr "Бул кимге жетерин эсептеп жатабыз"
+
+#: templates/broadcasts/_counters.html:40
+msgid "Working out who this reaches…"
+msgstr "Бул кимге жетерин эсептеп жатабыз…"
+
+#: templates/broadcasts/_counters.html:52
+#: templates/inbox/_thread_body.html:153
+msgid "Queued"
+msgstr "Кезекте"
+
+#: templates/broadcasts/_counters.html:60 templates/broadcasts/detail.html:118
+#: templates/inbox/_thread_body.html:150
+msgid "Delivered"
+msgstr "Жеткирилди"
+
+#: templates/broadcasts/_counters.html:79
+#| msgid "Marketing"
+msgid "Waiting"
+msgstr "Күтүү"
+
+#: templates/broadcasts/_counters.html:86
+msgid "Why people were skipped"
+msgstr "Эмне үчүн адамдар өткөрүлүп жиберилди"
+
+#: templates/broadcasts/_recipients.html:16
+msgid "Show"
+msgstr "Көрсөтүү"
+
+#: templates/broadcasts/_recipients.html:43
+#| msgid "Erase contact"
+msgid "Erased contact"
+msgstr "Өчүрүлгөн контакт"
+
+#: templates/broadcasts/_recipients.html:49
+#| msgid "Nobody has picked these up yet."
+msgid "Nobody in this group."
+msgstr "Бул топто эч ким жок."
+
+#: templates/broadcasts/_rows.html:19
+#: templates/channels/whatsapp_templates.html:26
+#: templates/contacts/import_list.html:50
+msgid "Status"
+msgstr "Статус"
+
+#: templates/broadcasts/_rows.html:42
+#, python-format
+#| msgid "Finished"
+msgid "Finished %(when)s"
+msgstr "%(when)s аяктады"
+
+#: templates/broadcasts/_rows.html:44
+#, python-format
+#| msgid "Created %(name)s."
+msgid "Created %(when)s"
+msgstr "%(when)s түзүлдү"
+
+#: templates/broadcasts/_rows.html:49
+#| msgid "No imports yet."
+msgid "No broadcasts yet."
+msgstr "Азырынча жайылтуу жок."
+
+#: templates/broadcasts/_rows.html:62
+#, python-format
+msgid ""
+"Showing the %(page_size)s most recent. Search or filter by status to find an"
+" older one."
+msgstr ""
+"Акыркы %(page_size)s көрсөтүлүп жатат. Эскисин табуу үчүн издөө же статус "
+"боюнча чыпканы колдонуңуз."
+
+#: templates/broadcasts/_step_audience.html:32
+msgid "Who receives this?"
+msgstr "Муну ким алат?"
+
+#: templates/broadcasts/_step_audience.html:33
+msgid "The count updates as you edit. Nobody is messaged until the last step."
+msgstr ""
+"Сан түзөтүү учурунда жаңыланат. Акыркы кадамга чейин эч кимге билдирүү "
+"жөнөтүлбөйт."
+
+#: templates/broadcasts/_step_audience.html:37
+#| msgid "Save as segment"
+msgid "Saved segment"
+msgstr "Сакталган сегмент"
+
+#: templates/broadcasts/_step_audience.html:39
+#| msgid "Build your first flow"
+msgid "Build the rules below"
+msgstr "Төмөндөгү эрежелерди түзүү"
+
+#: templates/broadcasts/_step_audience.html:44
+msgid ""
+"A segment is copied, not linked. Editing it later will not change this "
+"broadcast."
+msgstr ""
+"Сегмент байланбайт, көчүрүлөт. Аны кийин өзгөртүү бул жайылтууга таасир "
+"этпейт."
+
+#: templates/broadcasts/_step_audience.html:66
+#: templates/broadcasts/_step_channel.html:34
+#: templates/broadcasts/_step_content.html:237
+#: templates/flows/_list_rows.html:68 templates/flows/import_upload.html:62
+msgid "Continue"
+msgstr "Улантуу"
+
+#: templates/broadcasts/_step_channel.html:15
+#| msgid "Which one"
+msgid "Which channel?"
+msgstr "Кайсы канал?"
+
+#: templates/broadcasts/_step_channel.html:16
+msgid "Only channels whose platform permits broadcasts are listed."
+msgstr ""
+"Тизмеде платформасы жайылтууга уруксат берген каналдар гана көрсөтүлөт."
+
+#: templates/broadcasts/_step_channel.html:30
+msgid "No channel in this workspace accepts broadcasts."
+msgstr "Бул жумуш мейкиндигинде бир дагы канал жайылтууларды кабыл албайт."
+
+#: templates/broadcasts/_step_content.html:45
+#| msgid "Marketing, per message"
+msgid "What kind of message?"
+msgstr "Кандай билдирүү?"
+
+#: templates/broadcasts/_step_content.html:48
+#| msgid "Choose a page"
+msgid "Compose a message"
+msgstr "Билдирүү түзүү"
+
+#: templates/broadcasts/_step_content.html:49
+#| msgid "Use this template"
+msgid "Use an approved template"
+msgstr "Бекитилген шаблонду колдонуу"
+
+#: templates/broadcasts/_step_content.html:52
+#, python-format
+msgid ""
+"Outside the %(hours)s-hour messaging window this channel accepts approved "
+"templates only."
+msgstr ""
+"%(hours)s сааттык билдирүү терезесинен тышкары бул канал бекитилген "
+"шаблондорду гана кабыл алат."
+
+#: templates/broadcasts/_step_content.html:80
+#| msgid "Remove rule"
+msgid "Remove block"
+msgstr "Блокту өчүрүү"
+
+#: templates/broadcasts/_step_content.html:94
+msgid "What do you want to say?"
+msgstr "Эмне дегиңиз келет?"
+
+#: templates/broadcasts/_step_content.html:111
+msgid "Media library id or URL"
+msgstr "Медиатекадан ID же шилтеме"
+
+#: templates/broadcasts/_step_content.html:113
+msgid "Media library id, or https://…"
+msgstr "Медиатекадан ID, же https://…"
+
+#: templates/broadcasts/_step_content.html:115
+#| msgid "optional"
+msgid "Caption (optional)"
+msgstr "Жазуу (милдеттүү эмес)"
+
+#: templates/broadcasts/_step_content.html:122
+msgid "Card title"
+msgstr "Карточканын аталышы"
+
+#: templates/broadcasts/_step_content.html:123
+msgid "Subtitle"
+msgstr "Кичи аталыш"
+
+#: templates/broadcasts/_step_content.html:127
+msgid "Image: media library id, or https://…"
+msgstr "Сүрөт: медиатекадан ID, же https://…"
+
+#: templates/broadcasts/_step_content.html:135
+#| msgid "Add note"
+msgid "Add text"
+msgstr "Текст кошуу"
+
+#: templates/broadcasts/_step_content.html:136
+#: templates/flows/_triggers_panel.html:76 templates/inbox/list.html:140
+msgid "Add"
+msgstr "Кошуу"
+
+#: templates/broadcasts/_step_content.html:141
+#| msgid "Search the media library…"
+msgid "Open media library"
+msgstr "Медиатеканы ачуу"
+
+#: templates/broadcasts/_step_content.html:156
+#: templates/channels/detail.html:66
+msgid "Buttons"
+msgstr "Баскычтар"
+
+#: templates/broadcasts/_step_content.html:157
+msgid "A reply button parks the contact in a waiting run until they answer."
+msgstr "Жооп баскычы контактты ал жооп бергенге чейин күтүү режимине коёт."
+
+#: templates/broadcasts/_step_content.html:160
+#| msgid "Remove tag"
+msgid "Remove button"
+msgstr "Баскычты өчүрүү"
+
+#: templates/broadcasts/_step_content.html:163 templates/inbox/list.html:135
+msgid "Label"
+msgstr "Метка"
+
+#: templates/broadcasts/_step_content.html:165
+#: templates/inbox/_composer.html:33
+msgid "Reply"
+msgstr "Жооп"
+
+#: templates/broadcasts/_step_content.html:166
+#| msgid "Open in inbox"
+msgid "Open a link"
+msgstr "Шилтемени ачуу"
+
+#: templates/broadcasts/_step_content.html:175
+#: templates/contacts/_filter_bar.html:181
+msgid "of"
+msgstr "ичинен"
+
+#: templates/broadcasts/_step_content.html:179
+#| msgid "Add one"
+msgid "Add button"
+msgstr "Баскыч кошуу"
+
+#: templates/broadcasts/_step_content.html:187
+#| msgid "WhatsApp template"
+msgid "Approved template"
+msgstr "Бекитилген шаблон"
+
+#: templates/broadcasts/_step_content.html:191
+#| msgid "Choose a label…"
+msgid "Choose a template…"
+msgstr "Шаблон тандаңыз…"
+
+#: templates/broadcasts/_step_content.html:216
+#| msgid "Messages out"
+msgid "Message tag"
+msgstr "Билдирүү теги"
+
+#: templates/broadcasts/_step_content.html:217
+#, python-format
+msgid "Required for contacts outside the %(hours)s-hour window."
+msgstr "%(hours)s сааттык терезеден тышкаркы контакттар үчүн талап кылынат."
+
+#: templates/broadcasts/_step_content.html:220
+msgid "No tag: in-window contacts only"
+msgstr "Тегсиз: терезедеги контакттар гана"
+
+#: templates/broadcasts/_step_schedule.html:23
+msgid "When should it go out?"
+msgstr "Качан жөнөтүлсүн?"
+
+#: templates/broadcasts/_step_schedule.html:24
+#, python-format
+msgid "Times are in %(tz)s."
+msgstr "Убакыт %(tz)s убакыт алкагында көрсөтүлгөн."
+
+#: templates/broadcasts/_step_schedule.html:28
+#| msgid "Send at"
+msgid "Send now"
+msgstr "Азыр жөнөтүү"
+
+#: templates/broadcasts/_step_schedule.html:29
+#| msgid "Scheduled reply updated"
+msgid "Schedule for later"
+msgstr "Кийинкиге пландаштыруу"
+
+#: templates/broadcasts/_step_schedule.html:33
+#: templates/inbox/_composer.html:138
+msgid "Send at"
+msgstr "Жөнөтүү убактысы"
+
+#: templates/broadcasts/_step_schedule.html:43
+msgid ""
+"A scheduled broadcast can be cancelled up to the moment it starts, and while"
+" it is sending."
+msgstr ""
+"Пландаштырылган жайылтууну ал башталганга чейин жана жөнөтүлүп жатканда "
+"жокко чыгарууга болот."
+
+#: templates/broadcasts/_step_schedule.html:47
+#: templates/inbox/_composer.html:109
+msgid "Send"
+msgstr "Жөнөтүү"
+
+#: templates/broadcasts/_wizard.html:17
+msgid "Composer steps"
+msgstr "Түзүү кадамдары"
+
+#: templates/broadcasts/_wizard.html:29
+#| msgid "Done"
+msgid "Done:"
+msgstr "Даяр:"
+
+#: templates/broadcasts/compose.html:38
+msgid "Delete this draft? Nothing has been sent, and this cannot be undone."
+msgstr ""
+"Бул долбоорду өчүрөсүзбү? Эч нерсе жөнөтүлгөн жок, муну артка кайтарууга "
+"болбойт."
+
+#: templates/broadcasts/compose.html:42
+#| msgid "Deleted"
+msgid "Delete draft"
+msgstr "Долбоорду өчүрүү"
+
+#: templates/broadcasts/detail.html:34
+#| msgid "Broadcasts"
+msgid "All broadcasts"
+msgstr "Бардык жайылтуулар"
+
+#: templates/broadcasts/detail.html:37 templates/flows/_list_rows.html:88
+msgid "Duplicate"
+msgstr "Көчүрмөлөө"
+
+#: templates/broadcasts/detail.html:55
+msgid "Recipients"
+msgstr "Алуучулар"
+
+#: templates/broadcasts/detail.html:56
+msgid "Who was skipped, and why."
+msgstr "Ким өткөрүлүп жиберилди жана эмне үчүн."
+
+#: templates/broadcasts/detail.html:85
+msgid "Clicks"
+msgstr "Баскандар"
+
+#: templates/broadcasts/detail.html:86
+msgid "Links pressed in this message. Refresh to update."
+msgstr ""
+"Бул билдирүүдөгү басылган шилтемелер. Жаңылоо үчүн баракты жаңыртыңыз."
+
+#: templates/broadcasts/detail.html:91
+#| msgid "Blocked"
+msgid "Clicked"
+msgstr "Баскандар саны"
+
+#: templates/broadcasts/detail.html:99
+#, python-format
+#| msgid "Move %(name)s earlier"
+msgid "%(name)s deliverability"
+msgstr "%(name)s жеткирилиши"
+
+#: templates/broadcasts/detail.html:100
+msgid "Last 30 days, every message on this channel."
+msgstr "Акыркы 30 күн, бул каналдагы бардык билдирүүлөр."
+
+#: templates/broadcasts/detail.html:105
+#| msgid "Message"
+msgid "Messages"
+msgstr "Билдирүүлөр"
+
+#: templates/broadcasts/detail.html:109
+msgid "Reached provider"
+msgstr "Провайдерге жетти"
+
+#: templates/broadcasts/list.html:21
+msgid ""
+"One message to many contacts, filtered for compliance before it goes out."
+msgstr ""
+"Бир билдирүү көптөгөн контактарга, жөнөтүлгөнгө чейин талаптарга ылайыктыгы "
+"боюнча чыпкаланган."
+
+#: templates/broadcasts/list.html:31
+#| msgid "Broadcast finished"
+msgid "New broadcast name"
+msgstr "Жаңы жайылтуунун аты"
+
+#: templates/broadcasts/list.html:40
+#: templates/organizations/workspaces.html:39
+msgid "Create"
+msgstr "Түзүү"
+
+#: templates/broadcasts/list.html:50
+#, python-format
+msgid ""
+"No channel in this workspace accepts broadcasts yet. Connect one in\n"
+"    <a href=\"%(channel_settings_url)s\">channel settings</a> first."
+msgstr ""
+"Бул жумуш мейкиндигинде азырынча бир дагы канал жайылтууларды кабыл албайт. Адегенде\n"
+"    <a href=\"%(channel_settings_url)s\">канал жөндөөлөрүндө</a> каналды туташтырыңыз."
+
+#: templates/broadcasts/list.html:68
+#| msgid "Search flows"
+msgid "Search"
+msgstr "Издөө"
+
+#: templates/broadcasts/list.html:69
+#| msgid "Search contacts"
+msgid "Search broadcasts"
+msgstr "Жайылтууларды издөө"
+
+#: templates/broadcasts/list.html:73
+#| msgid "Any tag"
+msgid "Any status"
+msgstr "Каалаган статус"
 
 #: templates/channels/_instagram_posts.html:18
 #: templates/channels/instagram_connect.html:16
@@ -3718,10 +4349,6 @@ msgstr "Бул платформа эмнени колдойт"
 #, python-format
 msgid "Up to %(max_len)s characters"
 msgstr "%(max_len)s белгиге чейин"
-
-#: templates/channels/detail.html:66
-msgid "Buttons"
-msgstr "Баскычтар"
 
 #: templates/channels/detail.html:67
 #, python-format
@@ -4744,10 +5371,6 @@ msgstr ""
 "Жөнөтүү канчага турарын көрүү үчүн бул жерге билдирүү жазып көрүңүз. Ошол "
 "эле эсептегич SMS жөнөтүү панелинде жана жайылтуу композиторунда иштейт."
 
-#: templates/channels/sms_settings.html:86
-msgid "Message"
-msgstr "Билдирүү"
-
 #: templates/channels/telegram_connect.html:23
 msgid "Connect Telegram"
 msgstr "Telegram'ды туташтыруу"
@@ -5018,11 +5641,6 @@ msgstr "Категория"
 #: templates/channels/whatsapp_templates.html:26
 msgid "Variables"
 msgstr "Өзгөрмөлөр"
-
-#: templates/channels/whatsapp_templates.html:26
-#: templates/contacts/import_list.html:50
-msgid "Status"
-msgstr "Статус"
 
 #: templates/channels/whatsapp_templates.html:35
 #, python-format
@@ -5333,10 +5951,6 @@ msgstr "Сегмент катары сактоо"
 #: templates/contacts/_filter_bar.html:177
 msgid "Delete segment"
 msgstr "Сегментти өчүрүү"
-
-#: templates/contacts/_filter_bar.html:181
-msgid "of"
-msgstr "ичинен"
 
 #: templates/contacts/_filter_bar.html:182
 msgid "rules"
@@ -5966,7 +6580,6 @@ msgstr "Жооп керек"
 
 #: templates/flows/_import_requirement.html:21
 #, python-format
-#| msgid "Uploaded %(date)s"
 msgid "Unnamed %(kind)s"
 msgstr "Аты жок %(kind)s"
 
@@ -6000,7 +6613,6 @@ msgstr "Өткөрүп жиберүү үчүн бош калтырыңыз"
 
 #: templates/flows/_import_requirement.html:65
 #, python-format
-#| msgid "Settings for %(name)s"
 msgid "Value for %(name)s"
 msgstr "%(name)s үчүн маани"
 
@@ -6035,12 +6647,10 @@ msgstr ""
 
 #: templates/flows/_import_requirement.html:135
 #, python-format
-#| msgid "Back to %(name)s"
 msgid "What to do with %(name)s"
 msgstr "%(name)s менен эмне кылуу"
 
 #: templates/flows/_import_requirement.html:138 templates/flows/list.html:77
-#| msgid "Create"
 msgid "Create it"
 msgstr "Түзүү"
 
@@ -6058,12 +6668,10 @@ msgstr "Атаңыз…"
 
 #: templates/flows/_import_requirement.html:150
 #, python-format
-#| msgid "You have joined %(name)s."
 msgid "Name for the new %(name)s"
 msgstr "Жаңы %(name)s үчүн ат"
 
 #: templates/flows/_import_requirement.html:156
-#| msgid "What is the field called?"
 msgid "What this field holds"
 msgstr "Бул талаа эмнени сактайт"
 
@@ -6072,7 +6680,6 @@ msgid "Media asset"
 msgstr "Медиа файл"
 
 #: templates/flows/_import_requirement.html:166
-#| msgid "Pick a tag first"
 msgid "Pick an asset…"
 msgstr "Файл тандаңыз…"
 
@@ -6085,22 +6692,18 @@ msgid "Media URL"
 msgstr "Медиа файлдын шилтемеси"
 
 #: templates/flows/_import_requirement.html:177
-#| msgid "Which one"
 msgid "Which existing one"
 msgstr "Мурунтан бардын кайсынысы"
 
 #: templates/flows/_import_requirement.html:178
-#| msgid "Which one"
 msgid "Pick one…"
 msgstr "Тандаңыз…"
 
 #: templates/flows/_list_rows.html:22
-#| msgid "Nobody here yet"
 msgid "No flows here yet"
 msgstr "Бул жерде азырынча сценарий жок"
 
 #: templates/flows/_list_rows.html:25
-#| msgid "No conversations match these filters."
 msgid "Nothing matches these filters."
 msgstr "Бул чыпкаларга эч нерсе дал келбейт."
 
@@ -6108,23 +6711,13 @@ msgstr "Бул чыпкаларга эч нерсе дал келбейт."
 msgid "Start from a template above, or create one from scratch."
 msgstr "Жогорудагы шаблондон баштаңыз же нөлдөн түзүңүз."
 
-#: templates/flows/_list_rows.html:68 templates/flows/import_upload.html:62
-msgid "Continue"
-msgstr "Улантуу"
-
 #: templates/flows/_list_rows.html:72
-#| msgid "No actions"
 msgid "More actions"
 msgstr "Башка иш-аракеттер"
 
 #: templates/flows/_list_rows.html:81
-#| msgid "Status"
 msgid "Stats"
 msgstr "Статистика"
-
-#: templates/flows/_list_rows.html:88
-msgid "Duplicate"
-msgstr "Көчүрмөлөө"
 
 #: templates/flows/_list_rows.html:106 templates/flows/edit.html:83
 msgid "Download a copy"
@@ -6149,13 +6742,11 @@ msgid "Folder"
 msgstr "Папка"
 
 #: templates/flows/_list_rows.html:135
-#| msgid "From name"
 msgid "Flow name"
 msgstr "Сценарийдин аты"
 
 #: templates/flows/_template_card.html:52
 #, python-format
-#| msgid "New label"
 msgid "Needs %(label)s"
 msgstr "%(label)s керек"
 
@@ -6168,12 +6759,10 @@ msgid "Calls out to the internet"
 msgstr "Интернетке кайрылат"
 
 #: templates/flows/_template_card.html:80
-#| msgid "Start again"
 msgid "Starts on:"
 msgstr "Башталат:"
 
 #: templates/flows/_template_card.html:81
-#| msgid "Add another email"
 msgid "Another flow"
 msgstr "Башка сценарий"
 
@@ -6188,43 +6777,31 @@ msgstr "Өлчөмү:"
 #: templates/flows/_template_card.html:91
 #: templates/flows/import_review.html:50
 #, python-format
-#| msgid "%(count)s skipped"
 msgid "%(count)s step"
 msgid_plural "%(count)s steps"
 msgstr[0] "%(count)s кадам"
 
 #: templates/flows/_template_card.html:97
-#| msgid "New template"
 msgid "Use this template"
 msgstr "Бул шаблонду колдонуу"
 
 #: templates/flows/_template_tile.html:28
 #, python-format
-#| msgid "%(count)s skipped: %(reason)s"
-#| msgid_plural "%(count)s skipped: %(reason)s"
 msgid "%(count)s step · %(platform)s"
 msgid_plural "%(count)s steps · %(platform)s"
 msgstr[0] "%(count)s кадам · %(platform)s"
 
 #: templates/flows/_trigger_form.html:33
 #, python-format
-#| msgid "Update “%(name)s”"
 msgid "Edit “%(label)s”"
 msgstr "«%(label)s»ды түзөтүү"
 
 #: templates/flows/_trigger_form.html:33
 #, python-format
-#| msgid "Update “%(name)s”"
 msgid "Add “%(label)s”"
 msgstr "«%(label)s»ды кошуу"
 
-#: templates/flows/_trigger_form.html:49
-#| msgid "Channels"
-msgid "Channel"
-msgstr "Канал"
-
 #: templates/flows/_trigger_form.html:51 templates/flows/_trigger_row.html:37
-#| msgid "All channels"
 msgid "All matching channels"
 msgstr "Дал келген бардык каналдар"
 
@@ -6238,7 +6815,6 @@ msgstr "Шилтемени көчүрүү"
 
 #: templates/flows/_trigger_ref_links.html:28
 #, python-format
-#| msgid "Role in %(name)s"
 msgid "QR code for %(name)s"
 msgstr "%(name)s үчүн QR-код"
 
@@ -6247,12 +6823,10 @@ msgid "Paused"
 msgstr "Тындырылды"
 
 #: templates/flows/_trigger_row.html:48
-#| msgid "Paste the token"
 msgid "Pause this trigger"
 msgstr "Бул триггерди тындыруу"
 
 #: templates/flows/_trigger_row.html:48
-#| msgid "Enable this rule"
 msgid "Enable this trigger"
 msgstr "Бул триггерди күйгүзүү"
 
@@ -6273,7 +6847,6 @@ msgid "Move down"
 msgstr "Төмөн жылдыруу"
 
 #: templates/flows/_trigger_row.html:66
-#| msgid "Select this page"
 msgid "Delete this trigger?"
 msgstr "Бул триггерди өчүрөсүзбү?"
 
@@ -6305,7 +6878,6 @@ msgstr ""
 "        кичинеси гана иштейт."
 
 #: templates/flows/_triggers_panel.html:45
-#| msgid "No tags yet"
 msgid "No triggers yet"
 msgstr "Азырынча триггер жок"
 
@@ -6319,16 +6891,10 @@ msgid "Trigger type"
 msgstr "Триггердин түрү"
 
 #: templates/flows/_triggers_panel.html:73
-#| msgid "No labels yet"
 msgid "(not available yet)"
 msgstr "(азырынча жеткиликсиз)"
 
-#: templates/flows/_triggers_panel.html:76 templates/inbox/list.html:140
-msgid "Add"
-msgstr "Кошуу"
-
 #: templates/flows/edit.html:60
-#| msgid "Read only"
 msgid "Read-only"
 msgstr "Окуу үчүн гана"
 
@@ -6345,7 +6911,6 @@ msgid "Loading the flow builder…"
 msgstr "Сценарий редактору жүктөлүүдө…"
 
 #: templates/flows/edit.html:141
-#| msgid "That file could not be read"
 msgid "The flow builder could not load."
 msgstr "Сценарий редактору жүктөлгөн жок."
 
@@ -6358,25 +6923,19 @@ msgstr ""
 "                же контейнер образын кайра курңуз."
 
 #: templates/flows/edit.html:157
-#| msgid "Loading…"
 msgid "Loading triggers…"
 msgstr "Триггерлер жүктөлүүдө…"
 
 #: templates/flows/import_review.html:18 templates/flows/import_upload.html:12
 #: templates/flows/import_upload.html:16
-#| msgid "Import as"
 msgid "Import a flow"
 msgstr "Сценарийди импорттоо"
 
 #: templates/flows/import_review.html:22
-#| msgid "Recent imports"
 msgid "Review this import"
 msgstr "Бул импортту текшериңиз"
 
 #: templates/flows/import_review.html:29
-#| msgid ""
-#| "Nothing has been written yet. These are the numbers the import would "
-#| "produce."
 msgid ""
 "Nothing has been created yet. Answer what it asks for below, then import."
 msgstr ""
@@ -6389,14 +6948,11 @@ msgstr "Бул файлдагы сценарийлер"
 
 #: templates/flows/import_review.html:51
 #, python-format
-#| msgid "%(count)s error"
-#| msgid_plural "%(count)s errors"
 msgid "%(count)s trigger"
 msgid_plural "%(count)s triggers"
 msgstr[0] "%(count)s триггер"
 
 #: templates/flows/import_review.html:54
-#| msgid "Live flows"
 msgid "Main flow"
 msgstr "Негизги сценарий"
 
@@ -6424,7 +6980,6 @@ msgstr ""
 
 #: templates/flows/import_review.html:92
 #, python-format
-#| msgid "Role in %(name)s"
 msgid "(in %(name)s)"
 msgstr "(%(name)s ичинде)"
 
@@ -6457,7 +7012,6 @@ msgstr "Өткөрүп жиберүү"
 
 #: templates/flows/import_review.html:175
 #, python-format
-#| msgid "Import %(count)s row(s) now?"
 msgid "Import %(count)s flow"
 msgid_plural "Import %(count)s flows"
 msgstr[0] "%(count)s сценарийди импорттоо"
@@ -6471,7 +7025,6 @@ msgid "Discard"
 msgstr "Импортту өчүрүү"
 
 #: templates/flows/import_review.html:181
-#| msgid "Back to webhooks"
 msgid "Back to flows"
 msgstr "Сценарийлерге кайтуу"
 
@@ -6492,12 +7045,10 @@ msgstr ""
 "жана кайда кайрыларын так көрөсүз."
 
 #: templates/flows/import_upload.html:28
-#| msgid "That file could not be read"
 msgid "That file was not imported"
 msgstr "Бул файл импорттолгон жок"
 
 #: templates/flows/import_upload.html:42
-#| msgid "No templates yet."
 msgid "Flow template file"
 msgstr "Сценарий шаблонунун файлы"
 
@@ -6536,7 +7087,6 @@ msgstr ""
 "сөз, историяга жооп."
 
 #: templates/flows/list.html:59
-#| msgid "Import as"
 msgid "Import a file"
 msgstr "Файлды импорттоо"
 
@@ -6549,17 +7099,14 @@ msgid "Comment to DM"
 msgstr "Комментарийден жеке кабарга"
 
 #: templates/flows/list.html:74
-#| msgid "What is the field called?"
 msgid "What is this flow called?"
 msgstr "Бул сценарий кантип аталат?"
 
 #: templates/flows/list.html:89
-#| msgid "Search contacts"
 msgid "Search flows"
 msgstr "Сценарийлерди издөө"
 
 #: templates/flows/list.html:107
-#| msgid "All imports"
 msgid "All folders"
 msgstr "Бардык папкалар"
 
@@ -6571,10 +7118,6 @@ msgstr "Шаблондон баштоо"
 
 #: templates/flows/list.html:117
 #, python-format
-#| msgid ""
-#| "%(counter)s ready-made flow. Pick one and change the words to suit you."
-#| msgid_plural ""
-#| "%(counter)s ready-made flows. Pick one and change the words to suit you."
 msgid "%(count)s ready-made flow. Pick one and change the words to suit you."
 msgid_plural ""
 "%(count)s ready-made flows. Pick one and change the words to suit you."
@@ -6583,7 +7126,6 @@ msgstr[0] ""
 
 #: templates/flows/list.html:121
 #, python-format
-#| msgid "Browse all %(total)s"
 msgid "Browse all %(count)s"
 msgstr "Баарын көрүү (%(count)s)"
 
@@ -6594,17 +7136,14 @@ msgstr ""
 "Бирин тандаңыз, эч нерсе түзүлгөнгө чейин ага эмне керек экенин так көрөсүз."
 
 #: templates/flows/template_gallery.html:35
-#| msgid "Upload a file"
 msgid "Upload a file instead"
 msgstr "Анын ордуна файл жүктөө"
 
 #: templates/flows/template_gallery.html:45
-#| msgid "That file could not be read"
 msgid "That template could not be read"
 msgstr "Бул шаблон окулган жок"
 
 #: templates/flows/template_gallery.html:66
-#| msgid "Back to templates"
 msgid "Search templates"
 msgstr "Шаблондорду издөө"
 
@@ -6617,7 +7156,6 @@ msgstr ""
 "            ал эми шилтемелери жана тегдери — толтургуч гана. Өзүңүз түзөтүп, жарыялаганча эч нерсе иштебейт."
 
 #: templates/flows/template_gallery.html:93
-#| msgid "No templates yet."
 msgid "No templates are installed"
 msgstr "Шаблондор орнотулган эмес"
 
@@ -6639,7 +7177,6 @@ msgid "Any post"
 msgstr "Каалаган жазуу"
 
 #: templates/flows/triggers/_form_comment.html:29
-#| msgid "On these connections"
 msgid "Only these posts"
 msgstr "Жалгыз ушул жазуулар"
 
@@ -6649,12 +7186,10 @@ msgstr "Ар бир сапта бир жазуу ID'си"
 
 #: templates/flows/triggers/_form_comment.html:39
 #, python-format
-#| msgid "Choose a label…"
 msgid "Choose from %(label)s"
 msgstr "%(label)s'дан тандоо"
 
 #: templates/flows/triggers/_form_comment.html:45
-#| msgid "On these connections"
 msgid "Only when the comment contains"
 msgstr "Комментарий камтыганда гана"
 
@@ -6680,7 +7215,6 @@ msgid "Like the comment"
 msgstr "Комментарийди жактыруу"
 
 #: templates/flows/triggers/_form_comment.html:75
-#| msgid "Quick replies"
 msgid "Public reply"
 msgstr "Ачык жооп"
 
@@ -6710,22 +7244,18 @@ msgid "Exact"
 msgstr "Так эле"
 
 #: templates/flows/triggers/_form_keyword.html:16
-#| msgid "contains"
 msgid "Contains"
 msgstr "Камтыйт"
 
 #: templates/flows/triggers/_form_keyword.html:17
-#| msgid "as a whole word"
 msgid "Whole word"
 msgstr "Бүтүн сөз катары"
 
 #: templates/flows/triggers/_form_keyword.html:42
-#| msgid "Remove rule"
 msgid "Remove keyword"
 msgstr "Ачкыч сөздү өчүрүү"
 
 #: templates/flows/triggers/_form_keyword.html:46
-#| msgid "Keyword"
 msgid "Add keyword"
 msgstr "Ачкыч сөз кошуу"
 
@@ -6738,14 +7268,10 @@ msgstr ""
 " ичинде дал келет, «так эле сөз катары» дал келбейт."
 
 #: templates/flows/triggers/_form_ref_url.html:10
-#| msgid "Preferences"
 msgid "Reference"
 msgstr "Шилтеме"
 
 #: templates/flows/triggers/_form_ref_url.html:15
-#| msgid ""
-#| "Lowercase letters, digits and underscores. Meta shows this name in its "
-#| "review queue."
 msgid ""
 "Letters, digits, hyphens and underscores. It appears in the link and inside "
 "the QR code."
@@ -6754,7 +7280,6 @@ msgstr ""
 "көрүнөт."
 
 #: templates/flows/triggers/_form_ref_url.html:19
-#| msgid "Username"
 msgid "Public username"
 msgstr "Ачык колдонуучу аты"
 
@@ -6773,7 +7298,6 @@ msgstr ""
 "Messenger'ге кереги жок."
 
 #: templates/flows/triggers/_form_rule.html:28
-#| msgid "Add tag"
 msgid "Any tag"
 msgstr "Каалаган тег"
 
@@ -6786,12 +7310,10 @@ msgstr ""
 "өзгөртпөйт жана эч нерсени иштетпейт."
 
 #: templates/flows/triggers/_form_rule.html:39
-#| msgid "Fields"
 msgid "Field"
 msgstr "Талаа"
 
 #: templates/flows/triggers/_form_rule.html:41
-#| msgid "New field"
 msgid "Any field"
 msgstr "Каалаган талаа"
 
@@ -6801,7 +7323,6 @@ msgstr ""
 "Талаанын жаңы маанисине дал келтирүү үчүн төмөнкү шарттарды колдонуңуз."
 
 #: templates/flows/triggers/_form_rule.html:51
-#| msgid "And the contact matches"
 msgid "Only when the contact matches"
 msgstr "Контакт дал келгенде гана"
 
@@ -6814,10 +7335,6 @@ msgstr ""
 "Өзгөргөндөн кийин текшерилет, ошондуктан эреже контакт азыр кандай экенин "
 "сурай алат. Баарына иштеши үчүн бош калтырыңыз. Ар бир контакт бул "
 "сценарийди мүнөтүнө бир жолудан ашык иштете албайт."
-
-#: templates/inbox/_composer.html:33
-msgid "Reply"
-msgstr "Жооп"
 
 #: templates/inbox/_composer.html:42
 msgid "Write a reply…"
@@ -6847,10 +7364,6 @@ msgstr "Жүктөлүүдө…"
 msgid "Nothing in the library this channel can carry."
 msgstr "Бул канал алып жүрө турган эч нерсе китепканада жок."
 
-#: templates/inbox/_composer.html:109
-msgid "Send"
-msgstr "Жөнөтүү"
-
 #: templates/inbox/_composer.html:119
 msgid "Add note"
 msgstr "Эскертүү кошуу"
@@ -6868,14 +7381,6 @@ msgstr "Кийинчерээк жөнөтүү"
 msgid "A reply pauses automation for %(minutes)s minute."
 msgid_plural "A reply pauses automation for %(minutes)s minutes."
 msgstr[0] "Жооп автоматташтырууну %(minutes)s мүнөткө тыныктырат."
-
-#: templates/inbox/_composer.html:138
-msgid "Send at"
-msgstr "Жөнөтүү убактысы"
-
-#: templates/inbox/_composer.html:144
-msgid "Schedule"
-msgstr "Пландоо"
 
 #: templates/inbox/_composer.html:158
 msgid "Remind at"
@@ -6913,11 +7418,6 @@ msgstr "Окулган жок"
 #: templates/inbox/_conversation_rows.html:80
 msgid "Something is scheduled on this conversation"
 msgstr "Бул маекке бир нерсе пландалган"
-
-#: templates/inbox/_conversation_rows.html:80
-#: templates/inbox/_deferred.html:39
-msgid "Scheduled"
-msgstr "Пландалды"
 
 #: templates/inbox/_deferred.html:21
 msgid "Reminder"
@@ -7227,14 +7727,6 @@ msgstr "Басылды: %(id)s"
 msgid "Ref: %(ref)s"
 msgstr "Шилтеме: %(ref)s"
 
-#: templates/inbox/_thread_body.html:150
-msgid "Delivered"
-msgstr "Жеткирилди"
-
-#: templates/inbox/_thread_body.html:153
-msgid "Queued"
-msgstr "Кезекте"
-
 #: templates/inbox/_thread_body.html:172
 msgid "Try again"
 msgstr "Кайра аракет кылуу"
@@ -7304,10 +7796,6 @@ msgstr "Бардык каналдар"
 #: templates/inbox/list.html:102
 msgid "Any label"
 msgstr "Каалаган метка"
-
-#: templates/inbox/list.html:135
-msgid "Label"
-msgstr "Метка"
 
 #: templates/inbox/list.html:137
 msgid "Choose a label…"
@@ -7652,10 +8140,6 @@ msgstr "Жаңы жумуш мейкиндиги"
 #: templates/organizations/workspaces.html:36
 msgid "What is it called?"
 msgstr "Ал кандай аталат?"
-
-#: templates/organizations/workspaces.html:39
-msgid "Create"
-msgstr "Түзүү"
 
 #: templates/organizations/workspaces.html:56
 msgid "You are a member"

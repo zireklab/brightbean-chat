@@ -1,4 +1,4 @@
-{% load common_extras %}
+{% load common_extras i18n %}
 {% comment %}
 The broadcast table. One renderer for the toolbar's fetch and for every
 mutation's refresh event.
@@ -14,12 +14,12 @@ page is where the live figures are computed, and it writes them back here.
 <table class="w-full text-sm">
     <thead>
         <tr style="color: var(--text-tertiary);">
-            <th class="text-left font-medium pb-2">Name</th>
-            <th class="text-left font-medium pb-2">Channel</th>
-            <th class="text-left font-medium pb-2">Status</th>
-            <th class="text-right font-medium pb-2">Sent</th>
-            <th class="text-right font-medium pb-2">Skipped</th>
-            <th class="text-left font-medium pb-2 pl-4">When</th>
+            <th class="text-left font-medium pb-2">{% translate "Name" %}</th>
+            <th class="text-left font-medium pb-2">{% translate "Channel" %}</th>
+            <th class="text-left font-medium pb-2">{% translate "Status" %}</th>
+            <th class="text-right font-medium pb-2">{% translate "Sent" %}</th>
+            <th class="text-right font-medium pb-2">{% translate "Skipped" %}</th>
+            <th class="text-left font-medium pb-2 pl-4">{% translate "When" %}</th>
         </tr>
     </thead>
     <tbody>
@@ -39,14 +39,14 @@ page is where the live figures are computed, and it writes them back here.
             <td class="py-2 text-right" style="font-variant-numeric: tabular-nums;">{{ broadcast.stats.sent|default:0 }}</td>
             <td class="py-2 text-right" style="font-variant-numeric: tabular-nums;">{{ broadcast.stats.skipped|default:0 }}</td>
             <td class="py-2 pl-4" style="color: var(--text-secondary);">
-                {% if broadcast.finished_at %}Finished {{ broadcast.finished_at }}
+                {% if broadcast.finished_at %}{% blocktranslate with when=broadcast.finished_at %}Finished {{ when }}{% endblocktranslate %}
                 {% elif broadcast.scheduled_at %}{{ broadcast.scheduled_at }}
-                {% else %}Created {{ broadcast.created_at }}{% endif %}
+                {% else %}{% blocktranslate with when=broadcast.created_at %}Created {{ when }}{% endblocktranslate %}{% endif %}
             </td>
         </tr>
         {% empty %}
         <tr><td colspan="6" class="py-6 text-center" style="color: var(--text-tertiary);">
-            No broadcasts yet.
+            {% translate "No broadcasts yet." %}
         </td></tr>
         {% endfor %}
     </tbody>
@@ -59,6 +59,6 @@ page is where the live figures are computed, and it writes them back here.
   set rather than this page, so they are the way to reach what is not here.
 {% endcomment %}
 <p class="bc-hint mt-2">
-    Showing the {{ page_size }} most recent. Search or filter by status to find an older one.
+    {% blocktranslate %}Showing the {{ page_size }} most recent. Search or filter by status to find an older one.{% endblocktranslate %}
 </p>
 {% endif %}
