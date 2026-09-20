@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 10:09+0600\n"
+"POT-Creation-Date: 2026-09-20 12:51+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ru\n"
@@ -286,6 +286,511 @@ msgstr "Рассылка «{broadcast_name}» завершена"
 msgid "{sent} sent, {failed} failed, {skipped} skipped."
 msgstr "Отправлено: {sent}, ошибок: {failed}, пропущено: {skipped}."
 
+#: apps/channels/forms.py:27
+msgid ""
+"That account is already connected to this deployment. Disconnect it there "
+"first."
+msgstr ""
+"Этот аккаунт уже подключён к этому развёртыванию. Сначала отключите его там."
+
+#: apps/channels/forms.py:32
+#, python-brace-format
+msgid ""
+"{label} has a guided setup that collects its credentials. Use that instead "
+"of this form."
+msgstr ""
+"Для {label} есть пошаговая настройка, которая сама собирает учётные данные. "
+"Используйте её вместо этой формы."
+
+#: apps/channels/forms.py:47 templates/accounts/settings.html:32
+#: templates/api/keys_list.html:39
+#: templates/channels/whatsapp_templates.html:26
+#: templates/organizations/settings.html:27
+#: templates/organizations/settings.html:49
+#: templates/workspaces/settings.html:36
+msgid "Name"
+msgstr "Имя"
+
+#: apps/channels/forms.py:48 templates/channels/detail.html:40
+msgid "Account identifier"
+msgstr "Идентификатор аккаунта"
+
+#: apps/channels/forms.py:51
+msgid "How this channel appears in the inbox and the flow builder."
+msgstr "Как этот канал отображается во входящих и в конструкторе сценариев."
+
+#: apps/channels/forms.py:53
+msgid ""
+"The platform's own id for the account: bot id, page id, phone number id, or "
+"sending domain."
+msgstr ""
+"Собственный идентификатор платформы для аккаунта: id бота, id страницы, id "
+"номера телефона или домен отправки."
+
+#: apps/channels/forms_whatsapp.py:60
+msgid "WhatsApp Business Account ID"
+msgstr "ID бизнес-аккаунта WhatsApp"
+
+#: apps/channels/forms_whatsapp.py:62
+msgid "From Business Manager → WhatsApp Accounts. Digits only."
+msgstr "Из Business Manager → WhatsApp Accounts. Только цифры."
+
+#: apps/channels/forms_whatsapp.py:65
+msgid "Phone number ID"
+msgstr "ID номера телефона"
+
+#: apps/channels/forms_whatsapp.py:67
+msgid "The API id of the number, not the number itself."
+msgstr "API-идентификатор номера, а не сам номер."
+
+#: apps/channels/forms_whatsapp.py:70
+msgid "Permanent access token"
+msgstr "Постоянный токен доступа"
+
+#: apps/channels/forms_whatsapp.py:74
+msgid ""
+"A system user token with whatsapp_business_messaging and "
+"whatsapp_business_management."
+msgstr ""
+"Токен системного пользователя с правами whatsapp_business_messaging и "
+"whatsapp_business_management."
+
+#: apps/channels/forms_whatsapp.py:86
+msgid "This is a numeric id from Business Manager."
+msgstr "Это числовой идентификатор из Business Manager."
+
+#: apps/channels/forms_whatsapp.py:92
+msgid "Paste the system user token."
+msgstr "Вставьте токен системного пользователя."
+
+#: apps/channels/forms_whatsapp.py:107
+msgid "Header"
+msgstr "Заголовок"
+
+#: apps/channels/forms_whatsapp.py:110
+#, python-format
+msgid "Optional, up to %(max)s characters. May contain {{1}}."
+msgstr "Необязательно, до %(max)s символов. Может содержать {{1}}."
+
+#: apps/channels/forms_whatsapp.py:113
+msgid "Body"
+msgstr "Текст сообщения"
+
+#: apps/channels/forms_whatsapp.py:116
+#, python-format
+msgid "Up to %(max)s characters. Use {{1}}, {{2}} … for variables."
+msgstr "До %(max)s символов. Для переменных используйте {{1}}, {{2}} и т. д."
+
+#: apps/channels/forms_whatsapp.py:119
+msgid "Footer"
+msgstr "Нижний колонтитул"
+
+#: apps/channels/forms_whatsapp.py:122
+#, python-format
+msgid "Optional, up to %(max)s characters. No variables allowed here."
+msgstr "Необязательно, до %(max)s символов. Переменные здесь недопустимы."
+
+#: apps/channels/forms_whatsapp.py:124
+msgid "Link button label"
+msgstr "Текст кнопки-ссылки"
+
+#: apps/channels/forms_whatsapp.py:126
+msgid "Link button URL"
+msgstr "URL кнопки-ссылки"
+
+#: apps/channels/forms_whatsapp.py:129
+msgid "May end in a variable, e.g. https://example.com/orders/{{1}}."
+msgstr ""
+"Может заканчиваться переменной, например https://example.com/orders/{{1}}."
+
+#: apps/channels/forms_whatsapp.py:135
+msgid "WhatsApp number"
+msgstr "Номер WhatsApp"
+
+#: apps/channels/forms_whatsapp.py:135
+msgid "Template name"
+msgstr "Название шаблона"
+
+#: apps/channels/forms_whatsapp.py:137
+msgid ""
+"Lowercase letters, digits and underscores. Meta shows this name in its "
+"review queue."
+msgstr ""
+"Строчные буквы, цифры и подчёркивания. Meta показывает это имя в очереди на "
+"проверку."
+
+#: apps/channels/forms_whatsapp.py:138
+msgid "Meta's language code, e.g. en_US."
+msgstr "Код языка Meta, например en_US."
+
+#: apps/channels/forms_whatsapp.py:160
+#, python-format
+msgid "Quick reply %(number)s"
+msgstr "Быстрый ответ %(number)s"
+
+#: apps/channels/forms_whatsapp.py:203
+msgid "A footer cannot contain variables. Move it into the body."
+msgstr ""
+"Нижний колонтитул не может содержать переменные. Перенесите их в текст "
+"сообщения."
+
+#: apps/channels/forms_whatsapp.py:211
+msgid "Use lowercase letters, digits and underscores only."
+msgstr "Используйте только строчные буквы, цифры и подчёркивания."
+
+#: apps/channels/forms_whatsapp.py:222
+msgid "A link button needs both a label and a URL."
+msgstr "Для кнопки-ссылки нужны и текст, и URL."
+
+#: apps/channels/forms_whatsapp.py:270
+msgid "Marketing, per message"
+msgstr "Маркетинг, за сообщение"
+
+#: apps/channels/forms_whatsapp.py:271
+msgid "Utility, per message"
+msgstr "Служебные, за сообщение"
+
+#: apps/channels/forms_whatsapp.py:272
+msgid "Authentication, per message"
+msgstr "Аутентификация, за сообщение"
+
+#: apps/channels/forms_whatsapp.py:278
+msgid "Use a three-letter ISO 4217 code, e.g. USD."
+msgstr "Используйте трёхбуквенный код ISO 4217, например USD."
+
+#: apps/channels/forms_whatsapp.py:286
+msgid "A price cannot be negative."
+msgstr "Цена не может быть отрицательной."
+
+#: apps/channels/models.py:103 templates/api/keys_list.html:87
+msgid "Active"
+msgstr "Активен"
+
+#: apps/channels/models.py:104
+msgid "Needs reconnection"
+msgstr "Требуется переподключение"
+
+#: apps/channels/models.py:105 templates/api/webhooks_list.html:65
+msgid "Disabled"
+msgstr "Отключено"
+
+#: apps/channels/models.py:552
+msgid "Marketing"
+msgstr "Маркетинг"
+
+#: apps/channels/models.py:553
+msgid "Utility"
+msgstr "Служебные"
+
+#: apps/channels/models.py:554
+msgid "Authentication"
+msgstr "Аутентификация"
+
+#: apps/channels/models.py:566
+msgid "Draft"
+msgstr "Черновик"
+
+#: apps/channels/models.py:567
+msgid "In review"
+msgstr "На проверке"
+
+#: apps/channels/models.py:568
+msgid "Approved"
+msgstr "Одобрен"
+
+#: apps/channels/models.py:569
+msgid "Rejected"
+msgstr "Отклонён"
+
+#: apps/channels/views.py:402
+msgid "That is not a status you can set by hand."
+msgstr "Такой статус нельзя установить вручную."
+
+#: apps/channels/views.py:416
+#, python-format
+msgid "%(name)s is now %(status)s."
+msgstr "%(name)s теперь %(status)s."
+
+#: apps/channels/views.py:461
+#, python-format
+msgid "Disconnected %(name)s."
+msgstr "%(name)s отключён."
+
+#: apps/channels/views_email.py:89
+msgid ""
+"The mail server did not accept those details. Check the host, port, "
+"encryption and sign-in details with your provider and try again."
+msgstr ""
+"Почтовый сервер не принял эти данные. Проверьте у своего провайдера хост, "
+"порт, тип шифрования и данные для входа и попробуйте снова."
+
+#: apps/channels/views_email.py:92
+msgid ""
+"Resend did not accept that API key. Copy it again from the Resend dashboard "
+"and try again."
+msgstr ""
+"Resend не принял этот API-ключ. Скопируйте его заново из панели Resend и "
+"попробуйте снова."
+
+#: apps/channels/views_email.py:94
+msgid ""
+"AWS did not accept those credentials. Check the access key, secret and "
+"region, and that the key is allowed to use SES."
+msgstr ""
+"AWS не принял эти учётные данные. Проверьте ключ доступа, секрет и регион, а"
+" также что ключу разрешено использовать SES."
+
+#: apps/channels/views_email.py:215
+#, python-format
+msgid "Connected %(domain)s."
+msgstr "Подключено: %(domain)s."
+
+#: apps/channels/views_email.py:229
+msgid "Paste the API key from your Resend dashboard."
+msgstr "Вставьте API-ключ из панели Resend."
+
+#: apps/channels/views_email.py:239
+msgid "Enter the access key, the secret and the AWS region."
+msgstr "Введите ключ доступа, секрет и регион AWS."
+
+#: apps/channels/views_email.py:241
+msgid ""
+"That is not an AWS region name. It looks like eu-west-1 or us-gov-east-1."
+msgstr ""
+"Это не похоже на название региона AWS. Оно выглядит как eu-west-1 или us-"
+"gov-east-1."
+
+#: apps/channels/views_email.py:256
+msgid "Enter the SMTP host your provider gave you."
+msgstr "Введите SMTP-хост, который вам дал провайдер."
+
+#: apps/channels/views_email.py:259
+msgid "The SMTP port is a number — usually 587 for STARTTLS or 465 for SSL."
+msgstr "SMTP-порт — это число, обычно 587 для STARTTLS или 465 для SSL."
+
+#: apps/channels/views_email.py:262
+msgid "Choose STARTTLS, SSL or none for the connection encryption."
+msgstr "Выберите тип шифрования соединения: STARTTLS, SSL или без шифрования."
+
+#: apps/channels/views_email.py:314
+msgid "Updated this channel's webhook settings."
+msgstr "Настройки вебхука этого канала обновлены."
+
+#: apps/channels/views_email.py:316
+msgid "Nothing to update."
+msgstr "Нечего обновлять."
+
+#: apps/channels/views_email.py:344
+msgid "Your account has no email address to send a test to."
+msgstr ""
+"У вашего аккаунта нет адреса электронной почты, на который можно отправить "
+"тест."
+
+#: apps/channels/views_email.py:354
+msgid "Too many test emails for this channel just now. Try again shortly."
+msgstr ""
+"Слишком много тестовых писем для этого канала за короткое время. Попробуйте "
+"немного позже."
+
+#: apps/channels/views_email.py:359
+msgid "This connection has no from-address stored."
+msgstr "Для этого подключения не сохранён адрес отправителя."
+
+#: apps/channels/views_email.py:376
+#, python-format
+msgid "Sent a test email to %(recipient)s."
+msgstr "Тестовое письмо отправлено на %(recipient)s."
+
+#: apps/channels/views_instagram.py:67
+msgid ""
+"This deployment has no Instagram app credentials yet. Set "
+"PLATFORM_INSTAGRAM_CLIENT_ID and PLATFORM_INSTAGRAM_CLIENT_SECRET in the "
+"environment. See docs/channels/instagram.md."
+msgstr ""
+"У этого развёртывания пока нет учётных данных приложения Instagram. Задайте "
+"PLATFORM_INSTAGRAM_CLIENT_ID и PLATFORM_INSTAGRAM_CLIENT_SECRET в переменных"
+" окружения. См. docs/channels/instagram.md."
+
+#: apps/channels/views_instagram.py:77
+msgid ""
+"Instagram did not complete the connection. Start again from Settings -> "
+"Channels, and check that this deployment's callback URL is listed in your "
+"Meta app."
+msgstr ""
+"Instagram не завершил подключение. Начните заново на странице «Настройки → "
+"Каналы» и убедитесь, что callback-URL этого развёртывания указан в вашем "
+"приложении Meta."
+
+#: apps/channels/views_instagram.py:165
+msgid "Instagram was not connected."
+msgstr "Instagram не был подключён."
+
+#: apps/channels/views_instagram.py:260
+#, python-format
+msgid "Reconnected %(name)s."
+msgstr "%(name)s переподключён."
+
+#: apps/channels/views_instagram.py:270
+#, python-format
+msgid ""
+"Connected %(name)s. Subscribe your Meta app to this account's webhook fields"
+" to start receiving messages — see docs/channels/instagram.md."
+msgstr ""
+"Подключено: %(name)s. Подпишите своё приложение Meta на поля вебхука этого "
+"аккаунта, чтобы начать получать сообщения — см. docs/channels/instagram.md."
+
+#: apps/channels/views_messenger.py:94
+msgid ""
+"Facebook did not complete that connection. Start the setup again from this "
+"page, and make sure you accept every permission it asks for."
+msgstr ""
+"Facebook не завершил подключение. Начните настройку заново с этой страницы и"
+" убедитесь, что вы приняли все запрошенные разрешения."
+
+#: apps/channels/views_messenger.py:102
+msgid ""
+"This deployment has no Facebook app credentials yet. Set "
+"PLATFORM_MESSENGER_CLIENT_ID and PLATFORM_MESSENGER_CLIENT_SECRET in the "
+"environment; see docs/channels/messenger.md."
+msgstr ""
+"У этого развёртывания пока нет учётных данных приложения Facebook. Задайте "
+"PLATFORM_MESSENGER_CLIENT_ID и PLATFORM_MESSENGER_CLIENT_SECRET в переменных"
+" окружения; см. docs/channels/messenger.md."
+
+#: apps/channels/views_messenger.py:111
+msgid ""
+"That page connected, but Facebook would not start sending its messages here."
+" The app needs pages_messaging and pages_manage_metadata on this page; see "
+"docs/channels/messenger.md."
+msgstr ""
+"Страница подключена, но Facebook не начал присылать сюда сообщения. "
+"Приложению нужны права pages_messaging и pages_manage_metadata для этой "
+"страницы; см. docs/channels/messenger.md."
+
+#: apps/channels/views_messenger.py:282
+msgid "Pick one of the pages below."
+msgstr "Выберите одну из страниц ниже."
+
+#: apps/channels/views_messenger.py:364
+#, python-format
+msgid ""
+"Connected %(name)s, but the Get Started button could not be configured — the"
+" welcome trigger will not fire until it is. See docs/channels/messenger.md."
+msgstr ""
+"Подключено: %(name)s, но не удалось настроить кнопку Get Started — "
+"приветственный триггер не сработает, пока это не будет сделано. См. "
+"docs/channels/messenger.md."
+
+#: apps/channels/views_messenger.py:372 apps/channels/views_whatsapp.py:180
+#, python-format
+msgid "Connected %(name)s. Send it a message to check it works."
+msgstr ""
+"Подключено: %(name)s. Отправьте ему сообщение, чтобы проверить работу."
+
+#: apps/channels/views_sms.py:238
+#, python-format
+msgid ""
+"Connected %(name)s. Paste the webhook URL below into Twilio to start "
+"receiving messages."
+msgstr ""
+"Подключено: %(name)s. Вставьте URL вебхука ниже в Twilio, чтобы начать "
+"получать сообщения."
+
+#: apps/channels/views_sms.py:278
+msgid "SMS settings saved."
+msgstr "Настройки SMS сохранены."
+
+#: apps/channels/views_sms.py:283
+#, python-format
+msgid ""
+"SMS settings saved, but the price per segment was not a number between 0 and"
+" %(max)s and was left unchanged."
+msgstr ""
+"Настройки SMS сохранены, но цена за сегмент не была числом от 0 до %(max)s, "
+"поэтому осталась без изменений."
+
+#: apps/channels/views_telegram.py:58
+msgid ""
+"Telegram did not accept that token. Copy it again from BotFather — it looks "
+"like 123456789:AA... — and make sure the bot has not been revoked."
+msgstr ""
+"Telegram не принял этот токен. Скопируйте его заново из BotFather — он "
+"выглядит как 123456789:AA... — и убедитесь, что бот не был отозван."
+
+#: apps/channels/views_telegram.py:73
+msgid ""
+"That token works, but Telegram could not be pointed at this deployment. The "
+"webhook URL has to be reachable over public HTTPS with a valid certificate; "
+"see docs/channels/telegram.md."
+msgstr ""
+"Токен рабочий, но Telegram не удалось направить на это развёртывание. URL "
+"вебхука должен быть доступен по публичному HTTPS с действительным "
+"сертификатом; см. docs/channels/telegram.md."
+
+#: apps/channels/views_telegram.py:100
+msgid "Paste the token BotFather gave you."
+msgstr "Вставьте токен, который дал BotFather."
+
+#: apps/channels/views_telegram.py:187
+#, python-format
+msgid "Connected @%(username)s. Send it /start to check it works."
+msgstr "Подключено: @%(username)s. Отправьте /start, чтобы проверить работу."
+
+#: apps/channels/views_whatsapp.py:60
+#| msgid ""
+#| "A system user token with whatsapp_business_messaging and "
+#| "whatsapp_business_management."
+msgid ""
+"Meta did not accept those details. Check the phone number ID and that the "
+"system user token has whatsapp_business_messaging and "
+"whatsapp_business_management, then try again."
+msgstr ""
+"Meta не приняла эти данные. Проверьте ID номера телефона и что токен "
+"системного пользователя имеет права whatsapp_business_messaging и "
+"whatsapp_business_management, затем попробуйте снова."
+
+#: apps/channels/views_whatsapp.py:68
+msgid ""
+"Those credentials work, but this app could not be subscribed to the WhatsApp"
+" Business Account's webhooks. Nothing will be delivered until it is; see "
+"docs/channels/whatsapp.md."
+msgstr ""
+"Эти учётные данные работают, но это приложение не удалось подписать на "
+"вебхуки WhatsApp Business Account. Ничего не будет доставлено, пока это не "
+"будет сделано; см. docs/channels/whatsapp.md."
+
+#: apps/channels/views_whatsapp.py:266
+msgid "This number already has a template with that name and language."
+msgstr "У этого номера уже есть шаблон с таким именем и языком."
+
+#: apps/channels/views_whatsapp.py:270
+#, python-format
+msgid "Saved %(name)s. Submit it when you are ready for Meta to review it."
+msgstr ""
+"Сохранено: %(name)s. Отправьте на проверку, когда будете готовы, чтобы Meta "
+"её рассмотрела."
+
+#: apps/channels/views_whatsapp.py:355
+#, python-format
+msgid "Meta would not accept %(name)s: %(exc)s"
+msgstr "Meta не приняла %(name)s: %(exc)s"
+
+#: apps/channels/views_whatsapp.py:360
+#, python-format
+msgid "%(name)s is with Meta for review. This usually takes minutes to a day."
+msgstr ""
+"%(name)s отправлен на проверку в Meta. Обычно это занимает от нескольких "
+"минут до суток."
+
+#: apps/channels/views_whatsapp.py:373
+#, python-format
+msgid "Deleted %(name)s."
+msgstr "%(name)s удалён."
+
+#: apps/channels/views_whatsapp.py:402
+msgid "Saved the cost estimates."
+msgstr "Оценки стоимости сохранены."
+
 #: apps/common/context_processors.py:238 templates/api/keys_list.html:43
 msgid "Workspace"
 msgstr "Рабочее пространство"
@@ -294,7 +799,8 @@ msgstr "Рабочее пространство"
 msgid "General"
 msgstr "Общее"
 
-#: apps/common/context_processors.py:251
+#: apps/common/context_processors.py:251 templates/channels/list.html:24
+#: templates/channels/list.html:31
 #: templates/partials/_sidebar_channels.html:35
 msgid "Channels"
 msgstr "Каналы"
@@ -373,7 +879,7 @@ msgstr "Входящие"
 msgid "Flows"
 msgstr "Сценарии"
 
-#: apps/common/context_processors.py:465
+#: apps/common/context_processors.py:465 templates/channels/detail.html:82
 msgid "Broadcasts"
 msgstr "Рассылки"
 
@@ -729,6 +1235,7 @@ msgid "Good evening"
 msgstr "Добрый вечер"
 
 #: apps/workspaces/views.py:182 apps/workspaces/views.py:184
+#: templates/channels/list.html:37 templates/channels/list.html:116
 #: templates/partials/_sidebar_channels.html:44
 msgid "Connect a channel"
 msgstr "Подключить канал"
@@ -834,6 +1341,7 @@ msgid "Continue with %(provider_name)s"
 msgstr "Продолжить через %(provider_name)s"
 
 #: templates/account/login.html:31 templates/account/signup.html:26
+#: templates/channels/sms_connect.html:71
 msgid "or"
 msgstr "или"
 
@@ -875,6 +1383,7 @@ msgid "How BrightBean Chat looks and speaks to you."
 msgstr "Как BrightBean Chat выглядит и на каком языке говорит с вами."
 
 #: templates/accounts/preferences.html:20
+#: templates/channels/whatsapp_templates.html:26
 msgid "Language"
 msgstr "Язык"
 
@@ -896,13 +1405,6 @@ msgstr "Сохранить изменения"
 #: templates/accounts/settings.html:20
 msgid "How you appear to your team and in internal notes."
 msgstr "Как вы отображаетесь для команды и во внутренних заметках."
-
-#: templates/accounts/settings.html:32 templates/api/keys_list.html:39
-#: templates/organizations/settings.html:27
-#: templates/organizations/settings.html:49
-#: templates/workspaces/settings.html:36
-msgid "Name"
-msgstr "Имя"
 
 #: templates/accounts/settings.html:36
 msgid "What your team sees on assignments and internal notes."
@@ -957,6 +1459,7 @@ msgid "Read the API reference"
 msgstr "Прочитать справочник по API"
 
 #: templates/api/key_created.html:26 templates/api/webhook_secret.html:22
+#: templates/channels/secret.html:57
 msgid "Done"
 msgstr "Готово"
 
@@ -1019,10 +1522,6 @@ msgstr ""
 #: templates/api/keys_list.html:77
 msgid "Existing keys"
 msgstr "Существующие ключи"
-
-#: templates/api/keys_list.html:87
-msgid "Active"
-msgstr "Активен"
 
 #: templates/api/keys_list.html:87
 msgid "Revoked"
@@ -1102,7 +1601,9 @@ msgstr "События"
 msgid "Enabled"
 msgstr "Включено"
 
-#: templates/api/webhook_detail.html:45
+#: templates/api/webhook_detail.html:45 templates/channels/detail.html:112
+#: templates/channels/sms_settings.html:70
+#: templates/channels/whatsapp_cost_hints.html:17
 msgid "Save"
 msgstr "Сохранить"
 
@@ -1120,7 +1621,7 @@ msgstr ""
 "сразу делает подписи недействительными. Сначала обновите приёмник — иначе "
 "доставки начнут проваливать проверку сразу после смены."
 
-#: templates/api/webhook_detail.html:55
+#: templates/api/webhook_detail.html:55 templates/channels/detail.html:133
 msgid "Rotate secret"
 msgstr "Сменить секрет"
 
@@ -1179,6 +1680,7 @@ msgid "Nothing delivered yet."
 msgstr "Пока ничего не доставлено."
 
 #: templates/api/webhook_detail.html:91
+#: templates/channels/whatsapp_templates.html:70
 msgid "Delete"
 msgstr "Удалить"
 
@@ -1190,7 +1692,8 @@ msgstr "Удалить конечную точку"
 msgid "Back to webhooks"
 msgstr "Назад к вебхукам"
 
-#: templates/api/webhook_secret.html:3
+#: templates/api/webhook_secret.html:3 templates/channels/detail.html:129
+#: templates/channels/secret.html:3
 msgid "Webhook secret"
 msgstr "Секрет вебхука"
 
@@ -1239,10 +1742,6 @@ msgstr "Добавить конечную точку"
 msgid "Endpoints"
 msgstr "Конечные точки"
 
-#: templates/api/webhooks_list.html:65
-msgid "Disabled"
-msgstr "Отключено"
-
 #: templates/api/webhooks_list.html:68
 #, python-format
 msgid "last delivery %(last_delivery)s"
@@ -1271,6 +1770,1496 @@ msgstr ""
 #: templates/base.html:170
 msgid "Toggle menu"
 msgstr "Открыть/закрыть меню"
+
+#: templates/channels/_instagram_posts.html:18
+#: templates/channels/instagram_connect.html:16
+msgid "Connect Instagram"
+msgstr "Подключить Instagram"
+
+#: templates/channels/_instagram_posts.html:21
+msgid "(no caption)"
+msgstr "(без подписи)"
+
+#: templates/channels/_instagram_posts.html:38
+#: templates/channels/_messenger_posts.html:41
+msgid "View"
+msgstr "Просмотр"
+
+#: templates/channels/_messenger_posts.html:25
+msgid "Connect a page"
+msgstr "Подключить страницу"
+
+#: templates/channels/_messenger_posts.html:28
+msgid "(no text)"
+msgstr "(без текста)"
+
+#: templates/channels/_sms_segments.html:11
+#, python-format
+msgid "%(counter)s character"
+msgid_plural "%(counter)s characters"
+msgstr[0] "%(counter)s символ"
+msgstr[1] "%(counter)s символа"
+msgstr[2] "%(counter)s символов"
+msgstr[3] "%(counter)s символов"
+
+#: templates/channels/_sms_segments.html:13
+#, python-format
+msgid "%(counter)s segment"
+msgid_plural "%(counter)s segments"
+msgstr[0] "%(counter)s сегмент"
+msgstr[1] "%(counter)s сегмента"
+msgstr[2] "%(counter)s сегментов"
+msgstr[3] "%(counter)s сегментов"
+
+#: templates/channels/_sms_segments.html:14
+#, python-format
+msgid "(%(remaining)s left in this one)"
+msgstr "(осталось %(remaining)s в этом)"
+
+#: templates/channels/_sms_segments.html:16
+#, python-format
+msgid "about %(cost)s per recipient"
+msgstr "около %(cost)s за получателя"
+
+#: templates/channels/_sms_segments.html:20
+msgid ""
+"A character outside the GSM-7 alphabet (a curly quote or an emoji, often "
+"pasted in) re-encodes the whole message and drops the segment from 160 "
+"characters to 70."
+msgstr ""
+"Символ вне алфавита GSM-7 (например, «фигурная» кавычка или эмодзи, часто "
+"попадает при вставке) перекодирует всё сообщение и уменьшает сегмент со 160 "
+"до 70 символов."
+
+#: templates/channels/_unsubscribe_body.html:8
+msgid "You have been unsubscribed"
+msgstr "Вы отписались от рассылки"
+
+#: templates/channels/_unsubscribe_body.html:10
+#, python-format
+msgid "%(address)s was already unsubscribed. Nothing changed."
+msgstr "%(address)s уже был отписан. Ничего не изменилось."
+
+#: templates/channels/_unsubscribe_body.html:12
+#, python-format
+msgid "%(address)s will not receive any more email from this sender."
+msgstr "%(address)s больше не будет получать письма от этого отправителя."
+
+#: templates/channels/_unsubscribe_body.html:15
+msgid ""
+"You can close this page. If you unsubscribed by mistake, ask the sender to "
+"add you again. For your protection we cannot re-subscribe you from here."
+msgstr ""
+"Вы можете закрыть эту страницу. Если вы отписались по ошибке, попросите "
+"отправителя добавить вас снова. Для вашей безопасности мы не можем подписать"
+" вас отсюда."
+
+#: templates/channels/_unsubscribe_body.html:18
+msgid "Already unsubscribed"
+msgstr "Уже отписан"
+
+#: templates/channels/_unsubscribe_body.html:19
+#, python-format
+msgid "%(address)s is not receiving email from this sender."
+msgstr "%(address)s не получает письма от этого отправителя."
+
+#: templates/channels/_unsubscribe_body.html:20
+msgid "You can close this page."
+msgstr "Вы можете закрыть эту страницу."
+
+#: templates/channels/_unsubscribe_body.html:22
+#, python-format
+msgid "Unsubscribe %(address)s?"
+msgstr "Отписать %(address)s?"
+
+#: templates/channels/_unsubscribe_body.html:23
+msgid "You will stop receiving email from this sender."
+msgstr "Вы перестанете получать письма от этого отправителя."
+
+#: templates/channels/_unsubscribe_body.html:27
+#: templates/channels/unsubscribe_confirm.html:3
+msgid "Unsubscribe"
+msgstr "Отписаться"
+
+#: templates/channels/detail.html:37
+msgid "This connection"
+msgstr "Это подключение"
+
+#: templates/channels/detail.html:45
+msgid "Channel settings"
+msgstr "Настройки канала"
+
+#: templates/channels/detail.html:46
+#, python-format
+msgid "%(label)s settings for this workspace"
+msgstr "Настройки %(label)s для этого пространства"
+
+#: templates/channels/detail.html:50
+msgid "Webhook URL"
+msgstr "URL вебхука"
+
+#: templates/channels/detail.html:50
+msgid ""
+"Where this platform delivers to. It contains the connection's id, so it is "
+"unique to this channel."
+msgstr ""
+"Куда эта платформа доставляет сообщения. Содержит id подключения, поэтому "
+"уникален для этого канала."
+
+#: templates/channels/detail.html:60
+msgid "What this platform carries"
+msgstr "Что поддерживает эта платформа"
+
+#: templates/channels/detail.html:62
+msgid "Text"
+msgstr "Текст"
+
+#: templates/channels/detail.html:63
+#, python-format
+msgid "Up to %(max_len)s characters"
+msgstr "До %(max_len)s символов"
+
+#: templates/channels/detail.html:66
+msgid "Buttons"
+msgstr "Кнопки"
+
+#: templates/channels/detail.html:67
+#, python-format
+msgid "Up to %(max_buttons)s"
+msgstr "До %(max_buttons)s"
+
+#: templates/channels/detail.html:67
+msgid "Not supported: buttons become numbered replies"
+msgstr "Не поддерживается: кнопки становятся пронумерованными ответами"
+
+#: templates/channels/detail.html:70
+msgid "Quick replies"
+msgstr "Быстрые ответы"
+
+#: templates/channels/detail.html:71
+#, python-format
+msgid "Up to %(max_qr)s"
+msgstr "До %(max_qr)s"
+
+#: templates/channels/detail.html:71
+msgid "Not supported: quick replies become numbered replies"
+msgstr ""
+"Не поддерживается: быстрые ответы становятся пронумерованными ответами"
+
+#: templates/channels/detail.html:74
+msgid "Carousels"
+msgstr "Карусели"
+
+#: templates/channels/detail.html:75
+msgid "Supported"
+msgstr "Поддерживается"
+
+#: templates/channels/detail.html:75
+msgid "Sent as sequential messages"
+msgstr "Отправляются как последовательные сообщения"
+
+#: templates/channels/detail.html:78
+msgid "Messaging window"
+msgstr "Окно переписки"
+
+#: templates/channels/detail.html:79
+#, python-format
+msgid "%(hours)s hours after the contact's last message"
+msgstr "%(hours)s часов после последнего сообщения контакта"
+
+#: templates/channels/detail.html:79 templates/channels/email_connect.html:98
+#: templates/channels/whatsapp_templates.html:42
+msgid "None"
+msgstr "Нет"
+
+#: templates/channels/detail.html:83
+msgid "Allowed"
+msgstr "Разрешено"
+
+#: templates/channels/detail.html:83
+msgid "Not allowed on this platform"
+msgstr "Не разрешено на этой платформе"
+
+#: templates/channels/detail.html:97
+msgid "Bounce handling"
+msgstr "Обработка отказов доставки"
+
+#: templates/channels/detail.html:99
+msgid ""
+"Both of these can only be set after the channel exists, because the webhook "
+"URL above contains its id, so you create the endpoint in your provider "
+"first, then paste back what it gives you. Until the relevant one is set, "
+"bounce and complaint notifications are ignored rather than trusted."
+msgstr ""
+"Оба параметра можно задать только после создания канала, так как URL вебхука"
+" выше содержит его id: сначала создайте эндпоинт у провайдера, затем "
+"вставьте то, что он выдаст. Пока нужный параметр не задан, уведомления об "
+"отказах и жалобах игнорируются, а не принимаются на веру."
+
+#: templates/channels/detail.html:102
+msgid "Resend signing secret"
+msgstr "Секрет подписи Resend"
+
+#: templates/channels/detail.html:104
+msgid ""
+"From the Resend webhook you pointed at the URL above. Stored encrypted."
+msgstr ""
+"Из вебхука Resend, направленного на указанный выше URL. Хранится в "
+"зашифрованном виде."
+
+#: templates/channels/detail.html:107
+msgid "SES bounce topic ARN"
+msgstr "ARN темы отказов SES"
+
+#: templates/channels/detail.html:109
+msgid "Only this topic's notifications are accepted."
+msgstr "Принимаются уведомления только этой темы."
+
+#: templates/channels/detail.html:113
+msgid "Leave a field blank to keep what is already stored."
+msgstr "Оставьте поле пустым, чтобы сохранить уже сохранённое значение."
+
+#: templates/channels/detail.html:119 templates/channels/detail.html:123
+msgid "Send a test email"
+msgstr "Отправить тестовое письмо"
+
+#: templates/channels/detail.html:121
+msgid ""
+"Sends one real email to your own account address, through this connection, "
+"carrying the same <code>List-Unsubscribe</code> headers and footer every "
+"other send does, so a provider that strips them shows up here rather than "
+"after a campaign."
+msgstr ""
+"Отправляет одно настоящее письмо на адрес вашего аккаунта через это "
+"подключение с теми же заголовками <code>List-Unsubscribe</code> и подвалом, "
+"что и любая другая отправка — так провайдер, который их вырезает, проявит "
+"себя здесь, а не после рассылки."
+
+#: templates/channels/detail.html:131
+msgid ""
+"Stored encrypted and never displayed again. Rotating issues a new secret "
+"immediately, so deliveries carrying the old one are rejected until the "
+"platform has the new one. Where the platform accepts it over its own API, as"
+" Telegram does, that happens as part of rotating, and the next page says so."
+msgstr ""
+"Хранится в зашифрованном виде и больше никогда не отображается. Ротация "
+"сразу выдаёт новый секрет, поэтому доставки со старым секретом отклоняются, "
+"пока платформа не получит новый. Там, где платформа принимает его через "
+"собственный API, как Telegram, это происходит в рамках ротации, о чём "
+"сообщит следующая страница."
+
+#: templates/channels/detail.html:138
+#: templates/channels/email_connect.html:176
+#: templates/channels/instagram_connect.html:71
+#: templates/channels/messenger_connect.html:82
+#: templates/channels/messenger_pages.html:37 templates/channels/new.html:34
+#: templates/channels/sms_connect.html:101
+#: templates/channels/sms_settings.html:93
+#: templates/channels/telegram_connect.html:89
+#: templates/channels/whatsapp_connect.html:71
+msgid "Back to channels"
+msgstr "Назад к каналам"
+
+#: templates/channels/email_connect.html:18
+msgid "Connect email"
+msgstr "Подключить email"
+
+#: templates/channels/email_connect.html:28
+msgid "Connect an email sender"
+msgstr "Подключить отправителя email"
+
+#: templates/channels/email_connect.html:30
+msgid ""
+"Email is outbound only. BrightBean Chat sends through your own provider: "
+"your SMTP server, Resend, or Amazon SES. So the sending reputation, the "
+"domain and the bill stay yours."
+msgstr ""
+"Email работает только на отправку. BrightBean Chat отправляет через вашего "
+"собственного провайдера: ваш SMTP-сервер, Resend или Amazon SES. Так "
+"репутация отправителя, домен и счёт остаются вашими."
+
+#: templates/channels/email_connect.html:38
+#: templates/channels/instagram_connect.html:36
+#: templates/channels/messenger_connect.html:35
+msgid "Before you start"
+msgstr "Перед началом"
+
+#: templates/channels/email_connect.html:41
+msgid ""
+"Set up SPF, DKIM and DMARC on the domain you are going to send from. All "
+"three, not one: without them a meaningful share of what you send goes to "
+"spam, and Gmail and Yahoo reject bulk mail from domains that lack them "
+"outright. Your provider publishes the exact records. The full checklist is "
+"in docs/channels/email.md."
+msgstr ""
+"Настройте SPF, DKIM и DMARC на домене, с которого будете отправлять. Все "
+"три, а не один: без них значительная часть писем попадёт в спам, а Gmail и "
+"Yahoo вовсе отклоняют массовую почту с доменов без этих записей. Точные "
+"записи публикует ваш провайдер. Полный чек-лист — в docs/channels/email.md."
+
+#: templates/channels/email_connect.html:44
+msgid ""
+"Have that provider's credentials to hand: an SMTP host and password, a "
+"Resend API key, or an AWS access key and secret."
+msgstr ""
+"Держите под рукой учётные данные провайдера: SMTP-хост и пароль, API-ключ "
+"Resend либо ключ доступа и секрет AWS."
+
+#: templates/channels/email_connect.html:50
+msgid "Which provider sends the mail"
+msgstr "Какой провайдер отправляет почту"
+
+#: templates/channels/email_connect.html:51
+msgid "Pick one and the fields below change to match."
+msgstr "Выберите один — поля ниже изменятся соответственно."
+
+#: templates/channels/email_connect.html:55
+msgid "Your own SMTP server"
+msgstr "Собственный SMTP-сервер"
+
+#: templates/channels/email_connect.html:55 templates/members/list.html:137
+msgid "Resend"
+msgstr "Отправить повторно"
+
+#: templates/channels/email_connect.html:55
+msgid "Amazon SES"
+msgstr "Amazon SES"
+
+#: templates/channels/email_connect.html:56
+msgid "Any server you already run"
+msgstr "Любой сервер, который у вас уже работает"
+
+#: templates/channels/email_connect.html:56
+msgid "An API key from the dashboard"
+msgstr "API-ключ из панели управления"
+
+#: templates/channels/email_connect.html:56
+msgid "An IAM access key"
+msgstr "Ключ доступа IAM"
+
+#: templates/channels/email_connect.html:66
+msgid "Who it comes from"
+msgstr "От кого оно приходит"
+
+#: templates/channels/email_connect.html:68
+msgid "From address"
+msgstr "Адрес отправителя"
+
+#: templates/channels/email_connect.html:70
+msgid ""
+"Its domain becomes this channel's identity, and only one workspace can claim"
+" a domain."
+msgstr ""
+"Его домен становится идентификатором этого канала, и заявить домен может "
+"только одно рабочее пространство."
+
+#: templates/channels/email_connect.html:73
+msgid "From name"
+msgstr "Имя отправителя"
+
+#: templates/channels/email_connect.html:77
+msgid "Channel name"
+msgstr "Название канала"
+
+#: templates/channels/email_connect.html:79
+msgid ""
+"What this channel is called in BrightBean Chat. Defaults to the domain."
+msgstr "Как этот канал называется в BrightBean Chat. По умолчанию — домен."
+
+#: templates/channels/email_connect.html:84
+msgid "Your SMTP server"
+msgstr "Ваш SMTP-сервер"
+
+#: templates/channels/email_connect.html:86
+msgid "Host"
+msgstr "Хост"
+
+#: templates/channels/email_connect.html:90
+msgid "Port"
+msgstr "Порт"
+
+#: templates/channels/email_connect.html:94
+msgid "Encryption"
+msgstr "Шифрование"
+
+#: templates/channels/email_connect.html:96
+#: templates/channels/email_connect.html:97
+msgid "port"
+msgstr "порт"
+
+#: templates/channels/email_connect.html:100
+msgid "Choose \"none\" only for a relay on your own private network."
+msgstr ""
+"Выбирайте «none» только для ретранслятора в вашей собственной частной сети."
+
+#: templates/channels/email_connect.html:103
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: templates/channels/email_connect.html:107
+msgid "Password"
+msgstr "Пароль"
+
+#: templates/channels/email_connect.html:109
+#: templates/channels/email_connect.html:140
+msgid "Stored encrypted and never shown again."
+msgstr "Хранится в зашифрованном виде и больше никогда не показывается."
+
+#: templates/channels/email_connect.html:117
+msgid "API key"
+msgstr "API-ключ"
+
+#: templates/channels/email_connect.html:119
+msgid "From the Resend dashboard. Stored encrypted and never shown again."
+msgstr ""
+"Из панели Resend. Хранится в зашифрованном виде и больше никогда не "
+"показывается."
+
+#: templates/channels/email_connect.html:122
+msgid "Webhook signing secret"
+msgstr "Секрет подписи вебхука"
+
+#: templates/channels/email_connect.html:125
+msgid ""
+"Optional now, required for bounce handling. Create a webhook endpoint in "
+"Resend pointing at the URL this page shows after you connect, then paste the"
+" secret it gives you."
+msgstr ""
+"Сейчас необязательно, но требуется для обработки отказов доставки. Создайте "
+"эндпоинт вебхука в Resend, указывающий на URL, который эта страница покажет "
+"после подключения, затем вставьте выданный секрет."
+
+#: templates/channels/email_connect.html:134
+msgid "Access key ID"
+msgstr "ID ключа доступа"
+
+#: templates/channels/email_connect.html:138
+msgid "Secret access key"
+msgstr "Секретный ключ доступа"
+
+#: templates/channels/email_connect.html:143
+msgid "Region"
+msgstr "Регион"
+
+#: templates/channels/email_connect.html:147
+msgid "Bounce topic ARN"
+msgstr "ARN темы отказов"
+
+#: templates/channels/email_connect.html:150
+msgid ""
+"Optional. Set it and only that topic's notifications are accepted; leave it "
+"blank and the first subscription this channel confirms is pinned instead."
+msgstr ""
+"Необязательно. Если задать — принимаются уведомления только этой темы; "
+"оставить пустым — закрепится первая подписка, которую подтвердит этот канал."
+
+#: templates/channels/email_connect.html:154
+msgid ""
+"The key needs <code>ses:SendEmail</code>, and "
+"<code>sns:ConfirmSubscription</code> if you want bounce handling. See "
+"docs/channels/email.md."
+msgstr ""
+"Ключу нужны права <code>ses:SendEmail</code>, а для обработки отказов — ещё "
+"и <code>sns:ConfirmSubscription</code>. См. docs/channels/email.md."
+
+#: templates/channels/email_connect.html:160
+#: templates/channels/sms_connect.html:79
+#: templates/channels/telegram_connect.html:73
+#: templates/channels/whatsapp_connect.html:55
+msgid "Connect"
+msgstr "Подключить"
+
+#: templates/channels/email_connect.html:165
+#: templates/channels/messenger_connect.html:63
+#: templates/channels/sms_connect.html:84
+#: templates/channels/telegram_connect.html:78
+#: templates/channels/whatsapp_connect.html:60
+msgid "What happens next"
+msgstr "Что будет дальше"
+
+#: templates/channels/email_connect.html:167
+msgid ""
+"We check the credentials with your provider before saving anything. Once the"
+" channel exists, its page shows the webhook URL to paste into Resend or to "
+"subscribe an SNS topic to, and a button that sends a test email to your own "
+"address."
+msgstr ""
+"Прежде чем что-либо сохранить, мы проверяем учётные данные у вашего "
+"провайдера. После создания канала на его странице появится URL вебхука для "
+"вставки в Resend или подписки на тему SNS, а также кнопка отправки тестового"
+" письма на ваш собственный адрес."
+
+#: templates/channels/email_connect.html:170
+msgid ""
+"Every email BrightBean Chat sends carries a <code>List-Unsubscribe</code> "
+"header and an unsubscribe link in the footer. That is not configurable: it "
+"is what keeps the channel compliant, and it is what the unsubscribe and "
+"suppression handling is built on."
+msgstr ""
+"Каждое письмо, отправленное BrightBean Chat, несёт заголовок <code>List-"
+"Unsubscribe</code> и ссылку отписки в подвале. Это не настраивается: именно "
+"это обеспечивает соответствие требованиям канала и на этом строится "
+"обработка отписок и подавления рассылки."
+
+#: templates/channels/instagram_connect.html:26
+msgid "Connect an Instagram account"
+msgstr "Подключить аккаунт Instagram"
+
+#: templates/channels/instagram_connect.html:28
+msgid ""
+"BrightBean Chat uses the <strong>Instagram API with Instagram "
+"Login</strong>, so the account you connect must be a "
+"<strong>professional</strong> account, Business or Creator. You will be sent"
+" to Instagram to authorise it, and we never see your password."
+msgstr ""
+"BrightBean Chat использует <strong>Instagram API с Instagram Login</strong>,"
+" поэтому подключаемый аккаунт должен быть <strong>профессиональным</strong> "
+"— Business или Creator. Вы будете перенаправлены в Instagram для "
+"авторизации, и мы никогда не увидим ваш пароль."
+
+#: templates/channels/instagram_connect.html:38
+msgid "Create a Meta app with the <em>Instagram</em> product added."
+msgstr "Создайте приложение Meta с добавленным продуктом <em>Instagram</em>."
+
+#: templates/channels/instagram_connect.html:40
+msgid ""
+"Add this deployment's callback URL to the app's <em>Business login "
+"settings</em>, exactly as written."
+msgstr ""
+"Добавьте callback-URL этого развёртывания в <em>Business login settings</em>"
+" приложения точно в том виде, в каком он указан."
+
+#: templates/channels/instagram_connect.html:41
+msgid "Callback URL"
+msgstr "Callback-URL"
+
+#: templates/channels/instagram_connect.html:44
+msgid ""
+"Set the app's Instagram app ID and secret on this deployment as "
+"<code>PLATFORM_INSTAGRAM_CLIENT_ID</code> and "
+"<code>PLATFORM_INSTAGRAM_CLIENT_SECRET</code>."
+msgstr ""
+"Задайте ID и секрет Instagram-приложения на этом развёртывании как "
+"<code>PLATFORM_INSTAGRAM_CLIENT_ID</code> и "
+"<code>PLATFORM_INSTAGRAM_CLIENT_SECRET</code>."
+
+#: templates/channels/instagram_connect.html:46
+msgid "In the account's Instagram settings, allow access to messages."
+msgstr "В настройках Instagram аккаунта разрешите доступ к сообщениям."
+
+#: templates/channels/instagram_connect.html:52
+msgid "Authorise the account"
+msgstr "Авторизовать аккаунт"
+
+#: templates/channels/instagram_connect.html:54
+msgid "You will be sent to Instagram to sign in and pick the account."
+msgstr "Вы будете перенаправлены в Instagram, чтобы войти и выбрать аккаунт."
+
+#: templates/channels/instagram_connect.html:56
+msgid "Continue to Instagram"
+msgstr "Перейти в Instagram"
+
+#: templates/channels/instagram_connect.html:60
+msgid "What we ask Instagram for"
+msgstr "Что мы запрашиваем у Instagram"
+
+#: templates/channels/instagram_connect.html:65
+msgid ""
+"Reading and answering comments needs the last one, so it is requested up "
+"front rather than when a comment trigger is first used."
+msgstr ""
+"Для чтения и ответа на комментарии нужно последнее разрешение, поэтому оно "
+"запрашивается сразу, а не при первом использовании триггера комментариев."
+
+#: templates/channels/list.html:33
+msgid ""
+"Each channel is one bot, page, number or sending address. Messages arrive "
+"and go out through it."
+msgstr ""
+"Каждый канал — это один бот, страница, номер или адрес отправки. Через него "
+"сообщения приходят и отправляются."
+
+#: templates/channels/list.html:49
+#, python-format
+msgid "%(name)s stopped receiving messages"
+msgstr "%(name)s перестал получать сообщения"
+
+#: templates/channels/list.html:52
+#, python-format
+msgid "%(label)s revoked the connection. Reconnect to start receiving again."
+msgstr ""
+"%(label)s отозвал подключение. Переподключитесь, чтобы снова начать получать"
+" сообщения."
+
+#: templates/channels/list.html:57
+msgid "Reconnect"
+msgstr "Переподключить"
+
+#: templates/channels/list.html:74
+#, python-format
+msgid "Settings for %(name)s"
+msgstr "Настройки для %(name)s"
+
+#: templates/channels/list.html:87
+#, python-format
+msgid ""
+"Guided setup for %(label)s is still on the way. The connection holds its "
+"webhook URL and secret, and starts working when the adapter ships."
+msgstr ""
+"Пошаговая настройка для %(label)s пока в разработке. Подключение уже хранит "
+"свой URL вебхука и секрет и заработает, когда выйдет адаптер."
+
+#: templates/channels/list.html:97
+msgid "Turn on"
+msgstr "Включить"
+
+#: templates/channels/list.html:100
+msgid "Turn off"
+msgstr "Выключить"
+
+#: templates/channels/list.html:106
+msgid "Disconnect"
+msgstr "Отключить"
+
+#: templates/channels/list.html:112
+msgid "No channels connected yet"
+msgstr "Пока нет подключённых каналов"
+
+#: templates/channels/list.html:114
+msgid "Connect the first one and messages start arriving in your inbox."
+msgstr "Подключите первый — и сообщения начнут поступать во входящие."
+
+#: templates/channels/list.html:128
+msgid "Add another channel"
+msgstr "Добавить ещё один канал"
+
+#: templates/channels/list.html:129
+msgid "WhatsApp, Messenger or email"
+msgstr "WhatsApp, Messenger или email"
+
+#: templates/channels/list.html:135
+msgid "Available to connect"
+msgstr "Доступны для подключения"
+
+#: templates/channels/list.html:137
+msgid "Each one takes a few minutes and we walk you through it."
+msgstr ""
+"Каждое занимает всего несколько минут, и мы проведём вас через весь процесс."
+
+#: templates/channels/list.html:152
+msgid "Set up"
+msgstr "Настроить"
+
+#: templates/channels/list.html:154
+msgid "Soon"
+msgstr "Скоро"
+
+#: templates/channels/messenger_connect.html:15
+msgid "Connect Facebook Messenger"
+msgstr "Подключить Facebook Messenger"
+
+#: templates/channels/messenger_connect.html:25
+msgid "Connect a Facebook page"
+msgstr "Подключить страницу Facebook"
+
+#: templates/channels/messenger_connect.html:27
+msgid ""
+"Messenger connects through Facebook Login for Business. You sign in to "
+"Facebook, choose which page to connect, and we store that page's access "
+"token encrypted. It is never shown again."
+msgstr ""
+"Messenger подключается через Facebook Login for Business. Вы входите в "
+"Facebook, выбираете страницу для подключения, и мы сохраняем токен доступа "
+"этой страницы в зашифрованном виде. Он больше никогда не показывается."
+
+#: templates/channels/messenger_connect.html:38
+msgid ""
+"Create a Meta app of type <strong>Business</strong> and add the "
+"<strong>Messenger</strong> and <strong>Facebook Login for Business</strong> "
+"products to it."
+msgstr ""
+"Создайте приложение Meta типа <strong>Business</strong> и добавьте в него "
+"продукты <strong>Messenger</strong> и <strong>Facebook Login for "
+"Business</strong>."
+
+#: templates/channels/messenger_connect.html:41
+msgid ""
+"Add this exact redirect URI to Facebook Login for Business → <em>Valid OAuth"
+" Redirect URIs</em>."
+msgstr ""
+"Добавьте именно этот redirect URI в Facebook Login for Business → <em>Valid "
+"OAuth Redirect URIs</em>."
+
+#: templates/channels/messenger_connect.html:42
+msgid "Valid OAuth Redirect URI"
+msgstr "Действительный redirect URI OAuth"
+
+#: templates/channels/messenger_connect.html:45
+msgid ""
+"Set the app's ID and secret on this deployment as "
+"<code>PLATFORM_MESSENGER_CLIENT_ID</code> and "
+"<code>PLATFORM_MESSENGER_CLIENT_SECRET</code>."
+msgstr ""
+"Задайте ID и секрет приложения на этом развёртывании как "
+"<code>PLATFORM_MESSENGER_CLIENT_ID</code> и "
+"<code>PLATFORM_MESSENGER_CLIENT_SECRET</code>."
+
+#: templates/channels/messenger_connect.html:48
+msgid ""
+"Set <code>PLATFORM_MESSENGER_VERIFY_TOKEN</code> and paste the same value "
+"into the Messenger webhook's <em>Verify token</em> field."
+msgstr ""
+"Задайте <code>PLATFORM_MESSENGER_VERIFY_TOKEN</code> и вставьте то же "
+"значение в поле <em>Verify token</em> вебхука Messenger."
+
+#: templates/channels/messenger_connect.html:55
+msgid "Choose the page"
+msgstr "Выберите страницу"
+
+#: templates/channels/messenger_connect.html:57
+msgid ""
+"You will be sent to Facebook to sign in and pick which page to connect."
+msgstr ""
+"Вы будете перенаправлены в Facebook, чтобы войти и выбрать страницу для "
+"подключения."
+
+#: templates/channels/messenger_connect.html:59
+msgid "Continue with Facebook"
+msgstr "Продолжить через Facebook"
+
+#: templates/channels/messenger_connect.html:64
+msgid "What we ask Facebook for"
+msgstr "Что мы запрашиваем у Facebook"
+
+#: templates/channels/messenger_connect.html:68
+msgid "Webhook fields we subscribe the page to"
+msgstr "Поля вебхука, на которые мы подписываем страницу"
+
+#: templates/channels/messenger_connect.html:70
+msgid ""
+"Once you pick a page we subscribe it to these and configure its Get Started "
+"button, so the welcome trigger can fire."
+msgstr ""
+"Как только вы выберете страницу, мы подпишем её на эти поля и настроим "
+"кнопку Get Started, чтобы сработал приветственный триггер."
+
+#: templates/channels/messenger_connect.html:76
+msgid ""
+"To serve pages other than your own app's test page, Meta requires App Review"
+" and Business Verification. Full setup notes are in "
+"docs/channels/messenger.md."
+msgstr ""
+"Чтобы обслуживать страницы, отличные от тестовой страницы вашего приложения,"
+" Meta требует App Review и Business Verification. Полные инструкции по "
+"настройке — в docs/channels/messenger.md."
+
+#: templates/channels/messenger_pages.html:3
+msgid "Choose a page"
+msgstr "Выберите страницу"
+
+#: templates/channels/messenger_pages.html:4
+msgid "Choose a page to connect"
+msgstr "Выберите страницу для подключения"
+
+#: templates/channels/messenger_pages.html:13
+msgid ""
+"These are the Facebook pages you just granted access to. Connecting one "
+"subscribes it to this deployment's webhook and sets its Get Started button."
+msgstr ""
+"Это страницы Facebook, к которым вы только что предоставили доступ. "
+"Подключение подписывает страницу на вебхук этого развёртывания и настраивает"
+" её кнопку Get Started."
+
+#: templates/channels/messenger_pages.html:28
+msgid "Connect this page"
+msgstr "Подключить эту страницу"
+
+#: templates/channels/messenger_pages.html:32
+msgid ""
+"That Facebook account granted no pages. Facebook Login for Business asks "
+"which pages to share during sign-in. Start again and pick at least one, or "
+"check that you are an admin of the page you meant."
+msgstr ""
+"Этот аккаунт Facebook не предоставил ни одной страницы. Facebook Login for "
+"Business спрашивает, какими страницами поделиться, при входе. Начните заново"
+" и выберите хотя бы одну или убедитесь, что вы администратор нужной "
+"страницы."
+
+#: templates/channels/messenger_pages.html:34
+msgid "Start again"
+msgstr "Начать заново"
+
+#: templates/channels/new.html:3 templates/channels/new.html:4
+msgid "Add a channel"
+msgstr "Добавить канал"
+
+#: templates/channels/new.html:8
+msgid ""
+"This creates the connection and its webhook secret. Credentials are entered "
+"in each platform's own connect flow, which arrives with that platform's "
+"adapter."
+msgstr ""
+"Это создаёт подключение и его секрет вебхука. Учётные данные вводятся в "
+"собственном процессе подключения каждой платформы, который появляется вместе"
+" с адаптером этой платформы."
+
+#: templates/channels/new.html:15
+msgid "Platform"
+msgstr "Платформа"
+
+#: templates/channels/new.html:31
+msgid "Create channel"
+msgstr "Создать канал"
+
+#: templates/channels/partials/_whatsapp_template_preview.html:15
+msgid "Sample values, used for this preview only. They are never sent."
+msgstr ""
+"Примерные значения, используются только для этого предпросмотра. Никогда не "
+"отправляются."
+
+#: templates/channels/partials/_whatsapp_template_preview.html:26
+msgid "This template has no variables."
+msgstr "У этого шаблона нет переменных."
+
+#: templates/channels/secret.html:5
+#, python-format
+msgid "%(name)s is connected"
+msgstr "%(name)s подключён"
+
+#: templates/channels/secret.html:5
+msgid "New webhook secret"
+msgstr "Новый секрет вебхука"
+
+#: templates/channels/secret.html:16
+msgid "Copy this secret now. It is not shown again."
+msgstr "Скопируйте этот секрет сейчас. Он больше не будет показан."
+
+#: templates/channels/secret.html:19
+msgid "Where it goes"
+msgstr "Куда идёт"
+
+#: templates/channels/secret.html:29
+#, python-format
+msgid "%(label)s has already been given this secret, and is delivering to:"
+msgstr "%(label)s уже получил этот секрет и доставляет на:"
+
+#: templates/channels/secret.html:32
+msgid "There is nothing else to do. The copy above is for your records."
+msgstr "Больше ничего делать не нужно. Текст выше — для ваших записей."
+
+#: templates/channels/secret.html:36
+#, python-format
+msgid "%(label)s could not be given the new secret."
+msgstr "%(label)s не удалось передать новый секрет."
+
+#: templates/channels/secret.html:37
+msgid "This channel will reject every delivery until it is."
+msgstr "Пока это не будет сделано, канал будет отклонять все доставки."
+
+#: templates/channels/secret.html:39
+msgid ""
+"Rotate again to retry. If it keeps failing, disconnect and reconnect the "
+"channel."
+msgstr ""
+"Выполните ротацию ещё раз, чтобы повторить попытку. Если ошибка повторяется,"
+" отключите и заново подключите канал."
+
+#: templates/channels/secret.html:43
+msgid "Configure the platform to deliver events to:"
+msgstr "Настройте платформу отправлять события на:"
+
+#: templates/channels/secret.html:48
+msgid ""
+"Deliveries that do not carry a valid signature for this secret are rejected,"
+" and a source that keeps failing is temporarily blocked."
+msgstr ""
+"Доставки без действительной подписи для этого секрета отклоняются, а "
+"источник, который постоянно ошибается, временно блокируется."
+
+#: templates/channels/secret.html:53
+#, python-format
+msgid ""
+"The %(label)s adapter ships with %(issue)s. Until then this channel holds "
+"its configuration but does not send or receive."
+msgstr ""
+"Адаптер %(label)s выйдет вместе с %(issue)s. До тех пор этот канал хранит "
+"свою конфигурацию, но не отправляет и не получает сообщения."
+
+#: templates/channels/sms_connect.html:14
+msgid "Connect Twilio"
+msgstr "Подключить Twilio"
+
+#: templates/channels/sms_connect.html:24
+msgid "Connect a Twilio number"
+msgstr "Подключить номер Twilio"
+
+#: templates/channels/sms_connect.html:26
+msgid ""
+"BrightBean Chat sends SMS through your own Twilio account, so the messages, "
+"the number and the bill are all yours. The Auth Token is the whole "
+"credential: anyone holding it can send as your number and read your "
+"messages, so it is stored encrypted and never shown again."
+msgstr ""
+"BrightBean Chat отправляет SMS через ваш собственный аккаунт Twilio, поэтому"
+" сообщения, номер и счёт — полностью ваши. Auth Token — это весь секрет "
+"целиком: любой, у кого он есть, может отправлять от имени вашего номера и "
+"читать ваши сообщения, поэтому он хранится в зашифрованном виде и больше "
+"никогда не показывается."
+
+#: templates/channels/sms_connect.html:34
+#: templates/channels/telegram_connect.html:49
+#: templates/channels/whatsapp_connect.html:40
+msgid "Before you paste"
+msgstr "Перед тем как вставить"
+
+#: templates/channels/sms_connect.html:36
+msgid ""
+"Open the <a href=\"https://console.twilio.com/\" rel=\"noopener noreferrer\""
+" target=\"_blank\">Twilio console</a> and copy the Account SID and Auth "
+"Token from the dashboard."
+msgstr ""
+"Откройте <a href=\"https://console.twilio.com/\" rel=\"noopener noreferrer\""
+" target=\"_blank\">консоль Twilio</a> и скопируйте Account SID и Auth Token "
+"из панели управления."
+
+#: templates/channels/sms_connect.html:37
+msgid ""
+"Copy either a phone number you own, in E.164 form "
+"(<code>+15551234567</code>), or a Messaging Service SID (<code>MG…</code>) "
+"if you send through one."
+msgstr ""
+"Скопируйте либо свой номер телефона в формате E.164 "
+"(<code>+15551234567</code>), либо Messaging Service SID (<code>MG…</code>), "
+"если отправляете через него."
+
+#: templates/channels/sms_connect.html:38
+msgid ""
+"US traffic also needs A2P 10DLC registration, which happens in Twilio and "
+"not here. There is a checklist on the SMS settings page."
+msgstr ""
+"Для трафика в США также требуется регистрация A2P 10DLC, которая выполняется"
+" в Twilio, а не здесь. Чек-лист есть на странице настроек SMS."
+
+#: templates/channels/sms_connect.html:44
+msgid "Your Twilio account"
+msgstr "Ваш аккаунт Twilio"
+
+#: templates/channels/sms_connect.html:47
+msgid "Account SID"
+msgstr "Account SID"
+
+#: templates/channels/sms_connect.html:49
+msgid "Starts with <code>AC</code>."
+msgstr "Начинается с <code>AC</code>."
+
+#: templates/channels/sms_connect.html:52
+msgid "Auth Token"
+msgstr "Auth Token"
+
+#: templates/channels/sms_connect.html:60
+msgid "Pasted once. We check it with Twilio before saving anything."
+msgstr ""
+"Вставляется один раз. Прежде чем что-либо сохранить, мы проверяем его в "
+"Twilio."
+
+#: templates/channels/sms_connect.html:64
+msgid "Where messages are sent from"
+msgstr "Откуда отправляются сообщения"
+
+#: templates/channels/sms_connect.html:65
+msgid "Give one or the other, not both."
+msgstr "Укажите одно из двух, не оба."
+
+#: templates/channels/sms_connect.html:68
+msgid "From number"
+msgstr "Номер отправителя"
+
+#: templates/channels/sms_connect.html:73
+msgid "Messaging Service SID"
+msgstr "Messaging Service SID"
+
+#: templates/channels/sms_connect.html:92
+msgid ""
+"We check the credentials and confirm the sender belongs to the account, then"
+" store the connection. Twilio has no way for us to configure your number "
+"remotely, so the last step is yours: open the number (or the messaging "
+"service) in the Twilio console and paste the webhook URL shown on the "
+"connection's page into <em>A message comes in</em>, as a <code>POST</code>."
+msgstr ""
+"Мы проверяем учётные данные и подтверждаем, что отправитель принадлежит "
+"аккаунту, затем сохраняем подключение. У нас нет способа настроить ваш номер"
+" в Twilio удалённо, поэтому последний шаг — за вами: откройте номер (или "
+"сервис сообщений) в консоли Twilio и вставьте URL вебхука, показанный на "
+"странице подключения, в поле <em>A message comes in</em> как "
+"<code>POST</code>."
+
+#: templates/channels/sms_connect.html:95
+msgid ""
+"That URL has to match <strong>exactly</strong>, trailing slash included: "
+"Twilio signs each delivery with an HMAC computed over the URL itself, so a "
+"URL that differs by one character fails verification. It also has to be "
+"reachable from the public internet over HTTPS. Full setup notes are in "
+"docs/channels/sms.md."
+msgstr ""
+"Этот URL должен совпадать <strong>точно</strong>, включая завершающий слэш: "
+"Twilio подписывает каждую доставку HMAC, вычисленным по самому URL, поэтому "
+"URL, отличающийся хотя бы на один символ, не пройдёт проверку. Он также "
+"должен быть доступен из публичного интернета по HTTPS. Полные инструкции — в"
+" docs/channels/sms.md."
+
+#: templates/channels/sms_settings.html:3
+#: templates/channels/sms_settings.html:4
+msgid "SMS settings"
+msgstr "Настройки SMS"
+
+#: templates/channels/sms_settings.html:8
+msgid ""
+"The wording of the replies carriers require you to send, and a couple of "
+"hints for the composer. The replies themselves are not optional and cannot "
+"be switched off here. Leaving a box empty uses the default wording rather "
+"than sending nothing."
+msgstr ""
+"Текст ответов, которые операторы связи требуют отправлять, и пара подсказок "
+"для композера. Сами ответы не являются опциональными и не могут быть "
+"отключены здесь. Если оставить поле пустым, используется текст по умолчанию,"
+" а не отсутствие ответа."
+
+#: templates/channels/sms_settings.html:11
+msgid "Keywords"
+msgstr "Ключевые слова"
+
+#: templates/channels/sms_settings.html:13
+msgid ""
+"These are handled before anything else and cannot be intercepted by a flow. "
+"Matching is case-insensitive on the whole message, so \"stop\" unsubscribes "
+"and \"stop by tomorrow\" does not."
+msgstr ""
+"Они обрабатываются раньше всего остального и не могут быть перехвачены "
+"сценарием. Сравнение нечувствительно к регистру и учитывает всё сообщение "
+"целиком, поэтому «stop» отписывает, а «stop by tomorrow» — нет."
+
+#: templates/channels/sms_settings.html:16
+msgid "Unsubscribe:"
+msgstr "Отписка:"
+
+#: templates/channels/sms_settings.html:17
+msgid "Help:"
+msgstr "Помощь:"
+
+#: templates/channels/sms_settings.html:18
+msgid "Resubscribe:"
+msgstr "Повторная подписка:"
+
+#: templates/channels/sms_settings.html:24
+msgid "Replies"
+msgstr "Ответы"
+
+#: templates/channels/sms_settings.html:26
+msgid "Unsubscribe confirmation"
+msgstr "Подтверждение отписки"
+
+#: templates/channels/sms_settings.html:28
+#, python-format
+msgid "Sent once when a contact texts STOP. Default: “%(default)s”"
+msgstr ""
+"Отправляется один раз, когда контакт пишет STOP. По умолчанию: «%(default)s»"
+
+#: templates/channels/sms_settings.html:31
+msgid "Help reply"
+msgstr "Ответ на HELP"
+
+#: templates/channels/sms_settings.html:34
+#, python-format
+msgid ""
+"Sent when a contact texts HELP, even after they have unsubscribed. Should "
+"name your business and say how to opt out. Default: “%(default)s”"
+msgstr ""
+"Отправляется, когда контакт пишет HELP, даже после отписки. Должен называть "
+"ваш бизнес и объяснять, как отписаться. По умолчанию: «%(default)s»"
+
+#: templates/channels/sms_settings.html:38
+msgid "Resubscribe confirmation"
+msgstr "Подтверждение повторной подписки"
+
+#: templates/channels/sms_settings.html:40
+#, python-format
+msgid "Sent when a contact texts START. Default: “%(default)s”"
+msgstr "Отправляется, когда контакт пишет START. По умолчанию: «%(default)s»"
+
+#: templates/channels/sms_settings.html:43
+msgid "Cost hint"
+msgstr "Подсказка по стоимости"
+
+#: templates/channels/sms_settings.html:45
+msgid "Price per segment"
+msgstr "Цена за сегмент"
+
+#: templates/channels/sms_settings.html:49
+msgid ""
+"Used only to estimate what a broadcast will cost. BrightBean Chat never "
+"meters or bills anything. Your Twilio invoice is the real number, and prices"
+" differ per destination."
+msgstr ""
+"Используется только для оценки стоимости рассылки. BrightBean Chat никогда "
+"ничего не считает и не выставляет счета. Реальную цифру даёт счёт Twilio, и "
+"цены различаются по направлениям."
+
+#: templates/channels/sms_settings.html:53
+msgid "A2P 10DLC checklist"
+msgstr "Чек-лист A2P 10DLC"
+
+#: templates/channels/sms_settings.html:55
+msgid ""
+"US carriers require application-to-person traffic on a 10-digit long code to"
+" be registered. All of it happens in the Twilio console; nothing on this "
+"page performs or verifies registration, and these boxes are your own record "
+"that it is done."
+msgstr ""
+"Операторы связи США требуют регистрации трафика application-to-person на "
+"10-значном длинном номере. Всё это происходит в консоли Twilio; ничто на "
+"этой странице не выполняет и не проверяет регистрацию — эти флажки лишь ваша"
+" собственная отметка о том, что она сделана."
+
+#: templates/channels/sms_settings.html:60
+msgid "Brand registered in Twilio"
+msgstr "Бренд зарегистрирован в Twilio"
+
+#: templates/channels/sms_settings.html:66
+msgid "Campaign approved and the number linked to it"
+msgstr "Кампания одобрена и номер к ней привязан"
+
+#: templates/channels/sms_settings.html:81
+msgid "Segment preview"
+msgstr "Предпросмотр сегментов"
+
+#: templates/channels/sms_settings.html:83
+msgid ""
+"Try a message here to see what it will cost to send. The same counter runs "
+"in the Send SMS panel and in the broadcast composer."
+msgstr ""
+"Попробуйте написать сообщение здесь, чтобы увидеть, сколько будет стоить "
+"отправка. Тот же счётчик работает в панели отправки SMS и в композере "
+"рассылки."
+
+#: templates/channels/sms_settings.html:86
+msgid "Message"
+msgstr "Сообщение"
+
+#: templates/channels/telegram_connect.html:23
+msgid "Connect Telegram"
+msgstr "Подключить Telegram"
+
+#: templates/channels/telegram_connect.html:33
+msgid "Connect a Telegram bot"
+msgstr "Подключить бота Telegram"
+
+#: templates/channels/telegram_connect.html:35
+msgid ""
+"Telegram bots are created by talking to BotFather. The token it gives you is"
+" the whole credential: anyone holding it can read and send as your bot, so "
+"it is stored encrypted and never shown again."
+msgstr ""
+"Боты Telegram создаются через общение с BotFather. Выданный им токен — это "
+"весь секрет целиком: любой, у кого он есть, может читать и отправлять "
+"сообщения от имени вашего бота, поэтому он хранится в зашифрованном виде и "
+"больше никогда не показывается."
+
+#: templates/channels/telegram_connect.html:51
+msgid ""
+"Open <code>@BotFather</code> in Telegram and send <code>/newbot</code>."
+msgstr ""
+"Откройте <code>@BotFather</code> в Telegram и отправьте "
+"<code>/newbot</code>."
+
+#: templates/channels/telegram_connect.html:52
+msgid "Choose a display name and a username ending in <code>bot</code>."
+msgstr ""
+"Выберите отображаемое имя и имя пользователя, заканчивающееся на "
+"<code>bot</code>."
+
+#: templates/channels/telegram_connect.html:53
+msgid ""
+"Copy the token it replies with. It looks like <code>123456789:AA…</code>."
+msgstr ""
+"Скопируйте токен из ответа. Он выглядит как <code>123456789:AA…</code>."
+
+#: templates/channels/telegram_connect.html:59
+msgid "Paste the token"
+msgstr "Вставьте токен"
+
+#: templates/channels/telegram_connect.html:61
+msgid "Bot token"
+msgstr "Токен бота"
+
+#: templates/channels/telegram_connect.html:70
+msgid "Pasted once. We verify it with Telegram before saving anything."
+msgstr ""
+"Вставляется один раз. Прежде чем что-либо сохранить, мы проверяем его в "
+"Telegram."
+
+#: templates/channels/telegram_connect.html:80
+msgid ""
+"We call <code>getMe</code> to check the token and learn your bot's username,"
+" then point Telegram at this deployment with <code>setWebhook</code> and a "
+"secret only the two of us know."
+msgstr ""
+"Мы вызываем <code>getMe</code>, чтобы проверить токен и узнать имя "
+"пользователя бота, затем направляем Telegram на это развёртывание через "
+"<code>setWebhook</code> с секретом, известным только нам двоим."
+
+#: templates/channels/telegram_connect.html:82
+#: templates/channels/whatsapp_connect.html:64
+msgid "Deliveries arrive at"
+msgstr "Доставки поступают на"
+
+#: templates/channels/telegram_connect.html:83
+msgid ""
+"That URL has to be reachable from the public internet over HTTPS with a "
+"valid certificate. Telegram will not deliver to anything else. On a local "
+"machine, put a tunnel in front of it first. Full setup notes are in "
+"docs/channels/telegram.md."
+msgstr ""
+"Этот URL должен быть доступен из публичного интернета по HTTPS с "
+"действительным сертификатом. Telegram не будет доставлять ни на что другое. "
+"На локальной машине сначала настройте туннель. Полные инструкции — в "
+"docs/channels/telegram.md."
+
+#: templates/channels/unsubscribe_done.html:3
+msgid "Unsubscribed"
+msgstr "Отписан"
+
+#: templates/channels/whatsapp_connect.html:20
+msgid "Connect WhatsApp"
+msgstr "Подключить WhatsApp"
+
+#: templates/channels/whatsapp_connect.html:30
+msgid "Connect a WhatsApp number"
+msgstr "Подключить номер WhatsApp"
+
+#: templates/channels/whatsapp_connect.html:32
+msgid ""
+"This is the direct-from-Meta path: you generate a permanent system user "
+"token in Business Manager and paste it here. It is stored encrypted and "
+"never shown again."
+msgstr ""
+"Это прямой путь от Meta: вы создаёте постоянный токен системного "
+"пользователя в Business Manager и вставляете его сюда. Он хранится в "
+"зашифрованном виде и больше никогда не показывается."
+
+#: templates/channels/whatsapp_connect.html:42
+msgid ""
+"In Business Manager, open <em>WhatsApp Accounts</em> and copy the WhatsApp "
+"Business Account ID."
+msgstr ""
+"В Business Manager откройте <em>WhatsApp Accounts</em> и скопируйте ID "
+"бизнес-аккаунта WhatsApp."
+
+#: templates/channels/whatsapp_connect.html:43
+msgid ""
+"Open the number under that account and copy its <em>phone number ID</em> — "
+"the API id, not the number itself."
+msgstr ""
+"Откройте номер в этом аккаунте и скопируйте его <em>phone number ID</em> — "
+"API-идентификатор, а не сам номер."
+
+#: templates/channels/whatsapp_connect.html:45
+msgid ""
+"Create a system user with <code>whatsapp_business_messaging</code> and "
+"<code>whatsapp_business_management</code>, then generate a permanent token "
+"for it."
+msgstr ""
+"Создайте системного пользователя с правами "
+"<code>whatsapp_business_messaging</code> и "
+"<code>whatsapp_business_management</code>, затем сгенерируйте для него "
+"постоянный токен."
+
+#: templates/channels/whatsapp_connect.html:52
+msgid "Paste the three values"
+msgstr "Вставьте три значения"
+
+#: templates/channels/whatsapp_connect.html:62
+msgid ""
+"We prove the token against Meta before anything is written, then subscribe "
+"the account to this deployment."
+msgstr ""
+"Прежде чем что-либо записать, мы проверяем токен у Meta, затем подписываем "
+"аккаунт на это развёртывание."
+
+#: templates/channels/whatsapp_connect.html:65
+msgid ""
+"Paste this into the app's WhatsApp webhook configuration, with the verify "
+"token shown there. Full setup notes are in docs/channels/whatsapp.md."
+msgstr ""
+"Вставьте это в конфигурацию вебхука WhatsApp приложения вместе с показанным "
+"там verify token. Полные инструкции — в docs/channels/whatsapp.md."
+
+#: templates/channels/whatsapp_cost_hints.html:3
+#: templates/channels/whatsapp_cost_hints.html:4
+msgid "WhatsApp cost estimates"
+msgstr "Оценки стоимости WhatsApp"
+
+#: templates/channels/whatsapp_cost_hints.html:8
+msgid ""
+"Meta bills you directly, per conversation, at a rate that depends on the "
+"template's category and the recipient's country. BrightBean Chat never "
+"meters and never charges. It only shows the numbers you enter here beside a "
+"template and in the broadcast composer, so a send of ten thousand messages "
+"does not come as a surprise."
+msgstr ""
+"Meta выставляет счёт вам напрямую, за диалог, по тарифу, который зависит от "
+"категории шаблона и страны получателя. BrightBean Chat никогда ничего не "
+"считает и не взимает плату. Он лишь показывает введённые вами здесь цифры "
+"рядом с шаблоном и в композере рассылки, чтобы отправка десяти тысяч "
+"сообщений не стала сюрпризом."
+
+#: templates/channels/whatsapp_cost_hints.html:11
+msgid ""
+"Copy the rates for the countries you actually message from Meta's own "
+"pricing page. Leaving them at zero simply hides the estimate."
+msgstr ""
+"Скопируйте тарифы для стран, в которые вы действительно отправляете "
+"сообщения, со страницы цен самой Meta. Если оставить их равными нулю, оценка"
+" просто не будет показана."
+
+#: templates/channels/whatsapp_cost_hints.html:20
+#: templates/channels/whatsapp_template_form.html:44
+msgid "Back to templates"
+msgstr "Назад к шаблонам"
+
+#: templates/channels/whatsapp_template_form.html:3
+msgid "WhatsApp template"
+msgstr "Шаблон WhatsApp"
+
+#: templates/channels/whatsapp_template_form.html:5
+msgid "Edit template"
+msgstr "Редактировать шаблон"
+
+#: templates/channels/whatsapp_template_form.html:5
+#: templates/channels/whatsapp_templates.html:18
+msgid "New template"
+msgstr "Новый шаблон"
+
+#: templates/channels/whatsapp_template_form.html:12
+msgid ""
+"This template is with Meta, or already approved, so it cannot be edited. the"
+" copy under review is the one Meta holds. Delete it and write a new one if "
+"it needs to change."
+msgstr ""
+"Этот шаблон находится у Meta или уже одобрен, поэтому его нельзя "
+"редактировать. Версия на проверке — та, что хранится у Meta. Если нужно "
+"изменить, удалите его и напишите новый."
+
+#: templates/channels/whatsapp_template_form.html:18
+#, python-format
+msgid ""
+"Write the message once and mark the parts that change with "
+"<code>%(open_brace)s1%(close_brace)s</code>, "
+"<code>%(open_brace)s2%(close_brace)s</code> and so on. Meta numbers "
+"variables per section, so a header's first variable and a body's first "
+"variable are two different values."
+msgstr ""
+"Напишите сообщение один раз и отметьте изменяемые части как "
+"<code>%(open_brace)s1%(close_brace)s</code>, "
+"<code>%(open_brace)s2%(close_brace)s</code> и так далее. Meta нумерует "
+"переменные отдельно для каждого раздела, поэтому первая переменная заголовка"
+" и первая переменная текста — это два разных значения."
+
+#: templates/channels/whatsapp_template_form.html:38
+msgid "Preview"
+msgstr "Предпросмотр"
+
+#: templates/channels/whatsapp_template_form.html:39
+msgid "Start typing to see the message."
+msgstr "Начните печатать, чтобы увидеть сообщение."
+
+#: templates/channels/whatsapp_template_form.html:41
+msgid "Save draft"
+msgstr "Сохранить черновик"
+
+#: templates/channels/whatsapp_templates.html:3
+msgid "WhatsApp templates"
+msgstr "Шаблоны WhatsApp"
+
+#: templates/channels/whatsapp_templates.html:4
+msgid "WhatsApp message templates"
+msgstr "Шаблоны сообщений WhatsApp"
+
+#: templates/channels/whatsapp_templates.html:8
+msgid ""
+"More than 24 hours after a contact's last message, WhatsApp accepts nothing "
+"but a template Meta has already approved. Write one here, submit it, and it "
+"becomes available to flows and broadcasts once the review comes back."
+msgstr ""
+"Через 24 часа после последнего сообщения контакта WhatsApp принимает только "
+"шаблоны, уже одобренные Meta. Напишите шаблон здесь, отправьте на проверку —"
+" и после её завершения он станет доступен в сценариях и рассылках."
+
+#: templates/channels/whatsapp_templates.html:13
+msgid ""
+"No WhatsApp number is connected yet, so there is nothing to submit a "
+"template against."
+msgstr ""
+"Пока не подключён ни один номер WhatsApp, поэтому отправлять шаблон не к "
+"чему."
+
+#: templates/channels/whatsapp_templates.html:19
+msgid "Cost estimates"
+msgstr "Оценки стоимости"
+
+#: templates/channels/whatsapp_templates.html:20
+msgid "estimates only, never metered"
+msgstr "только оценки, без реального учёта"
+
+#: templates/channels/whatsapp_templates.html:26
+msgid "Category"
+msgstr "Категория"
+
+#: templates/channels/whatsapp_templates.html:26
+msgid "Number"
+msgstr "Номер"
+
+#: templates/channels/whatsapp_templates.html:26
+msgid "Variables"
+msgstr "Переменные"
+
+#: templates/channels/whatsapp_templates.html:26
+msgid "Status"
+msgstr "Статус"
+
+#: templates/channels/whatsapp_templates.html:35
+#, python-format
+msgid "≈ %(currency)s %(cost)s per message"
+msgstr "≈ %(currency)s %(cost)s за сообщение"
+
+#: templates/channels/whatsapp_templates.html:60
+msgid "Edit"
+msgstr "Редактировать"
+
+#: templates/channels/whatsapp_templates.html:64
+msgid "Submit for review"
+msgstr "Отправить на проверку"
+
+#: templates/channels/whatsapp_templates.html:78
+msgid "No templates yet."
+msgstr "Пока нет шаблонов."
+
+#: templates/channels/whatsapp_templates.html:81
+msgid "What review is like"
+msgstr "Как проходит проверка"
+
+#: templates/channels/whatsapp_templates.html:83
+msgid ""
+"Meta usually answers within minutes, occasionally within a day. BrightBean "
+"Chat checks every hour and notifies workspace admins when the answer "
+"arrives; a rejected template shows Meta's reason above and can be edited and"
+" resubmitted. Marketing templates are reviewed most strictly and cost the "
+"most to send."
+msgstr ""
+"Meta обычно отвечает в течение нескольких минут, иногда в течение суток. "
+"BrightBean Chat проверяет каждый час и уведомляет администраторов "
+"пространства, когда приходит ответ; отклонённый шаблон показывает причину "
+"Meta выше и может быть отредактирован и отправлен повторно. Маркетинговые "
+"шаблоны проверяются строже всего и стоят дороже всего при отправке."
 
 #: templates/members/_accept_invite_body.html:2
 #, python-format
@@ -1415,10 +3404,6 @@ msgstr "Ожидающие приглашения"
 #, python-format
 msgid "Expires %(expires_at)s"
 msgstr "Истекает %(expires_at)s"
-
-#: templates/members/list.html:137
-msgid "Resend"
-msgstr "Отправить повторно"
 
 #: templates/members/list.html:141
 msgid "Revoke"

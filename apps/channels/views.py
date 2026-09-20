@@ -33,6 +33,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.timesince import timesince
+from django.utils.translation import gettext
 from django.views.decorators.http import require_GET, require_POST
 
 from apps.channels.capabilities import capabilities_for
@@ -398,7 +399,7 @@ def connection_set_status(request: WorkspaceRequest, workspace_id: str, connecti
     # time — the shape every half-enforced limit bug takes.
     turning_on = status != ConnectionStatus.DISABLED and connection.status == ConnectionStatus.DISABLED
     if status not in SETTABLE_STATUSES:
-        messages.error(request, "That is not a status you can set by hand.")
+        messages.error(request, gettext("That is not a status you can set by hand."))
     else:
         # The count and the status change are one critical section when the
         # change is a re-enable: two admins switching channels back on at the
@@ -411,7 +412,9 @@ def connection_set_status(request: WorkspaceRequest, workspace_id: str, connecti
                 connection.status = status
                 connection.save(update_fields=["status", "updated_at"])
                 messages.success(
-                    request, f"{connection.display_name} is now {connection.get_status_display().lower()}."
+                    request,
+                    gettext("%(name)s is now %(status)s.")
+                    % {"name": connection.display_name, "status": connection.get_status_display().lower()},
                 )
     return redirect(reverse("channels:list", kwargs={"workspace_id": workspace_id}))
 
@@ -455,7 +458,7 @@ def connection_delete(request: WorkspaceRequest, workspace_id: str, connection_i
     name = connection.display_name
     _notify_disconnect(connection)
     connection.delete()
-    messages.success(request, f"Disconnected {name}.")
+    messages.success(request, gettext("Disconnected %(name)s.") % {"name": name})
     return redirect(reverse("channels:list", kwargs={"workspace_id": workspace_id}))
 
 

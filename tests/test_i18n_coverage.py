@@ -55,6 +55,29 @@ _I18N_TEMPLATES = [
     "api/webhooks_list.html",
     "api/webhook_detail.html",
     "api/webhook_secret.html",
+    # Phase 2a (channels)
+    "channels/list.html",
+    "channels/new.html",
+    "channels/detail.html",
+    "channels/secret.html",
+    "channels/telegram_connect.html",
+    "channels/email_connect.html",
+    "channels/instagram_connect.html",
+    "channels/messenger_connect.html",
+    "channels/messenger_pages.html",
+    "channels/sms_connect.html",
+    "channels/sms_settings.html",
+    "channels/whatsapp_connect.html",
+    "channels/whatsapp_cost_hints.html",
+    "channels/whatsapp_templates.html",
+    "channels/whatsapp_template_form.html",
+    "channels/unsubscribe_confirm.html",
+    "channels/unsubscribe_done.html",
+    "channels/_unsubscribe_body.html",
+    "channels/_instagram_posts.html",
+    "channels/_messenger_posts.html",
+    "channels/_sms_segments.html",
+    "channels/partials/_whatsapp_template_preview.html",
 ]
 
 #: Every Python module a landed phase put gettext/gettext_lazy copy in.
@@ -80,6 +103,17 @@ _I18N_MODULES = [
     "apps/api/events.py",
     "apps/api/models.py",
     "apps/common/validators.py",
+    # Phase 2a (channels)
+    "apps/channels/forms.py",
+    "apps/channels/forms_whatsapp.py",
+    "apps/channels/models.py",
+    "apps/channels/views.py",
+    "apps/channels/views_email.py",
+    "apps/channels/views_instagram.py",
+    "apps/channels/views_messenger.py",
+    "apps/channels/views_sms.py",
+    "apps/channels/views_telegram.py",
+    "apps/channels/views_whatsapp.py",
 ]
 
 
