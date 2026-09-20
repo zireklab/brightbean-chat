@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load common_extras %}
+{% load common_extras i18n %}
 {% comment %}
 The flow list. Everything below the toolbar is the _list_rows.html partial, so
 the list has exactly one renderer: the filters fetch it, and every mutation
@@ -23,7 +23,7 @@ tokens rather than from utility palettes, which is what keeps the white-label
 swap in styles.css meaningful.
 {% endcomment %}
 
-{% block title %}Flows · BrightBean Chat{% endblock %}
+{% block title %}{% translate "Flows" %} · BrightBean Chat{% endblock %}
 
 {% block sub_nav %}{% include "partials/_sub_nav.html" with groups=flow_tab_groups %}{% endblock %}
 {% block alpine_components %}{{ block.super }}{% include "partials/_list_behaviours.html" %}{% endblock %}
@@ -47,33 +47,34 @@ swap in styles.css meaningful.
 
     <div class="flex flex-wrap items-end justify-between gap-6 mb-6">
         <div>
-            <h1 class="page-title">Flows</h1>
+            <h1 class="page-title">{% translate "Flows" %}</h1>
             <p class="page-lede mt-1.5">
-                A flow replies for you when something happens: a comment, a keyword, a reply to your story.
+                {% translate "A flow replies for you when something happens: a comment, a keyword, a reply to your story." %}
             </p>
         </div>
         {% if can_edit %}
         <div class="flex items-center gap-2 flex-shrink-0">
             <a href="{% url 'flows:import_start' workspace_id=request.workspace.id %}"
-               class="btn-pill-secondary">Import a file</a>
+               class="btn-pill-secondary">{% translate "Import a file" %}</a>
             <button type="button" class="btn-pill-primary" @click="creating = true; $nextTick(() => $refs.newName.focus())">
-                {% include "partials/_nav_icon.html" with name="flows" icon_size=16 %} New flow
+                {% include "partials/_nav_icon.html" with name="flows" icon_size=16 %} {% translate "New flow" %}
             </button>
         </div>
         {% endif %}
     </div>
 
     {% if can_edit %}
+    {% translate "Comment to DM" as new_flow_placeholder %}
     <form class="card p-4 mb-5 flex flex-wrap items-center gap-2" x-show="creating" x-cloak
           hx-post="{% url 'flows:create' workspace_id=request.workspace.id %}"
           hx-swap="none"
           @htmx:after-request="$el.reset(); creating = false">
         {% csrf_token %}
-        <label for="new-flow-name" class="text-[13px] font-semibold" style="color: var(--text-primary);">What is this flow called?</label>
+        <label for="new-flow-name" class="text-[13px] font-semibold" style="color: var(--text-primary);">{% translate "What is this flow called?" %}</label>
         <input id="new-flow-name" x-ref="newName" type="text" name="name" maxlength="200" required
-               placeholder="Comment to DM" class="form-input-styled" style="width: 18rem;">
-        <button type="submit" class="btn-pill-primary btn-pill-sm">Create it</button>
-        <button type="button" class="btn-pill-secondary btn-pill-sm" @click="creating = false">Cancel</button>
+               placeholder="{{ new_flow_placeholder }}" class="form-input-styled" style="width: 18rem;">
+        <button type="submit" class="btn-pill-primary btn-pill-sm">{% translate "Create it" %}</button>
+        <button type="button" class="btn-pill-secondary btn-pill-sm" @click="creating = false">{% translate "Cancel" %}</button>
     </form>
     {% endif %}
 
@@ -84,8 +85,9 @@ swap in styles.css meaningful.
           hx-swap="innerHTML"
           hx-trigger="input changed delay:300ms, filters-changed"
           @submit.prevent>
-        <input type="search" name="q" x-model="q" placeholder="Search flows"
-               class="form-input-styled" style="width: 15rem;" aria-label="Search flows">
+        {% translate "Search flows" as search_flows_label %}
+        <input type="search" name="q" x-model="q" placeholder="{{ search_flows_label }}"
+               class="form-input-styled" style="width: 15rem;" aria-label="{{ search_flows_label }}">
         <input type="hidden" name="status" x-model="status">
         <input type="hidden" name="folder" x-model="folder">
         {% comment %}
@@ -100,20 +102,21 @@ swap in styles.css meaningful.
             {{ chip.label }}{% if chip.count %}<span style="opacity: .65;">{{ chip.count }}</span>{% endif %}
         </button>
         {% endfor %}
-        {% ui_select model="folder" options=folder_options placeholder="All folders" icon="tag" onchange="reload()" %}
+        {% translate "All folders" as all_folders_placeholder %}
+        {% ui_select model="folder" options=folder_options placeholder=all_folders_placeholder icon="tag" onchange="reload()" %}
     </form>
 
     {% if template_cards and can_edit %}
     <section class="card p-[22px] mb-7">
         <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
             <div>
-                <h2 class="section-title">Start from a template</h2>
+                <h2 class="section-title">{% translate "Start from a template" %}</h2>
                 <p class="text-[13px] mt-1" style="color: var(--text-tertiary);">
-                    {{ template_total }} ready-made flow{{ template_total|pluralize }}. Pick one and change the words to suit you.
+                    {% blocktranslate count count=template_total %}{{ count }} ready-made flow. Pick one and change the words to suit you.{% plural %}{{ count }} ready-made flows. Pick one and change the words to suit you.{% endblocktranslate %}
                 </p>
             </div>
             <a class="btn-pill-secondary btn-pill-sm flex-shrink-0"
-               href="{% url 'flows:template_gallery' workspace_id=request.workspace.id %}">Browse all {{ template_total }}</a>
+               href="{% url 'flows:template_gallery' workspace_id=request.workspace.id %}">{% blocktranslate with count=template_total %}Browse all {{ count }}{% endblocktranslate %}</a>
         </div>
         <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {% comment %}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 13:37+0600\n"
+"POT-Creation-Date: 2026-09-20 17:30+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ky\n"
@@ -451,7 +451,7 @@ msgid "A price cannot be negative."
 msgstr "Баа терс сан боло албайт."
 
 #: apps/channels/models.py:103 apps/contacts/models.py:61
-#: templates/api/keys_list.html:87
+#: apps/flows/models.py:61 templates/api/keys_list.html:87
 msgid "Active"
 msgstr "Активдүү"
 
@@ -476,7 +476,8 @@ msgstr "Тейлөө"
 msgid "Authentication"
 msgstr "Аутентификация"
 
-#: apps/channels/models.py:566
+#: apps/channels/models.py:566 apps/flows/models.py:60 apps/flows/views.py:202
+#: templates/flows/_list_rows.html:53 templates/flows/edit.html:57
 msgid "Draft"
 msgstr "Долбоор"
 
@@ -788,9 +789,10 @@ msgstr "Жумуш мейкиндиги"
 msgid "General"
 msgstr "Жалпы"
 
-#: apps/common/context_processors.py:251 templates/channels/list.html:24
-#: templates/channels/list.html:31 templates/contacts/_channels.html:21
-#: templates/contacts/_rows.html:51 templates/inbox/_sidebar.html:20
+#: apps/common/context_processors.py:251 apps/flows/portability/cards.py:35
+#: templates/channels/list.html:24 templates/channels/list.html:31
+#: templates/contacts/_channels.html:21 templates/contacts/_rows.html:51
+#: templates/inbox/_sidebar.html:20
 #: templates/partials/_sidebar_channels.html:35
 msgid "Channels"
 msgstr "Каналдар"
@@ -799,8 +801,8 @@ msgstr "Каналдар"
 msgid "Library"
 msgstr "Медиа китепканасы"
 
-#: apps/common/context_processors.py:307 templates/contacts/_rows.html:52
-#: templates/contacts/_tag_chips.html:17
+#: apps/common/context_processors.py:307 apps/flows/portability/cards.py:28
+#: templates/contacts/_rows.html:52 templates/contacts/_tag_chips.html:17
 #: templates/contacts/import_detail.html:71
 #: templates/contacts/tag_list.html:15 templates/contacts/tag_list.html:22
 #: templates/inbox/_sidebar.html:70
@@ -874,6 +876,8 @@ msgid "Inbox"
 msgstr "Кирүүчү кабарлар"
 
 #: apps/common/context_processors.py:455 apps/common/context_processors.py:526
+#: templates/flows/edit.html:47 templates/flows/list.html:26
+#: templates/flows/list.html:51
 msgid "Flows"
 msgstr "Сценарийлер"
 
@@ -895,7 +899,7 @@ msgstr "Аналитика"
 msgid "Notifications"
 msgstr "Билдирүүлөр"
 
-#: apps/common/context_processors.py:534
+#: apps/common/context_processors.py:534 apps/flows/portability/cards.py:30
 msgid "Sequences"
 msgstr "Ырааттуулуктар"
 
@@ -905,8 +909,8 @@ msgstr "Шаблондор"
 
 #: apps/common/tests/test_templatetags.py:166
 #: templates/api/webhooks_list.html:71 templates/contacts/import_list.html:64
-#: templates/inbox/_card.html:19 templates/inbox/_sidebar.html:17
-#: templates/organizations/workspaces.html:61
+#: templates/flows/_list_rows.html:68 templates/inbox/_card.html:19
+#: templates/inbox/_sidebar.html:17 templates/organizations/workspaces.html:61
 msgid "Open"
 msgstr "Ачуу"
 
@@ -1144,8 +1148,6 @@ msgstr "Автоматташтыруу токтотулду"
 
 #: apps/contacts/views.py:792
 #, python-format
-#| msgid "%(counter)s character"
-#| msgid_plural "%(counter)s characters"
 msgid "%(count)s run expired."
 msgid_plural "%(count)s runs expired."
 msgstr[0] "%(count)s аткаруу мөөнөтү бүттү."
@@ -1165,15 +1167,12 @@ msgstr "Тегдерди жаңыртуу мүмкүн болгон жок"
 
 #: apps/contacts/views.py:885
 #, python-format
-#| msgid "Label removed from %(count)s conversation"
-#| msgid_plural "Label removed from %(count)s conversations"
 msgid "Tag removed from %(count)s contact"
 msgid_plural "Tag removed from %(count)s contacts"
 msgstr[0] "Тег %(count)s байланыштан алынды"
 
 #: apps/contacts/views.py:887
 #, python-format
-#| msgid "Tag added to a contact"
 msgid "Tag added to %(count)s contact"
 msgid_plural "Tag added to %(count)s contacts"
 msgstr[0] "Тег %(count)s байланышка кошулду"
@@ -1185,8 +1184,6 @@ msgstr "%(tag)s — %(count)s тандалды."
 
 #: apps/contacts/views.py:914
 #, python-format
-#| msgid "%(counter)s character"
-#| msgid_plural "%(counter)s characters"
 msgid "%(count)s contact deleted"
 msgid_plural "%(count)s contacts deleted"
 msgstr[0] "%(count)s байланыш өчүрүлдү"
@@ -1211,21 +1208,18 @@ msgstr "Баары 1-кадамдан кайра башташат."
 
 #: apps/contacts/views.py:980
 #, python-format
-#| msgid "Test failed: %(reason)s."
 msgid "%(count)s skipped: %(reason)s"
 msgid_plural "%(count)s skipped: %(reason)s"
 msgstr[0] "%(count)s өткөрүлүп жиберилди: %(reason)s"
 
 #: apps/contacts/views.py:986
 #, python-format
-#| msgid "Contact unsubscribed from a sequence"
 msgid "%(count)s contact unsubscribed from %(name)s"
 msgid_plural "%(count)s contacts unsubscribed from %(name)s"
 msgstr[0] "%(count)s байланыш %(name)sдан чыгарылды"
 
 #: apps/contacts/views.py:989
 #, python-format
-#| msgid "Contact subscribed to a sequence"
 msgid "%(count)s contact subscribed to %(name)s"
 msgid_plural "%(count)s contacts subscribed to %(name)s"
 msgstr[0] "%(count)s байланыш %(name)sга жазылды"
@@ -1343,8 +1337,6 @@ msgstr "Тег өчүрүлдү"
 
 #: apps/contacts/views.py:1492
 #, python-format
-#| msgid "Label removed from %(count)s conversation"
-#| msgid_plural "Label removed from %(count)s conversations"
 msgid "%(name)s — removed from %(count)s contact."
 msgid_plural "%(name)s — removed from %(count)s contacts."
 msgstr[0] "%(name)s — %(count)s байланыштан алынды."
@@ -1359,7 +1351,6 @@ msgstr "Тегдер бириктирилди"
 
 #: apps/contacts/views.py:1519
 #, python-format
-#| msgid "Reconnected %(name)s."
 msgid "%(count)s contact moved to %(name)s."
 msgid_plural "%(count)s contacts moved to %(name)s."
 msgstr[0] "%(count)s байланыш %(name)sга которулду."
@@ -1446,8 +1437,6 @@ msgstr[0] ""
 
 #: apps/contacts/views.py:1756
 #, python-format
-#| msgid "%(counter)s character"
-#| msgid_plural "%(counter)s characters"
 msgid "Erasing %(count)s contact"
 msgid_plural "Erasing %(count)s contacts"
 msgstr[0] "%(count)s байланыш өчүрүлүүдө"
@@ -1460,9 +1449,825 @@ msgstr "Бул форма башка байланыш үчүн болчу"
 msgid "Reload the page and try again. Nothing was changed."
 msgstr "Баракчаны кайра жүктөп, дагы аракет кылыңыз. Эч нерсе өзгөргөн жок."
 
+#: apps/flows/models.py:62 apps/flows/views.py:203
+#: templates/flows/_list_rows.html:51 templates/flows/edit.html:55
+#: templates/organizations/workspaces.html:53
+msgid "Archived"
+msgstr "Архивделген"
+
+#: apps/flows/portability/cards.py:29 templates/contacts/detail.html:91
+#: templates/contacts/field_list.html:8 templates/contacts/field_list.html:15
+msgid "Custom fields"
+msgstr "Атайын талаалар"
+
+#: apps/flows/portability/cards.py:31
+#| msgid "Segment saved"
+msgid "Segments"
+msgstr "Сегменттер"
+
+#: apps/flows/portability/cards.py:32 templates/members/list.html:70
+msgid "Members"
+msgstr "Мүчөлөр"
+
+#: apps/flows/portability/cards.py:33
+#| msgid "Live flows"
+msgid "Other flows"
+msgstr "Башка сценарийлер"
+
+#: apps/flows/portability/cards.py:34
+msgid "Media"
+msgstr "Медиа"
+
+#: apps/flows/portability/cards.py:36
+msgid "Request headers"
+msgstr "Сурам аталыштары"
+
+#: apps/flows/portability/cards.py:37
+#: templates/channels/whatsapp_templates.html:3
+msgid "WhatsApp templates"
+msgstr "WhatsApp шаблондору"
+
+#: apps/flows/portability/cards.py:38
+msgid "Ref link handles"
+msgstr "Шилтемелер үчүн колдонуучу аттары"
+
+#: apps/flows/portability/cards.py:39
+msgid "Email sender addresses"
+msgstr "Email жөнөтүүчүнүн дареги"
+
+#: apps/flows/portability/cards.py:40
+msgid "Comment trigger posts"
+msgstr "Комментарий триггери үчүн жазуулар"
+
+#: apps/flows/portability/cards.py:50
+msgid ""
+"This flow labels people with the tags below, and your workspace does not "
+"have them yet. For each one: create it under this name, or point it at a tag"
+" you already use. (A tag is a label on a person — “VIP”, “Newsletter” — that"
+" you can search and filter by later.)"
+msgstr ""
+"Бул сценарий адамдарды төмөнкү тегдер менен белгилейт, бирок алар сиздин "
+"жумуш мейкиндигинде дагы жок. Ар бири үчүн: ушул ат менен түзүңүз же "
+"мурунтан бар тегди көрсөтүңүз. (Тег — бул контакттагы белги — «VIP», "
+"«Рассылка» — кийин ошол боюнча издеп, чыпкалай аласыз.)"
+
+#: apps/flows/portability/cards.py:56
+msgid ""
+"This flow saves these details onto a contact, and your workspace does not "
+"have them yet. For each one: create it, or point it at a field you already "
+"have. (A custom field is a detail that is not built in — a size, a booking "
+"date, an order number. Its type decides what you can store, and cannot be "
+"changed later.)"
+msgstr ""
+"Бул сценарий бул маалыматтарды контакттын картасына сактайт, бирок алар "
+"сиздин жумуш мейкиндигинде дагы жок. Ар бири үчүн: аны түзүңүз же мурунтан "
+"бар талаага көрсөтүңүз. (Кошумча талаа — бул демейки боюнча жок көрсөткүч — "
+"өлчөм, брондоо күнү, буйрутма номери. Анын түрү эмнени сактай турганыңызды "
+"аныктайт жана кийин өзгөртүлбөйт.)"
+
+#: apps/flows/portability/cards.py:62
+msgid ""
+"A sequence is a series of messages sent over days. A new one arrives empty, "
+"so add its messages afterwards."
+msgstr ""
+"Цепочка — бир нече күн ичинде жөнөтүлүүчү билдирүүлөр катары. Жаңы цепочка "
+"бош түзүлөт, андыктан билдирүүлөрдү кийин кошуңуз."
+
+#: apps/flows/portability/cards.py:64
+msgid ""
+"A segment is a saved contact filter and cannot be created from a file. Pick "
+"one you already have."
+msgstr ""
+"Сегмент — бул сакталган контакт чыпкасы, аны файлдан түзүүгө болбойт. "
+"Мурунтан барын тандаңыз."
+
+#: apps/flows/portability/cards.py:65
+msgid "Who the flow assigns conversations to and notifies. Defaults to you."
+msgstr ""
+"Сценарий сүйлөшүүлөрдү кимге дайындайт жана кимге билдирет. Демейки боюнча —"
+" сизге."
+
+#: apps/flows/portability/cards.py:66
+msgid ""
+"Flows this one hands over to. A file exported with everything it uses "
+"carries them along."
+msgstr ""
+"Бул сценарий өткөрүп берген сценарийлер. «Колдонгондун баары менен» "
+"экспорттолгон файл аларды да камтыйт."
+
+#: apps/flows/portability/cards.py:67
+msgid ""
+"Pick an image or file from your library, or paste a link to use instead."
+msgstr "Китепканадан сүрөт же файл тандаңыз, же анын ордуна шилтеме коюңуз."
+
+#: apps/flows/portability/cards.py:69
+msgid ""
+"Which connected account each trigger should watch. Letting one watch every "
+"account is wider than it sounds: it covers every platform that kind of "
+"trigger works on, not just this one, so a Telegram keyword trigger would "
+"answer SMS as well."
+msgstr ""
+"Ар бир триггер кайсы туташтырылган аккаунтту байкашы керек. Бардык "
+"аккаунттарды байкатуу угулгандан кеңири: бул триггердин түрү иштеген ар бир "
+"платформаны камтыйт, жалгыз ушуну эмес, ошондуктан Telegram'догу ачкыч сөз "
+"триггери SMS'ке да жооп берет."
+
+#: apps/flows/portability/cards.py:74
+msgid ""
+"These were stripped when the file was made, so no password could travel in "
+"it. Supply your own."
+msgstr ""
+"Алар файл түзүлгөндө алынып салынган, ошондуктан анда сырсөз болушу мүмкүн "
+"эмес. Өзүңүздүкүн көрсөтүңүз."
+
+#: apps/flows/portability/cards.py:76
+msgid ""
+"The flow sends these approved templates. Nothing to answer — make sure you "
+"have them."
+msgstr ""
+"Сценарий бул бекитилген шаблондорду жөнөтөт. Жооп берүүнүн кереги жок — "
+"алардын барын текшериңиз."
+
+#: apps/flows/portability/cards.py:77
+msgid ""
+"The public @handle a link was built from was stripped when the file was "
+"made."
+msgstr ""
+"Шилтеме түзүлгөн ачык @колдонуучу аты файл түзүлгөндө алынып салынган."
+
+#: apps/flows/portability/cards.py:78
+msgid "The sending address was stripped when the file was made."
+msgstr "Жөнөтүүчүнүн дареги файл түзүлгөндө алынып салынган."
+
+#: apps/flows/portability/cards.py:80
+msgid ""
+"The trigger watched particular posts, and which posts was stripped when the "
+"file was made. List your own — leaving this blank does not mean every post, "
+"it means no posts, so the trigger would never fire."
+msgstr ""
+"Триггер белгилүү жазууларды байкаган, бирок кайсыларын файл түзүлгөндө "
+"алынып салынган. Өзүңүздүкүн көрсөтүңүз — бош калтырсаңыз, бул «бардык "
+"жазуулар» дегенди билдирбейт, «эч бир жазуу» дегенди билдирет, ошондуктан "
+"триггер эч качан иштебейт."
+
+#: apps/flows/portability/envelope.py:258
+#, python-format
+msgid "The file is %(size)s bytes; the limit is %(max)s bytes."
+msgstr "Файл %(size)s байт; чек — %(max)s байт."
+
+#: apps/flows/portability/envelope.py:264
+#| msgid "That file is too large"
+msgid "The file is empty."
+msgstr "Файл бош."
+
+#: apps/flows/portability/envelope.py:272
+#| msgid "That label is not valid."
+msgid "The file is not valid JSON."
+msgstr "Файл жарактуу JSON эмес."
+
+#: apps/flows/portability/envelope.py:275
+#: apps/flows/portability/envelope.py:336
+#| msgid "A rule condition must be an object."
+msgid "A flow template must be a JSON object."
+msgstr "Сценарий шаблону JSON объектиси болушу керек."
+
+#: apps/flows/portability/envelope.py:280
+#, python-format
+msgid "The file nests deeper than the limit of %(max)s levels."
+msgstr "Файлдын деңгээли %(max)s чегинен тереңирээк."
+
+#: apps/flows/portability/envelope.py:285
+msgid "The file contains a null character, which cannot be stored."
+msgstr "Файлда сакталбай турган нөл символ бар."
+
+#: apps/flows/portability/envelope.py:348
+#, python-format
+msgid "Two flows share the key %(key)r."
+msgstr "Эки сценарий бирдей %(key)r ачкычын колдонот."
+
+#: apps/flows/portability/envelope.py:353
+#, python-format
+msgid "entry names %(entry)r, which is not a flow in this file."
+msgstr ""
+"жазуу %(entry)r дегенди көрсөтөт, бирок бул файлда мындай сценарий жок."
+
+#: apps/flows/portability/imports.py:648
+#, python-format
+msgid ""
+"Pick the %(platform)s account this trigger should watch, or choose to let it"
+" watch them all."
+msgstr ""
+"Бул триггер байкашы керек %(platform)s аккаунтун тандаңыз, же баарын "
+"байкатууну тандаңыз."
+
+#: apps/flows/portability/imports.py:664
+#, python-format
+#| msgid "A tag name is at most %(max)s characters."
+msgid "At most %(limit)s characters."
+msgstr "%(limit)s символдон ашык эмес."
+
+#: apps/flows/portability/imports.py:669
+#, python-format
+msgid "This %(noun)s has to be supplied — the flow cannot run without it."
+msgstr "%(noun)s көрсөтүлүшү керек — ансыз сценарий иштебейт."
+
+#: apps/flows/portability/imports.py:678
+#, python-format
+msgid "A %(noun)s cannot be created from a template; pick an existing one."
+msgstr "%(noun)s шаблондон түзүлбөйт; мурунтан барын тандаңыз."
+
+#: apps/flows/portability/imports.py:694
+#, python-format
+#| msgid "%(label)s settings for this workspace"
+msgid "Pick a %(noun)s in this workspace."
+msgstr "Бул жумуш мейкиндигинен %(noun)s тандаңыз."
+
+#: apps/flows/portability/imports.py:700
+#, python-format
+msgid "Choose what this %(noun)s should become."
+msgstr "Бул %(noun)s эмнеге айланышы керектигин тандаңыз."
+
+#: apps/flows/portability/imports.py:739
+#, python-format
+msgid ""
+"A %(noun)s called “%(name)s” already exists — use the existing one instead."
+msgstr "«%(name)s» аталышындагы %(noun)s мурунтан бар — ошону колдонуңуз."
+
+#: apps/flows/portability/imports.py:749
+#| msgid "That is not an email address."
+msgid "That is not a field type."
+msgstr "Бул талаа түрү эмес."
+
+#: apps/flows/portability/imports.py:974
+#, python-format
+msgid "“%(name)s” would not be storable after mapping: %(issue)s"
+msgstr "Дал келтиргенден кийин «%(name)s» сакталбайт: %(issue)s"
+
+#: apps/flows/portability/imports.py:1062
+#, python-format
+msgid "The %(type)s trigger on “%(name)s” cannot be created here: %(issues)s"
+msgstr ""
+"«%(name)s» ичиндеги %(type)s триггерин бул жерден түзүүгө болбойт: "
+"%(issues)s"
+
 #: apps/flows/starter.py:45
 msgid "Hi! Thanks for getting in touch — how can we help?"
 msgstr "Салам! Кайрылганыңыз үчүн рахмат — эмне менен жардам бере алабыз?"
+
+#: apps/flows/triggers/forms.py:100
+#| msgid "Each keyword must be an object."
+msgid "Each keyword needs a matching mode."
+msgstr "Ар бир ачкыч сөздүн дал келүү режими болушу керек."
+
+#: apps/flows/triggers/phrasing.py:40
+msgid "when someone sends a keyword"
+msgstr "бирөө ачкыч сөз жөнөткөндө"
+
+#: apps/flows/triggers/phrasing.py:41
+msgid "when someone comments on a post"
+msgstr "бирөө жазууга комментарий калтырганда"
+
+#: apps/flows/triggers/phrasing.py:42
+msgid "when someone mentions you in a story"
+msgstr "бирөө сизди историясында эскергенде"
+
+#: apps/flows/triggers/phrasing.py:43
+msgid "when someone replies to your story"
+msgstr "бирөө сиздин историяңызга жооп бергенде"
+
+#: apps/flows/triggers/phrasing.py:44
+msgid "when someone follows you"
+msgstr "бирөө сизге жазылганда"
+
+#: apps/flows/triggers/phrasing.py:45
+msgid "when someone opens your link or scans your QR code"
+msgstr "бирөө сиздин шилтемеңизди ачканда же QR-кодуңузду сканерлегенде"
+
+#: apps/flows/triggers/phrasing.py:46
+msgid "when nothing else matches"
+msgstr "башка эч нерсе дал келбегенде"
+
+#: apps/flows/triggers/phrasing.py:47
+msgid "when someone messages you for the first time"
+msgstr "бирөө сизге биринчи жолу жазганда"
+
+#: apps/flows/triggers/phrasing.py:48
+#| msgid "When a message arrives"
+msgid "when a message matches your rules"
+msgstr "билдирүү эрежелериңизге дал келгенде"
+
+#: apps/flows/triggers/phrasing.py:49
+msgid "when another system asks it to"
+msgstr "башка система сураганда"
+
+#: apps/flows/triggers/phrasing.py:67
+msgid ""
+"Instagram does not support new-follower triggers yet, so it will not run."
+msgstr ""
+"Instagram азырынча жаңы жазылуучулар боюнча триггерлерди колдоого албайт, "
+"ошондуктан ал иштебейт."
+
+#: apps/flows/triggers/phrasing.py:88
+#, python-format
+msgid "“%(word)s” and %(count)s more"
+msgstr "«%(word)s» жана дагы %(count)s"
+
+#: apps/flows/triggers/phrasing.py:91
+#, python-format
+#| msgid "%(list)s or %(last)s"
+msgid "%(list)s or “%(last)s”"
+msgstr "%(list)s же «%(last)s»"
+
+#: apps/flows/triggers/phrasing.py:108
+#, python-format
+msgid "when a %(type)s trigger fires"
+msgstr "%(type)s триггери иштегенде"
+
+#: apps/flows/triggers/phrasing.py:113
+#, python-format
+msgid "when someone sends %(quoted)s"
+msgstr "бирөө %(quoted)s жөнөткөндө"
+
+#: apps/flows/triggers/phrasing.py:115
+#, python-format
+msgid "when someone comments %(quoted)s"
+msgstr "бирөө %(quoted)s деп комментарий калтырганда"
+
+#: apps/flows/triggers/phrasing.py:143
+msgid "No trigger yet, so it will not run until you add one"
+msgstr "Азырынча триггер жок, ошондуктан сиз аны кошмоюнча иштебейт"
+
+#: apps/flows/triggers/phrasing.py:147
+#, python-format
+#| msgid "%(list)s or %(last)s"
+msgid "%(first)s, or %(second)s"
+msgstr "%(first)s же %(second)s"
+
+#: apps/flows/triggers/phrasing.py:152
+#, python-format
+msgid "%(first)s, and %(count)s other triggers"
+msgstr "%(first)s жана дагы %(count)s триггер"
+
+#: apps/flows/triggers/registry.py:120
+#: templates/flows/triggers/_form_keyword.html:32
+#: templates/inbox/_rule_form.html:72 templates/inbox/_rule_form.html:84
+msgid "Keyword"
+msgstr "Ачкыч сөз"
+
+#: apps/flows/triggers/registry.py:121
+msgid "Runs when an incoming message matches one of these words."
+msgstr "Кирүүчү билдирүү ушул сөздөрдүн бирине дал келгенде иштейт."
+
+#: apps/flows/triggers/registry.py:129
+msgid "Comment"
+msgstr "Комментарий"
+
+#: apps/flows/triggers/registry.py:130
+msgid "Runs when someone comments on a post, and replies to them privately."
+msgstr ""
+"Бирөө жазууга комментарий калтырганда иштейт жана ага жеке билдирүү менен "
+"жооп берет."
+
+#: apps/flows/triggers/registry.py:147
+#| msgid "Stop automation"
+msgid "Story mention"
+msgstr "Историяда эскерүү"
+
+#: apps/flows/triggers/registry.py:148
+msgid "Runs when someone mentions this account in their story."
+msgstr "Бирөө бул аккаунтту өз историясында эскергенде иштейт."
+
+#: apps/flows/triggers/registry.py:155
+msgid "Story reply"
+msgstr "Историяга жооп"
+
+#: apps/flows/triggers/registry.py:156
+msgid "Runs when someone replies to one of this account's stories."
+msgstr "Бирөө бул аккаунттун бир историясына жооп бергенде иштейт."
+
+#: apps/flows/triggers/registry.py:164
+#| msgid "New flow"
+msgid "New follower"
+msgstr "Жаңы жазылуучу"
+
+#: apps/flows/triggers/registry.py:165
+msgid "Runs when someone follows this account."
+msgstr "Бирөө бул аккаунтка жазылганда иштейт."
+
+#: apps/flows/triggers/registry.py:168
+msgid ""
+"Instagram does not tell apps about new followers yet, so this trigger will "
+"not run. It is here so it starts working on its own if Instagram opens that "
+"up."
+msgstr ""
+"Instagram азырынча колдонмолорго жаңы жазылуучулар жөнүндө билдирбейт, "
+"ошондуктан бул триггер иштебейт. Ал бул жерде, эгер Instagram муну ачса, өзү"
+" иштеп кете турганы үчүн турат."
+
+#: apps/flows/triggers/registry.py:177
+msgid "Link or QR code"
+msgstr "Шилтеме же QR-код"
+
+#: apps/flows/triggers/registry.py:178
+msgid ""
+"Runs when someone arrives through a link or QR code carrying this reference."
+msgstr "Бирөө ушул шилтеме менен ссылка же QR-код аркылуу келгенде иштейт."
+
+#: apps/flows/triggers/registry.py:186
+#| msgid "Nothing selected"
+msgid "Nothing else matched"
+msgstr "Башка эч нерсе дал келген жок"
+
+#: apps/flows/triggers/registry.py:187
+msgid "Runs when nothing else matched. At most once per contact per day."
+msgstr ""
+"Башка эч нерсе дал келбегенде иштейт. Бир контактка күнүнө бир жолудан ашык "
+"эмес."
+
+#: apps/flows/triggers/registry.py:195
+msgid "Welcome"
+msgstr "Куттуктоо"
+
+#: apps/flows/triggers/registry.py:196
+msgid "Runs the first time someone opens a conversation."
+msgstr "Бирөө биринчи жолу сүйлөшүүнү ачканда иштейт."
+
+#: apps/flows/triggers/registry.py:203
+msgid "Something happens here"
+msgstr "Бул жерде бир нерсе болот"
+
+#: apps/flows/triggers/registry.py:204
+msgid ""
+"Runs when something happens to a contact — a tag added, a field changed."
+msgstr ""
+"Контакт менен бир нерсе болгондо иштейт — тег кошулганда, талаа өзгөргөндө."
+
+#: apps/flows/triggers/registry.py:212
+#| msgid "Add another email"
+msgid "Another system"
+msgstr "Башка система"
+
+#: apps/flows/triggers/registry.py:213
+msgid "Runs only when the API asks for it."
+msgstr "API аркылуу сурам болгондо гана иштейт."
+
+#: apps/flows/triggers/services.py:95 apps/flows/triggers/validation.py:63
+#, python-format
+msgid "%(type)r is not a trigger type."
+msgstr "%(type)r триггер түрү эмес."
+
+#: apps/flows/triggers/services.py:175
+#, python-format
+msgid "%(direction)r is not a direction."
+msgstr "%(direction)r багыт эмес."
+
+#: apps/flows/triggers/services.py:277
+#| msgid "No keys yet"
+msgid "No keywords yet"
+msgstr "Азырынча ачкыч сөз жок"
+
+#: apps/flows/triggers/services.py:282
+#, python-format
+msgid "%(shown)s and %(more)s more"
+msgstr "%(shown)s жана дагы %(more)s"
+
+#: apps/flows/triggers/services.py:289
+#, python-format
+#| msgid "Create “%(term)s”"
+msgid "Reference “%(ref)s”"
+msgstr "«%(ref)s» шилтемеси"
+
+#: apps/flows/triggers/services.py:305
+msgid "specific posts"
+msgstr "белгилүү жазууларда"
+
+#: apps/flows/triggers/services.py:305
+msgid "any post"
+msgstr "каалаган жазууда"
+
+#: apps/flows/triggers/services.py:309
+#, python-format
+#| msgid "%(count)s error"
+#| msgid_plural "%(count)s errors"
+msgid " and %(count)s more"
+msgstr " жана дагы %(count)s"
+
+#: apps/flows/triggers/services.py:311
+#, python-format
+msgid "Comments on %(scope)s containing %(shown)s%(more)s"
+msgstr "%(scope)s жазуулардагы %(shown)s%(more)s камтыган комментарийлер"
+
+#: apps/flows/triggers/services.py:319
+#, python-format
+msgid "Comments on %(scope)s"
+msgstr "%(scope)s жазуулардагы комментарийлер"
+
+#: apps/flows/triggers/services.py:324
+msgid "replies publicly"
+msgstr "ачык жооп берет"
+
+#: apps/flows/triggers/services.py:326
+msgid "likes the comment"
+msgstr "комментарийди жактырат"
+
+#: apps/flows/triggers/services.py:344
+#, python-format
+msgid "A %(label)s trigger is not tied to a channel."
+msgstr "«%(label)s» триггери каналга байланган эмес."
+
+#: apps/flows/triggers/services.py:352
+#, python-format
+msgid "%(label)s triggers do not run on %(platform)s."
+msgstr "«%(label)s» триггерлери %(platform)s'до иштебейт."
+
+#: apps/flows/triggers/validation.py:66
+#| msgid "A rule condition must be an object."
+msgid "A trigger's configuration has to be an object."
+msgstr "Триггердин конфигурациясы объект болушу керек."
+
+#: apps/flows/triggers/validation.py:72
+#, python-format
+msgid "The configuration is %(size)s bytes; the limit is %(max)s."
+msgstr "Конфигурация %(size)s байт; чек — %(max)s."
+
+#: apps/flows/triggers/validation.py:81
+#, python-format
+#| msgid "A conversation can carry at most %(max)s labels."
+msgid "The configuration nests deeper than %(max)s levels."
+msgstr "Конфигурациянын деңгээли %(max)s чегинен тереңирээк."
+
+#: apps/flows/views.py:55
+#| msgid "Failed"
+msgid "Unfiled"
+msgstr "Папкасыз"
+
+#: apps/flows/views.py:200 templates/flows/template_gallery.html:70
+#| msgid "all"
+msgid "All"
+msgstr "Баары"
+
+#: apps/flows/views.py:201 templates/flows/_list_rows.html:48
+#: templates/flows/edit.html:52
+msgid "Live"
+msgstr "Иштеп жатат"
+
+#: apps/flows/views.py:295 apps/flows/views.py:323
+msgid "Name required"
+msgstr "Атын көрсөтүңүз"
+
+#: apps/flows/views.py:295
+#| msgid "Give the key a name so you can recognise it later."
+msgid "Give the flow a name to create it."
+msgstr "Сценарийди түзүү үчүн ага ат бериңиз."
+
+#: apps/flows/views.py:310
+#| msgid "Field created"
+msgid "Flow created"
+msgstr "Сценарий түзүлдү"
+
+#: apps/flows/views.py:311
+#, python-format
+msgid "%(name)s starts with a first message — open it to edit."
+msgstr "%(name)s биринчи билдирүүдөн башталат — түзөтүү үчүн ачыңыз."
+
+#: apps/flows/views.py:323
+#| msgid "A rule needs a name."
+msgid "A flow needs a name."
+msgstr "Сценарийге ат керек."
+
+#: apps/flows/views.py:327
+#| msgid "Field renamed"
+msgid "Flow renamed"
+msgstr "Сценарийдин аты өзгөртүлдү"
+
+#: apps/flows/views.py:338
+#| msgid "Flow started"
+msgid "Flow duplicated"
+msgstr "Сценарий көчүрмөлөндү"
+
+#: apps/flows/views.py:339
+#, python-format
+#| msgid "%(name)s is connected"
+msgid "%(name)s was created as a draft."
+msgstr "%(name)s долбоор катары түзүлдү."
+
+#: apps/flows/views.py:352
+#| msgid "Flow started"
+msgid "Flow archived"
+msgstr "Сценарий архивделди"
+
+#: apps/flows/views.py:353
+msgid "Find it again with the Archived status filter."
+msgstr "Аны «Архивделген» статус чыпкасы менен кайра табыңыз."
+
+#: apps/flows/views.py:364
+#| msgid "Flow started"
+msgid "Flow restored"
+msgstr "Сценарий калыбына келтирилди"
+
+#: apps/flows/views_portability.py:136
+msgid "Choose a flow template file to import."
+msgstr "Импорттоо үчүн сценарий шаблонунун файлын тандаңыз."
+
+#: apps/flows/views_portability.py:146
+#, python-format
+msgid "That file is %(size)s bytes; the limit is %(max)s bytes."
+msgstr "Бул файл %(size)s байт; чек — %(max)s байт."
+
+#: apps/flows/views_portability.py:243
+#, python-format
+msgid ""
+"%(name)s could not be read. This is a problem with the template, not with "
+"you."
+msgstr "%(name)s окулган жок. Бул шаблондун көйгөйү, сиздики эмес."
+
+#: apps/flows/views_portability.py:336
+#, python-format
+#| msgid "Move %(name)s later"
+msgid "From the %(name)s template."
+msgstr "%(name)s шаблонунан."
+
+#: apps/flows/views_portability.py:337
+#, python-format
+#| msgid "From name"
+msgid "From %(filename)s."
+msgstr "%(filename)s файлынан."
+
+#: apps/flows/views_portability.py:337
+msgid "From an uploaded file."
+msgstr "Жүктөлгөн файлдан."
+
+#: apps/flows/views_portability.py:354
+#, python-format
+msgid "Nothing was imported. %(exc)s"
+msgstr "Эч нерсе импорттолгон жок. %(exc)s"
+
+#: apps/flows/views_portability.py:358 apps/flows/views_portability.py:614
+#: apps/flows/views_portability.py:641
+#| msgid "This invitation has already been accepted."
+msgid "This file has already been imported."
+msgstr "Бул файл мурунтан эле импорттолгон."
+
+#: apps/flows/views_portability.py:388
+msgid ""
+"Imported as a draft, with its trigger switched off. Read the messages below,"
+" then switch the trigger on and set it live."
+msgstr ""
+"Долбоор катары импорттолду, триггери өчүрүлгөн. Төмөнкү билдирүүлөрдү окуп, "
+"триггерди күйгүзүп, сценарийди иштетиңиз."
+
+#: apps/flows/views_portability.py:392
+#, python-format
+msgid ""
+"%(count)s flow arrived as a draft, with its triggers switched off. Open it "
+"to read the messages before anything goes live."
+msgid_plural ""
+"%(count)s flows arrived as drafts, with their triggers switched off. Open "
+"each one to read the messages before anything goes live."
+msgstr[0] ""
+"%(count)s сценарий долбоор катары келди, триггерлери өчүрүлгөн. Эч нерсе "
+"иштебей туруп, билдирүүлөрдү окуу үчүн ачыңыз."
+
+#: apps/flows/views_portability.py:614 apps/flows/views_portability.py:641
+#: apps/flows/views_portability.py:671
+#| msgid "Already tagged"
+msgid "Already imported"
+msgstr "Мурунтан импорттолгон"
+
+#: apps/flows/views_portability.py:623
+msgid "Not ready to import"
+msgstr "Импорттоого даяр эмес"
+
+#: apps/flows/views_portability.py:625 apps/flows/views_portability.py:634
+#| msgid "Nothing was running"
+msgid "Nothing was imported"
+msgstr "Эч нерсе импорттолгон жок"
+
+#: apps/flows/views_portability.py:635
+#, python-format
+msgid "%(exc)s Re-check your answers and try again."
+msgstr "%(exc)s Жоопторуңузду кайра текшерип, дагы аракет кылыңыз."
+
+#: apps/flows/views_portability.py:648
+#| msgid "Import as"
+msgid "Imported as drafts"
+msgstr "Долбоор катары импорттолду"
+
+#: apps/flows/views_portability.py:657
+msgid "Something still has to be answered."
+msgstr "Дагы бир нерсеге жооп берүү керек."
+
+#: apps/flows/views_portability.py:660
+#, python-format
+msgid "%(label)s: %(problem)s"
+msgstr "%(label)s: %(problem)s"
+
+#: apps/flows/views_portability.py:671
+msgid "An applied import is kept as a record."
+msgstr "Колдонулган импорт жазуу катары сакталат."
+
+#: apps/flows/views_portability.py:674
+#| msgid "Import started"
+msgid "Import discarded"
+msgstr "Импорт өчүрүлдү"
+
+#: apps/flows/views_triggers.py:66
+#| msgid "Tag added"
+msgid "A tag is added"
+msgstr "Тег кошулду"
+
+#: apps/flows/views_triggers.py:67
+#| msgid "Tag removed"
+msgid "A tag is removed"
+msgstr "Тег өчүрүлдү"
+
+#: apps/flows/views_triggers.py:68
+#| msgid "Save changes"
+msgid "A field changes"
+msgstr "Талаа өзгөрдү"
+
+#: apps/flows/views_triggers.py:69
+#| msgid "Contact subscribed to a sequence"
+msgid "Subscribed to a sequence"
+msgstr "Контакт цепочкага жазылды"
+
+#: apps/flows/views_triggers.py:70
+#| msgid "Contact unsubscribed from a sequence"
+msgid "Unsubscribed from a sequence"
+msgstr "Контакт цепочкадан чыгарылды"
+
+#: apps/flows/views_triggers.py:71
+#| msgid "Contact created"
+msgid "A contact is created"
+msgstr "Контакт түзүлдү"
+
+#: apps/flows/views_triggers.py:111 apps/flows/views_triggers.py:210
+#: apps/flows/views_triggers.py:247
+#| msgid "Unknown state"
+msgid "Unknown trigger type"
+msgstr "Белгисиз триггер түрү"
+
+#: apps/flows/views_triggers.py:111 apps/flows/views_triggers.py:210
+#| msgid "Pick one of the pages below."
+msgid "Pick one from the list."
+msgstr "Тизмеден бирин тандаңыз."
+
+#: apps/flows/views_triggers.py:216 apps/flows/views_triggers.py:252
+msgid "Keywords did not save"
+msgstr "Ачкыч сөздөр сакталган жок"
+
+#: apps/flows/views_triggers.py:221 apps/flows/views_triggers.py:257
+#| msgid "That label is not valid."
+msgid "That filter is not valid"
+msgstr "Бул чыпка жараксыз"
+
+#: apps/flows/views_triggers.py:236
+#| msgid "Tag added"
+msgid "Trigger added"
+msgstr "Триггер кошулду"
+
+#: apps/flows/views_triggers.py:272
+#| msgid "Segment saved"
+msgid "Trigger saved"
+msgstr "Триггер сакталды"
+
+#: apps/flows/views_triggers.py:284 templates/flows/_trigger_row.html:50
+#| msgid "Rule enabled"
+msgid "Trigger enabled"
+msgstr "Триггер күйгүзүлдү"
+
+#: apps/flows/views_triggers.py:284
+msgid "Trigger paused"
+msgstr "Триггер тындырылды"
+
+#: apps/flows/views_triggers.py:299 apps/inbox/views.py:1767
+msgid "Order updated"
+msgstr "Тартип жаңыртылды"
+
+#: apps/flows/views_triggers.py:309
+#| msgid "Tag removed"
+msgid "Trigger removed"
+msgstr "Триггер өчүрүлдү"
+
+#: apps/flows/views_triggers.py:348
+#| msgid "Unsupported content."
+msgid "Unsupported format."
+msgstr "Колдоого алынбаган формат."
+
+#: apps/flows/views_triggers.py:459
+#| msgid "That file is too large"
+msgid "That reference is taken"
+msgstr "Бул шилтеме мурунтан алынган"
+
+#: apps/flows/views_triggers.py:460
+#, python-format
+msgid "Another trigger in this workspace already uses “%(ref)s”."
+msgstr "Бул жумуш мейкиндигинде башка триггер «%(ref)s»ды мурунтан колдонот."
+
+#: apps/flows/views_triggers.py:467
+#| msgid "Segment saved"
+msgid "Trigger not saved"
+msgstr "Триггер сакталган жок"
 
 #: apps/inbox/codes.py:27
 msgid "That scheduled reply had nothing left to send."
@@ -1919,10 +2724,6 @@ msgstr "Эреже өчүрүлдү"
 #: apps/inbox/views.py:1752
 msgid "Rule deleted"
 msgstr "Эреже өчүрүлдү"
-
-#: apps/inbox/views.py:1767
-msgid "Order updated"
-msgstr "Тартип жаңыртылды"
 
 #: apps/members/roles.py:40
 msgid "Owner"
@@ -2496,10 +3297,13 @@ msgstr "Ачкыч чыгаруу"
 #: templates/api/keys_list.html:62 templates/api/webhooks_list.html:52
 #: templates/contacts/_field_rows.html:57 templates/contacts/_tag_rows.html:59
 #: templates/contacts/_tag_rows.html:71 templates/contacts/field_list.html:36
-#: templates/contacts/tag_list.html:42 templates/inbox/_deferred.html:31
-#: templates/inbox/_deferred.html:46 templates/inbox/_label_rows.html:51
-#: templates/inbox/label_settings.html:41 templates/members/list.html:65
-#: templates/members/list.html:108 templates/organizations/workspaces.html:40
+#: templates/contacts/tag_list.html:42 templates/flows/_list_rows.html:139
+#: templates/flows/_trigger_form.html:74 templates/flows/import_upload.html:63
+#: templates/flows/list.html:78 templates/flows/template_gallery.html:36
+#: templates/inbox/_deferred.html:31 templates/inbox/_deferred.html:46
+#: templates/inbox/_label_rows.html:51 templates/inbox/label_settings.html:41
+#: templates/members/list.html:65 templates/members/list.html:108
+#: templates/organizations/workspaces.html:40
 msgid "Cancel"
 msgstr "Жокко чыгаруу"
 
@@ -2602,6 +3406,7 @@ msgstr "Күйгүзүлгөн"
 #: templates/channels/sms_settings.html:70
 #: templates/channels/whatsapp_cost_hints.html:17
 #: templates/contacts/_field_rows.html:56 templates/contacts/_tag_rows.html:58
+#: templates/flows/_list_rows.html:138 templates/flows/_trigger_form.html:72
 #: templates/inbox/_label_rows.html:50
 msgid "Save"
 msgstr "Сактоо"
@@ -2649,6 +3454,7 @@ msgid "When"
 msgstr "Качан"
 
 #: templates/api/webhook_detail.html:70
+#: templates/flows/triggers/_form_rule.html:18
 msgid "Event"
 msgstr "Окуя"
 
@@ -2680,8 +3486,8 @@ msgstr "Азырынча эч нерсе жеткирилген жок."
 #: templates/api/webhook_detail.html:91
 #: templates/channels/whatsapp_templates.html:70
 #: templates/contacts/_field_rows.html:50 templates/contacts/_tag_rows.html:47
-#: templates/contacts/list.html:243 templates/inbox/_label_rows.html:42
-#: templates/inbox/_rule_rows.html:70
+#: templates/contacts/list.html:243 templates/flows/_trigger_row.html:66
+#: templates/inbox/_label_rows.html:42 templates/inbox/_rule_rows.html:70
 msgid "Delete"
 msgstr "Өчүрүү"
 
@@ -2783,6 +3589,7 @@ msgstr "(тамга жок)"
 
 #: templates/channels/_instagram_posts.html:38
 #: templates/channels/_messenger_posts.html:41
+#: templates/flows/_list_rows.html:68
 msgid "View"
 msgstr "Көрүү"
 
@@ -2961,6 +3768,7 @@ msgstr "байланыштын акыркы билдирүүсүнөн %(hours)s
 
 #: templates/channels/detail.html:79 templates/channels/email_connect.html:98
 #: templates/channels/whatsapp_templates.html:42
+#: templates/flows/triggers/_form_comment.html:77
 msgid "None"
 msgstr "Жок"
 
@@ -3820,6 +4628,7 @@ msgstr ""
 "текст колдонулат."
 
 #: templates/channels/sms_settings.html:11
+#: templates/flows/triggers/_form_keyword.html:26
 msgid "Keywords"
 msgstr "Ачкыч сөздөр"
 
@@ -4171,10 +4980,6 @@ msgstr "Билдирүүнү көрүү үчүн жазып баштаңыз."
 msgid "Save draft"
 msgstr "Долбоорду сактоо"
 
-#: templates/channels/whatsapp_templates.html:3
-msgid "WhatsApp templates"
-msgstr "WhatsApp шаблондору"
-
 #: templates/channels/whatsapp_templates.html:4
 msgid "WhatsApp message templates"
 msgstr "WhatsApp билдирүү шаблондору"
@@ -4225,7 +5030,8 @@ msgid "≈ %(currency)s %(cost)s per message"
 msgstr "≈ %(currency)s %(cost)s ар бир билдирүү үчүн"
 
 #: templates/channels/whatsapp_templates.html:60
-#: templates/inbox/_label_rows.html:33 templates/inbox/_rule_rows.html:61
+#: templates/flows/_trigger_row.html:63 templates/inbox/_label_rows.html:33
+#: templates/inbox/_rule_rows.html:61
 msgid "Edit"
 msgstr "Түзөтүү"
 
@@ -4339,8 +5145,6 @@ msgstr "Текст жок"
 
 #: templates/contacts/_activity.html:113
 #, python-format
-#| msgid "%(counter)s segment"
-#| msgid_plural "%(counter)s segments"
 msgid "%(count)s attachment"
 msgid_plural "%(count)s attachments"
 msgstr[0] "%(count)s тиркеме"
@@ -4400,20 +5204,17 @@ msgstr ""
 
 #: templates/contacts/_field_rows.html:38
 #, python-format
-#| msgid "%(count)s conversation unassigned"
-#| msgid_plural "%(count)s conversations unassigned"
 msgid "%(count)s value stored"
 msgid_plural "%(count)s values stored"
 msgstr[0] "%(count)s маани сакталды"
 
 #: templates/contacts/_field_rows.html:41 templates/contacts/_tag_rows.html:36
+#: templates/flows/_list_rows.html:85
 msgid "Rename"
 msgstr "Атын өзгөртүү"
 
 #: templates/contacts/_field_rows.html:49
 #, python-format
-#| msgid ""
-#| "Delete “%(name)s”? Conversations it has already labelled keep their labels."
 msgid "Delete “%(name)s”? %(count)s stored value will go with it."
 msgid_plural "Delete “%(name)s”? %(count)s stored values will go with it."
 msgstr[0] ""
@@ -4471,6 +5272,8 @@ msgid "Which one"
 msgstr "Кайсынысы"
 
 #: templates/contacts/_filter_bar.html:58
+#: templates/flows/_import_requirement.html:78
+#: templates/flows/_import_requirement.html:136
 msgid "Choose…"
 msgstr "Тандаңыз…"
 
@@ -4565,8 +5368,6 @@ msgstr "%(count)s өткөрүлүп жиберилди"
 #: templates/contacts/_import_progress.html:35
 #: templates/contacts/import_list.html:61
 #, python-format
-#| msgid "%(counter)s character"
-#| msgid_plural "%(counter)s characters"
 msgid "%(count)s error"
 msgid_plural "%(count)s errors"
 msgstr[0] "%(count)s ката"
@@ -4680,8 +5481,6 @@ msgstr "%(pages)sдин %(number)s-баракчасы."
 
 #: templates/contacts/_rows.html:133
 #, python-format
-#| msgid "%(count)s conversation unassigned"
-#| msgid_plural "%(count)s conversations unassigned"
 msgid "%(count)s contact in all."
 msgid_plural "%(count)s contacts in all."
 msgstr[0] "Баары болуп %(count)s байланыш."
@@ -4725,8 +5524,6 @@ msgstr "Тег табуу"
 
 #: templates/contacts/_tag_rows.html:33
 #, python-format
-#| msgid "%(counter)s character"
-#| msgid_plural "%(counter)s characters"
 msgid "On %(count)s contact"
 msgid_plural "On %(count)s contacts"
 msgstr[0] "%(count)s байланышта"
@@ -4737,8 +5534,6 @@ msgstr "Башка тег менен бириктирүү…"
 
 #: templates/contacts/_tag_rows.html:46
 #, python-format
-#| msgid "Label removed from %(count)s conversation"
-#| msgid_plural "Label removed from %(count)s conversations"
 msgid "Delete “%(name)s”? It will be removed from %(count)s contact."
 msgid_plural "Delete “%(name)s”? It will be removed from %(count)s contacts."
 msgstr[0] "«%(name)s»ди өчүрөсүзбү? Ал %(count)s байланыштан алынат."
@@ -4840,11 +5635,6 @@ msgstr "Ар бир талаа андан чыкканыңызда өзү сак
 #: templates/contacts/detail.html:70
 msgid "You have read-only access to this workspace."
 msgstr "Сизде бул иш мейкиндигине окуу үчүн гана мүмкүнчүлүк бар."
-
-#: templates/contacts/detail.html:91 templates/contacts/field_list.html:8
-#: templates/contacts/field_list.html:15
-msgid "Custom fields"
-msgstr "Атайын талаалар"
 
 #: templates/contacts/detail.html:104
 msgid "True"
@@ -5115,6 +5905,7 @@ msgid "selected"
 msgstr "тандалды"
 
 #: templates/contacts/list.html:206
+#: templates/flows/triggers/_form_rule.html:26
 msgid "Tag"
 msgstr "Тег"
 
@@ -5168,6 +5959,861 @@ msgstr ""
 #: templates/contacts/tag_list.html:38
 msgid "What is the tag called?"
 msgstr "Тег кандай аталат?"
+
+#: templates/flows/_import_requirement.html:20
+msgid "Needs an answer"
+msgstr "Жооп керек"
+
+#: templates/flows/_import_requirement.html:21
+#, python-format
+#| msgid "Uploaded %(date)s"
+msgid "Unnamed %(kind)s"
+msgstr "Аты жок %(kind)s"
+
+#: templates/flows/_import_requirement.html:33
+#, python-format
+msgid "Needed by %(needed_by)s"
+msgstr "%(needed_by)s үчүн керек"
+
+#: templates/flows/_import_requirement.html:39
+msgid "Included in this file. It resolves to the copy about to be created."
+msgstr "Бул файлга кошулган. Азыр түзүлүүчү көчүрмөгө шилтенет."
+
+#: templates/flows/_import_requirement.html:44
+#, python-format
+msgid ""
+"This flow sends the approved template <span class=\"font-mono\">%(template_name)s</span>.\n"
+"        Nothing to answer here. Make sure your WhatsApp account has it."
+msgstr ""
+"Бул сценарий бекитилген <span class=\"font-mono\">%(template_name)s</span> шаблонун жөнөтөт.\n"
+"        Бул жерде жооп берүүнүн кереги жок. WhatsApp аккаунтуңузда бар экенин текшериңиз."
+
+#: templates/flows/_import_requirement.html:64
+msgid "Post ids, comma separated. Blank matches no posts"
+msgstr ""
+"Жазуулардын ID'лери үтүр менен бөлүнгөн. Бош болсо — эч бир жазуу дал "
+"келбейт"
+
+#: templates/flows/_import_requirement.html:64
+msgid "Leave blank to omit"
+msgstr "Өткөрүп жиберүү үчүн бош калтырыңыз"
+
+#: templates/flows/_import_requirement.html:65
+#, python-format
+#| msgid "Settings for %(name)s"
+msgid "Value for %(name)s"
+msgstr "%(name)s үчүн маани"
+
+#: templates/flows/_import_requirement.html:77
+#, python-format
+msgid "Account for the %(name)s trigger(s)"
+msgstr "%(name)s триггери(лери) үчүн аккаунт"
+
+#: templates/flows/_import_requirement.html:83
+msgid "Every account this kind of trigger works on"
+msgstr "Бул триггер түрү иштеген бардык аккаунттар"
+
+#: templates/flows/_import_requirement.html:97
+#, python-format
+msgid ""
+"No %(name)s account is connected yet. You can\n"
+"        <a href=\"%(connect_url)s\" class=\"btn-text-hover-primary\" style=\"text-decoration: underline;\">connect one</a>\n"
+"        and come back, or import now and pick the account later."
+msgstr ""
+"Азырынча бир дагы %(name)s аккаунту туташтырылган эмес. Сиз\n"
+"        <a href=\"%(connect_url)s\" class=\"btn-text-hover-primary\" style=\"text-decoration: underline;\">аны туташтырып</a>\n"
+"        кайра келсеңиз болот, же азыр импорттоп, аккаунтту кийин тандаңыз."
+
+#: templates/flows/_import_requirement.html:104
+#, python-format
+msgid ""
+"This trigger will listen on every platform its kind works on, not only "
+"%(name)s."
+msgstr ""
+"Бул триггер өз түрү иштеген бардык платформаларда угат, жалгыз %(name)s'да "
+"эмес."
+
+#: templates/flows/_import_requirement.html:135
+#, python-format
+#| msgid "Back to %(name)s"
+msgid "What to do with %(name)s"
+msgstr "%(name)s менен эмне кылуу"
+
+#: templates/flows/_import_requirement.html:138 templates/flows/list.html:77
+#| msgid "Create"
+msgid "Create it"
+msgstr "Түзүү"
+
+#: templates/flows/_import_requirement.html:140
+msgid "Use an existing one"
+msgstr "Мурунтан барын колдонуу"
+
+#: templates/flows/_import_requirement.html:142
+msgid "Leave it out"
+msgstr "Калтырбоо"
+
+#: templates/flows/_import_requirement.html:149
+msgid "Call it…"
+msgstr "Атаңыз…"
+
+#: templates/flows/_import_requirement.html:150
+#, python-format
+#| msgid "You have joined %(name)s."
+msgid "Name for the new %(name)s"
+msgstr "Жаңы %(name)s үчүн ат"
+
+#: templates/flows/_import_requirement.html:156
+#| msgid "What is the field called?"
+msgid "What this field holds"
+msgstr "Бул талаа эмнени сактайт"
+
+#: templates/flows/_import_requirement.html:165
+msgid "Media asset"
+msgstr "Медиа файл"
+
+#: templates/flows/_import_requirement.html:166
+#| msgid "Pick a tag first"
+msgid "Pick an asset…"
+msgstr "Файл тандаңыз…"
+
+#: templates/flows/_import_requirement.html:172
+msgid "…or paste a URL"
+msgstr "…же шилтеме коюңуз"
+
+#: templates/flows/_import_requirement.html:173
+msgid "Media URL"
+msgstr "Медиа файлдын шилтемеси"
+
+#: templates/flows/_import_requirement.html:177
+#| msgid "Which one"
+msgid "Which existing one"
+msgstr "Мурунтан бардын кайсынысы"
+
+#: templates/flows/_import_requirement.html:178
+#| msgid "Which one"
+msgid "Pick one…"
+msgstr "Тандаңыз…"
+
+#: templates/flows/_list_rows.html:22
+#| msgid "Nobody here yet"
+msgid "No flows here yet"
+msgstr "Бул жерде азырынча сценарий жок"
+
+#: templates/flows/_list_rows.html:25
+#| msgid "No conversations match these filters."
+msgid "Nothing matches these filters."
+msgstr "Бул чыпкаларга эч нерсе дал келбейт."
+
+#: templates/flows/_list_rows.html:27
+msgid "Start from a template above, or create one from scratch."
+msgstr "Жогорудагы шаблондон баштаңыз же нөлдөн түзүңүз."
+
+#: templates/flows/_list_rows.html:68 templates/flows/import_upload.html:62
+msgid "Continue"
+msgstr "Улантуу"
+
+#: templates/flows/_list_rows.html:72
+#| msgid "No actions"
+msgid "More actions"
+msgstr "Башка иш-аракеттер"
+
+#: templates/flows/_list_rows.html:81
+#| msgid "Status"
+msgid "Stats"
+msgstr "Статистика"
+
+#: templates/flows/_list_rows.html:88
+msgid "Duplicate"
+msgstr "Көчүрмөлөө"
+
+#: templates/flows/_list_rows.html:106 templates/flows/edit.html:83
+msgid "Download a copy"
+msgstr "Көчүрмөсүн жүктөп алуу"
+
+#: templates/flows/_list_rows.html:108
+msgid "Download with everything it uses"
+msgstr "Колдонгондун баары менен жүктөп алуу"
+
+#: templates/flows/_list_rows.html:113
+#: templates/organizations/workspaces.html:73
+msgid "Restore"
+msgstr "Калыбына келтирүү"
+
+#: templates/flows/_list_rows.html:117
+#: templates/organizations/workspaces.html:73
+msgid "Archive"
+msgstr "Архивдөө"
+
+#: templates/flows/_list_rows.html:133
+msgid "Folder"
+msgstr "Папка"
+
+#: templates/flows/_list_rows.html:135
+#| msgid "From name"
+msgid "Flow name"
+msgstr "Сценарийдин аты"
+
+#: templates/flows/_template_card.html:52
+#, python-format
+#| msgid "New label"
+msgid "Needs %(label)s"
+msgstr "%(label)s керек"
+
+#: templates/flows/_template_card.html:64
+msgid "This template contains a step that sends a request to another service."
+msgstr "Бул шаблонде башка сервиске сурам жөнөтүүчү кадам бар."
+
+#: templates/flows/_template_card.html:65
+msgid "Calls out to the internet"
+msgstr "Интернетке кайрылат"
+
+#: templates/flows/_template_card.html:80
+#| msgid "Start again"
+msgid "Starts on:"
+msgstr "Башталат:"
+
+#: templates/flows/_template_card.html:81
+#| msgid "Add another email"
+msgid "Another flow"
+msgstr "Башка сценарий"
+
+#: templates/flows/_template_card.html:85
+msgid "Also needs:"
+msgstr "Дагы керек:"
+
+#: templates/flows/_template_card.html:90
+msgid "Size:"
+msgstr "Өлчөмү:"
+
+#: templates/flows/_template_card.html:91
+#: templates/flows/import_review.html:50
+#, python-format
+#| msgid "%(count)s skipped"
+msgid "%(count)s step"
+msgid_plural "%(count)s steps"
+msgstr[0] "%(count)s кадам"
+
+#: templates/flows/_template_card.html:97
+#| msgid "New template"
+msgid "Use this template"
+msgstr "Бул шаблонду колдонуу"
+
+#: templates/flows/_template_tile.html:28
+#, python-format
+#| msgid "%(count)s skipped: %(reason)s"
+#| msgid_plural "%(count)s skipped: %(reason)s"
+msgid "%(count)s step · %(platform)s"
+msgid_plural "%(count)s steps · %(platform)s"
+msgstr[0] "%(count)s кадам · %(platform)s"
+
+#: templates/flows/_trigger_form.html:33
+#, python-format
+#| msgid "Update “%(name)s”"
+msgid "Edit “%(label)s”"
+msgstr "«%(label)s»ды түзөтүү"
+
+#: templates/flows/_trigger_form.html:33
+#, python-format
+#| msgid "Update “%(name)s”"
+msgid "Add “%(label)s”"
+msgstr "«%(label)s»ды кошуу"
+
+#: templates/flows/_trigger_form.html:49
+#| msgid "Channels"
+msgid "Channel"
+msgstr "Канал"
+
+#: templates/flows/_trigger_form.html:51 templates/flows/_trigger_row.html:37
+#| msgid "All channels"
+msgid "All matching channels"
+msgstr "Дал келген бардык каналдар"
+
+#: templates/flows/_trigger_ref_links.html:24
+msgid "Copied"
+msgstr "Көчүрүлдү"
+
+#: templates/flows/_trigger_ref_links.html:25
+msgid "Copy link"
+msgstr "Шилтемени көчүрүү"
+
+#: templates/flows/_trigger_ref_links.html:28
+#, python-format
+#| msgid "Role in %(name)s"
+msgid "QR code for %(name)s"
+msgstr "%(name)s үчүн QR-код"
+
+#: templates/flows/_trigger_row.html:13
+msgid "Paused"
+msgstr "Тындырылды"
+
+#: templates/flows/_trigger_row.html:48
+#| msgid "Paste the token"
+msgid "Pause this trigger"
+msgstr "Бул триггерди тындыруу"
+
+#: templates/flows/_trigger_row.html:48
+#| msgid "Enable this rule"
+msgid "Enable this trigger"
+msgstr "Бул триггерди күйгүзүү"
+
+#: templates/flows/_trigger_row.html:55
+msgid "Run this trigger earlier"
+msgstr "Бул триггерди мурунураак иштетүү"
+
+#: templates/flows/_trigger_row.html:57
+msgid "Move up"
+msgstr "Жогору жылдыруу"
+
+#: templates/flows/_trigger_row.html:58
+msgid "Run this trigger later"
+msgstr "Бул триггерди кийинчерээк иштетүү"
+
+#: templates/flows/_trigger_row.html:60
+msgid "Move down"
+msgstr "Төмөн жылдыруу"
+
+#: templates/flows/_trigger_row.html:66
+#| msgid "Select this page"
+msgid "Delete this trigger?"
+msgstr "Бул триггерди өчүрөсүзбү?"
+
+#: templates/flows/_triggers_panel.html:27 templates/flows/edit.html:151
+#: templates/flows/import_review.html:131
+msgid "Triggers"
+msgstr "Триггерлер"
+
+#: templates/flows/_triggers_panel.html:29
+msgid "Close"
+msgstr "Жабуу"
+
+#: templates/flows/_triggers_panel.html:32
+msgid ""
+"What starts this flow. Lower numbers run first and the first match wins, "
+"across every flow in this workspace, not just this one."
+msgstr ""
+"Бул сценарийди эмне иштетет. Кичине номерлер биринчи иштейт, биринчи дал "
+"келген жеңет — бул жумуш мейкиндигиндеги бардык сценарийлер боюнча, жалгыз "
+"ушул эмес."
+
+#: templates/flows/_triggers_panel.html:37
+#, python-format
+msgid ""
+"More than one “%(label)s” trigger is enabled on this flow. Only the one with the\n"
+"        lowest number will ever run."
+msgstr ""
+"Бул сценарийде «%(label)s» триггеринен биртен ашык күйгүзүлгөн. Алардын ичинен номери\n"
+"        кичинеси гана иштейт."
+
+#: templates/flows/_triggers_panel.html:45
+#| msgid "No tags yet"
+msgid "No triggers yet"
+msgstr "Азырынча триггер жок"
+
+#: templates/flows/_triggers_panel.html:47
+msgid "A published flow with no trigger never runs. Add one below."
+msgstr ""
+"Триггери жок жарыяланган сценарий эч качан иштебейт. Төмөндөн кошуңуз."
+
+#: templates/flows/_triggers_panel.html:64
+msgid "Trigger type"
+msgstr "Триггердин түрү"
+
+#: templates/flows/_triggers_panel.html:73
+#| msgid "No labels yet"
+msgid "(not available yet)"
+msgstr "(азырынча жеткиликсиз)"
+
+#: templates/flows/_triggers_panel.html:76 templates/inbox/list.html:140
+msgid "Add"
+msgstr "Кошуу"
+
+#: templates/flows/edit.html:60
+#| msgid "Read only"
+msgid "Read-only"
+msgstr "Окуу үчүн гана"
+
+#: templates/flows/edit.html:85
+msgid "This flow and every flow it hands over to, as one file"
+msgstr "Бул сценарий жана ал өткөрүп берген бардык сценарийлер бир файлда"
+
+#: templates/flows/edit.html:85
+msgid "With everything it uses"
+msgstr "Колдонгондун баары менен"
+
+#: templates/flows/edit.html:136
+msgid "Loading the flow builder…"
+msgstr "Сценарий редактору жүктөлүүдө…"
+
+#: templates/flows/edit.html:141
+#| msgid "That file could not be read"
+msgid "The flow builder could not load."
+msgstr "Сценарий редактору жүктөлгөн жок."
+
+#: templates/flows/edit.html:143
+msgid ""
+"Its JavaScript bundle has not been built. Run <code>make frontend</code> and reload,\n"
+"                or rebuild the container image."
+msgstr ""
+"Анын JavaScript чогулмасы курулган эмес. <code>make frontend</code> иштетип, баракты кайра жүктөңүз,\n"
+"                же контейнер образын кайра курңуз."
+
+#: templates/flows/edit.html:157
+#| msgid "Loading…"
+msgid "Loading triggers…"
+msgstr "Триггерлер жүктөлүүдө…"
+
+#: templates/flows/import_review.html:18 templates/flows/import_upload.html:12
+#: templates/flows/import_upload.html:16
+#| msgid "Import as"
+msgid "Import a flow"
+msgstr "Сценарийди импорттоо"
+
+#: templates/flows/import_review.html:22
+#| msgid "Recent imports"
+msgid "Review this import"
+msgstr "Бул импортту текшериңиз"
+
+#: templates/flows/import_review.html:29
+#| msgid ""
+#| "Nothing has been written yet. These are the numbers the import would "
+#| "produce."
+msgid ""
+"Nothing has been created yet. Answer what it asks for below, then import."
+msgstr ""
+"Азырынча эч нерсе түзүлгөн жок. Төмөндөгү суроолорго жооп берип, андан кийин"
+" импорттоңуз."
+
+#: templates/flows/import_review.html:40
+msgid "Flows in this file"
+msgstr "Бул файлдагы сценарийлер"
+
+#: templates/flows/import_review.html:51
+#, python-format
+#| msgid "%(count)s error"
+#| msgid_plural "%(count)s errors"
+msgid "%(count)s trigger"
+msgid_plural "%(count)s triggers"
+msgstr[0] "%(count)s триггер"
+
+#: templates/flows/import_review.html:54
+#| msgid "Live flows"
+msgid "Main flow"
+msgstr "Негизги сценарий"
+
+#: templates/flows/import_review.html:67
+msgid ""
+"Nothing goes live on its own. Each arrives as a draft with its trigger "
+"switched off, so after importing you open it, check the messages read the "
+"way you want, switch the trigger on and set the flow live."
+msgstr ""
+"Эч нерсе өзүнөн-өзү иштебейт. Ар бири триггери өчүрүлгөн долбоор катары "
+"келет, ошондуктан импорттогондон кийин сиз аны ачып, билдирүүлөр туура "
+"окулаарын текшерип, триггерди күйгүзүп, сценарийди иштетесиз."
+
+#: templates/flows/import_review.html:76
+msgid "This flow calls out to the internet"
+msgstr "Бул сценарий интернетке кайрылат"
+
+#: templates/flows/import_review.html:78
+msgid ""
+"Whoever wrote this template chose these addresses. Read them before you "
+"publish the flow."
+msgstr ""
+"Бул даректерди шаблондун автору тандаган. Сценарийди жарыялоодон мурун "
+"аларды окуп чыгыңыз."
+
+#: templates/flows/import_review.html:92
+#, python-format
+#| msgid "Role in %(name)s"
+msgid "(in %(name)s)"
+msgstr "(%(name)s ичинде)"
+
+#: templates/flows/import_review.html:102
+msgid "Worth knowing"
+msgstr "Билип коюу керек"
+
+#: templates/flows/import_review.html:133
+msgid ""
+"What starts each flow. Keeping one imports it switched off, ready for you to"
+" turn on once you have read the flow. Skipping one leaves it out of the "
+"import entirely."
+msgstr ""
+"Ар бир сценарийди эмне иштетет. Триггерди калтырсаңыз, ал өчүрүлгөн бойдон "
+"импорттолот — сценарийди окуп чыккандан кийин күйгүзүүгө даяр. Өткөрүп "
+"жиберсеңиз, ал импортко такыр кирбейт."
+
+#: templates/flows/import_review.html:146
+#, python-format
+msgid "Keep or skip the %(label)s trigger on %(name)s"
+msgstr "%(name)s'дагы %(label)s триггерин калтыруу же өткөрүп жиберүү"
+
+#: templates/flows/import_review.html:147
+msgid "Keep"
+msgstr "Калтыруу"
+
+#: templates/flows/import_review.html:148
+msgid "Skip"
+msgstr "Өткөрүп жиберүү"
+
+#: templates/flows/import_review.html:175
+#, python-format
+#| msgid "Import %(count)s row(s) now?"
+msgid "Import %(count)s flow"
+msgid_plural "Import %(count)s flows"
+msgstr[0] "%(count)s сценарийди импорттоо"
+
+#: templates/flows/import_review.html:177
+msgid "Save and come back later"
+msgstr "Сактап, кийин кайтуу"
+
+#: templates/flows/import_review.html:180
+msgid "Discard"
+msgstr "Импортту өчүрүү"
+
+#: templates/flows/import_review.html:181
+#| msgid "Back to webhooks"
+msgid "Back to flows"
+msgstr "Сценарийлерге кайтуу"
+
+#: templates/flows/import_review.html:191
+msgid "Importing now will bring you back here. Still to answer:"
+msgstr "Азыр импорттосоңуз, бул жерге кайра кайтасыз. Дагы жооп берүү керек:"
+
+#: templates/flows/import_review.html:193
+msgid "Save your answers to re-check."
+msgstr "Кайра текшерүү үчүн жоопторуңузду сактаңыз."
+
+#: templates/flows/import_upload.html:18
+msgid ""
+"Upload a flow template. You will see exactly what it needs, and what it will"
+" call out to, before anything is created."
+msgstr ""
+"Сценарий шаблонун жүктөңүз. Эч нерсе түзүлгөнгө чейин ага эмне керек экенин "
+"жана кайда кайрыларын так көрөсүз."
+
+#: templates/flows/import_upload.html:28
+#| msgid "That file could not be read"
+msgid "That file was not imported"
+msgstr "Бул файл импорттолгон жок"
+
+#: templates/flows/import_upload.html:42
+#| msgid "No templates yet."
+msgid "Flow template file"
+msgstr "Сценарий шаблонунун файлы"
+
+#: templates/flows/import_upload.html:47
+#, python-format
+msgid ""
+"JSON, up to %(size)s. A template exported from any BrightBean Chat "
+"installation."
+msgstr ""
+"JSON, %(size)s чейин. Каалаган BrightBean Chat орнотуусунан экспорттолгон "
+"шаблон."
+
+#: templates/flows/import_upload.html:51
+#, python-format
+msgid ""
+"Or <a href=\"%(template_gallery_url)s\" class=\"btn-link\">start from one of"
+" the built-in templates</a>."
+msgstr ""
+"Же <a href=\"%(template_gallery_url)s\" class=\"btn-link\">курамдагы "
+"шаблондордун биринен баштаңыз</a>."
+
+#: templates/flows/import_upload.html:56
+msgid ""
+"Imported flows arrive as <strong>unpublished drafts</strong> with their triggers switched off.\n"
+"                Nothing runs until you publish it yourself."
+msgstr ""
+"Импорттолгон сценарийлер триггерлери өчүрүлгөн <strong>жарыяланбаган долбоорлор</strong> катары келет.\n"
+"                Өзүңүз жарыялаганча эч нерсе иштебейт."
+
+#: templates/flows/list.html:53
+msgid ""
+"A flow replies for you when something happens: a comment, a keyword, a reply"
+" to your story."
+msgstr ""
+"Бир нерсе болгондо сценарий сиздин ордуңузга жооп берет: комментарий, ачкыч "
+"сөз, историяга жооп."
+
+#: templates/flows/list.html:59
+#| msgid "Import as"
+msgid "Import a file"
+msgstr "Файлды импорттоо"
+
+#: templates/flows/list.html:61 templates/workspaces/dashboard.html:31
+msgid "New flow"
+msgstr "Жаңы сценарий"
+
+#: templates/flows/list.html:68
+msgid "Comment to DM"
+msgstr "Комментарийден жеке кабарга"
+
+#: templates/flows/list.html:74
+#| msgid "What is the field called?"
+msgid "What is this flow called?"
+msgstr "Бул сценарий кантип аталат?"
+
+#: templates/flows/list.html:89
+#| msgid "Search contacts"
+msgid "Search flows"
+msgstr "Сценарийлерди издөө"
+
+#: templates/flows/list.html:107
+#| msgid "All imports"
+msgid "All folders"
+msgstr "Бардык папкалар"
+
+#: templates/flows/list.html:115 templates/flows/template_gallery.html:17
+#: templates/flows/template_gallery.html:29
+#: templates/workspaces/dashboard.html:100
+msgid "Start from a template"
+msgstr "Шаблондон баштоо"
+
+#: templates/flows/list.html:117
+#, python-format
+#| msgid ""
+#| "%(counter)s ready-made flow. Pick one and change the words to suit you."
+#| msgid_plural ""
+#| "%(counter)s ready-made flows. Pick one and change the words to suit you."
+msgid "%(count)s ready-made flow. Pick one and change the words to suit you."
+msgid_plural ""
+"%(count)s ready-made flows. Pick one and change the words to suit you."
+msgstr[0] ""
+"%(count)s даяр сценарий. Бирин тандап, сөздөрдү өзүңүзгө ылайыктаңыз."
+
+#: templates/flows/list.html:121
+#, python-format
+#| msgid "Browse all %(total)s"
+msgid "Browse all %(count)s"
+msgstr "Баарын көрүү (%(count)s)"
+
+#: templates/flows/template_gallery.html:31
+msgid ""
+"Pick one and you will see exactly what it needs before anything is created."
+msgstr ""
+"Бирин тандаңыз, эч нерсе түзүлгөнгө чейин ага эмне керек экенин так көрөсүз."
+
+#: templates/flows/template_gallery.html:35
+#| msgid "Upload a file"
+msgid "Upload a file instead"
+msgstr "Анын ордуна файл жүктөө"
+
+#: templates/flows/template_gallery.html:45
+#| msgid "That file could not be read"
+msgid "That template could not be read"
+msgstr "Бул шаблон окулган жок"
+
+#: templates/flows/template_gallery.html:66
+#| msgid "Back to templates"
+msgid "Search templates"
+msgstr "Шаблондорду издөө"
+
+#: templates/flows/template_gallery.html:86
+msgid ""
+"Every template arrives as an <strong>unpublished draft</strong> with its triggers switched off,\n"
+"            and its links and tags are placeholders. Nothing runs until you edit it and publish it yourself."
+msgstr ""
+"Ар бир шаблон триггерлери өчүрүлгөн <strong>жарыяланбаган долбоор</strong> катары келет,\n"
+"            ал эми шилтемелери жана тегдери — толтургуч гана. Өзүңүз түзөтүп, жарыялаганча эч нерсе иштебейт."
+
+#: templates/flows/template_gallery.html:93
+#| msgid "No templates yet."
+msgid "No templates are installed"
+msgstr "Шаблондор орнотулган эмес"
+
+#: templates/flows/template_gallery.html:95
+#, python-format
+msgid ""
+"This installation ships none, or none of them could be read.\n"
+"        You can still <a href=\"%(upload_url)s\" class=\"btn-link\">upload a template file</a>."
+msgstr ""
+"Бул орнотууда алар жок, же бир дагысы окулган жок.\n"
+"        Сиз дагы деле <a href=\"%(upload_url)s\" class=\"btn-link\">шаблон файлын жүктөй</a> аласыз."
+
+#: templates/flows/triggers/_form_comment.html:26
+msgid "Posts"
+msgstr "Жазуулар"
+
+#: templates/flows/triggers/_form_comment.html:28
+msgid "Any post"
+msgstr "Каалаган жазуу"
+
+#: templates/flows/triggers/_form_comment.html:29
+#| msgid "On these connections"
+msgid "Only these posts"
+msgstr "Жалгыз ушул жазуулар"
+
+#: templates/flows/triggers/_form_comment.html:32
+msgid "One post id per line"
+msgstr "Ар бир сапта бир жазуу ID'си"
+
+#: templates/flows/triggers/_form_comment.html:39
+#, python-format
+#| msgid "Choose a label…"
+msgid "Choose from %(label)s"
+msgstr "%(label)s'дан тандоо"
+
+#: templates/flows/triggers/_form_comment.html:45
+#| msgid "On these connections"
+msgid "Only when the comment contains"
+msgstr "Комментарий камтыганда гана"
+
+#: templates/flows/triggers/_form_comment.html:47
+msgid "One word or phrase per line. Blank matches every comment."
+msgstr ""
+"Ар бир сапта бир сөз же сүйлөм. Бош болсо — бардык комментарийге дал келет."
+
+#: templates/flows/triggers/_form_comment.html:49
+msgid "Never when it contains"
+msgstr "Эч качан, эгер камтыса"
+
+#: templates/flows/triggers/_form_comment.html:54
+msgid "Ignore replies to other comments"
+msgstr "Башка комментарийлерге жоопторду этибарга албоо"
+
+#: templates/flows/triggers/_form_comment.html:58
+msgid "Only reply once per person per post"
+msgstr "Ар бир адамга, ар бир жазууга бир гана жолу жооп берүү"
+
+#: templates/flows/triggers/_form_comment.html:63
+msgid "Like the comment"
+msgstr "Комментарийди жактыруу"
+
+#: templates/flows/triggers/_form_comment.html:75
+#| msgid "Quick replies"
+msgid "Public reply"
+msgstr "Ачык жооп"
+
+#: templates/flows/triggers/_form_comment.html:78
+msgid "Always this text"
+msgstr "Ар дайым ушул текст"
+
+#: templates/flows/triggers/_form_comment.html:79
+msgid "One of these, at random"
+msgstr "Ушулардын бирин, кокустан"
+
+#: templates/flows/triggers/_form_comment.html:82
+msgid "One reply per line"
+msgstr "Ар бир сапта бир жооп"
+
+#: templates/flows/triggers/_form_comment.html:84
+msgid ""
+"The public reply goes out first; the flow's first message follows as a "
+"private reply, once per comment and within seven days of it."
+msgstr ""
+"Алгач ачык жооп жөнөтүлөт; сценарийдин биринчи билдирүүсү жеке билдирүү "
+"катары андан кийин келет — ар бир комментарийге бир жолу, андан кийинки жети"
+" күн ичинде."
+
+#: templates/flows/triggers/_form_keyword.html:15
+msgid "Exact"
+msgstr "Так эле"
+
+#: templates/flows/triggers/_form_keyword.html:16
+#| msgid "contains"
+msgid "Contains"
+msgstr "Камтыйт"
+
+#: templates/flows/triggers/_form_keyword.html:17
+#| msgid "as a whole word"
+msgid "Whole word"
+msgstr "Бүтүн сөз катары"
+
+#: templates/flows/triggers/_form_keyword.html:42
+#| msgid "Remove rule"
+msgid "Remove keyword"
+msgstr "Ачкыч сөздү өчүрүү"
+
+#: templates/flows/triggers/_form_keyword.html:46
+#| msgid "Keyword"
+msgid "Add keyword"
+msgstr "Ачкыч сөз кошуу"
+
+#: templates/flows/triggers/_form_keyword.html:48
+msgid ""
+"Matching ignores case and surrounding spaces. “Contains” matches inside a "
+"word, “whole word” does not."
+msgstr ""
+"Дал келүү регистрди жана четиндеги боштуктарды эске албайт. «Камтыйт» сөздүн"
+" ичинде дал келет, «так эле сөз катары» дал келбейт."
+
+#: templates/flows/triggers/_form_ref_url.html:10
+#| msgid "Preferences"
+msgid "Reference"
+msgstr "Шилтеме"
+
+#: templates/flows/triggers/_form_ref_url.html:15
+#| msgid ""
+#| "Lowercase letters, digits and underscores. Meta shows this name in its "
+#| "review queue."
+msgid ""
+"Letters, digits, hyphens and underscores. It appears in the link and inside "
+"the QR code."
+msgstr ""
+"Тамгалар, сандар, дефистер жана астынкы сызыктар. Шилтемеде жана QR-коддо "
+"көрүнөт."
+
+#: templates/flows/triggers/_form_ref_url.html:19
+#| msgid "Username"
+msgid "Public username"
+msgstr "Ачык колдонуучу аты"
+
+#: templates/flows/triggers/_form_ref_url.html:19
+#: templates/organizations/settings.html:38
+#: templates/workspaces/settings.html:40 templates/workspaces/settings.html:45
+msgid "optional"
+msgstr "милдеттүү эмес"
+
+#: templates/flows/triggers/_form_ref_url.html:24
+msgid ""
+"Needed to build the link on channels that have not reported their username. "
+"Messenger does not need one."
+msgstr ""
+"Колдонуучу атын билдирбеген каналдарда шилтеме куруу үчүн керек. "
+"Messenger'ге кереги жок."
+
+#: templates/flows/triggers/_form_rule.html:28
+#| msgid "Add tag"
+msgid "Any tag"
+msgstr "Каалаган тег"
+
+#: templates/flows/triggers/_form_rule.html:34
+msgid ""
+"Fires for the tag that changed. Adding a tag a contact already has changes "
+"nothing and fires nothing."
+msgstr ""
+"Өзгөргөн тег үчүн иштейт. Контактта мурунтан бар тегди кошуу эч нерсени "
+"өзгөртпөйт жана эч нерсени иштетпейт."
+
+#: templates/flows/triggers/_form_rule.html:39
+#| msgid "Fields"
+msgid "Field"
+msgstr "Талаа"
+
+#: templates/flows/triggers/_form_rule.html:41
+#| msgid "New field"
+msgid "Any field"
+msgstr "Каалаган талаа"
+
+#: templates/flows/triggers/_form_rule.html:47
+msgid "Use the conditions below to match the field's new value."
+msgstr ""
+"Талаанын жаңы маанисине дал келтирүү үчүн төмөнкү шарттарды колдонуңуз."
+
+#: templates/flows/triggers/_form_rule.html:51
+#| msgid "And the contact matches"
+msgid "Only when the contact matches"
+msgstr "Контакт дал келгенде гана"
+
+#: templates/flows/triggers/_form_rule.html:56
+msgid ""
+"Checked after the change, so a rule can ask what the contact looks like now."
+" Leave empty to fire for everyone. Each contact can start this flow at most "
+"once a minute."
+msgstr ""
+"Өзгөргөндөн кийин текшерилет, ошондуктан эреже контакт азыр кандай экенин "
+"сурай алат. Баарына иштеши үчүн бош калтырыңыз. Ар бир контакт бул "
+"сценарийди мүнөтүнө бир жолудан ашык иштете албайт."
 
 #: templates/inbox/_composer.html:33
 msgid "Reply"
@@ -5372,10 +7018,6 @@ msgstr "так дал келет"
 #: templates/inbox/_rule_form.html:69
 msgid "as a whole word"
 msgstr "бүтүн сөз катары"
-
-#: templates/inbox/_rule_form.html:72 templates/inbox/_rule_form.html:84
-msgid "Keyword"
-msgstr "Ачкыч сөз"
 
 #: templates/inbox/_rule_form.html:75 templates/inbox/_rule_form.html:87
 msgid "Match mode"
@@ -5671,10 +7313,6 @@ msgstr "Метка"
 msgid "Choose a label…"
 msgstr "Метканы тандаңыз…"
 
-#: templates/inbox/list.html:140
-msgid "Add"
-msgstr "Кошуу"
-
 #: templates/inbox/list.html:167
 msgid "Pick a conversation to read it."
 msgstr "Окуу үчүн маекти тандаңыз."
@@ -5805,10 +7443,6 @@ msgstr "Азырынча эч бир мейкиндикте мүчөлөрдү �
 #: templates/members/list.html:64
 msgid "Send invitation"
 msgstr "Чакырууну жөнөтүү"
-
-#: templates/members/list.html:70
-msgid "Members"
-msgstr "Мүчөлөр"
 
 #: templates/members/list.html:85
 msgid "Manage access"
@@ -5998,11 +7632,6 @@ msgstr "Өз убакыт алкагын коё элек ар бир мейки�
 msgid "Logo URL"
 msgstr "Логотип URL"
 
-#: templates/organizations/settings.html:38
-#: templates/workspaces/settings.html:40 templates/workspaces/settings.html:45
-msgid "optional"
-msgstr "милдеттүү эмес"
-
 #: templates/organizations/settings.html:57
 msgid "Only organization admins can change these."
 msgstr "Муну уюм администраторлору гана өзгөртө алат."
@@ -6028,10 +7657,6 @@ msgstr "Ал кандай аталат?"
 msgid "Create"
 msgstr "Түзүү"
 
-#: templates/organizations/workspaces.html:53
-msgid "Archived"
-msgstr "Архивделген"
-
 #: templates/organizations/workspaces.html:56
 msgid "You are a member"
 msgstr "Сиз мүчөсүз"
@@ -6039,14 +7664,6 @@ msgstr "Сиз мүчөсүз"
 #: templates/organizations/workspaces.html:56
 msgid "You do not have access"
 msgstr "Сизде мүмкүнчүлүк жок"
-
-#: templates/organizations/workspaces.html:73
-msgid "Restore"
-msgstr "Калыбына келтирүү"
-
-#: templates/organizations/workspaces.html:73
-msgid "Archive"
-msgstr "Архивдөө"
 
 #: templates/organizations/workspaces.html:82
 msgid "No workspaces yet"
@@ -6126,10 +7743,6 @@ msgstr "Бөлүм"
 msgid "%(workspace_name)s. Your role here: %(role)s."
 msgstr "%(workspace_name)s. Бул жердеги ролуңуз: %(role)s."
 
-#: templates/workspaces/dashboard.html:31
-msgid "New flow"
-msgstr "Жаңы сценарий"
-
 #: templates/workspaces/dashboard.html:46
 msgid "Finish setting up"
 msgstr "Тууралоону бүтүрүңүз"
@@ -6144,10 +7757,6 @@ msgstr[0] "%(counter)s кадам калды. Болжол менен беш м�
 #, python-format
 msgid "%(done)s of %(total)s"
 msgstr "%(total)s ичинен %(done)s"
-
-#: templates/workspaces/dashboard.html:100
-msgid "Start from a template"
-msgstr "Шаблондон баштаңыз"
 
 #: templates/workspaces/dashboard.html:102
 #, python-format

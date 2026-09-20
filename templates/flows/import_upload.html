@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% comment %}
 Step one of the import wizard: choose a file.
 
@@ -8,14 +9,13 @@ FlowImport row — see apps/flows/views_portability.py. Every error below is a
 message from that validation, rendered escaped like all imported text.
 {% endcomment %}
 
-{% block title %}Import a flow · BrightBean Chat{% endblock %}
+{% block title %}{% translate "Import a flow" %} · BrightBean Chat{% endblock %}
 
 {% block page_header %}
 <div class="mb-6">
-    <h1 class="page-title">Import a flow</h1>
+    <h1 class="page-title">{% translate "Import a flow" %}</h1>
     <p class="text-sm" style="color: var(--text-secondary);">
-        Upload a flow template. You will see exactly what it needs, and what it will call out to,
-        before anything is created.
+        {% translate "Upload a flow template. You will see exactly what it needs, and what it will call out to, before anything is created." %}
     </p>
 </div>
 {% endblock %}
@@ -25,7 +25,7 @@ message from that validation, rendered escaped like all imported text.
     {% if errors %}
     <div class="rounded-xl border p-4 mb-4"
          style="border-color: var(--danger-500); background: rgba(var(--danger-500-rgb), 0.08);">
-        <p class="text-sm font-medium" style="color: var(--text-primary);">That file was not imported</p>
+        <p class="text-sm font-medium" style="color: var(--text-primary);">{% translate "That file was not imported" %}</p>
         <ul class="mt-2 space-y-1">
             {% for error in errors %}
             <li class="text-sm" style="color: var(--text-secondary);">{{ error }}</li>
@@ -39,28 +39,28 @@ message from that validation, rendered escaped like all imported text.
           class="rounded-xl border p-6" style="border-color: var(--border); background: var(--surface-1);">
         {% csrf_token %}
         <label for="flow-template-file" class="block text-sm font-medium mb-2" style="color: var(--text-primary);">
-            Flow template file
+            {% translate "Flow template file" %}
         </label>
         <input id="flow-template-file" type="file" name="file" accept=".json,application/json" required
                class="form-input-styled w-full">
         <p class="text-xs mt-2" style="color: var(--text-tertiary);">
-            JSON, up to {{ max_bytes|filesizeformat }}. A template exported from any BrightBean Chat installation.
+            {% blocktranslate with size=max_bytes|filesizeformat %}JSON, up to {{ size }}. A template exported from any BrightBean Chat installation.{% endblocktranslate %}
         </p>
+        {% url 'flows:template_gallery' workspace_id=request.workspace.id as template_gallery_url %}
         <p class="text-xs mt-1" style="color: var(--text-tertiary);">
-            Or <a href="{% url 'flows:template_gallery' workspace_id=request.workspace.id %}"
-                  class="btn-link">start from one of the built-in templates</a>.
+            {% blocktranslate %}Or <a href="{{ template_gallery_url }}" class="btn-link">start from one of the built-in templates</a>.{% endblocktranslate %}
         </p>
 
         <div class="mt-4 rounded-lg p-3" style="background: var(--surface-2);">
             <p class="text-xs" style="color: var(--text-secondary);">
-                Imported flows arrive as <strong>unpublished drafts</strong> with their triggers switched off.
-                Nothing runs until you publish it yourself.
+                {% blocktranslate %}Imported flows arrive as <strong>unpublished drafts</strong> with their triggers switched off.
+                Nothing runs until you publish it yourself.{% endblocktranslate %}
             </p>
         </div>
 
         <div class="flex items-center gap-2 mt-5">
-            <button type="submit" class="btn-brand btn-inline">Continue</button>
-            <a href="{{ list_url }}" class="btn-outline btn-inline">Cancel</a>
+            <button type="submit" class="btn-brand btn-inline">{% translate "Continue" %}</button>
+            <a href="{{ list_url }}" class="btn-outline btn-inline">{% translate "Cancel" %}</a>
         </div>
     </form>
 </div>

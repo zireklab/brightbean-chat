@@ -109,6 +109,24 @@ _I18N_TEMPLATES = [
     "contacts/tag_list.html",
     "contacts/import_detail.html",
     "contacts/import_list.html",
+    # Phase 2d (flows)
+    "flows/_import_requirement.html",
+    "flows/_list_rows.html",
+    "flows/_template_card.html",
+    "flows/_template_tile.html",
+    "flows/_trigger_form.html",
+    "flows/_trigger_ref_links.html",
+    "flows/_trigger_row.html",
+    "flows/_triggers_panel.html",
+    "flows/edit.html",
+    "flows/import_review.html",
+    "flows/import_upload.html",
+    "flows/list.html",
+    "flows/template_gallery.html",
+    "flows/triggers/_form_comment.html",
+    "flows/triggers/_form_keyword.html",
+    "flows/triggers/_form_ref_url.html",
+    "flows/triggers/_form_rule.html",
 ]
 
 #: Every Python module a landed phase put gettext/gettext_lazy copy in.
@@ -155,6 +173,19 @@ _I18N_MODULES = [
     "apps/contacts/views.py",
     "apps/contacts/models.py",
     "apps/contacts/imports.py",
+    # Phase 2d (flows)
+    "apps/flows/models.py",
+    "apps/flows/views.py",
+    "apps/flows/views_triggers.py",
+    "apps/flows/views_portability.py",
+    "apps/flows/triggers/services.py",
+    "apps/flows/triggers/forms.py",
+    "apps/flows/triggers/validation.py",
+    "apps/flows/triggers/registry.py",
+    "apps/flows/triggers/phrasing.py",
+    "apps/flows/portability/cards.py",
+    "apps/flows/portability/imports.py",
+    "apps/flows/portability/envelope.py",
 ]
 
 

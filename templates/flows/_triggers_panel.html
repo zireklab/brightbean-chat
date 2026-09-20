@@ -1,4 +1,4 @@
-{% comment %}
+{% load i18n %}{% comment %}
 The Triggers drawer's body (issue #11, SPEC §10).
 
 Rendered inside edit.html on first open and re-fetched whole on every
@@ -24,28 +24,27 @@ inside it would be swapped away mid-request.
      class="p-4">
 
     <div class="flex items-center justify-between gap-2 mb-1">
-        <h2 class="text-sm font-semibold" style="color: var(--text-primary);">Triggers</h2>
+        <h2 class="text-sm font-semibold" style="color: var(--text-primary);">{% translate "Triggers" %}</h2>
         <button type="button" class="btn-link text-xs"
-                @click="triggersOpen = false">Close</button>
+                @click="triggersOpen = false">{% translate "Close" %}</button>
     </div>
     <p class="text-xs mb-4" style="color: var(--text-tertiary);">
-        What starts this flow. Lower numbers run first and the first match wins,
-        across every flow in this workspace, not just this one.
+        {% translate "What starts this flow. Lower numbers run first and the first match wins, across every flow in this workspace, not just this one." %}
     </p>
 
     {% for label in duplicate_stage_labels %}
     <div class="alert-error text-xs mb-3">
-        More than one “{{ label }}” trigger is enabled on this flow. Only the one with the
-        lowest number will ever run.
+        {% blocktranslate %}More than one “{{ label }}” trigger is enabled on this flow. Only the one with the
+        lowest number will ever run.{% endblocktranslate %}
     </div>
     {% endfor %}
 
     {% if not triggers %}
     <div class="rounded-xl border p-6 text-center mb-4"
          style="border-color: var(--border); background: var(--surface-1);">
-        <p class="text-sm font-medium" style="color: var(--text-primary);">No triggers yet</p>
+        <p class="text-sm font-medium" style="color: var(--text-primary);">{% translate "No triggers yet" %}</p>
         <p class="text-xs mt-1" style="color: var(--text-secondary);">
-            A published flow with no trigger never runs. Add one below.
+            {% translate "A published flow with no trigger never runs. Add one below." %}
         </p>
     </div>
     {% else %}
@@ -62,7 +61,7 @@ inside it would be swapped away mid-request.
           hx-get="{% url 'flows:trigger_form' workspace_id=request.workspace.id flow_id=flow.id %}"
           hx-target="#trigger-form"
           hx-swap="innerHTML">
-        <select name="type" class="form-input-styled" aria-label="Trigger type" style="flex: 1 1 auto;">
+        <select name="type" class="form-input-styled" aria-label="{% translate 'Trigger type' %}" style="flex: 1 1 auto;">
             {% for spec in trigger_types %}
             {% comment %}
               A type that cannot fire says so in the option itself, not only
@@ -70,10 +69,10 @@ inside it would be swapped away mid-request.
               reason is on the form; this is the part that has to survive
               inside a <select>.
             {% endcomment %}
-            <option value="{{ spec.type }}">{{ spec.label }}{% if spec.unavailable %} (not available yet){% endif %}</option>
+            <option value="{{ spec.type }}">{{ spec.label }}{% if spec.unavailable %} {% translate "(not available yet)" %}{% endif %}</option>
             {% endfor %}
         </select>
-        <button type="submit" class="btn-brand btn-inline">Add</button>
+        <button type="submit" class="btn-brand btn-inline">{% translate "Add" %}</button>
     </form>
     {% endif %}
 

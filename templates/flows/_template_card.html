@@ -1,4 +1,4 @@
-{% comment %}
+{% load i18n %}{% comment %}
 One template, as both the gallery and the flows empty state show it. Everything
 here is text from the validated document or from TEMPLATE_COPY — no |safe, no
 mark_safe, matching the rule the review page states: a template's message bodies
@@ -47,7 +47,7 @@ inside Alpine's evaluator on every card, on every render of the core Flows page.
         <span class="rounded-full px-2 py-0.5 text-xs font-medium inline-flex items-center gap-1"
               style="{% if platform.connected %}background: var(--surface-2); color: var(--text-secondary);{% else %}background: rgba(var(--warning-500-rgb), 0.12); color: var(--warning-700);{% endif %}">
             {% include "partials/_platform_icon.html" with platform=platform.key size="sm" %}
-            {% if not platform.connected %}Needs {% endif %}{{ platform.label }}
+            {% if not platform.connected %}{% blocktranslate with label=platform.label %}Needs {{ label }}{% endblocktranslate %}{% else %}{{ platform.label }}{% endif %}
         </span>
         {% endfor %}
         {% if entry.card.calls_out %}
@@ -58,8 +58,8 @@ inside Alpine's evaluator on every card, on every render of the core Flows page.
         {% endcomment %}
         <span class="rounded-full px-2 py-0.5 text-xs font-medium inline-flex items-center gap-1"
               style="background: var(--surface-2); color: var(--text-secondary);"
-              title="This template contains a step that sends a request to another service.">
-            Calls out to the internet
+              title="{% translate 'This template contains a step that sends a request to another service.' %}">
+            {% translate "Calls out to the internet" %}
         </span>
         {% endif %}
     </div>
@@ -73,23 +73,23 @@ inside Alpine's evaluator on every card, on every render of the core Flows page.
           nothing after it reads as a missing value rather than an answer.
         {% endcomment %}
         <div class="flex gap-1">
-            <dt class="font-medium">Starts on:</dt>
-            <dd>{% if entry.triggers %}{{ entry.triggers|join:", " }}{% else %}Another flow{% endif %}</dd>
+            <dt class="font-medium">{% translate "Starts on:" %}</dt>
+            <dd>{% if entry.triggers %}{{ entry.triggers|join:", " }}{% else %}{% translate "Another flow" %}{% endif %}</dd>
         </div>
         {% if entry.needs %}
         <div class="flex gap-1">
-            <dt class="font-medium">Also needs:</dt>
+            <dt class="font-medium">{% translate "Also needs:" %}</dt>
             <dd>{{ entry.needs|join:", " }}</dd>
         </div>
         {% endif %}
         <div class="flex gap-1">
-            <dt class="font-medium">Size:</dt>
-            <dd>{{ entry.card.step_count }} step{{ entry.card.step_count|pluralize }}</dd>
+            <dt class="font-medium">{% translate "Size:" %}</dt>
+            <dd>{% blocktranslate count count=entry.card.step_count %}{{ count }} step{% plural %}{{ count }} steps{% endblocktranslate %}</dd>
         </div>
     </dl>
 
     <form method="post" action="{{ entry.start_url }}" class="mt-auto pt-1">
         {% csrf_token %}
-        <button type="submit" class="btn-brand btn-inline w-full">Use this template</button>
+        <button type="submit" class="btn-brand btn-inline w-full">{% translate "Use this template" %}</button>
     </form>
 </article>

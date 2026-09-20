@@ -28,6 +28,7 @@ from typing import Any
 
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from apps.common.scoping import WorkspaceScopedModel
 from apps.contacts.errors import WorkspaceMismatchError
@@ -56,9 +57,9 @@ __all__ = [
 class FlowStatus(models.TextChoices):
     """SPEC §5. ``active`` is set by publishing, never by hand."""
 
-    DRAFT = "draft", "Draft"
-    ACTIVE = "active", "Active"
-    ARCHIVED = "archived", "Archived"
+    DRAFT = "draft", _("Draft")
+    ACTIVE = "active", _("Active")
+    ARCHIVED = "archived", _("Archived")
 
 
 class Flow(WorkspaceScopedModel):
