@@ -10,6 +10,7 @@
  * the publish response and the detail response both carry, so a reload and a
  * fresh publish arrive at the same label by the same route.
  */
+import i18n from "./i18n";
 import { UNSAVED } from "./persistence/autosave";
 import type { SaveSlice } from "./store/store";
 
@@ -27,14 +28,22 @@ export interface PublishView {
   publishHint: string | null;
 }
 
-const SAVE_COPY: Record<string, string> = {
-  clean: "No changes",
-  dirty: "Unsaved changes",
-  saving: "Saving…",
-  saved: "Saved",
-  rejected: "Not saved",
-  error: "Save failed",
-};
+// A function, not a table built once at module load: the labels have to read
+// in whatever language is active *now*, the same reason Django's own
+// module-level copy in this rollout uses gettext_lazy rather than gettext.
+// i18n.t() called at import time would freeze every label in whatever
+// language was active before main.tsx's setBuilderLocale() ever runs.
+function saveCopy(state: string): string {
+  const known: Record<string, string> = {
+    clean: i18n.t("publishState.save.clean"),
+    dirty: i18n.t("publishState.save.dirty"),
+    saving: i18n.t("publishState.save.saving"),
+    saved: i18n.t("publishState.save.saved"),
+    rejected: i18n.t("publishState.save.rejected"),
+    error: i18n.t("publishState.save.error"),
+  };
+  return known[state] ?? state;
+}
 
 // Borrowed from the autosave rather than restated: "the server does not have
 // what you are looking at" is one fact, and two copies of it would disagree the
@@ -42,7 +51,7 @@ const SAVE_COPY: Record<string, string> = {
 const PENDING: ReadonlySet<string> = new Set(UNSAVED);
 
 export function publishView(save: SaveSlice, flowStatus: string | undefined): PublishView {
-  const saveCopy = SAVE_COPY[save.state] ?? save.state;
+  const copy = saveCopy(save.state);
   const pending = PENDING.has(save.state);
   const live = save.publishedVersion;
   const liveNow = !pending && save.version?.published === true;
@@ -51,26 +60,26 @@ export function publishView(save: SaveSlice, flowStatus: string | undefined): Pu
     // Archiving does not unpublish, and publishing un-archives (services.publish
     // sets status back to ACTIVE), so the button stays live and says so.
     return {
-      label: "Archived",
+      label: i18n.t("publishState.archived"),
       tone: "warning",
-      liveChip: live ? `v${live.version} live` : null,
+      liveChip: live ? i18n.t("publishState.liveChip", { version: live.version }) : null,
       publishDisabled: false,
-      publishLabel: "Set live",
+      publishLabel: i18n.t("publishState.setLive"),
       publishHint: null,
     };
   }
 
   if (liveNow) {
     return {
-      label: `Live · v${save.version?.version}`,
+      label: i18n.t("publishState.liveLabel", { version: save.version?.version }),
       tone: "success",
       liveChip: null,
       publishDisabled: true,
       // Still "Set live", not "Live": the status beside it already says
       // `Live · v2`, and a button repeating the word says nothing about what
       // pressing it would do. Disabled plus the hint carries that.
-      publishLabel: "Set live",
-      publishHint: "This version is already live. Make a change to set it live again.",
+      publishLabel: i18n.t("publishState.setLive"),
+      publishHint: i18n.t("publishState.alreadyLiveHint"),
     };
   }
 
@@ -78,11 +87,16 @@ export function publishView(save: SaveSlice, flowStatus: string | undefined): Pu
     // No version number while an edit is pending over a published one: the next
     // save opens version n+1, so printing n here would name the *live* version
     // as though it were the draft in front of you.
-    label: pending && live ? saveCopy : save.version ? `${saveCopy} · Draft v${save.version.version}` : saveCopy,
+    label:
+      pending && live
+        ? copy
+        : save.version
+          ? i18n.t("publishState.draftLabel", { save: copy, version: save.version.version })
+          : copy,
     tone: "plain",
-    liveChip: live ? `v${live.version} live` : null,
+    liveChip: live ? i18n.t("publishState.liveChip", { version: live.version }) : null,
     publishDisabled: false,
-    publishLabel: "Set live",
+    publishLabel: i18n.t("publishState.setLive"),
     publishHint: null,
   };
 }

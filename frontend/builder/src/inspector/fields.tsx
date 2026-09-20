@@ -7,6 +7,7 @@
  */
 import type { ReactNode } from "react";
 
+import i18n from "../i18n";
 import type { JsonSchema } from "../schema/types";
 import type { ConfigPath } from "../store/paths";
 import { formatPath } from "../store/paths";
@@ -64,10 +65,10 @@ export function FieldShell({
         <label className="fb-field-label" htmlFor={fieldId(path)}>
           {labelFor(propertyName, schema.title)}
         </label>
-        {required ? null : <span className="fb-empty">optional</span>}
+        {required ? null : <span className="fb-empty">{i18n.t("inspector.optional")}</span>}
         {onClear && !required && !readOnly ? (
           <button type="button" className="btn-link ml-auto text-xs" onClick={onClear}>
-            Clear
+            {i18n.t("fields.clear")}
           </button>
         ) : null}
       </div>
@@ -165,7 +166,9 @@ export function SelectField(props: FieldProps) {
         disabled={readOnly}
         onChange={(event) => set(path, event.target.value, `enum:${path.join(".")}`)}
       >
-        {required && typeof value === "string" && options.includes(value) ? null : <option value="">Choose…</option>}
+        {required && typeof value === "string" && options.includes(value) ? null : (
+          <option value="">{i18n.t("inspector.choose")}</option>
+        )}
         {/* The label, not the wire value. These rendered verbatim, so a select
             offered `system_field` and `has_no_value` — see ENUM_LABELS. */}
         {options.map((option) => (
@@ -194,7 +197,7 @@ export function ScalarField(props: FieldProps) {
         <select
           id={fieldId(path)}
           className="bb-select w-28"
-          aria-label="Value kind"
+          aria-label={i18n.t("fields.valueKind")}
           value={kind}
           disabled={readOnly}
           onChange={(event) => {
@@ -202,9 +205,9 @@ export function ScalarField(props: FieldProps) {
             set(path, next === "number" ? 0 : next === "boolean" ? true : String(value ?? ""), `scalar:${path.join(".")}`);
           }}
         >
-          <option value="text">Text</option>
-          <option value="number">Number</option>
-          <option value="boolean">Yes / no</option>
+          <option value="text">{i18n.t("fields.kindText")}</option>
+          <option value="number">{i18n.t("fields.kindNumber")}</option>
+          <option value="boolean">{i18n.t("fields.kindBoolean")}</option>
         </select>
         {kind === "boolean" ? (
           <select
@@ -213,8 +216,8 @@ export function ScalarField(props: FieldProps) {
             disabled={readOnly}
             onChange={(event) => set(path, event.target.value === "true", `scalar:${path.join(".")}`)}
           >
-            <option value="true">Yes</option>
-            <option value="false">No</option>
+            <option value="true">{i18n.t("fields.yes")}</option>
+            <option value="false">{i18n.t("fields.no")}</option>
           </select>
         ) : (
           <input
@@ -271,7 +274,7 @@ export function JsonField(props: FieldProps) {
             set(path, JSON.parse(text), `json:${path.join(".")}`);
             event.target.setCustomValidity("");
           } catch (error) {
-            event.target.setCustomValidity(error instanceof Error ? error.message : "Invalid JSON");
+            event.target.setCustomValidity(error instanceof Error ? error.message : i18n.t("fields.invalidJson"));
             event.target.reportValidity();
           }
         }}

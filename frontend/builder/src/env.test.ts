@@ -32,7 +32,18 @@ describe("reading the mount div", () => {
       schemaUrl: "/w/ws/api/flows/schema/",
       mediaPickerUrl: "/w/ws/media/picker/",
       previewUrl: "/w/ws/settings/channels/telegram/preview/flow-1/",
+      locale: "en",
     });
+  });
+
+  it("reads the locale the shell resolved", () => {
+    expect(readEnv(mount({ ...COMPLETE, locale: "ru" })).locale).toBe("ru");
+  });
+
+  it("falls back to English rather than throwing when data-locale is missing", () => {
+    // An older cached page render should not take the whole builder down for
+    // want of one attribute — see the doc comment on BuilderEnv.locale.
+    expect(readEnv(mount(COMPLETE)).locale).toBe("en");
   });
 
   it('treats data-can-edit="false" as false', () => {

@@ -16,6 +16,7 @@
  *   the step's own editor.
  */
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 import { configSchema } from "../schema/artifact";
 import { FieldProvider, type FieldContextValue } from "../inspector/FieldContext";
@@ -27,6 +28,7 @@ import { TriggerSection } from "./TriggerSection";
 import { titleOf } from "./title";
 
 export function StepEditor() {
+  const { t } = useTranslation();
   const store = useBuilderStore();
   const selected = useBuilder((state) => state.selection.nodes);
   const stepCount = useBuilder((state) => state.nodeOrder.length);
@@ -63,16 +65,16 @@ export function StepEditor() {
 
   if (selected.length > 1) {
     return (
-      <aside className="fb-editor" aria-label="Step settings">
+      <aside className="fb-editor" aria-label={t("stepEditor.settings")}>
         <div className="fb-editor-body">
-          <p className="fb-empty">{selected.length} steps selected.</p>
+          <p className="fb-empty">{t("stepEditor.stepsSelected", { count: selected.length })}</p>
           {canEdit ? (
             <button
               type="button"
               className="btn-pill-secondary btn-pill-sm mt-3"
               onClick={() => store.getState().deleteNodes(selected)}
             >
-              Delete these {selected.length} steps
+              {t("stepEditor.deleteSteps", { count: selected.length })}
             </button>
           ) : null}
         </div>
@@ -81,23 +83,20 @@ export function StepEditor() {
   }
 
   return (
-    <aside className="fb-editor" aria-label="Step settings">
+    <aside className="fb-editor" aria-label={t("stepEditor.settings")}>
       <div className="fb-editor-body">
         <TriggerSection />
 
         {triggerCount === 0 && stepCount === 0 ? (
           <section className="fb-editor-start">
-            <p className="fb-editor-start-title">Two things make a flow</p>
-            <p className="fb-editor-start-body">
-              Something that starts it, and something it does. Choose what starts it above, then add
-              your first step on the canvas.
-            </p>
+            <p className="fb-editor-start-title">{t("stepEditor.startTitle")}</p>
+            <p className="fb-editor-start-body">{t("stepEditor.startBody")}</p>
           </section>
         ) : null}
 
         {stepCount > 0 ? (
           <section className="fb-editor-section">
-            <p className="fb-section-label">Steps</p>
+            <p className="fb-section-label">{t("stepEditor.steps")}</p>
             <StepList />
           </section>
         ) : null}
@@ -121,7 +120,7 @@ export function StepEditor() {
                 being worked on, and it was being cut twice at two widths. */}
             <header className="fb-edit-head">
               <span className="fb-edit-caption">
-                {index >= 0 ? `Editing step ${index + 1}` : "Editing this step"}
+                {index >= 0 ? t("stepEditor.editingStep", { count: index + 1 }) : t("stepEditor.editingThisStep")}
               </span>
               <span className="fb-edit-title">{titleOf(nodeType, config)}</span>
             </header>
@@ -150,7 +149,7 @@ export function StepEditor() {
                   className="fb-step-delete"
                   onClick={() => store.getState().deleteNodes([nodeId])}
                 >
-                  Delete this step
+                  {t("stepEditor.deleteThisStep")}
                 </button>
               </>
             ) : null}
@@ -159,12 +158,9 @@ export function StepEditor() {
           // The trigger card on the canvas is selected. Its own panel is at the
           // top of this column and is highlighted; saying so beats leaving the
           // column looking like nothing was clicked.
-          <p className="fb-empty mt-3">
-            What starts this flow is at the top of this column. Open it to change the words it
-            watches for, or which account it watches.
-          </p>
+          <p className="fb-empty mt-3">{t("stepEditor.triggerHint")}</p>
         ) : stepCount > 0 ? (
-          <p className="fb-empty mt-3">Pick a step above, or on the canvas, to change what it says.</p>
+          <p className="fb-empty mt-3">{t("stepEditor.pickAStep")}</p>
         ) : null}
       </div>
     </aside>

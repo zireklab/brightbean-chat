@@ -16,14 +16,17 @@
  * The store's trigger list is refreshed on `triggersChanged` (see App.tsx), so
  * closing the drawer updates this without a reload.
  */
+import { useTranslation } from "react-i18next";
+
 import { useBuilder } from "../store/context";
-import { TRIGGER_PHRASE } from "../schema/plain";
+import { triggerPhrase } from "../schema/plain";
 
 function openDrawer() {
   window.dispatchEvent(new CustomEvent("toggle-triggers", { bubbles: true }));
 }
 
 export function TriggerSection() {
+  const { t } = useTranslation();
   const triggers = useBuilder((state) => state.triggers);
   const canEdit = useBuilder((state) => state.env.canEdit);
   const selected = useBuilder((state) => state.triggerSelected);
@@ -33,14 +36,14 @@ export function TriggerSection() {
     // Highlighted when the canvas card is selected, the same way a step's row
     // highlights — so clicking either one shows you which is which.
     <section className={selected ? "fb-trigger-section is-selected" : "fb-trigger-section"}>
-      <p className="fb-step-eyebrow">{TRIGGER_PHRASE}</p>
+      <p className="fb-step-eyebrow">{triggerPhrase()}</p>
 
       {triggers.length === 0 ? (
         <>
-          <p className="fb-trigger-empty">Nothing starts this flow yet, so it will not run.</p>
+          <p className="fb-trigger-empty">{t("triggerSection.emptyLong")}</p>
           {canEdit ? (
             <button type="button" className="btn-pill-primary btn-pill-sm mt-2.5" onClick={openDrawer}>
-              Choose what starts it
+              {t("triggerSection.chooseWhatStartsIt")}
             </button>
           ) : null}
         </>
@@ -50,19 +53,15 @@ export function TriggerSection() {
             {triggers.map((trigger) => (
               <li key={trigger.id} className={trigger.enabled ? "fb-trigger-row" : "fb-trigger-row is-off"}>
                 <span className="fb-trigger-name">{trigger.type_label}</span>
-                {!trigger.enabled ? <span className="fb-trigger-off">Switched off</span> : null}
+                {!trigger.enabled ? <span className="fb-trigger-off">{t("triggerSection.switchedOff")}</span> : null}
                 <span className="fb-trigger-detail block">{trigger.summary}</span>
               </li>
             ))}
           </ul>
-          {enabled.length === 0 ? (
-            <p className="fb-trigger-empty mt-2">
-              Every one is switched off, so nothing reaches this flow yet.
-            </p>
-          ) : null}
+          {enabled.length === 0 ? <p className="fb-trigger-empty mt-2">{t("triggerSection.allSwitchedOff")}</p> : null}
           {canEdit ? (
             <button type="button" className="btn-pill-secondary btn-pill-sm mt-2.5" onClick={openDrawer}>
-              Change what starts it
+              {t("triggerSection.changeWhatStartsIt")}
             </button>
           ) : null}
         </>

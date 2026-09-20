@@ -33,19 +33,37 @@
  * rather than a blank line on a card.
  */
 
+import i18n from "../i18n";
 import { FALLBACK_GROUP, groupOf } from "./artifact";
 import type { NodeTypeSpec } from "./types";
 
-/** One phrase per palette group, written to sit above the step's own title. */
+/**
+ * One phrase per palette group, written to sit above the step's own title.
+ *
+ * Getters, not plain string values: a frozen object built at module load
+ * would read in whatever language was active before main.tsx's
+ * setBuilderLocale() ever ran, the same trap publishState.ts's saveCopy()
+ * avoids. A getter re-reads i18n.t() on every access, so `GROUP_PHRASE[key]`
+ * still indexes like a plain `Record<string, string>` — which is what
+ * plain.test.ts exercises — while staying current with the active language.
+ */
 export const GROUP_PHRASE: Record<string, string> = {
-  content: "Then send",
+  get content() {
+    return i18n.t("plain.group.content");
+  },
   // Not "If they reply", which the artboards used: this group holds
   // `condition`, `smart_delay`, `randomizer` and `start_flow`, and only one of
   // them has anything to do with a reply. As a card eyebrow it was merely odd;
   // as the heading over those four in the Add a step menu it was wrong.
-  logic: "Then decide",
-  actions: "Then do",
-  other: "Also",
+  get logic() {
+    return i18n.t("plain.group.logic");
+  },
+  get actions() {
+    return i18n.t("plain.group.actions");
+  },
+  get other() {
+    return i18n.t("plain.group.other");
+  },
 };
 
 /**
@@ -57,9 +75,15 @@ export const GROUP_PHRASE: Record<string, string> = {
  * keeps a node type registered by a later layer readable with no edit here.
  */
 export const TYPE_PHRASE: Record<string, string> = {
-  smart_delay: "Then wait",
-  start_flow: "Then hand over",
-  note: "Note",
+  get smart_delay() {
+    return i18n.t("plain.type.smartDelay");
+  },
+  get start_flow() {
+    return i18n.t("plain.type.startFlow");
+  },
+  get note() {
+    return i18n.t("plain.type.note");
+  },
 };
 
 /** The eyebrow for a node type: what kind of step this is, in plain words. */
@@ -67,7 +91,7 @@ export function plainKind(spec: NodeTypeSpec | undefined, type: string): string 
   // `?? FALLBACK` twice over, deliberately: a group registered in Python with
   // no phrase here reads "Also" rather than rendering an empty eyebrow, which
   // is what plain.test.ts is there to catch before anybody sees it.
-  const fallback = GROUP_PHRASE[FALLBACK_GROUP] ?? "Step";
+  const fallback = GROUP_PHRASE[FALLBACK_GROUP] ?? i18n.t("plain.stepFallback");
   const byType = TYPE_PHRASE[type];
   if (byType) return byType;
   if (!spec) return fallback;
@@ -78,6 +102,9 @@ export function plainKind(spec: NodeTypeSpec | undefined, type: string): string 
  * The trigger card's eyebrow.
  *
  * A trigger is not a node and has no group, but it reads as the first step of
- * the flow and the design gives it the same treatment.
+ * the flow and the design gives it the same treatment. A function, not a
+ * constant, for the same reason GROUP_PHRASE's values are getters.
  */
-export const TRIGGER_PHRASE = "When";
+export function triggerPhrase(): string {
+  return i18n.t("plain.trigger");
+}
