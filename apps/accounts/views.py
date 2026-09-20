@@ -2,6 +2,7 @@
 
 from typing import Any
 
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
@@ -65,3 +66,23 @@ def account_settings(request: RBACRequest) -> HttpResponse:
         request.user.save(update_fields=["name"])
         return redirect(reverse("accounts:settings"))
     return render(request, "accounts/settings.html")
+
+
+@login_required
+def account_preferences(request: RBACRequest) -> HttpResponse:
+    """The display-language picker.
+
+    Replaces config/urls.py's old ``settings_preferences`` stub. Saved to
+    ``user.language``, which is all that is needed: the redirect below is a
+    fresh request, and ``apps.accounts.middleware.LanguagePreferenceMiddleware``
+    reads the field straight off it, so the *next* page already renders in the
+    new language with nothing more to do here.
+    """
+    if request.method == "POST":
+        language = (request.POST.get("language") or "").strip()
+        valid_codes = {code for code, _ in settings.LANGUAGES}
+        if language in valid_codes or language == "":
+            request.user.language = language
+            request.user.save(update_fields=["language"])
+        return redirect(reverse("settings_preferences"))
+    return render(request, "accounts/preferences.html")

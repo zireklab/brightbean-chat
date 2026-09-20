@@ -1,0 +1,464 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-20 00:54+0600\n"
+"PO-Revision-Date: 2026-09-20 12:00+0600\n"
+"Last-Translator: BrightBean Chat\n"
+"Language-Team: ru\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: apps/broadcasts/notifications.py:40 apps/notifications/events.py:305
+#, python-brace-format
+msgid "Broadcast \"{broadcast_name}\" finished"
+msgstr "Рассылка «{broadcast_name}» завершена"
+
+#: apps/broadcasts/notifications.py:41 apps/notifications/events.py:306
+#, python-brace-format
+msgid "{sent} sent, {failed} failed, {skipped} skipped."
+msgstr "Отправлено: {sent}, ошибок: {failed}, пропущено: {skipped}."
+
+#: apps/common/context_processors.py:229
+msgid "Workspace"
+msgstr "Рабочее пространство"
+
+#: apps/common/context_processors.py:234 apps/common/context_processors.py:359
+msgid "General"
+msgstr "Общее"
+
+#: apps/common/context_processors.py:242
+#: templates/partials/_sidebar_channels.html:35
+msgid "Channels"
+msgstr "Каналы"
+
+#: apps/common/context_processors.py:278
+msgid "Library"
+msgstr "Медиатека"
+
+#: apps/common/context_processors.py:298
+msgid "Tags"
+msgstr "Теги"
+
+#: apps/common/context_processors.py:306
+msgid "Labels"
+msgstr "Метки"
+
+#: apps/common/context_processors.py:314
+msgid "Inbox rules"
+msgstr "Правила входящих"
+
+#: apps/common/context_processors.py:326
+msgid "Fields"
+msgstr "Поля"
+
+#: apps/common/context_processors.py:334
+msgid "Email tracking"
+msgstr "Отслеживание писем"
+
+#: apps/common/context_processors.py:346
+msgid "Webhooks"
+msgstr "Вебхуки"
+
+#: apps/common/context_processors.py:355
+msgid "Organisation"
+msgstr "Организация"
+
+#: apps/common/context_processors.py:366
+msgid "Workspaces"
+msgstr "Рабочие пространства"
+
+#: apps/common/context_processors.py:372
+msgid "People & roles"
+msgstr "Люди и роли"
+
+#: apps/common/context_processors.py:376
+msgid "Plan & billing"
+msgstr "Тариф и оплата"
+
+#: apps/common/context_processors.py:384
+msgid "Developers"
+msgstr "Разработчикам"
+
+#: apps/common/context_processors.py:396 templates/accounts/settings.html:14
+#: templates/accounts/settings.html:19
+msgid "Profile"
+msgstr "Профиль"
+
+#: apps/common/context_processors.py:402 templates/accounts/preferences.html:8
+#: templates/accounts/preferences.html:14
+msgid "Preferences"
+msgstr "Настройки"
+
+#: apps/common/context_processors.py:426
+msgid "Home"
+msgstr "Главная"
+
+#: apps/common/context_processors.py:433
+msgid "Inbox"
+msgstr "Входящие"
+
+#: apps/common/context_processors.py:446 apps/common/context_processors.py:517
+msgid "Flows"
+msgstr "Сценарии"
+
+#: apps/common/context_processors.py:456
+msgid "Broadcasts"
+msgstr "Рассылки"
+
+#: apps/common/context_processors.py:464
+msgid "Contacts"
+msgstr "Контакты"
+
+#: apps/common/context_processors.py:478
+msgid "Insights"
+msgstr "Аналитика"
+
+#: apps/common/context_processors.py:496
+msgid "Notifications"
+msgstr "Уведомления"
+
+#: apps/common/context_processors.py:525
+msgid "Sequences"
+msgstr "Цепочки"
+
+#: apps/common/context_processors.py:533
+msgid "Templates"
+msgstr "Шаблоны"
+
+#: apps/common/tests/test_templatetags.py:166
+msgid "Open"
+msgstr "Открыть"
+
+#: apps/flows/starter.py:45
+msgid "Hi! Thanks for getting in touch — how can we help?"
+msgstr "Привет! Спасибо, что написали — чем можем помочь?"
+
+#: apps/inbox/notifications.py:35
+#, python-brace-format
+msgid "Scheduled reply to {contact_name} was not sent"
+msgstr "Запланированный ответ для {contact_name} не был отправлен"
+
+#: apps/inbox/notifications.py:46
+msgid "A scheduled reply was not sent"
+msgstr "Запланированный ответ не был отправлен"
+
+#: apps/members/services.py:415
+#, python-format
+msgid "You have been invited to %(org_name)s on BrightBean Chat"
+msgstr "Вас пригласили в %(org_name)s в BrightBean Chat"
+
+#: apps/notifications/events.py:211
+#, python-brace-format
+msgid "Flow \"{flow_name}\" hit the loop cap"
+msgstr "Сценарий «{flow_name}» достиг лимита циклов"
+
+#: apps/notifications/events.py:213
+#, python-brace-format
+msgid ""
+"It ran 30 blocks without pausing for {contact_name} and was stopped. Open "
+"the flow and look for a cycle with no wait in it."
+msgstr ""
+"Он выполнил 30 блоков подряд без паузы для {contact_name} и был остановлен. "
+"Откройте сценарий и найдите цикл без ожидания."
+
+#: apps/notifications/events.py:226
+#, python-brace-format
+msgid "Flow \"{flow_name}\" failed"
+msgstr "Сценарий «{flow_name}» завершился с ошибкой"
+
+#: apps/notifications/events.py:227
+#, python-brace-format
+msgid "The run for {contact_name} stopped at {node_label}: {error}"
+msgstr "Выполнение для {contact_name} остановилось на «{node_label}»: {error}"
+
+#: apps/notifications/events.py:242
+#, python-brace-format
+msgid "{channel_name} needs reconnecting"
+msgstr "Канал {channel_name} нужно переподключить"
+
+#: apps/notifications/events.py:244
+#, python-brace-format
+msgid ""
+"{platform_label} stopped accepting the stored credentials. Nothing will send"
+" or receive on this channel until it is reconnected."
+msgstr ""
+"{platform_label} перестал принимать сохранённые учётные данные. Пока канал "
+"не переподключат, отправка и приём сообщений через него невозможны."
+
+#: apps/notifications/events.py:259
+msgid "Webhook disabled after repeated failures"
+msgstr "Вебхук отключён после повторяющихся сбоев"
+
+#: apps/notifications/events.py:261
+#, python-brace-format
+msgid ""
+"{url} failed {failure_count} times in a row and has been switched off. Re-"
+"enable it once the endpoint is healthy again."
+msgstr ""
+"{url} подряд дал сбой {failure_count} раз(а) и был отключён. Включите его "
+"снова, когда эндпоинт заработает."
+
+#: apps/notifications/events.py:277
+#, python-brace-format
+msgid "Reminder: {contact_name}"
+msgstr "Напоминание: {contact_name}"
+
+#: apps/notifications/events.py:292
+#, python-brace-format
+msgid "{actor_name} mentioned you"
+msgstr "{actor_name} упомянул(а) вас"
+
+#: apps/notifications/events.py:318
+#, python-brace-format
+msgid "WhatsApp template \"{template_name}\" was {status}"
+msgstr "Шаблон WhatsApp «{template_name}» получил статус: {status}"
+
+#: templates/account/login.html:4 templates/account/login.html:8
+#: templates/account/login.html:38
+msgid "Sign in"
+msgstr "Войти"
+
+#: templates/account/login.html:9
+msgid "Welcome back to BrightBean Chat."
+msgstr "С возвращением в BrightBean Chat."
+
+#: templates/account/login.html:28 templates/account/signup.html:23
+#, python-format
+msgid "Continue with %(provider_name)s"
+msgstr "Продолжить через %(provider_name)s"
+
+#: templates/account/login.html:31 templates/account/signup.html:26
+msgid "or"
+msgstr "или"
+
+#: templates/account/login.html:43
+#, python-format
+msgid ""
+"No account yet? <a href=\"%(signup_url)s\" style=\"color: "
+"var(--primary);\">Create one</a>."
+msgstr ""
+"Ещё нет аккаунта? <a href=\"%(signup_url)s\" style=\"color: "
+"var(--primary);\">Создать</a>."
+
+#: templates/account/signup.html:4 templates/account/signup.html:8
+msgid "Create your account"
+msgstr "Создайте аккаунт"
+
+#: templates/account/signup.html:13
+msgid ""
+"You were invited to join an organization. Signing up here adds you to it."
+msgstr ""
+"Вас пригласили присоединиться к организации. Регистрация здесь добавит вас в"
+" неё."
+
+#: templates/account/signup.html:53
+msgid "Create account"
+msgstr "Создать аккаунт"
+
+#: templates/account/signup.html:58
+#, python-format
+msgid ""
+"Already have an account? <a href=\"%(login_url)s\" style=\"color: "
+"var(--primary);\">Sign in</a>."
+msgstr ""
+"Уже есть аккаунт? <a href=\"%(login_url)s\" style=\"color: "
+"var(--primary);\">Войти</a>."
+
+#: templates/accounts/preferences.html:15
+msgid "How BrightBean Chat looks and speaks to you."
+msgstr "Как BrightBean Chat выглядит и на каком языке говорит с вами."
+
+#: templates/accounts/preferences.html:20
+msgid "Language"
+msgstr "Язык"
+
+#: templates/accounts/preferences.html:24
+msgid "Match my browser"
+msgstr "Как в браузере"
+
+#: templates/accounts/preferences.html:33
+msgid "Changes what you see. Your teammates can each pick their own."
+msgstr ""
+"Меняет только то, что видите вы. У каждого из команды может быть свой язык."
+
+#: templates/accounts/preferences.html:37 templates/accounts/settings.html:40
+msgid "Save changes"
+msgstr "Сохранить изменения"
+
+#: templates/accounts/settings.html:20
+msgid "How you appear to your team and in internal notes."
+msgstr "Как вы отображаетесь для команды и во внутренних заметках."
+
+#: templates/accounts/settings.html:32
+msgid "Name"
+msgstr "Имя"
+
+#: templates/accounts/settings.html:36
+msgid "What your team sees on assignments and internal notes."
+msgstr "Это видит команда в назначениях и внутренних заметках."
+
+#: templates/accounts/settings.html:45
+msgid "Signing in"
+msgstr "Вход в аккаунт"
+
+#: templates/accounts/settings.html:47
+#, python-format
+msgid "You sign in with a password, as %(email)s."
+msgstr "Вы входите по паролю, под адресом %(email)s."
+
+#: templates/accounts/settings.html:50
+msgid "Change password"
+msgstr "Изменить пароль"
+
+#: templates/accounts/settings.html:51
+msgid "Add another email"
+msgstr "Добавить ещё один email"
+
+#: templates/base.html:170
+msgid "Toggle menu"
+msgstr "Открыть/закрыть меню"
+
+#: templates/members/email/invite.html:2
+#, python-format
+msgid ""
+"\n"
+"<p>%(inviter)s invited you to join\n"
+"   <strong>%(org_name)s</strong> on BrightBean Chat.</p>\n"
+msgstr ""
+"\n"
+"<p>%(inviter)s пригласил(а) вас присоединиться к\n"
+"   <strong>%(org_name)s</strong> в BrightBean Chat.</p>\n"
+
+#: templates/members/email/invite.html:6 templates/members/email/invite.txt:3
+msgid "Accept the invitation"
+msgstr "Принять приглашение"
+
+#: templates/members/email/invite.html:7 templates/members/email/invite.txt:6
+msgid ""
+"This link expires in 7 days. If you were not expecting it, you can ignore "
+"this email."
+msgstr ""
+"Срок действия ссылки — 7 дней. Если вы не ожидали этого письма, просто "
+"проигнорируйте его."
+
+#: templates/members/email/invite.txt:1
+#, python-format
+msgid "%(inviter)s invited you to join %(org_name)s on BrightBean Chat."
+msgstr ""
+"%(inviter)s пригласил(а) вас присоединиться к %(org_name)s в BrightBean "
+"Chat."
+
+#: templates/notifications/email/notification.html:58
+#, python-format
+msgid "Workspace: %(workspace_name)s"
+msgstr "Рабочее пространство: %(workspace_name)s"
+
+#: templates/notifications/email/notification.html:63
+#: templates/notifications/email/notification.txt:5
+msgid "View it"
+msgstr "Открыть"
+
+#: templates/notifications/email/notification.html:73
+#, python-format
+msgid ""
+"You are receiving this because notification emails are on for your account.\n"
+"          <a href=\"%(settings_url)s\" style=\"color:#F97316;text-decoration:underline;\">Turn them off</a>."
+msgstr ""
+"Вы получили это письмо, потому что уведомления по email включены для вашего аккаунта.\n"
+"          <a href=\"%(settings_url)s\" style=\"color:#F97316;text-decoration:underline;\">Отключить их</a>."
+
+#: templates/notifications/email/notification.txt:8
+msgid ""
+"You are receiving this because notification emails are on for your account."
+msgstr ""
+"Вы получили это письмо, потому что уведомления по email включены для вашего "
+"аккаунта."
+
+#: templates/notifications/email/notification.txt:9
+msgid "Turn them off"
+msgstr "Отключить их"
+
+#: templates/partials/_app_sidebar.html:110
+#, python-format
+msgid "Back to %(name)s"
+msgstr "Назад в %(name)s"
+
+#: templates/partials/_app_sidebar.html:124
+#, python-format
+msgid "Switch workspace (currently %(name)s)"
+msgstr "Сменить пространство (сейчас: %(name)s)"
+
+#: templates/partials/_app_sidebar.html:164
+msgid "New workspace"
+msgstr "Новое пространство"
+
+#: templates/partials/_app_sidebar.html:185
+msgid "Workspace settings"
+msgstr "Настройки пространства"
+
+#: templates/partials/_app_sidebar.html:217
+msgid "Settings"
+msgstr "Настройки"
+
+#: templates/partials/_app_sidebar.html:217
+msgid "Main"
+msgstr "Основное"
+
+#: templates/partials/_app_sidebar.html:286
+msgid "Collapse sidebar"
+msgstr "Свернуть боковую панель"
+
+#: templates/partials/_app_sidebar.html:293
+msgid "Expand sidebar"
+msgstr "Развернуть боковую панель"
+
+#: templates/partials/_app_sidebar.html:328
+msgid "Manage team"
+msgstr "Управление командой"
+
+#: templates/partials/_app_sidebar.html:343
+msgid "Organization Settings"
+msgstr "Настройки организации"
+
+#: templates/partials/_app_sidebar.html:352
+msgid "Sign out"
+msgstr "Выйти"
+
+#: templates/partials/_sidebar_channels.html:44
+msgid "Connect a channel"
+msgstr "Подключить канал"
+
+#: templates/partials/_sidebar_channels.html:53
+msgid "needs reconnecting"
+msgstr "нужно переподключить"
+
+#: templates/partials/_sidebar_channels.html:53
+msgid "turned off"
+msgstr "отключён"
+
+#: templates/partials/_sidebar_channels.html:76
+msgid "Connect channels"
+msgstr "Подключить каналы"
+
+#: templates/partials/_sidebar_channels.html:94
+#, python-format
+msgid "Connect %(platform)s"
+msgstr "Подключить %(platform)s"
+
+#: templates/partials/_sidebar_channels.html:108
+#: templates/partials/_sidebar_channels.html:115
+msgid "More channels"
+msgstr "Ещё каналы"
+
+#: templates/partials/_sub_nav.html:13
+msgid "Section"
+msgstr "Раздел"

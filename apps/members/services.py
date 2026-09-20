@@ -35,6 +35,7 @@ from django.db import transaction
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import gettext
 
 from apps.members.models import Invitation, OrgMembership, WorkspaceMembership
 from apps.members.roles import ORG_ROLE_LEVEL, WORKSPACE_ROLE_LEVEL, OrgRole, WorkspaceRole, permissions_for_role
@@ -407,7 +408,12 @@ def send_invite_email(invitation: Invitation, token: str) -> None:
     }
     try:
         message = EmailMultiAlternatives(
-            subject=f"You have been invited to {invitation.organization.name} on BrightBean Chat",
+            # gettext(), not gettext_lazy: this runs at call time inside the
+            # inviting admin's request, not at module import, so the currently
+            # active language is already the right one to render in — see
+            # apps.notifications.events for where lazy is needed instead.
+            subject=gettext("You have been invited to %(org_name)s on BrightBean Chat")
+            % {"org_name": invitation.organization.name},
             body=render_to_string("members/email/invite.txt", context),
             from_email=settings.DEFAULT_FROM_EMAIL,
             to=[invitation.email],

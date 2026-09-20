@@ -1,0 +1,462 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-20 00:54+0600\n"
+"PO-Revision-Date: 2026-09-20 12:00+0600\n"
+"Last-Translator: BrightBean Chat\n"
+"Language-Team: ky\n"
+"Language: ky\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: apps/broadcasts/notifications.py:40 apps/notifications/events.py:305
+#, python-brace-format
+msgid "Broadcast \"{broadcast_name}\" finished"
+msgstr "«{broadcast_name}» жайылтуусу аяктады"
+
+#: apps/broadcasts/notifications.py:41 apps/notifications/events.py:306
+#, python-brace-format
+msgid "{sent} sent, {failed} failed, {skipped} skipped."
+msgstr "Жөнөтүлдү: {sent}, ката: {failed}, өткөрүп жиберилди: {skipped}."
+
+#: apps/common/context_processors.py:229
+msgid "Workspace"
+msgstr "Жумуш мейкиндиги"
+
+#: apps/common/context_processors.py:234 apps/common/context_processors.py:359
+msgid "General"
+msgstr "Жалпы"
+
+#: apps/common/context_processors.py:242
+#: templates/partials/_sidebar_channels.html:35
+msgid "Channels"
+msgstr "Каналдар"
+
+#: apps/common/context_processors.py:278
+msgid "Library"
+msgstr "Медиа китепканасы"
+
+#: apps/common/context_processors.py:298
+msgid "Tags"
+msgstr "Тегдер"
+
+#: apps/common/context_processors.py:306
+msgid "Labels"
+msgstr "Белгилер"
+
+#: apps/common/context_processors.py:314
+msgid "Inbox rules"
+msgstr "Кирүүчү кат эрежелери"
+
+#: apps/common/context_processors.py:326
+msgid "Fields"
+msgstr "Талаалар"
+
+#: apps/common/context_processors.py:334
+msgid "Email tracking"
+msgstr "Катты көзөмөлдөө"
+
+#: apps/common/context_processors.py:346
+msgid "Webhooks"
+msgstr "Вебхуктар"
+
+#: apps/common/context_processors.py:355
+msgid "Organisation"
+msgstr "Уюм"
+
+#: apps/common/context_processors.py:366
+msgid "Workspaces"
+msgstr "Жумуш мейкиндиктери"
+
+#: apps/common/context_processors.py:372
+msgid "People & roles"
+msgstr "Адамдар жана ролдор"
+
+#: apps/common/context_processors.py:376
+msgid "Plan & billing"
+msgstr "Тариф жана төлөм"
+
+#: apps/common/context_processors.py:384
+msgid "Developers"
+msgstr "Иштеп чыгуучулар үчүн"
+
+#: apps/common/context_processors.py:396 templates/accounts/settings.html:14
+#: templates/accounts/settings.html:19
+msgid "Profile"
+msgstr "Профиль"
+
+#: apps/common/context_processors.py:402 templates/accounts/preferences.html:8
+#: templates/accounts/preferences.html:14
+msgid "Preferences"
+msgstr "Жеке ырастоолор"
+
+#: apps/common/context_processors.py:426
+msgid "Home"
+msgstr "Башкы бет"
+
+#: apps/common/context_processors.py:433
+msgid "Inbox"
+msgstr "Кирүүчү кабарлар"
+
+#: apps/common/context_processors.py:446 apps/common/context_processors.py:517
+msgid "Flows"
+msgstr "Сценарийлер"
+
+#: apps/common/context_processors.py:456
+msgid "Broadcasts"
+msgstr "Жайылтуулар"
+
+#: apps/common/context_processors.py:464
+msgid "Contacts"
+msgstr "Байланыштар"
+
+#: apps/common/context_processors.py:478
+msgid "Insights"
+msgstr "Аналитика"
+
+#: apps/common/context_processors.py:496
+msgid "Notifications"
+msgstr "Билдирүүлөр"
+
+#: apps/common/context_processors.py:525
+msgid "Sequences"
+msgstr "Ырааттуулуктар"
+
+#: apps/common/context_processors.py:533
+msgid "Templates"
+msgstr "Шаблондор"
+
+#: apps/common/tests/test_templatetags.py:166
+msgid "Open"
+msgstr "Ачуу"
+
+#: apps/flows/starter.py:45
+msgid "Hi! Thanks for getting in touch — how can we help?"
+msgstr "Салам! Кайрылганыңыз үчүн рахмат — эмне менен жардам бере алабыз?"
+
+#: apps/inbox/notifications.py:35
+#, python-brace-format
+msgid "Scheduled reply to {contact_name} was not sent"
+msgstr "{contact_name} үчүн пландалган жооп жөнөтүлгөн жок"
+
+#: apps/inbox/notifications.py:46
+msgid "A scheduled reply was not sent"
+msgstr "Пландалган жооп жөнөтүлгөн жок"
+
+#: apps/members/services.py:415
+#, python-format
+msgid "You have been invited to %(org_name)s on BrightBean Chat"
+msgstr "Сиз BrightBean Chat'та %(org_name)s уюмуна чакырылдыңыз"
+
+#: apps/notifications/events.py:211
+#, python-brace-format
+msgid "Flow \"{flow_name}\" hit the loop cap"
+msgstr "«{flow_name}» сценарийи циклдер чегине жетти"
+
+#: apps/notifications/events.py:213
+#, python-brace-format
+msgid ""
+"It ran 30 blocks without pausing for {contact_name} and was stopped. Open "
+"the flow and look for a cycle with no wait in it."
+msgstr ""
+"Ал {contact_name} үчүн 30 блокту тыныгуусуз аткарып, токтотулду. Сценарийди "
+"ачып, күтүүсүз циклди табыңыз."
+
+#: apps/notifications/events.py:226
+#, python-brace-format
+msgid "Flow \"{flow_name}\" failed"
+msgstr "«{flow_name}» сценарийи катасы менен аяктады"
+
+#: apps/notifications/events.py:227
+#, python-brace-format
+msgid "The run for {contact_name} stopped at {node_label}: {error}"
+msgstr "{contact_name} үчүн аткаруу «{node_label}» жеринде токтоду: {error}"
+
+#: apps/notifications/events.py:242
+#, python-brace-format
+msgid "{channel_name} needs reconnecting"
+msgstr "{channel_name} каналын кайра туташтыруу керек"
+
+#: apps/notifications/events.py:244
+#, python-brace-format
+msgid ""
+"{platform_label} stopped accepting the stored credentials. Nothing will send"
+" or receive on this channel until it is reconnected."
+msgstr ""
+"{platform_label} сакталган каттоо маалыматтарын кабыл алууну токтотту. Кайра"
+" туташтырылганга чейин бул канал аркылуу эч нерсе жөнөтүлбөйт же кабыл "
+"алынбайт."
+
+#: apps/notifications/events.py:259
+msgid "Webhook disabled after repeated failures"
+msgstr "Вебхук кайталанган каталардан кийин өчүрүлдү"
+
+#: apps/notifications/events.py:261
+#, python-brace-format
+msgid ""
+"{url} failed {failure_count} times in a row and has been switched off. Re-"
+"enable it once the endpoint is healthy again."
+msgstr ""
+"{url} катары менен {failure_count} жолу катага учурап, өчүрүлдү. Эндпоинт "
+"кайра иштей баштаганда аны кайра күйгүзүңүз."
+
+#: apps/notifications/events.py:277
+#, python-brace-format
+msgid "Reminder: {contact_name}"
+msgstr "Эскертүү: {contact_name}"
+
+#: apps/notifications/events.py:292
+#, python-brace-format
+msgid "{actor_name} mentioned you"
+msgstr "{actor_name} сизди эскерди"
+
+#: apps/notifications/events.py:318
+#, python-brace-format
+msgid "WhatsApp template \"{template_name}\" was {status}"
+msgstr "WhatsApp'тагы «{template_name}» шаблону {status} болду"
+
+#: templates/account/login.html:4 templates/account/login.html:8
+#: templates/account/login.html:38
+msgid "Sign in"
+msgstr "Кирүү"
+
+#: templates/account/login.html:9
+msgid "Welcome back to BrightBean Chat."
+msgstr "BrightBean Chat'ка кайра кош келиңиз."
+
+#: templates/account/login.html:28 templates/account/signup.html:23
+#, python-format
+msgid "Continue with %(provider_name)s"
+msgstr "%(provider_name)s аркылуу улантуу"
+
+#: templates/account/login.html:31 templates/account/signup.html:26
+msgid "or"
+msgstr "же"
+
+#: templates/account/login.html:43
+#, python-format
+msgid ""
+"No account yet? <a href=\"%(signup_url)s\" style=\"color: "
+"var(--primary);\">Create one</a>."
+msgstr ""
+"Аккаунтуңуз жокпу? <a href=\"%(signup_url)s\" style=\"color: "
+"var(--primary);\">Түзүү</a>."
+
+#: templates/account/signup.html:4 templates/account/signup.html:8
+msgid "Create your account"
+msgstr "Аккаунт түзүңүз"
+
+#: templates/account/signup.html:13
+msgid ""
+"You were invited to join an organization. Signing up here adds you to it."
+msgstr ""
+"Сиз уюмга кошулууга чакырылдыңыз. Бул жерден катталуу сизди ага кошот."
+
+#: templates/account/signup.html:53
+msgid "Create account"
+msgstr "Аккаунт түзүү"
+
+#: templates/account/signup.html:58
+#, python-format
+msgid ""
+"Already have an account? <a href=\"%(login_url)s\" style=\"color: "
+"var(--primary);\">Sign in</a>."
+msgstr ""
+"Аккаунтуңуз барбы? <a href=\"%(login_url)s\" style=\"color: "
+"var(--primary);\">Кирүү</a>."
+
+#: templates/accounts/preferences.html:15
+msgid "How BrightBean Chat looks and speaks to you."
+msgstr "BrightBean Chat сиз үчүн кандай көрүнөт жана кайсы тилде сүйлөйт."
+
+#: templates/accounts/preferences.html:20
+msgid "Language"
+msgstr "Тил"
+
+#: templates/accounts/preferences.html:24
+msgid "Match my browser"
+msgstr "Браузердегидей"
+
+#: templates/accounts/preferences.html:33
+msgid "Changes what you see. Your teammates can each pick their own."
+msgstr ""
+"Бул сиз көргөн нерсени гана өзгөртөт. Командаңыздагы ар бир адам өз тилин "
+"тандай алат."
+
+#: templates/accounts/preferences.html:37 templates/accounts/settings.html:40
+msgid "Save changes"
+msgstr "Өзгөртүүлөрдү сактоо"
+
+#: templates/accounts/settings.html:20
+msgid "How you appear to your team and in internal notes."
+msgstr "Командаңызга жана ички белгилерде кандай көрүнөсүз."
+
+#: templates/accounts/settings.html:32
+msgid "Name"
+msgstr "Аты"
+
+#: templates/accounts/settings.html:36
+msgid "What your team sees on assignments and internal notes."
+msgstr "Муну командаңыз тапшырмаларда жана ички белгилерде көрөт."
+
+#: templates/accounts/settings.html:45
+msgid "Signing in"
+msgstr "Кирүү"
+
+#: templates/accounts/settings.html:47
+#, python-format
+msgid "You sign in with a password, as %(email)s."
+msgstr "Сиз %(email)s дареги менен сырсөз аркылуу киресиз."
+
+#: templates/accounts/settings.html:50
+msgid "Change password"
+msgstr "Сырсөздү өзгөртүү"
+
+#: templates/accounts/settings.html:51
+msgid "Add another email"
+msgstr "Дагы бир email кошуу"
+
+#: templates/base.html:170
+msgid "Toggle menu"
+msgstr "Менюну ачуу/жабуу"
+
+#: templates/members/email/invite.html:2
+#, python-format
+msgid ""
+"\n"
+"<p>%(inviter)s invited you to join\n"
+"   <strong>%(org_name)s</strong> on BrightBean Chat.</p>\n"
+msgstr ""
+"\n"
+"<p>%(inviter)s сизди BrightBean Chat'тагы\n"
+"   <strong>%(org_name)s</strong> уюмуна чакырды.</p>\n"
+
+#: templates/members/email/invite.html:6 templates/members/email/invite.txt:3
+msgid "Accept the invitation"
+msgstr "Чакырууну кабыл алуу"
+
+#: templates/members/email/invite.html:7 templates/members/email/invite.txt:6
+msgid ""
+"This link expires in 7 days. If you were not expecting it, you can ignore "
+"this email."
+msgstr ""
+"Шилтеменин мөөнөтү 7 күн. Эгер бул катты күтпөгөн болсоңуз, аны эске албай "
+"коюңуз."
+
+#: templates/members/email/invite.txt:1
+#, python-format
+msgid "%(inviter)s invited you to join %(org_name)s on BrightBean Chat."
+msgstr "%(inviter)s сизди BrightBean Chat'тагы %(org_name)s уюмуна чакырды."
+
+#: templates/notifications/email/notification.html:58
+#, python-format
+msgid "Workspace: %(workspace_name)s"
+msgstr "Жумуш мейкиндиги: %(workspace_name)s"
+
+#: templates/notifications/email/notification.html:63
+#: templates/notifications/email/notification.txt:5
+msgid "View it"
+msgstr "Көрүү"
+
+#: templates/notifications/email/notification.html:73
+#, python-format
+msgid ""
+"You are receiving this because notification emails are on for your account.\n"
+"          <a href=\"%(settings_url)s\" style=\"color:#F97316;text-decoration:underline;\">Turn them off</a>."
+msgstr ""
+"Бул катты сиз алдыңыз, анткени аккаунтуңузда email билдирүүлөр күйгүзүлгөн.\n"
+"          <a href=\"%(settings_url)s\" style=\"color:#F97316;text-decoration:underline;\">Аларды өчүрүү</a>."
+
+#: templates/notifications/email/notification.txt:8
+msgid ""
+"You are receiving this because notification emails are on for your account."
+msgstr ""
+"Бул катты сиз алдыңыз, анткени аккаунтуңузда email билдирүүлөр күйгүзүлгөн."
+
+#: templates/notifications/email/notification.txt:9
+msgid "Turn them off"
+msgstr "Аларды өчүрүү"
+
+#: templates/partials/_app_sidebar.html:110
+#, python-format
+msgid "Back to %(name)s"
+msgstr "%(name)s мейкиндигине кайтуу"
+
+#: templates/partials/_app_sidebar.html:124
+#, python-format
+msgid "Switch workspace (currently %(name)s)"
+msgstr "Мейкиндикти которуу (учурда: %(name)s)"
+
+#: templates/partials/_app_sidebar.html:164
+msgid "New workspace"
+msgstr "Жаңы жумуш мейкиндиги"
+
+#: templates/partials/_app_sidebar.html:185
+msgid "Workspace settings"
+msgstr "Мейкиндик тууралоолору"
+
+#: templates/partials/_app_sidebar.html:217
+msgid "Settings"
+msgstr "Тууралоолор"
+
+#: templates/partials/_app_sidebar.html:217
+msgid "Main"
+msgstr "Негизги"
+
+#: templates/partials/_app_sidebar.html:286
+msgid "Collapse sidebar"
+msgstr "Каптал панелин жыйыштыруу"
+
+#: templates/partials/_app_sidebar.html:293
+msgid "Expand sidebar"
+msgstr "Каптал панелин жайып көрсөтүү"
+
+#: templates/partials/_app_sidebar.html:328
+msgid "Manage team"
+msgstr "Команданы башкаруу"
+
+#: templates/partials/_app_sidebar.html:343
+msgid "Organization Settings"
+msgstr "Уюм тууралоолору"
+
+#: templates/partials/_app_sidebar.html:352
+msgid "Sign out"
+msgstr "Чыгуу"
+
+#: templates/partials/_sidebar_channels.html:44
+msgid "Connect a channel"
+msgstr "Канал кошуу"
+
+#: templates/partials/_sidebar_channels.html:53
+msgid "needs reconnecting"
+msgstr "кайра туташтыруу керек"
+
+#: templates/partials/_sidebar_channels.html:53
+msgid "turned off"
+msgstr "өчүрүлгөн"
+
+#: templates/partials/_sidebar_channels.html:76
+msgid "Connect channels"
+msgstr "Каналдарды кошуу"
+
+#: templates/partials/_sidebar_channels.html:94
+#, python-format
+msgid "Connect %(platform)s"
+msgstr "%(platform)s кошуу"
+
+#: templates/partials/_sidebar_channels.html:108
+#: templates/partials/_sidebar_channels.html:115
+msgid "More channels"
+msgstr "Дагы каналдар"
+
+#: templates/partials/_sub_nav.html:13
+msgid "Section"
+msgstr "Бөлүм"

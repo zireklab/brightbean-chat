@@ -1,4 +1,5 @@
-.PHONY: help setup lock frontend schema css-watch js-watch server worker migrate migrations test test-cov lint format typecheck audit \
+.PHONY: help setup lock frontend schema css-watch js-watch server worker migrate migrations i18n-extract i18n-compile \
+        test test-cov lint format typecheck audit \
         docker-up docker-down docker-build docker-logs \
         prod-secrets prod-up prod-down prod-logs prod-migrate smoke
 
@@ -68,6 +69,14 @@ migrate: ## Run database migrations
 
 migrations: ## Create new migrations
 	python manage.py makemigrations
+
+# Internationalization
+
+i18n-extract: ## Pull new/changed strings into locale/*/LC_MESSAGES/django.po
+	django-admin makemessages -l ru -l ky --ignore=node_modules --ignore=static/js/vendor --ignore=frontend
+
+i18n-compile: ## Compile .po files to .mo for runtime use
+	django-admin compilemessages
 
 # Code quality
 

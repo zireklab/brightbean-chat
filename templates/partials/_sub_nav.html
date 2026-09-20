@@ -9,7 +9,8 @@ convention resolved in NavItem.resolved() rather than a fourth.
 Args:
   groups: rendered nav groups — flow_tab_groups, for now the only caller.
 {% endcomment %}
-<nav class="subnav" aria-label="Section">
+{% load i18n %}
+<nav class="subnav" aria-label="{% translate 'Section' %}">
     {% for group in groups %}{% for item in group.items %}
     <a href="{{ item.url }}" class="subnav-item{% if item.active %} active{% endif %}"
        {% if item.active %}aria-current="page"{% endif %}>{{ item.label }}</a>
