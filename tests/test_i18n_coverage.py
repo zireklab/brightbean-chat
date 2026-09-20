@@ -93,6 +93,22 @@ _I18N_TEMPLATES = [
     "inbox/_thread_header.html",
     "inbox/label_settings.html",
     "inbox/rule_settings.html",
+    # Phase 2c (contacts)
+    "contacts/list.html",
+    "contacts/_rows.html",
+    "contacts/_activity.html",
+    "contacts/_channels.html",
+    "contacts/_field_rows.html",
+    "contacts/_filter_bar.html",
+    "contacts/_tag_chips.html",
+    "contacts/_tag_suggestions.html",
+    "contacts/_tag_rows.html",
+    "contacts/_import_progress.html",
+    "contacts/detail.html",
+    "contacts/field_list.html",
+    "contacts/tag_list.html",
+    "contacts/import_detail.html",
+    "contacts/import_list.html",
 ]
 
 #: Every Python module a landed phase put gettext/gettext_lazy copy in.
@@ -135,6 +151,10 @@ _I18N_MODULES = [
     "apps/inbox/rules.py",
     "apps/inbox/services.py",
     "apps/inbox/views.py",
+    # Phase 2c (contacts)
+    "apps/contacts/views.py",
+    "apps/contacts/models.py",
+    "apps/contacts/imports.py",
 ]
 
 

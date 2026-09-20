@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 13:09+0600\n"
+"POT-Creation-Date: 2026-09-20 13:37+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ky\n"
@@ -53,7 +53,7 @@ msgstr "Окуу"
 msgid "Write"
 msgstr "Жазуу"
 
-#: apps/api/models.py:77
+#: apps/api/models.py:77 templates/contacts/list.html:262
 msgid "Erase"
 msgstr "Өчүрүү"
 
@@ -61,7 +61,8 @@ msgstr "Өчүрүү"
 msgid "Succeeded"
 msgstr "Ийгиликтүү"
 
-#: apps/api/models.py:89 templates/inbox/_thread_body.html:152
+#: apps/api/models.py:89 apps/contacts/models.py:411
+#: apps/contacts/models.py:571 templates/inbox/_thread_body.html:152
 msgid "Failed"
 msgstr "Ката"
 
@@ -290,8 +291,9 @@ msgstr ""
 #: apps/channels/forms.py:47 templates/accounts/settings.html:32
 #: templates/api/keys_list.html:39
 #: templates/channels/whatsapp_templates.html:26
-#: templates/inbox/_label_rows.html:46 templates/inbox/_rule_form.html:24
-#: templates/organizations/settings.html:27
+#: templates/contacts/_field_rows.html:54 templates/contacts/_rows.html:50
+#: templates/contacts/_tag_rows.html:56 templates/inbox/_label_rows.html:46
+#: templates/inbox/_rule_form.html:24 templates/organizations/settings.html:27
 #: templates/organizations/settings.html:49
 #: templates/workspaces/settings.html:36
 msgid "Name"
@@ -448,7 +450,8 @@ msgstr "ISO 4217 боюнча үч тамгалуу кодду колдонуң�
 msgid "A price cannot be negative."
 msgstr "Баа терс сан боло албайт."
 
-#: apps/channels/models.py:103 templates/api/keys_list.html:87
+#: apps/channels/models.py:103 apps/contacts/models.py:61
+#: templates/api/keys_list.html:87
 msgid "Active"
 msgstr "Активдүү"
 
@@ -786,7 +789,8 @@ msgid "General"
 msgstr "Жалпы"
 
 #: apps/common/context_processors.py:251 templates/channels/list.html:24
-#: templates/channels/list.html:31 templates/inbox/_sidebar.html:20
+#: templates/channels/list.html:31 templates/contacts/_channels.html:21
+#: templates/contacts/_rows.html:51 templates/inbox/_sidebar.html:20
 #: templates/partials/_sidebar_channels.html:35
 msgid "Channels"
 msgstr "Каналдар"
@@ -795,7 +799,11 @@ msgstr "Каналдар"
 msgid "Library"
 msgstr "Медиа китепканасы"
 
-#: apps/common/context_processors.py:307 templates/inbox/_sidebar.html:70
+#: apps/common/context_processors.py:307 templates/contacts/_rows.html:52
+#: templates/contacts/_tag_chips.html:17
+#: templates/contacts/import_detail.html:71
+#: templates/contacts/tag_list.html:15 templates/contacts/tag_list.html:22
+#: templates/inbox/_sidebar.html:70
 msgid "Tags"
 msgstr "Тегдер"
 
@@ -873,7 +881,9 @@ msgstr "Сценарийлер"
 msgid "Broadcasts"
 msgstr "Жайылтуулар"
 
-#: apps/common/context_processors.py:473
+#: apps/common/context_processors.py:473 templates/contacts/detail.html:17
+#: templates/contacts/import_list.html:13 templates/contacts/list.html:31
+#: templates/contacts/list.html:46
 msgid "Contacts"
 msgstr "Байланыштар"
 
@@ -894,14 +904,561 @@ msgid "Templates"
 msgstr "Шаблондор"
 
 #: apps/common/tests/test_templatetags.py:166
-#: templates/api/webhooks_list.html:71 templates/inbox/_card.html:19
-#: templates/inbox/_sidebar.html:17 templates/organizations/workspaces.html:61
+#: templates/api/webhooks_list.html:71 templates/contacts/import_list.html:64
+#: templates/inbox/_card.html:19 templates/inbox/_sidebar.html:17
+#: templates/organizations/workspaces.html:61
 msgid "Open"
 msgstr "Ачуу"
 
 #: apps/common/validators.py:36
 msgid "Color must be a 6-digit hex value like #3B82F6."
 msgstr "Түс #3B82F6 сыяктуу 6 орундуу hex мааниси болушу керек."
+
+#: apps/contacts/imports.py:551
+#, python-format
+msgid "This file has more than %(max)s rows; the rest were skipped."
+msgstr "Бул файлда %(max)s сатырдан көп бар; калгандары өткөрүп жиберилди."
+
+#: apps/contacts/imports.py:558
+msgid "That row is too long to import."
+msgstr "Бул сап импорттоо үчүн өтө узун."
+
+#: apps/contacts/imports.py:737
+#, python-format
+msgid "A tag name is at most %(max)s characters."
+msgstr "Тег аты эң көп %(max)s белгиден турат."
+
+#: apps/contacts/imports.py:819
+msgid "That is not an email address."
+msgstr "Бул электрондук почта дареги эмес."
+
+#: apps/contacts/models.py:62
+msgid "Deleted"
+msgstr "Өчүрүлдү"
+
+#: apps/contacts/models.py:68 templates/channels/detail.html:62
+msgid "Text"
+msgstr "Текст"
+
+#: apps/contacts/models.py:69 templates/channels/whatsapp_templates.html:26
+msgid "Number"
+msgstr "Номер"
+
+#: apps/contacts/models.py:70
+msgid "Date"
+msgstr "Күн"
+
+#: apps/contacts/models.py:71
+msgid "Date and time"
+msgstr "Күн жана убакыт"
+
+#: apps/contacts/models.py:72
+msgid "True or false"
+msgstr "Чын же жалган"
+
+#: apps/contacts/models.py:350
+#, python-format
+msgid ""
+"A custom field value populates exactly one column; this row populates "
+"%(count)s."
+msgstr ""
+"Атайын талаанын мааниси так бир мамычаны толтурат; бул сап %(count)s "
+"толтурат."
+
+#: apps/contacts/models.py:356
+#, python-format
+msgid "A %(type)s field stores its value in %(column)s."
+msgstr "%(type)s түрүндөгү талаа өз маанисин %(column)s ичинде сактайт."
+
+#: apps/contacts/models.py:406
+msgid "Uploaded"
+msgstr "Жүктөлдү"
+
+#: apps/contacts/models.py:407
+msgid "Checking"
+msgstr "Текшерилүүдө"
+
+#: apps/contacts/models.py:408
+msgid "Checked"
+msgstr "Текшерилди"
+
+#: apps/contacts/models.py:409
+msgid "Importing"
+msgstr "Импортталууда"
+
+#: apps/contacts/models.py:410
+msgid "Finished"
+msgstr "Аяктады"
+
+#: apps/contacts/models.py:427
+msgid "Update the contact that is already there"
+msgstr "Мурунтан бар байланышты жаңыртуу"
+
+#: apps/contacts/models.py:428
+msgid "Create a second contact anyway"
+msgstr "Баары бир экинчи байланыш түзүү"
+
+#: apps/contacts/models.py:429
+msgid "Skip the row"
+msgstr "Сапты өткөрүп жиберүү"
+
+#: apps/contacts/models.py:568 templates/contacts/_channels.html:52
+msgid "Pending"
+msgstr "Күтүүдө"
+
+#: apps/contacts/models.py:569
+msgid "Running"
+msgstr "Иштөөдө"
+
+#: apps/contacts/models.py:570 templates/api/key_created.html:26
+#: templates/api/webhook_secret.html:22 templates/channels/secret.html:57
+#: templates/inbox/_conversation_rows.html:71
+msgid "Done"
+msgstr "Бүттү"
+
+#: apps/contacts/models.py:577
+msgid "Contact page"
+msgstr "Байланыш баракчасы"
+
+#: apps/contacts/models.py:578
+msgid "Bulk action"
+msgstr "Массалык аракет"
+
+#: apps/contacts/models.py:579
+msgid "Public API"
+msgstr "Ачык API"
+
+#: apps/contacts/views.py:229
+msgid "Last interaction"
+msgstr "Акыркы аракеттешүү"
+
+#: apps/contacts/views.py:230
+msgid "Least recent"
+msgstr "Эң эскилери"
+
+#: apps/contacts/views.py:231
+msgid "Name (A–Z)"
+msgstr "Аты (А–Я)"
+
+#: apps/contacts/views.py:232
+msgid "Name (Z–A)"
+msgstr "Аты (Я–А)"
+
+#: apps/contacts/views.py:233 templates/members/list.html:37
+msgid "Email"
+msgstr "Email"
+
+#: apps/contacts/views.py:234
+msgid "Newest first"
+msgstr "Алгач жаңылары"
+
+#: apps/contacts/views.py:544
+msgid "Nothing to save"
+msgstr "Сактоочу эч нерсе жок"
+
+#: apps/contacts/views.py:548
+msgid "Could not save the contact"
+msgstr "Байланышты сактоо мүмкүн болгон жок"
+
+#: apps/contacts/views.py:550
+msgid "No change"
+msgstr "Өзгөрүү жок"
+
+#: apps/contacts/views.py:553
+msgid "Contact saved"
+msgstr "Байланыш сакталды"
+
+#: apps/contacts/views.py:595
+#, python-format
+msgid "Could not save %(field)s"
+msgstr "%(field)sди сактоо мүмкүн болгон жок"
+
+#: apps/contacts/views.py:597
+#, python-format
+msgid "%(field)s saved"
+msgstr "%(field)s сакталды"
+
+#: apps/contacts/views.py:647
+msgid "That tag does not exist"
+msgstr "Мындай тег жок"
+
+#: apps/contacts/views.py:648
+msgid ""
+"Creating tags needs the manage_crm permission. Ask an editor to add it "
+"first."
+msgstr ""
+"Тег түзүү үчүн manage_crm укугу керек. Адегенде редактордон аны кошууну "
+"сураңыз."
+
+#: apps/contacts/views.py:653 apps/contacts/views.py:660
+msgid "Could not add the tag"
+msgstr "Тег кошуу мүмкүн болгон жок"
+
+#: apps/contacts/views.py:655
+msgid "Pick a tag first"
+msgstr "Адегенде тег тандаңыз"
+
+#: apps/contacts/views.py:662
+msgid "Already tagged"
+msgstr "Мурунтан белгиленген"
+
+#: apps/contacts/views.py:664 apps/inbox/views.py:1133
+msgid "Tag added"
+msgstr "Тег кошулду"
+
+#: apps/contacts/views.py:676
+msgid "That tag was not on this contact"
+msgstr "Бул тег бул байланышта болгон эмес"
+
+#: apps/contacts/views.py:678 apps/inbox/views.py:1131
+msgid "Tag removed"
+msgstr "Тег алынды"
+
+#: apps/contacts/views.py:735
+msgid "Already opted out"
+msgstr "Мурунтан баш тарткан"
+
+#: apps/contacts/views.py:738 templates/contacts/_rows.html:120
+msgid "Opted out"
+msgstr "Баш тартты"
+
+#: apps/contacts/views.py:759 apps/contacts/views.py:765
+msgid "Could not start that flow"
+msgstr "Бул сценарийди баштоо мүмкүн болгон жок"
+
+#: apps/contacts/views.py:760
+msgid "It has no published version, or it is archived."
+msgstr "Анын жарыяланган версиясы жок, же ал архивде."
+
+#: apps/contacts/views.py:768
+msgid "Flow started"
+msgstr "Сценарий башталды"
+
+#: apps/contacts/views.py:788
+msgid "Nothing was running"
+msgstr "Эч нерсе иштеген жок"
+
+#: apps/contacts/views.py:791 apps/inbox/views.py:1106
+msgid "Automation stopped"
+msgstr "Автоматташтыруу токтотулду"
+
+#: apps/contacts/views.py:792
+#, python-format
+#| msgid "%(counter)s character"
+#| msgid_plural "%(counter)s characters"
+msgid "%(count)s run expired."
+msgid_plural "%(count)s runs expired."
+msgstr[0] "%(count)s аткаруу мөөнөтү бүттү."
+
+#: apps/contacts/views.py:813
+msgid "Contact deleted"
+msgstr "Байланыш өчүрүлдү"
+
+#: apps/contacts/views.py:875 apps/contacts/views.py:908
+#: apps/contacts/views.py:949 apps/contacts/views.py:1719
+msgid "Nothing selected"
+msgstr "Эч нерсе тандалган жок"
+
+#: apps/contacts/views.py:882
+msgid "Could not update the tags"
+msgstr "Тегдерди жаңыртуу мүмкүн болгон жок"
+
+#: apps/contacts/views.py:885
+#, python-format
+#| msgid "Label removed from %(count)s conversation"
+#| msgid_plural "Label removed from %(count)s conversations"
+msgid "Tag removed from %(count)s contact"
+msgid_plural "Tag removed from %(count)s contacts"
+msgstr[0] "Тег %(count)s байланыштан алынды"
+
+#: apps/contacts/views.py:887
+#, python-format
+#| msgid "Tag added to a contact"
+msgid "Tag added to %(count)s contact"
+msgid_plural "Tag added to %(count)s contacts"
+msgstr[0] "Тег %(count)s байланышка кошулду"
+
+#: apps/contacts/views.py:891
+#, python-format
+msgid "%(tag)s — %(count)s selected."
+msgstr "%(tag)s — %(count)s тандалды."
+
+#: apps/contacts/views.py:914
+#, python-format
+#| msgid "%(counter)s character"
+#| msgid_plural "%(counter)s characters"
+msgid "%(count)s contact deleted"
+msgid_plural "%(count)s contacts deleted"
+msgstr[0] "%(count)s байланыш өчүрүлдү"
+
+#: apps/contacts/views.py:915
+msgid "They are hidden everywhere and excluded from every segment."
+msgstr "Алар бардык жерде жашырылган жана ар бир сегменттен алынып салынган."
+
+#: apps/contacts/views.py:972
+msgid "Could not update the sequence"
+msgstr "Ырааттуулукту жаңыртуу мүмкүн болгон жок"
+
+#: apps/contacts/views.py:975
+msgid "Unsubscribing stops future steps; anything already running finishes."
+msgstr ""
+"Жазылуудан чыгуу келечектеги кадамдарды токтотот; мурунтан иштеп жаткандары "
+"аяктайт."
+
+#: apps/contacts/views.py:977
+msgid "Everyone starts again at step 1."
+msgstr "Баары 1-кадамдан кайра башташат."
+
+#: apps/contacts/views.py:980
+#, python-format
+#| msgid "Test failed: %(reason)s."
+msgid "%(count)s skipped: %(reason)s"
+msgid_plural "%(count)s skipped: %(reason)s"
+msgstr[0] "%(count)s өткөрүлүп жиберилди: %(reason)s"
+
+#: apps/contacts/views.py:986
+#, python-format
+#| msgid "Contact unsubscribed from a sequence"
+msgid "%(count)s contact unsubscribed from %(name)s"
+msgid_plural "%(count)s contacts unsubscribed from %(name)s"
+msgstr[0] "%(count)s байланыш %(name)sдан чыгарылды"
+
+#: apps/contacts/views.py:989
+#, python-format
+#| msgid "Contact subscribed to a sequence"
+msgid "%(count)s contact subscribed to %(name)s"
+msgid_plural "%(count)s contacts subscribed to %(name)s"
+msgstr[0] "%(count)s байланыш %(name)sга жазылды"
+
+#: apps/contacts/views.py:1026
+msgid "Could not save the segment"
+msgstr "Сегментти сактоо мүмкүн болгон жок"
+
+#: apps/contacts/views.py:1029
+msgid "Segment saved"
+msgstr "Сегмент сакталды"
+
+#: apps/contacts/views.py:1051
+msgid "Could not update the segment"
+msgstr "Сегментти жаңыртуу мүмкүн болгон жок"
+
+#: apps/contacts/views.py:1053
+msgid "Segment updated"
+msgstr "Сегмент жаңыртылды"
+
+#: apps/contacts/views.py:1070
+msgid "Segment deleted"
+msgstr "Сегмент өчүрүлдү"
+
+#: apps/contacts/views.py:1223
+msgid "Pick a CSV file first"
+msgstr "Адегенде CSV файлын тандаңыз"
+
+#: apps/contacts/views.py:1227
+msgid "Confirm the note about reachability"
+msgstr "Жеткиликтүүлүк жөнүндөгү эскертүүнү ырастаңыз"
+
+#: apps/contacts/views.py:1228
+msgid "Imported contacts cannot be messaged until they write to you first."
+msgstr ""
+"Импорттолгон байланыштарга алар сизге биринчи жазмайынча билдирүү жөнөтүүгө "
+"болбойт."
+
+#: apps/contacts/views.py:1234
+msgid "That file is too large"
+msgstr "Бул файл өтө чоң"
+
+#: apps/contacts/views.py:1235
+#, python-format
+msgid "The limit is %(mb)s MB."
+msgstr "Чеги — %(mb)s МБ."
+
+#: apps/contacts/views.py:1262 apps/contacts/views.py:1319
+msgid "That file could not be read"
+msgstr "Бул файлды окуу мүмкүн болгон жок"
+
+#: apps/contacts/views.py:1265
+msgid "File uploaded"
+msgstr "Файл жүктөлдү"
+
+#: apps/contacts/views.py:1266
+msgid "Map its columns to finish."
+msgstr "Аяктоо үчүн мамычаларын дал келтириңиз."
+
+#: apps/contacts/views.py:1314
+msgid "That import is already running"
+msgstr "Бул импорт мурунтан эле иштеп жатат"
+
+#: apps/contacts/views.py:1332
+msgid "That mapping cannot be used"
+msgstr "Бул дал келтирүүнү колдонууга болбойт"
+
+#: apps/contacts/views.py:1347
+msgid "Checking the file"
+msgstr "Файл текшерилүүдө"
+
+#: apps/contacts/views.py:1348 templates/contacts/import_detail.html:93
+msgid "Nothing is written until you confirm."
+msgstr "Ырастамайынча эч нерсе жазылбайт."
+
+#: apps/contacts/views.py:1368
+msgid "Check the file first"
+msgstr "Адегенде файлды текшериңиз"
+
+#: apps/contacts/views.py:1369
+msgid "The preview has to finish before anything is imported."
+msgstr "Эч нерсе импорттолордон мурун алдын ала көрүү аякташы керек."
+
+#: apps/contacts/views.py:1379
+msgid "Import started"
+msgstr "Импорт башталды"
+
+#: apps/contacts/views.py:1380
+msgid "You can leave this page."
+msgstr "Бул баракчадан кете аласыз."
+
+#: apps/contacts/views.py:1463
+msgid "Could not create the tag"
+msgstr "Тег түзүү мүмкүн болгон жок"
+
+#: apps/contacts/views.py:1465
+msgid "That tag already exists"
+msgstr "Мындай тег мурунтан эле бар"
+
+#: apps/contacts/views.py:1466
+msgid "Tag created"
+msgstr "Тег түзүлдү"
+
+#: apps/contacts/views.py:1477
+msgid "Could not rename the tag"
+msgstr "Тегдин атын өзгөртүү мүмкүн болгон жок"
+
+#: apps/contacts/views.py:1478
+msgid "Tag renamed"
+msgstr "Тегдин аты өзгөртүлдү"
+
+#: apps/contacts/views.py:1490
+msgid "Tag deleted"
+msgstr "Тег өчүрүлдү"
+
+#: apps/contacts/views.py:1492
+#, python-format
+#| msgid "Label removed from %(count)s conversation"
+#| msgid_plural "Label removed from %(count)s conversations"
+msgid "%(name)s — removed from %(count)s contact."
+msgid_plural "%(name)s — removed from %(count)s contacts."
+msgstr[0] "%(name)s — %(count)s байланыштан алынды."
+
+#: apps/contacts/views.py:1515
+msgid "Could not merge the tags"
+msgstr "Тегдерди бириктирүү мүмкүн болгон жок"
+
+#: apps/contacts/views.py:1518
+msgid "Tags merged"
+msgstr "Тегдер бириктирилди"
+
+#: apps/contacts/views.py:1519
+#, python-format
+#| msgid "Reconnected %(name)s."
+msgid "%(count)s contact moved to %(name)s."
+msgid_plural "%(count)s contacts moved to %(name)s."
+msgstr[0] "%(count)s байланыш %(name)sга которулду."
+
+#: apps/contacts/views.py:1553
+msgid "Could not create the field"
+msgstr "Талааны түзүү мүмкүн болгон жок"
+
+#: apps/contacts/views.py:1555
+msgid "Field created"
+msgstr "Талаа түзүлдү"
+
+#: apps/contacts/views.py:1568
+msgid "Could not rename the field"
+msgstr "Талаанын атын өзгөртүү мүмкүн болгон жок"
+
+#: apps/contacts/views.py:1570
+msgid "Field renamed"
+msgstr "Талаанын аты өзгөртүлдү"
+
+#: apps/contacts/views.py:1583
+msgid "Field deleted"
+msgstr "Талаа өчүрүлдү"
+
+#: apps/contacts/views.py:1585
+#, python-format
+msgid "%(name)s — %(count)s stored value removed."
+msgid_plural "%(name)s — %(count)s stored values removed."
+msgstr[0] "%(name)s — %(count)s сакталган маани өчүрүлдү."
+
+#: apps/contacts/views.py:1672
+msgid "Could not erase this contact"
+msgstr "Бул байланышты өчүрүү мүмкүн болгон жок"
+
+#: apps/contacts/views.py:1677
+msgid "Contact erased"
+msgstr "Байланыш өчүрүлдү"
+
+#: apps/contacts/views.py:1677
+msgid "Erasure started"
+msgstr "Өчүрүү башталды"
+
+#: apps/contacts/views.py:1679
+#, python-format
+msgid "%(name)s and everything held about them are gone."
+msgstr "%(name)s жана ал жөнүндө сакталган баары жок болду."
+
+#: apps/contacts/views.py:1681
+#, python-format
+msgid ""
+"%(name)s is hidden everywhere already; the rest is being removed in the "
+"background."
+msgstr ""
+"%(name)s мурунтан эле бардык жерде жашырылган; калганы фондо өчүрүлүүдө."
+
+#: apps/contacts/views.py:1713 apps/contacts/views.py:1766
+msgid "Erasure not confirmed"
+msgstr "Өчүрүү ырасталган жок"
+
+#: apps/contacts/views.py:1714 apps/contacts/views.py:1767
+#, python-format
+msgid "Type %(word)s to confirm. Nothing was changed."
+msgstr "Ырастоо үчүн %(word)s жазыңыз. Эч нерсе өзгөргөн жок."
+
+#: apps/contacts/views.py:1745
+msgid ""
+"They are hidden everywhere already. Their messages, identities and consent "
+"records are being removed."
+msgstr ""
+"Алар мурунтан эле бардык жерде жашырылган. Алардын билдирүүлөрү, инденттери "
+"жана макулдук жазуулары өчүрүлүүдө."
+
+#: apps/contacts/views.py:1749
+#, python-format
+msgid ""
+"%(untouched)s of the %(named)s selected was not touched — already deleted, "
+"already being erased, or not in this workspace."
+msgid_plural ""
+"%(untouched)s of the %(named)s selected were not touched — already deleted, "
+"already being erased, or not in this workspace."
+msgstr[0] ""
+"%(named)s тандалгандын %(untouched)sи тийилген жок — мурунтан эле өчүрүлгөн,"
+" өчүрүлүп жатат, же бул иш мейкиндигинде эмес."
+
+#: apps/contacts/views.py:1756
+#, python-format
+#| msgid "%(counter)s character"
+#| msgid_plural "%(counter)s characters"
+msgid "Erasing %(count)s contact"
+msgid_plural "Erasing %(count)s contacts"
+msgstr[0] "%(count)s байланыш өчүрүлүүдө"
+
+#: apps/contacts/views.py:1772
+msgid "That form was for a different contact"
+msgstr "Бул форма башка байланыш үчүн болчу"
+
+#: apps/contacts/views.py:1773
+msgid "Reload the page and try again. Nothing was changed."
+msgstr "Баракчаны кайра жүктөп, дагы аракет кылыңыз. Эч нерсе өзгөргөн жок."
 
 #: apps/flows/starter.py:45
 msgid "Hi! Thanks for getting in touch — how can we help?"
@@ -1187,7 +1744,8 @@ msgstr "файл"
 msgid "Still not sent"
 msgstr "Дагы деле жөнөтүлгөн жок"
 
-#: apps/inbox/views.py:910 templates/inbox/_thread_body.html:151
+#: apps/inbox/views.py:910 templates/contacts/_activity.html:99
+#: templates/inbox/_thread_body.html:151
 msgid "Sent"
 msgstr "Жөнөтүлдү"
 
@@ -1232,21 +1790,9 @@ msgstr "Автоматташтыруу тыныгууда"
 msgid "Nothing running"
 msgstr "Эч нерсе иштебейт"
 
-#: apps/inbox/views.py:1106
-msgid "Automation stopped"
-msgstr "Автоматташтыруу токтотулду"
-
 #: apps/inbox/views.py:1127
 msgid "No tag selected"
 msgstr "Тег тандалган жок"
-
-#: apps/inbox/views.py:1131
-msgid "Tag removed"
-msgstr "Тег алынды"
-
-#: apps/inbox/views.py:1133
-msgid "Tag added"
-msgstr "Тег кошулду"
 
 #: apps/inbox/views.py:1157
 msgid "Not labelled"
@@ -1268,8 +1814,6 @@ msgstr[0] "Метка %(count)s маектен алынды"
 
 #: apps/inbox/views.py:1207
 #, python-format
-#| msgid "%(count)s conversation unassigned"
-#| msgid_plural "%(count)s conversations unassigned"
 msgid "Label added to %(count)s conversation"
 msgid_plural "Label added to %(count)s conversations"
 msgstr[0] "Метка %(count)s маекке кошулду"
@@ -1909,12 +2453,6 @@ msgstr ""
 msgid "Read the API reference"
 msgstr "API справочнигин окуу"
 
-#: templates/api/key_created.html:26 templates/api/webhook_secret.html:22
-#: templates/channels/secret.html:57
-#: templates/inbox/_conversation_rows.html:71
-msgid "Done"
-msgstr "Бүттү"
-
 #: templates/api/keys_list.html:14 templates/api/keys_list.html:21
 msgid "API keys"
 msgstr "API ачкычтары"
@@ -1956,10 +2494,12 @@ msgid "Issue key"
 msgstr "Ачкыч чыгаруу"
 
 #: templates/api/keys_list.html:62 templates/api/webhooks_list.html:52
-#: templates/inbox/_deferred.html:31 templates/inbox/_deferred.html:46
-#: templates/inbox/_label_rows.html:51 templates/inbox/label_settings.html:41
-#: templates/members/list.html:65 templates/members/list.html:108
-#: templates/organizations/workspaces.html:40
+#: templates/contacts/_field_rows.html:57 templates/contacts/_tag_rows.html:59
+#: templates/contacts/_tag_rows.html:71 templates/contacts/field_list.html:36
+#: templates/contacts/tag_list.html:42 templates/inbox/_deferred.html:31
+#: templates/inbox/_deferred.html:46 templates/inbox/_label_rows.html:51
+#: templates/inbox/label_settings.html:41 templates/members/list.html:65
+#: templates/members/list.html:108 templates/organizations/workspaces.html:40
 msgid "Cancel"
 msgstr "Жокко чыгаруу"
 
@@ -1995,7 +2535,8 @@ msgstr "эч качан колдонулган эмес"
 msgid "revoked %(revoked_at)s"
 msgstr "%(revoked_at)s жокко чыгарылды"
 
-#: templates/api/keys_list.html:101 templates/inbox/_label_rows.html:35
+#: templates/api/keys_list.html:101 templates/contacts/_field_rows.html:43
+#: templates/contacts/_tag_rows.html:38 templates/inbox/_label_rows.html:35
 #: templates/inbox/_rule_rows.html:62 templates/members/list.html:88
 #: templates/organizations/workspaces.html:65
 #, python-format
@@ -2060,6 +2601,7 @@ msgstr "Күйгүзүлгөн"
 #: templates/api/webhook_detail.html:45 templates/channels/detail.html:112
 #: templates/channels/sms_settings.html:70
 #: templates/channels/whatsapp_cost_hints.html:17
+#: templates/contacts/_field_rows.html:56 templates/contacts/_tag_rows.html:58
 #: templates/inbox/_label_rows.html:50
 msgid "Save"
 msgstr "Сактоо"
@@ -2110,7 +2652,7 @@ msgstr "Качан"
 msgid "Event"
 msgstr "Окуя"
 
-#: templates/api/webhook_detail.html:70
+#: templates/api/webhook_detail.html:70 templates/contacts/import_list.html:50
 msgid "Result"
 msgstr "Натыйжа"
 
@@ -2137,7 +2679,9 @@ msgstr "Азырынча эч нерсе жеткирилген жок."
 
 #: templates/api/webhook_detail.html:91
 #: templates/channels/whatsapp_templates.html:70
-#: templates/inbox/_label_rows.html:42 templates/inbox/_rule_rows.html:70
+#: templates/contacts/_field_rows.html:50 templates/contacts/_tag_rows.html:47
+#: templates/contacts/list.html:243 templates/inbox/_label_rows.html:42
+#: templates/inbox/_rule_rows.html:70
 msgid "Delete"
 msgstr "Өчүрүү"
 
@@ -2330,6 +2874,7 @@ msgstr "Бул жөнөтүүчүдөн кат алууну токтотосуз
 
 #: templates/channels/_unsubscribe_body.html:27
 #: templates/channels/unsubscribe_confirm.html:3
+#: templates/contacts/list.html:233
 msgid "Unsubscribe"
 msgstr "Жазылуудан чыгуу"
 
@@ -2361,10 +2906,6 @@ msgstr ""
 #: templates/channels/detail.html:60
 msgid "What this platform carries"
 msgstr "Бул платформа эмнени колдойт"
-
-#: templates/channels/detail.html:62
-msgid "Text"
-msgstr "Текст"
 
 #: templates/channels/detail.html:63
 #, python-format
@@ -3670,14 +4211,11 @@ msgid "Category"
 msgstr "Категория"
 
 #: templates/channels/whatsapp_templates.html:26
-msgid "Number"
-msgstr "Номер"
-
-#: templates/channels/whatsapp_templates.html:26
 msgid "Variables"
 msgstr "Өзгөрмөлөр"
 
 #: templates/channels/whatsapp_templates.html:26
+#: templates/contacts/import_list.html:50
 msgid "Status"
 msgstr "Статус"
 
@@ -3716,6 +4254,920 @@ msgstr ""
 "администраторлоруна билдирет; четке кагылган шаблон жогорудан Meta'нын "
 "себебин көрсөтөт жана түзөтүлүп, кайра жөнөтүлсө болот. Маркетинг шаблондору"
 " эң катуу текшерилет жана жөнөтүү үчүн эң кымбат турат."
+
+#: templates/contacts/_activity.html:21
+msgid "Activity"
+msgstr "Активдүүлүк"
+
+#: templates/contacts/_activity.html:35
+msgid ""
+"Stop this automation? The run is expired and its pending timers are "
+"cancelled."
+msgstr ""
+"Бул автоматташтырууну токтотосузбу? Аткаруу мөөнөтү бүтөт жана күтүлүп "
+"жаткан таймерлер жокко чыгарылат."
+
+#: templates/contacts/_activity.html:36 templates/inbox/_sidebar.html:56
+msgid "Stop automation"
+msgstr "Автоматташтырууну токтотуу"
+
+#: templates/contacts/_activity.html:40
+msgid "No automation running."
+msgstr "Иштеп жаткан автоматташтыруу жок."
+
+#: templates/contacts/_activity.html:48
+msgid "Flow"
+msgstr "Сценарий"
+
+#: templates/contacts/_activity.html:50
+msgid "Start a flow…"
+msgstr "Сценарийди баштоо…"
+
+#: templates/contacts/_activity.html:53
+msgid "Start"
+msgstr "Баштоо"
+
+#: templates/contacts/_activity.html:60
+msgid "Starting a flow ends whatever this contact is already running."
+msgstr ""
+"Сценарийди баштоо бул байланыш үчүн мурунтан иштеп жаткан нерсени аяктайт."
+
+#: templates/contacts/_activity.html:77 templates/contacts/list.html:228
+msgid "Sequence"
+msgstr "Ырааттуулук"
+
+#: templates/contacts/_activity.html:81
+msgid "Enrol"
+msgstr "Жазуу"
+
+#: templates/contacts/_activity.html:82 templates/inbox/list.html:141
+msgid "Remove"
+msgstr "Алып салуу"
+
+#: templates/contacts/_activity.html:83
+msgid "Enrolling restarts the sequence at step 1."
+msgstr "Жазуу ырааттуулукту 1-кадамдан кайра баштайт."
+
+#: templates/contacts/_activity.html:88
+#, python-format
+msgid ""
+"No sequences yet. <a href=\"%(campaigns_url)s\">create one</a>\n"
+"      to enrol this contact."
+msgstr ""
+"Азырынча ырааттуулук жок. Бул байланышты жазуу үчүн <a "
+"href=\"%(campaigns_url)s\">бирин түзүңүз</a>."
+
+#: templates/contacts/_activity.html:95
+msgid "Recent messages"
+msgstr "Акыркы билдирүүлөр"
+
+#: templates/contacts/_activity.html:99
+msgid "Received"
+msgstr "Алынды"
+
+#: templates/contacts/_activity.html:101
+msgid "Internal note"
+msgstr "Ички эскертүү"
+
+#: templates/contacts/_activity.html:108
+msgid "Open in inbox"
+msgstr "Кирген катта ачуу"
+
+#: templates/contacts/_activity.html:111
+msgid "No text"
+msgstr "Текст жок"
+
+#: templates/contacts/_activity.html:113
+#, python-format
+#| msgid "%(counter)s segment"
+#| msgid_plural "%(counter)s segments"
+msgid "%(count)s attachment"
+msgid_plural "%(count)s attachments"
+msgstr[0] "%(count)s тиркеме"
+
+#: templates/contacts/_activity.html:118
+msgid "Nothing yet. Messages appear here as soon as this contact writes in."
+msgstr ""
+"Азырынча эч нерсе жок. Бул байланыш жазган замат билдирүүлөр бул жерде пайда"
+" болот."
+
+#: templates/contacts/_channels.html:37 templates/inbox/_sidebar.html:31
+#, python-format
+msgid "Opted out %(date)s"
+msgstr "%(date)s баш тартты"
+
+#: templates/contacts/_channels.html:39 templates/inbox/_sidebar.html:33
+msgid "Opted in"
+msgstr "Макул болду"
+
+#: templates/contacts/_channels.html:41
+msgid "No consent recorded"
+msgstr "Макулдук катталган жок"
+
+#: templates/contacts/_channels.html:52
+msgid "Captured before a connection existed; it attaches at first send"
+msgstr "Туташуу пайда болордон мурун алынган; биринчи жөнөтүүдө байланат"
+
+#: templates/contacts/_channels.html:54
+#, python-format
+msgid "Window closes in %(time)s"
+msgstr "Терезе %(time)s ичинде жабылат"
+
+#: templates/contacts/_channels.html:56
+msgid "Window closed"
+msgstr "Терезе жабылды"
+
+#: templates/contacts/_channels.html:61
+#, python-format
+msgid ""
+"Opt this contact out on %(platform)s? This cannot be undone from here. Only "
+"the contact can re-subscribe."
+msgstr ""
+"Бул байланышты %(platform)sдан баш тарттырасызбы? Муну бул жерден жокко "
+"чыгарууга болбойт. Кайра жазылуу — байланыштын өзүнө гана мүмкүн."
+
+#: templates/contacts/_channels.html:66
+msgid "Opt out"
+msgstr "Баш тартуу"
+
+#: templates/contacts/_channels.html:72
+msgid ""
+"No channels yet. A contact becomes reachable when they message one of this\n"
+"      workspace's connections. Importing an address does not create one."
+msgstr ""
+"Азырынча каналдар жок. Байланыш бул иш мейкиндигинин туташууларынын бирине "
+"жазганда жеткиликтүү болуп калат. Дарек импорттоо канал түзбөйт."
+
+#: templates/contacts/_field_rows.html:38
+#, python-format
+#| msgid "%(count)s conversation unassigned"
+#| msgid_plural "%(count)s conversations unassigned"
+msgid "%(count)s value stored"
+msgid_plural "%(count)s values stored"
+msgstr[0] "%(count)s маани сакталды"
+
+#: templates/contacts/_field_rows.html:41 templates/contacts/_tag_rows.html:36
+msgid "Rename"
+msgstr "Атын өзгөртүү"
+
+#: templates/contacts/_field_rows.html:49
+#, python-format
+#| msgid ""
+#| "Delete “%(name)s”? Conversations it has already labelled keep their labels."
+msgid "Delete “%(name)s”? %(count)s stored value will go with it."
+msgid_plural "Delete “%(name)s”? %(count)s stored values will go with it."
+msgstr[0] ""
+"«%(name)s»ди өчүрөсүзбү? Аны менен бирге %(count)s сакталган маани жок "
+"болот."
+
+#: templates/contacts/_field_rows.html:64
+msgid "No custom fields yet"
+msgstr "Азырынча атайын талаалар жок"
+
+#: templates/contacts/_field_rows.html:66
+msgid ""
+"A field is where a flow puts an answer it collected — a size, a booking "
+"date, a plan — so a filter can search on it later."
+msgstr ""
+"Талаа — сценарий жыйнаган жоопту (өлчөм, брондоо күнү, тариф) коё турган "
+"жер, ошондуктан чыпка кийинчерээк ал боюнча издей алат."
+
+#: templates/contacts/_field_rows.html:68
+#: templates/contacts/field_list.html:20
+msgid "New field"
+msgstr "Жаңы талаа"
+
+#: templates/contacts/_filter_bar.html:32
+msgid "Match"
+msgstr "Дал келүү"
+
+#: templates/contacts/_filter_bar.html:34
+msgid "Match all rules"
+msgstr "Бардык эрежелерге дал келүү"
+
+#: templates/contacts/_filter_bar.html:35
+msgid "Match any rule"
+msgstr "Каалаган эрежеге дал келүү"
+
+#: templates/contacts/_filter_bar.html:37
+msgid "Add rule"
+msgstr "Эреже кошуу"
+
+#: templates/contacts/_filter_bar.html:39 templates/inbox/list.html:142
+#: templates/workspaces/settings.html:73 templates/workspaces/settings.html:83
+msgid "Clear"
+msgstr "Тазалоо"
+
+#: templates/contacts/_filter_bar.html:41
+msgid "No filter: showing everyone."
+msgstr "Чыпка жок: баары көрсөтүлдү."
+
+#: templates/contacts/_filter_bar.html:47
+msgid "Look at"
+msgstr "Карала турган"
+
+#: templates/contacts/_filter_bar.html:56
+msgid "Which one"
+msgstr "Кайсынысы"
+
+#: templates/contacts/_filter_bar.html:58
+msgid "Choose…"
+msgstr "Тандаңыз…"
+
+#: templates/contacts/_filter_bar.html:65
+msgid "Condition"
+msgstr "Шарт"
+
+#: templates/contacts/_filter_bar.html:80
+msgid "Value"
+msgstr "Маани"
+
+#: templates/contacts/_filter_bar.html:85 templates/contacts/_rows.html:118
+msgid "Yes"
+msgstr "Ооба"
+
+#: templates/contacts/_filter_bar.html:86
+msgid "No"
+msgstr "Жок"
+
+#: templates/contacts/_filter_bar.html:98
+msgid "on a date"
+msgstr "белгилүү күнгө"
+
+#: templates/contacts/_filter_bar.html:99
+msgid "a number of days away"
+msgstr "күндөрдүн саны боюнча"
+
+#: templates/contacts/_filter_bar.html:116
+msgid "Negative is days ago, positive is days from now"
+msgstr "Терс сан — мурунку күндөр, оң сан — азыркыдан кийинки күндөр"
+
+#: templates/contacts/_filter_bar.html:129
+msgid "Remove rule"
+msgstr "Эрежени алып салуу"
+
+#: templates/contacts/_filter_bar.html:144
+msgid "Apply filter"
+msgstr "Чыпканы колдонуу"
+
+#: templates/contacts/_filter_bar.html:162
+#, python-format
+msgid "Update “%(name)s”"
+msgstr "«%(name)s»ди жаңыртуу"
+
+#: templates/contacts/_filter_bar.html:166
+msgid "Segment name"
+msgstr "Сегменттин аты"
+
+#: templates/contacts/_filter_bar.html:167
+msgid "Save as a new segment…"
+msgstr "Жаңы сегмент катары сактоо…"
+
+#: templates/contacts/_filter_bar.html:172
+msgid "Save as segment"
+msgstr "Сегмент катары сактоо"
+
+#: templates/contacts/_filter_bar.html:177
+msgid "Delete segment"
+msgstr "Сегментти өчүрүү"
+
+#: templates/contacts/_filter_bar.html:181
+msgid "of"
+msgstr "ичинен"
+
+#: templates/contacts/_filter_bar.html:182
+msgid "rules"
+msgstr "эреже"
+
+#: templates/contacts/_import_progress.html:20
+#, python-format
+msgid "%(processed)s of %(total)s rows"
+msgstr "%(total)sдин %(processed)sи"
+
+#: templates/contacts/_import_progress.html:32
+#: templates/contacts/import_list.html:58
+#, python-format
+msgid "%(count)s created"
+msgstr "%(count)s түзүлдү"
+
+#: templates/contacts/_import_progress.html:33
+#: templates/contacts/import_list.html:59
+#, python-format
+msgid "%(count)s updated"
+msgstr "%(count)s жаңыртылды"
+
+#: templates/contacts/_import_progress.html:34
+#: templates/contacts/import_list.html:60
+#, python-format
+msgid "%(count)s skipped"
+msgstr "%(count)s өткөрүлүп жиберилди"
+
+#: templates/contacts/_import_progress.html:35
+#: templates/contacts/import_list.html:61
+#, python-format
+#| msgid "%(counter)s character"
+#| msgid_plural "%(counter)s characters"
+msgid "%(count)s error"
+msgid_plural "%(count)s errors"
+msgstr[0] "%(count)s ката"
+
+#: templates/contacts/_import_progress.html:37
+msgid ""
+"Nothing has been written yet. These are the numbers the import would "
+"produce."
+msgstr "Азырынча эч нерсе жазылган жок. Бул импорт бере турган сандар."
+
+#: templates/contacts/_import_progress.html:42
+msgid "Rows that will not import"
+msgstr "Импортолбой турган саптар"
+
+#: templates/contacts/_import_progress.html:44
+msgid "Row"
+msgstr "Сап"
+
+#: templates/contacts/_import_progress.html:44
+#: templates/contacts/import_detail.html:55
+msgid "Column"
+msgstr "Мамыча"
+
+#: templates/contacts/_import_progress.html:44
+msgid "Problem"
+msgstr "Көйгөй"
+
+#: templates/contacts/_import_progress.html:56
+#, python-format
+msgid "Showing 20 of %(count)s. Download the report for the rest."
+msgstr ""
+"%(count)sнин ичинен 20 көрсөтүлдү. Калгандары үчүн отчётту жүктөп алыңыз."
+
+#: templates/contacts/_import_progress.html:60
+#, python-format
+msgid ""
+"Only the first %(shown)s row errors were stored; the remaining\n"
+"        %(hidden)s were counted but not recorded."
+msgstr ""
+"Сап каталарынын биринчи %(shown)sи гана сакталды; калган %(hidden)sи "
+"эсептелди, бирок жазылган жок."
+
+#: templates/contacts/_import_progress.html:64
+msgid "Download the report (CSV)"
+msgstr "Отчётту жүктөп алуу (CSV)"
+
+#: templates/contacts/_import_progress.html:68
+#, python-format
+msgid "Import %(count)s row(s) now?"
+msgstr "%(count)s сапты азыр импорттойсузбу?"
+
+#: templates/contacts/_import_progress.html:73
+msgid "Import for real"
+msgstr "Чын эле импорттоо"
+
+#: templates/contacts/_import_progress.html:74
+msgid "Rows listed above are skipped; everything else is written."
+msgstr ""
+"Жогоруда көрсөтүлгөн саптар өткөрүлүп жиберилет; калганынын баары жазылат."
+
+#: templates/contacts/_rows.html:23
+#, python-format
+msgid ""
+"This filter could not be applied, so no contacts are shown: %(list_error)s"
+msgstr ""
+"Бул чыпканы колдонуу мүмкүн болгон жок, ошондуктан байланыштар көрсөтүлгөн "
+"жок: %(list_error)s"
+
+#: templates/contacts/_rows.html:46
+msgid "Select this page"
+msgstr "Бул баракчаны тандоо"
+
+#: templates/contacts/_rows.html:53
+msgid "Last seen"
+msgstr "Акыркы көрүлгөн"
+
+#: templates/contacts/_rows.html:54
+msgid "Contactable"
+msgstr "Байланышууга жеткиликтүү"
+
+#: templates/contacts/_rows.html:61 templates/inbox/_conversation_rows.html:40
+#, python-format
+msgid "Select %(name)s"
+msgstr "%(name)sды тандоо"
+
+#: templates/contacts/_rows.html:80
+msgid "No email or phone yet"
+msgstr "Азырынча email же телефон жок"
+
+#: templates/contacts/_rows.html:96 templates/inbox/_conversation_rows.html:70
+#, python-format
+msgid "%(time)s ago"
+msgstr "%(time)s мурун"
+
+#: templates/contacts/_rows.html:114
+msgid "Opted out on at least one channel, still opted in on another"
+msgstr "Жок дегенде бир каналда баш тартты, экинчисинде жазылган бойдон"
+
+#: templates/contacts/_rows.html:115
+msgid "On some channels"
+msgstr "Кээ бир каналдарда"
+
+#: templates/contacts/_rows.html:122
+msgid "Not yet"
+msgstr "Азырынча жок"
+
+#: templates/contacts/_rows.html:132
+#, python-format
+msgid "Page %(number)s of %(pages)s."
+msgstr "%(pages)sдин %(number)s-баракчасы."
+
+#: templates/contacts/_rows.html:133
+#, python-format
+#| msgid "%(count)s conversation unassigned"
+#| msgid_plural "%(count)s conversations unassigned"
+msgid "%(count)s contact in all."
+msgid_plural "%(count)s contacts in all."
+msgstr[0] "Баары болуп %(count)s байланыш."
+
+#: templates/contacts/_rows.html:137
+msgid "Previous"
+msgstr "Мурунку"
+
+#: templates/contacts/_rows.html:142
+msgid "Next"
+msgstr "Кийинки"
+
+#: templates/contacts/_rows.html:147
+msgid "No contacts match this filter."
+msgstr "Бул чыпкага дал келген байланыш жок."
+
+#: templates/contacts/_rows.html:148
+msgid ""
+"No contacts yet. They arrive when someone messages a connected channel, or "
+"when you import a CSV."
+msgstr ""
+"Азырынча байланыштар жок. Алар бирөө туташтырылган каналга жазганда же CSV "
+"импорттогондо пайда болот."
+
+#: templates/contacts/_tag_chips.html:24
+#, python-format
+msgid "Remove %(name)s"
+msgstr "%(name)sды алып салуу"
+
+#: templates/contacts/_tag_chips.html:32
+msgid "No tags yet."
+msgstr "Азырынча тегдер жок."
+
+#: templates/contacts/_tag_chips.html:44
+msgid "Find or add a tag"
+msgstr "Тег табуу же кошуу"
+
+#: templates/contacts/_tag_chips.html:46
+msgid "Find a tag"
+msgstr "Тег табуу"
+
+#: templates/contacts/_tag_rows.html:33
+#, python-format
+#| msgid "%(counter)s character"
+#| msgid_plural "%(counter)s characters"
+msgid "On %(count)s contact"
+msgid_plural "On %(count)s contacts"
+msgstr[0] "%(count)s байланышта"
+
+#: templates/contacts/_tag_rows.html:44
+msgid "Merge into another tag…"
+msgstr "Башка тег менен бириктирүү…"
+
+#: templates/contacts/_tag_rows.html:46
+#, python-format
+#| msgid "Label removed from %(count)s conversation"
+#| msgid_plural "Label removed from %(count)s conversations"
+msgid "Delete “%(name)s”? It will be removed from %(count)s contact."
+msgid_plural "Delete “%(name)s”? It will be removed from %(count)s contacts."
+msgstr[0] "«%(name)s»ди өчүрөсүзбү? Ал %(count)s байланыштан алынат."
+
+#: templates/contacts/_tag_rows.html:62
+#, python-format
+msgid ""
+"Merge “%(name)s” into the chosen tag? “%(name)s” is deleted and its "
+"%(count)s contact keep the other one."
+msgid_plural ""
+"Merge “%(name)s” into the chosen tag? “%(name)s” is deleted and its "
+"%(count)s contacts keep the other one."
+msgstr[0] ""
+"«%(name)s»ди тандалган тег менен бириктиресизби? «%(name)s» өчүрүлөт, анын "
+"%(count)s байланышы башкасын сактайт."
+
+#: templates/contacts/_tag_rows.html:64
+#, python-format
+msgid "Merge %(name)s into"
+msgstr "%(name)sды бириктирүү"
+
+#: templates/contacts/_tag_rows.html:67 templates/contacts/list.html:208
+msgid "Choose a tag…"
+msgstr "Тег тандаңыз…"
+
+#: templates/contacts/_tag_rows.html:70
+msgid "Merge"
+msgstr "Бириктирүү"
+
+#: templates/contacts/_tag_rows.html:84
+msgid "No tags yet"
+msgstr "Азырынча тегдер жок"
+
+#: templates/contacts/_tag_rows.html:86
+msgid ""
+"A tag is how a flow says “this person asked about pricing”, so a filter can "
+"find them again later."
+msgstr ""
+"Тег — сценарийдин «бул адам баа жөнүндө сурады» деп айтуу ыкмасы, ошондуктан"
+" чыпка аны кийин кайра таба алат."
+
+#: templates/contacts/_tag_rows.html:88 templates/contacts/tag_list.html:27
+msgid "New tag"
+msgstr "Жаңы тег"
+
+#: templates/contacts/_tag_suggestions.html:24
+#, python-format
+msgid "Create “%(term)s”"
+msgstr "«%(term)s»ди түзүү"
+
+#: templates/contacts/_tag_suggestions.html:31
+#, python-format
+msgid "No tag matches “%(term)s”."
+msgstr "«%(term)s»ге дал келген тег жок."
+
+#: templates/contacts/_tag_suggestions.html:31
+msgid "Every tag is already on this contact."
+msgstr "Бардык тегдер бул байланышта мурунтан эле бар."
+
+#: templates/contacts/detail.html:30
+#, python-format
+msgid "Added %(added)s"
+msgstr "%(added)s кошулду"
+
+#: templates/contacts/detail.html:30
+#, python-format
+msgid "last seen %(seen)s"
+msgstr "акыркы жолу %(seen)s көрүлдү"
+
+#: templates/contacts/detail.html:35
+msgid "Back to contacts"
+msgstr "Байланыштарга кайтуу"
+
+#: templates/contacts/detail.html:44
+msgid "Export data"
+msgstr "Маалыматтарды экспорттоо"
+
+#: templates/contacts/detail.html:47
+#, python-format
+msgid ""
+"Delete %(name)s? They are hidden everywhere, drop out of every segment, and "
+"any running automation stops."
+msgstr ""
+"%(name)sды өчүрөсүзбү? Ал бардык жерде жашырылат, ар бир сегменттен чыгат, "
+"жана иштеп жаткан бардык автоматташтыруу токтойт."
+
+#: templates/contacts/detail.html:53
+msgid "Delete contact"
+msgstr "Байланышты өчүрүү"
+
+#: templates/contacts/detail.html:66
+msgid "Details"
+msgstr "Чоо-жайы"
+
+#: templates/contacts/detail.html:68
+msgid "Each field saves on its own when you leave it."
+msgstr "Ар бир талаа андан чыкканыңызда өзү сакталат."
+
+#: templates/contacts/detail.html:70
+msgid "You have read-only access to this workspace."
+msgstr "Сизде бул иш мейкиндигине окуу үчүн гана мүмкүнчүлүк бар."
+
+#: templates/contacts/detail.html:91 templates/contacts/field_list.html:8
+#: templates/contacts/field_list.html:15
+msgid "Custom fields"
+msgstr "Атайын талаалар"
+
+#: templates/contacts/detail.html:104
+msgid "True"
+msgstr "Чын"
+
+#: templates/contacts/detail.html:105
+msgid "False"
+msgstr "Жалган"
+
+#: templates/contacts/detail.html:129
+msgid "Emptying a field removes its value entirely."
+msgstr "Талааны бошотуу анын маанисин толугу менен өчүрөт."
+
+#: templates/contacts/detail.html:132
+msgid "No custom fields yet."
+msgstr "Азырынча атайын талаалар жок."
+
+#: templates/contacts/detail.html:133
+msgid "Add one"
+msgstr "Кошуу"
+
+#: templates/contacts/detail.html:154
+msgid "Erase permanently"
+msgstr "Биротоло өчүрүү"
+
+#: templates/contacts/detail.html:156
+#, python-format
+msgid ""
+"Removes %(name)s outright: their profile, custom field values, tags, channel\n"
+"          identities, consent records, conversations and message bodies. Counters stay, anonymised. A\n"
+"          suppressed email address is kept, because that is a fact about a mailbox rather than about this\n"
+"          contact. <strong>This cannot be undone.</strong>"
+msgstr ""
+"%(name)sды толугу менен өчүрөт: профилин, атайын талаа маанилерин, тегдерин,"
+" канал идентификаторлорун, макулдук жазууларын, маектерин жана билдирүү "
+"тексттерин. Эсептегичтер аноним түрдө калат. Тыюу салынган email дареги "
+"сакталып калат, себеби бул почта жайы жөнүндөгү факт, бул байланыш жөнүндө "
+"эмес. <strong>Муну жокко чыгарууга болбойт.</strong>"
+
+#: templates/contacts/detail.html:161
+#, python-format
+msgid ""
+"Erase %(name)s permanently? Their messages, identities and consent records "
+"are removed for good. This cannot be undone."
+msgstr ""
+"%(name)sды биротоло өчүрөсүзбү? Алардын билдирүүлөрү, идентификаторлору жана"
+" макулдук жазуулары биротоло өчүрүлөт. Муну жокко чыгарууга болбойт."
+
+#: templates/contacts/detail.html:168
+#, python-format
+msgid "Type <code>%(word)s</code> to confirm"
+msgstr "Ырастоо үчүн <code>%(word)s</code> жазыңыз"
+
+#: templates/contacts/detail.html:171
+msgid "Erase contact"
+msgstr "Байланышты өчүрүү"
+
+#: templates/contacts/field_list.html:17
+msgid ""
+"An extra detail you keep on a contact that is not already built in: a size, "
+"a booking date, a plan. Flows fill them in and filters can search on them."
+msgstr ""
+"Байланыш жөнүндө мурунтан жок кошумча чоо-жай: өлчөм, брондоо күнү, тариф. "
+"Сценарийлер аларды толтурат, чыпкалар алар боюнча издей алат."
+
+#: templates/contacts/field_list.html:23
+msgid "Plan"
+msgstr "Тариф"
+
+#: templates/contacts/field_list.html:26
+msgid "What is the field called?"
+msgstr "Талаа кандай аталат?"
+
+#: templates/contacts/field_list.html:30
+msgid "Type"
+msgstr "Түрү"
+
+#: templates/contacts/field_list.html:35 templates/contacts/tag_list.html:41
+#: templates/inbox/label_settings.html:40
+msgid "Add it"
+msgstr "Кошуу"
+
+#: templates/contacts/field_list.html:40
+msgid ""
+"Pick the type carefully: it is fixed once the field exists, and it decides "
+"how a filter can compare it."
+msgstr ""
+"Түрдү кылдаттык менен тандаңыз: талаа түзүлгөндөн кийин ал бекитилет жана "
+"чыпка аны кантип салыштыра турганын аныктайт."
+
+#: templates/contacts/import_detail.html:15
+msgid "Import"
+msgstr "Импорт"
+
+#: templates/contacts/import_detail.html:17
+#: templates/contacts/import_list.html:13
+#: templates/contacts/import_list.html:16
+msgid "Import contacts"
+msgstr "Байланыштарды импорттоо"
+
+#: templates/contacts/import_detail.html:23
+#, python-format
+msgid "Uploaded %(date)s"
+msgstr "%(date)s жүктөлдү"
+
+#: templates/contacts/import_detail.html:25
+msgid "All imports"
+msgstr "Бардык импорттор"
+
+#: templates/contacts/import_detail.html:44
+msgid "Map the columns"
+msgstr "Мамычаларды дал келтирүү"
+
+#: templates/contacts/import_detail.html:46
+msgid ""
+"Leave a column unmapped to ignore it. Mapping a column to <strong>Tags</strong> splits\n"
+"      its cell on <code>;</code> or <code>,</code> and attaches each name, creating tags that\n"
+"      do not exist yet."
+msgstr ""
+"Аны эске албоо үчүн мамычаны дал келтирбей калтырыңыз. Мамычаны "
+"<strong>Тегдер</strong>ге дал келтирүү анын клеткасын <code>;</code> же "
+"<code>,</code> боюнча бөлүп, ар бир атты тиркейт, азырынча жок тегдерди "
+"түзөт."
+
+#: templates/contacts/import_detail.html:51
+msgid "(unnamed)"
+msgstr "(аты жок)"
+
+#: templates/contacts/import_detail.html:55
+msgid "Sample"
+msgstr "Мисал"
+
+#: templates/contacts/import_detail.html:55
+msgid "Import as"
+msgstr "Кантип импорттоо"
+
+#: templates/contacts/import_detail.html:64
+#, python-format
+msgid "Import column %(name)s as"
+msgstr "%(name)s мамычасын кантип импорттоо"
+
+#: templates/contacts/import_detail.html:67
+msgid "Ignore"
+msgstr "Этибарга албоо"
+
+#: templates/contacts/import_detail.html:82
+msgid "When a row matches an existing contact"
+msgstr "Сап мурунтан бар байланышка дал келгенде"
+
+#: templates/contacts/import_detail.html:89
+msgid ""
+"Matched on email when you map one, otherwise on phone. Blank cells never "
+"clear a stored value. Emptying a field is an edit you make on the contact."
+msgstr ""
+"Дал келтирсеңиз email боюнча, болбосо телефон боюнча дал келет. Бош "
+"клеткалар сакталган маанини эч качан тазалабайт. Талааны бошотуу — "
+"байланышта өзүңүз жасаган түзөтүү."
+
+#: templates/contacts/import_detail.html:92
+msgid "Check the file"
+msgstr "Файлды текшерүү"
+
+#: templates/contacts/import_list.html:17
+msgid "Upload a CSV, map its columns, check it, then import."
+msgstr ""
+"CSV жүктөп, мамычаларын дал келтирип, текшерип, андан кийин импорттоңуз."
+
+#: templates/contacts/import_list.html:22
+msgid "Upload a file"
+msgstr "Файл жүктөө"
+
+#: templates/contacts/import_list.html:27
+msgid "CSV file"
+msgstr "CSV файлы"
+
+#: templates/contacts/import_list.html:30
+#, python-format
+msgid ""
+"Up to %(mb)s MB and %(rows)s rows. The first row must hold the column names."
+msgstr ""
+"%(mb)s МБга жана %(rows)s сапка чейин. Биринчи сап мамыча аттарын камтышы "
+"керек."
+
+#: templates/contacts/import_list.html:36
+msgid ""
+"I understand that imported contacts are <strong>not reachable on any channel</strong>\n"
+"        until they message this workspace first. Importing an email address or a phone number\n"
+"        does not create a messaging identity and is not a record of consent."
+msgstr ""
+"Импорттолгон байланыштар бул иш мейкиндигине биринчи жазмайынча <strong>эч "
+"бир каналда жеткиликтүү эмес</strong> экенин түшүнөм. Email дарегин же "
+"телефон номерин импорттоо билдирүү идентификаторун түзбөйт жана макулдуктун "
+"жазуусу болуп саналбайт."
+
+#: templates/contacts/import_list.html:42
+msgid "Upload"
+msgstr "Жүктөө"
+
+#: templates/contacts/import_list.html:47
+msgid "Recent imports"
+msgstr "Акыркы импорттор"
+
+#: templates/contacts/import_list.html:50
+msgid "File"
+msgstr "Файл"
+
+#: templates/contacts/import_list.html:50
+msgid "Rows"
+msgstr "Саптар"
+
+#: templates/contacts/import_list.html:50
+msgid "Started by"
+msgstr "Баштаган"
+
+#: templates/contacts/import_list.html:70
+msgid "No imports yet."
+msgstr "Азырынча импорттор жок."
+
+#: templates/contacts/list.html:49
+#, python-format
+msgid "%(count)s person has messaged you or been imported."
+msgid_plural "%(count)s people have messaged you or been imported."
+msgstr[0] "%(count)s адам сизге жазды же импортолду."
+
+#: templates/contacts/list.html:51
+msgid "Everyone who has messaged you or been imported."
+msgstr "Сизге жазган же импортолгон бардык адамдар."
+
+#: templates/contacts/list.html:65
+msgid "Export"
+msgstr "Экспорт"
+
+#: templates/contacts/list.html:66
+msgid "Import a CSV"
+msgstr "CSV импорттоо"
+
+#: templates/contacts/list.html:100
+msgid "Everyone"
+msgstr "Баары"
+
+#: templates/contacts/list.html:122
+msgid "Search by name, email or phone"
+msgstr "Аты, email же телефон боюнча издөө"
+
+#: templates/contacts/list.html:124
+msgid "Search contacts"
+msgstr "Байланыштарды издөө"
+
+#: templates/contacts/list.html:141
+msgid "Filter"
+msgstr "Чыпка"
+
+#: templates/contacts/list.html:144
+msgid "Sort"
+msgstr "Иреттөө"
+
+#: templates/contacts/list.html:186
+#, python-format
+msgid ""
+"Delete “%(name)s”? The contacts stay; any flow whose condition node "
+"references this segment stops validating."
+msgstr ""
+"«%(name)s»ди өчүрөсүзбү? Байланыштар калат; бул сегментке шилтеме кылган "
+"шарт түйүнү бар кандайдыр бир сценарий текшерүүдөн өтпөй калат."
+
+#: templates/contacts/list.html:197 templates/inbox/list.html:133
+msgid "selected"
+msgstr "тандалды"
+
+#: templates/contacts/list.html:206
+msgid "Tag"
+msgstr "Тег"
+
+#: templates/contacts/list.html:211
+msgid "Add tag"
+msgstr "Тег кошуу"
+
+#: templates/contacts/list.html:212 templates/inbox/_sidebar.html:78
+msgid "Remove tag"
+msgstr "Тегди алып салуу"
+
+#: templates/contacts/list.html:232 templates/organizations/billing.html:114
+msgid "Subscribe"
+msgstr "Жазылуу"
+
+#: templates/contacts/list.html:241
+msgid ""
+"Delete the selected contacts? They are hidden everywhere and drop out of "
+"every segment."
+msgstr ""
+"Тандалган байланыштарды өчүрөсүзбү? Алар бардык жерде жашырылат жана ар бир "
+"сегменттен чыгат."
+
+#: templates/contacts/list.html:254
+#, python-format
+msgid "Type %(word)s to confirm"
+msgstr "Ырастоо үчүн %(word)s жазыңыз"
+
+#: templates/contacts/list.html:258
+msgid ""
+"Erase the selected contacts permanently? Their messages, identities and "
+"consent records are removed for good. This cannot be undone."
+msgstr ""
+"Тандалган байланыштарды биротоло өчүрөсүзбү? Алардын билдирүүлөрү, "
+"идентификаторлору жана макулдук жазуулары биротоло өчүрүлөт. Муну жокко "
+"чыгарууга болбойт."
+
+#: templates/contacts/list.html:266
+msgid "Clear selection"
+msgstr "Тандоону тазалоо"
+
+#: templates/contacts/tag_list.html:24
+msgid ""
+"A tag labels a person. Flows add and remove them, segments filter on them, "
+"and deleting one takes it off every contact carrying it."
+msgstr ""
+"Тег адамды белгилейт. Сценарийлер аларды кошот жана алат, сегменттер алар "
+"боюнча чыпкалайт, ал эми тегди өчүрүү аны алып жүргөн бардык байланыштан "
+"алып салат."
+
+#: templates/contacts/tag_list.html:38
+msgid "What is the tag called?"
+msgstr "Тег кандай аталат?"
 
 #: templates/inbox/_composer.html:33
 msgid "Reply"
@@ -3808,19 +5260,9 @@ msgstr "Сиз бул кирген катты оки аласыз, бирок ж
 msgid "No conversations match these filters."
 msgstr "Бул чыпкаларга дал келген маек жок."
 
-#: templates/inbox/_conversation_rows.html:40
-#, python-format
-msgid "Select %(name)s"
-msgstr "%(name)sды тандоо"
-
 #: templates/inbox/_conversation_rows.html:64
 msgid "Unread"
 msgstr "Окулган жок"
-
-#: templates/inbox/_conversation_rows.html:70
-#, python-format
-msgid "%(time)s ago"
-msgstr "%(time)s мурун"
 
 #: templates/inbox/_conversation_rows.html:80
 msgid "Something is scheduled on this conversation"
@@ -4057,19 +5499,10 @@ msgstr[0] ""
 "байланыш маалыматтарын эски билдирүүлөр менен салыштырат, ошондуктан бул "
 "ошол учурда эмне болушу мүмкүн экенин кайра ойнотуу эмес, алдын ала көрүү."
 
-#: templates/inbox/_sidebar.html:31
-#, python-format
-msgid "Opted out %(date)s"
-msgstr "%(date)s баш тартты"
-
 #: templates/inbox/_sidebar.html:33
 #, python-format
 msgid "Opted in via %(source)s"
 msgstr "%(source)s аркылуу макул болду"
-
-#: templates/inbox/_sidebar.html:33
-msgid "Opted in"
-msgstr "Макул болду"
 
 #: templates/inbox/_sidebar.html:35
 msgid "No opt-in recorded"
@@ -4092,10 +5525,6 @@ msgstr "Канал даректери катталган эмес."
 msgid "Automation"
 msgstr "Автоматташтыруу"
 
-#: templates/inbox/_sidebar.html:56
-msgid "Stop automation"
-msgstr "Автоматташтырууну токтотуу"
-
 #: templates/inbox/_sidebar.html:60
 msgid "Nothing running for this contact."
 msgstr "Бул байланыш үчүн эч нерсе иштебейт."
@@ -4107,10 +5536,6 @@ msgstr "Автоматташтырууну улантуу"
 #: templates/inbox/_sidebar.html:66
 msgid "Pause automation"
 msgstr "Автоматташтырууну тыныктыруу"
-
-#: templates/inbox/_sidebar.html:78
-msgid "Remove tag"
-msgstr "Тегди алып салуу"
 
 #: templates/inbox/_sidebar.html:84
 msgid "None yet."
@@ -4226,10 +5651,6 @@ msgstr "Жеткирүүнү күтүүдө"
 msgid "What is the label called?"
 msgstr "Метка кандай аталат?"
 
-#: templates/inbox/label_settings.html:40
-msgid "Add it"
-msgstr "Кошуу"
-
 #: templates/inbox/list.html:31
 msgid "Every conversation across your connected channels."
 msgstr "Туташтырылган бардык каналдардагы бардык маектер."
@@ -4242,10 +5663,6 @@ msgstr "Бардык каналдар"
 msgid "Any label"
 msgstr "Каалаган метка"
 
-#: templates/inbox/list.html:133
-msgid "selected"
-msgstr "тандалды"
-
 #: templates/inbox/list.html:135
 msgid "Label"
 msgstr "Метка"
@@ -4257,15 +5674,6 @@ msgstr "Метканы тандаңыз…"
 #: templates/inbox/list.html:140
 msgid "Add"
 msgstr "Кошуу"
-
-#: templates/inbox/list.html:141
-msgid "Remove"
-msgstr "Алып салуу"
-
-#: templates/inbox/list.html:142 templates/workspaces/settings.html:73
-#: templates/workspaces/settings.html:83
-msgid "Clear"
-msgstr "Тазалоо"
 
 #: templates/inbox/list.html:167
 msgid "Pick a conversation to read it."
@@ -4376,10 +5784,6 @@ msgstr ""
 #: templates/members/list.html:28 templates/members/list.html:35
 msgid "Invite someone"
 msgstr "Чакыруу"
-
-#: templates/members/list.html:37
-msgid "Email"
-msgstr "Email"
 
 #: templates/members/list.html:41 templates/members/list.html:103
 msgid "Organization role"
@@ -4532,10 +5936,6 @@ msgstr "Айлык"
 #: templates/organizations/billing.html:102
 msgid "Yearly"
 msgstr "Жылдык"
-
-#: templates/organizations/billing.html:114
-msgid "Subscribe"
-msgstr "Жазылуу"
 
 #: templates/organizations/billing.html:129
 #, python-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-20 13:09+0600\n"
+"POT-Creation-Date: 2026-09-20 13:37+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ru\n"
@@ -53,7 +53,7 @@ msgstr "Чтение"
 msgid "Write"
 msgstr "Запись"
 
-#: apps/api/models.py:77
+#: apps/api/models.py:77 templates/contacts/list.html:262
 msgid "Erase"
 msgstr "Удаление"
 
@@ -61,7 +61,8 @@ msgstr "Удаление"
 msgid "Succeeded"
 msgstr "Успешно"
 
-#: apps/api/models.py:89 templates/inbox/_thread_body.html:152
+#: apps/api/models.py:89 apps/contacts/models.py:411
+#: apps/contacts/models.py:571 templates/inbox/_thread_body.html:152
 msgid "Failed"
 msgstr "Ошибка"
 
@@ -305,8 +306,9 @@ msgstr ""
 #: apps/channels/forms.py:47 templates/accounts/settings.html:32
 #: templates/api/keys_list.html:39
 #: templates/channels/whatsapp_templates.html:26
-#: templates/inbox/_label_rows.html:46 templates/inbox/_rule_form.html:24
-#: templates/organizations/settings.html:27
+#: templates/contacts/_field_rows.html:54 templates/contacts/_rows.html:50
+#: templates/contacts/_tag_rows.html:56 templates/inbox/_label_rows.html:46
+#: templates/inbox/_rule_form.html:24 templates/organizations/settings.html:27
 #: templates/organizations/settings.html:49
 #: templates/workspaces/settings.html:36
 msgid "Name"
@@ -463,7 +465,8 @@ msgstr "Используйте трёхбуквенный код ISO 4217, на�
 msgid "A price cannot be negative."
 msgstr "Цена не может быть отрицательной."
 
-#: apps/channels/models.py:103 templates/api/keys_list.html:87
+#: apps/channels/models.py:103 apps/contacts/models.py:61
+#: templates/api/keys_list.html:87
 msgid "Active"
 msgstr "Активен"
 
@@ -799,7 +802,8 @@ msgid "General"
 msgstr "Общее"
 
 #: apps/common/context_processors.py:251 templates/channels/list.html:24
-#: templates/channels/list.html:31 templates/inbox/_sidebar.html:20
+#: templates/channels/list.html:31 templates/contacts/_channels.html:21
+#: templates/contacts/_rows.html:51 templates/inbox/_sidebar.html:20
 #: templates/partials/_sidebar_channels.html:35
 msgid "Channels"
 msgstr "Каналы"
@@ -808,7 +812,11 @@ msgstr "Каналы"
 msgid "Library"
 msgstr "Медиатека"
 
-#: apps/common/context_processors.py:307 templates/inbox/_sidebar.html:70
+#: apps/common/context_processors.py:307 templates/contacts/_rows.html:52
+#: templates/contacts/_tag_chips.html:17
+#: templates/contacts/import_detail.html:71
+#: templates/contacts/tag_list.html:15 templates/contacts/tag_list.html:22
+#: templates/inbox/_sidebar.html:70
 msgid "Tags"
 msgstr "Теги"
 
@@ -886,7 +894,9 @@ msgstr "Сценарии"
 msgid "Broadcasts"
 msgstr "Рассылки"
 
-#: apps/common/context_processors.py:473
+#: apps/common/context_processors.py:473 templates/contacts/detail.html:17
+#: templates/contacts/import_list.html:13 templates/contacts/list.html:31
+#: templates/contacts/list.html:46
 msgid "Contacts"
 msgstr "Контакты"
 
@@ -907,14 +917,600 @@ msgid "Templates"
 msgstr "Шаблоны"
 
 #: apps/common/tests/test_templatetags.py:166
-#: templates/api/webhooks_list.html:71 templates/inbox/_card.html:19
-#: templates/inbox/_sidebar.html:17 templates/organizations/workspaces.html:61
+#: templates/api/webhooks_list.html:71 templates/contacts/import_list.html:64
+#: templates/inbox/_card.html:19 templates/inbox/_sidebar.html:17
+#: templates/organizations/workspaces.html:61
 msgid "Open"
 msgstr "Открыть"
 
 #: apps/common/validators.py:36
 msgid "Color must be a 6-digit hex value like #3B82F6."
 msgstr "Цвет должен быть 6-значным hex-значением, например #3B82F6."
+
+#: apps/contacts/imports.py:551
+#, python-format
+msgid "This file has more than %(max)s rows; the rest were skipped."
+msgstr "В этом файле больше %(max)s строк; остальные были пропущены."
+
+#: apps/contacts/imports.py:558
+msgid "That row is too long to import."
+msgstr "Эта строка слишком длинная для импорта."
+
+#: apps/contacts/imports.py:737
+#, python-format
+msgid "A tag name is at most %(max)s characters."
+msgstr "Имя тега не длиннее %(max)s символов."
+
+#: apps/contacts/imports.py:819
+msgid "That is not an email address."
+msgstr "Это не адрес электронной почты."
+
+#: apps/contacts/models.py:62
+msgid "Deleted"
+msgstr "Удалён"
+
+#: apps/contacts/models.py:68 templates/channels/detail.html:62
+msgid "Text"
+msgstr "Текст"
+
+#: apps/contacts/models.py:69 templates/channels/whatsapp_templates.html:26
+msgid "Number"
+msgstr "Номер"
+
+#: apps/contacts/models.py:70
+msgid "Date"
+msgstr "Дата"
+
+#: apps/contacts/models.py:71
+msgid "Date and time"
+msgstr "Дата и время"
+
+#: apps/contacts/models.py:72
+msgid "True or false"
+msgstr "Истина или ложь"
+
+#: apps/contacts/models.py:350
+#, python-format
+msgid ""
+"A custom field value populates exactly one column; this row populates "
+"%(count)s."
+msgstr ""
+"Значение пользовательского поля заполняет ровно один столбец; эта строка "
+"заполняет %(count)s."
+
+#: apps/contacts/models.py:356
+#, python-format
+msgid "A %(type)s field stores its value in %(column)s."
+msgstr "Поле типа %(type)s хранит своё значение в %(column)s."
+
+#: apps/contacts/models.py:406
+msgid "Uploaded"
+msgstr "Загружено"
+
+#: apps/contacts/models.py:407
+msgid "Checking"
+msgstr "Проверка"
+
+#: apps/contacts/models.py:408
+msgid "Checked"
+msgstr "Проверено"
+
+#: apps/contacts/models.py:409
+msgid "Importing"
+msgstr "Импортируется"
+
+#: apps/contacts/models.py:410
+msgid "Finished"
+msgstr "Завершено"
+
+#: apps/contacts/models.py:427
+msgid "Update the contact that is already there"
+msgstr "Обновить уже существующий контакт"
+
+#: apps/contacts/models.py:428
+msgid "Create a second contact anyway"
+msgstr "Всё равно создать второй контакт"
+
+#: apps/contacts/models.py:429
+msgid "Skip the row"
+msgstr "Пропустить строку"
+
+#: apps/contacts/models.py:568 templates/contacts/_channels.html:52
+msgid "Pending"
+msgstr "Ожидание"
+
+#: apps/contacts/models.py:569
+msgid "Running"
+msgstr "Выполняется"
+
+#: apps/contacts/models.py:570 templates/api/key_created.html:26
+#: templates/api/webhook_secret.html:22 templates/channels/secret.html:57
+#: templates/inbox/_conversation_rows.html:71
+msgid "Done"
+msgstr "Готово"
+
+#: apps/contacts/models.py:577
+msgid "Contact page"
+msgstr "Страница контакта"
+
+#: apps/contacts/models.py:578
+msgid "Bulk action"
+msgstr "Массовое действие"
+
+#: apps/contacts/models.py:579
+msgid "Public API"
+msgstr "Публичный API"
+
+#: apps/contacts/views.py:229
+msgid "Last interaction"
+msgstr "Последнее взаимодействие"
+
+#: apps/contacts/views.py:230
+msgid "Least recent"
+msgstr "Менее недавние"
+
+#: apps/contacts/views.py:231
+msgid "Name (A–Z)"
+msgstr "Имя (А–Я)"
+
+#: apps/contacts/views.py:232
+msgid "Name (Z–A)"
+msgstr "Имя (Я–А)"
+
+#: apps/contacts/views.py:233 templates/members/list.html:37
+msgid "Email"
+msgstr "Email"
+
+#: apps/contacts/views.py:234
+msgid "Newest first"
+msgstr "Сначала новые"
+
+#: apps/contacts/views.py:544
+msgid "Nothing to save"
+msgstr "Нечего сохранять"
+
+#: apps/contacts/views.py:548
+msgid "Could not save the contact"
+msgstr "Не удалось сохранить контакт"
+
+#: apps/contacts/views.py:550
+msgid "No change"
+msgstr "Без изменений"
+
+#: apps/contacts/views.py:553
+msgid "Contact saved"
+msgstr "Контакт сохранён"
+
+#: apps/contacts/views.py:595
+#, python-format
+msgid "Could not save %(field)s"
+msgstr "Не удалось сохранить %(field)s"
+
+#: apps/contacts/views.py:597
+#, python-format
+msgid "%(field)s saved"
+msgstr "%(field)s сохранено"
+
+#: apps/contacts/views.py:647
+msgid "That tag does not exist"
+msgstr "Этого тега не существует"
+
+#: apps/contacts/views.py:648
+msgid ""
+"Creating tags needs the manage_crm permission. Ask an editor to add it "
+"first."
+msgstr ""
+"Для создания тегов нужно право manage_crm. Попросите редактора сначала "
+"добавить его."
+
+#: apps/contacts/views.py:653 apps/contacts/views.py:660
+msgid "Could not add the tag"
+msgstr "Не удалось добавить тег"
+
+#: apps/contacts/views.py:655
+msgid "Pick a tag first"
+msgstr "Сначала выберите тег"
+
+#: apps/contacts/views.py:662
+msgid "Already tagged"
+msgstr "Уже помечен"
+
+#: apps/contacts/views.py:664 apps/inbox/views.py:1133
+msgid "Tag added"
+msgstr "Тег добавлен"
+
+#: apps/contacts/views.py:676
+msgid "That tag was not on this contact"
+msgstr "Этого тега не было на этом контакте"
+
+#: apps/contacts/views.py:678 apps/inbox/views.py:1131
+msgid "Tag removed"
+msgstr "Тег удалён"
+
+#: apps/contacts/views.py:735
+msgid "Already opted out"
+msgstr "Уже отписан"
+
+#: apps/contacts/views.py:738 templates/contacts/_rows.html:120
+msgid "Opted out"
+msgstr "Отписан"
+
+#: apps/contacts/views.py:759 apps/contacts/views.py:765
+msgid "Could not start that flow"
+msgstr "Не удалось запустить этот сценарий"
+
+#: apps/contacts/views.py:760
+msgid "It has no published version, or it is archived."
+msgstr "У него нет опубликованной версии, или он в архиве."
+
+#: apps/contacts/views.py:768
+msgid "Flow started"
+msgstr "Сценарий запущен"
+
+#: apps/contacts/views.py:788
+msgid "Nothing was running"
+msgstr "Ничего не выполнялось"
+
+#: apps/contacts/views.py:791 apps/inbox/views.py:1106
+msgid "Automation stopped"
+msgstr "Автоматизация остановлена"
+
+#: apps/contacts/views.py:792
+#, python-format
+#| msgid "%(counter)s character"
+#| msgid_plural "%(counter)s characters"
+msgid "%(count)s run expired."
+msgid_plural "%(count)s runs expired."
+msgstr[0] "%(count)s выполнение истекло."
+msgstr[1] "%(count)s выполнения истекли."
+msgstr[2] "%(count)s выполнений истекло."
+msgstr[3] "%(count)s выполнений истекло."
+
+#: apps/contacts/views.py:813
+msgid "Contact deleted"
+msgstr "Контакт удалён"
+
+#: apps/contacts/views.py:875 apps/contacts/views.py:908
+#: apps/contacts/views.py:949 apps/contacts/views.py:1719
+msgid "Nothing selected"
+msgstr "Ничего не выбрано"
+
+#: apps/contacts/views.py:882
+msgid "Could not update the tags"
+msgstr "Не удалось обновить теги"
+
+#: apps/contacts/views.py:885
+#, python-format
+#| msgid "Label removed from %(count)s conversation"
+#| msgid_plural "Label removed from %(count)s conversations"
+msgid "Tag removed from %(count)s contact"
+msgid_plural "Tag removed from %(count)s contacts"
+msgstr[0] "Тег удалён с %(count)s контакта"
+msgstr[1] "Тег удалён с %(count)s контактов"
+msgstr[2] "Тег удалён с %(count)s контактов"
+msgstr[3] "Тег удалён с %(count)s контактов"
+
+#: apps/contacts/views.py:887
+#, python-format
+#| msgid "Tag added to a contact"
+msgid "Tag added to %(count)s contact"
+msgid_plural "Tag added to %(count)s contacts"
+msgstr[0] "Тег добавлен к %(count)s контакту"
+msgstr[1] "Тег добавлен к %(count)s контактам"
+msgstr[2] "Тег добавлен к %(count)s контактам"
+msgstr[3] "Тег добавлен к %(count)s контактам"
+
+#: apps/contacts/views.py:891
+#, python-format
+msgid "%(tag)s — %(count)s selected."
+msgstr "%(tag)s — выбрано %(count)s."
+
+#: apps/contacts/views.py:914
+#, python-format
+#| msgid "%(counter)s character"
+#| msgid_plural "%(counter)s characters"
+msgid "%(count)s contact deleted"
+msgid_plural "%(count)s contacts deleted"
+msgstr[0] "%(count)s контакт удалён"
+msgstr[1] "%(count)s контакта удалено"
+msgstr[2] "%(count)s контактов удалено"
+msgstr[3] "%(count)s контактов удалено"
+
+#: apps/contacts/views.py:915
+msgid "They are hidden everywhere and excluded from every segment."
+msgstr "Они скрыты везде и исключены из каждого сегмента."
+
+#: apps/contacts/views.py:972
+msgid "Could not update the sequence"
+msgstr "Не удалось обновить цепочку"
+
+#: apps/contacts/views.py:975
+msgid "Unsubscribing stops future steps; anything already running finishes."
+msgstr "Отписка останавливает будущие шаги; всё уже запущенное завершится."
+
+#: apps/contacts/views.py:977
+msgid "Everyone starts again at step 1."
+msgstr "Все начинают заново с шага 1."
+
+#: apps/contacts/views.py:980
+#, python-format
+#| msgid "Test failed: %(reason)s."
+msgid "%(count)s skipped: %(reason)s"
+msgid_plural "%(count)s skipped: %(reason)s"
+msgstr[0] "%(count)s пропущено: %(reason)s"
+msgstr[1] "%(count)s пропущено: %(reason)s"
+msgstr[2] "%(count)s пропущено: %(reason)s"
+msgstr[3] "%(count)s пропущено: %(reason)s"
+
+#: apps/contacts/views.py:986
+#, python-format
+#| msgid "Contact unsubscribed from a sequence"
+msgid "%(count)s contact unsubscribed from %(name)s"
+msgid_plural "%(count)s contacts unsubscribed from %(name)s"
+msgstr[0] "%(count)s контакт отписан от %(name)s"
+msgstr[1] "%(count)s контакта отписаны от %(name)s"
+msgstr[2] "%(count)s контактов отписано от %(name)s"
+msgstr[3] "%(count)s контактов отписано от %(name)s"
+
+#: apps/contacts/views.py:989
+#, python-format
+#| msgid "Contact subscribed to a sequence"
+msgid "%(count)s contact subscribed to %(name)s"
+msgid_plural "%(count)s contacts subscribed to %(name)s"
+msgstr[0] "%(count)s контакт подписан на %(name)s"
+msgstr[1] "%(count)s контакта подписаны на %(name)s"
+msgstr[2] "%(count)s контактов подписано на %(name)s"
+msgstr[3] "%(count)s контактов подписано на %(name)s"
+
+#: apps/contacts/views.py:1026
+msgid "Could not save the segment"
+msgstr "Не удалось сохранить сегмент"
+
+#: apps/contacts/views.py:1029
+msgid "Segment saved"
+msgstr "Сегмент сохранён"
+
+#: apps/contacts/views.py:1051
+msgid "Could not update the segment"
+msgstr "Не удалось обновить сегмент"
+
+#: apps/contacts/views.py:1053
+msgid "Segment updated"
+msgstr "Сегмент обновлён"
+
+#: apps/contacts/views.py:1070
+msgid "Segment deleted"
+msgstr "Сегмент удалён"
+
+#: apps/contacts/views.py:1223
+msgid "Pick a CSV file first"
+msgstr "Сначала выберите файл CSV"
+
+#: apps/contacts/views.py:1227
+msgid "Confirm the note about reachability"
+msgstr "Подтвердите примечание о доступности"
+
+#: apps/contacts/views.py:1228
+msgid "Imported contacts cannot be messaged until they write to you first."
+msgstr ""
+"Импортированным контактам нельзя написать, пока они первыми не напишут вам."
+
+#: apps/contacts/views.py:1234
+msgid "That file is too large"
+msgstr "Этот файл слишком большой"
+
+#: apps/contacts/views.py:1235
+#, python-format
+msgid "The limit is %(mb)s MB."
+msgstr "Лимит — %(mb)s МБ."
+
+#: apps/contacts/views.py:1262 apps/contacts/views.py:1319
+msgid "That file could not be read"
+msgstr "Не удалось прочитать этот файл"
+
+#: apps/contacts/views.py:1265
+msgid "File uploaded"
+msgstr "Файл загружен"
+
+#: apps/contacts/views.py:1266
+msgid "Map its columns to finish."
+msgstr "Сопоставьте столбцы, чтобы завершить."
+
+#: apps/contacts/views.py:1314
+msgid "That import is already running"
+msgstr "Этот импорт уже выполняется"
+
+#: apps/contacts/views.py:1332
+msgid "That mapping cannot be used"
+msgstr "Это сопоставление нельзя использовать"
+
+#: apps/contacts/views.py:1347
+msgid "Checking the file"
+msgstr "Проверка файла"
+
+#: apps/contacts/views.py:1348 templates/contacts/import_detail.html:93
+msgid "Nothing is written until you confirm."
+msgstr "Ничего не записывается, пока вы не подтвердите."
+
+#: apps/contacts/views.py:1368
+msgid "Check the file first"
+msgstr "Сначала проверьте файл"
+
+#: apps/contacts/views.py:1369
+msgid "The preview has to finish before anything is imported."
+msgstr ""
+"Предпросмотр должен завершиться, прежде чем что-либо будет импортировано."
+
+#: apps/contacts/views.py:1379
+msgid "Import started"
+msgstr "Импорт начат"
+
+#: apps/contacts/views.py:1380
+msgid "You can leave this page."
+msgstr "Вы можете покинуть эту страницу."
+
+#: apps/contacts/views.py:1463
+msgid "Could not create the tag"
+msgstr "Не удалось создать тег"
+
+#: apps/contacts/views.py:1465
+msgid "That tag already exists"
+msgstr "Такой тег уже существует"
+
+#: apps/contacts/views.py:1466
+msgid "Tag created"
+msgstr "Тег создан"
+
+#: apps/contacts/views.py:1477
+msgid "Could not rename the tag"
+msgstr "Не удалось переименовать тег"
+
+#: apps/contacts/views.py:1478
+msgid "Tag renamed"
+msgstr "Тег переименован"
+
+#: apps/contacts/views.py:1490
+msgid "Tag deleted"
+msgstr "Тег удалён"
+
+#: apps/contacts/views.py:1492
+#, python-format
+#| msgid "Label removed from %(count)s conversation"
+#| msgid_plural "Label removed from %(count)s conversations"
+msgid "%(name)s — removed from %(count)s contact."
+msgid_plural "%(name)s — removed from %(count)s contacts."
+msgstr[0] "%(name)s — удалён с %(count)s контакта."
+msgstr[1] "%(name)s — удалён с %(count)s контактов."
+msgstr[2] "%(name)s — удалён с %(count)s контактов."
+msgstr[3] "%(name)s — удалён с %(count)s контактов."
+
+#: apps/contacts/views.py:1515
+msgid "Could not merge the tags"
+msgstr "Не удалось объединить теги"
+
+#: apps/contacts/views.py:1518
+msgid "Tags merged"
+msgstr "Теги объединены"
+
+#: apps/contacts/views.py:1519
+#, python-format
+#| msgid "Reconnected %(name)s."
+msgid "%(count)s contact moved to %(name)s."
+msgid_plural "%(count)s contacts moved to %(name)s."
+msgstr[0] "%(count)s контакт перемещён в %(name)s."
+msgstr[1] "%(count)s контакта перемещено в %(name)s."
+msgstr[2] "%(count)s контактов перемещено в %(name)s."
+msgstr[3] "%(count)s контактов перемещено в %(name)s."
+
+#: apps/contacts/views.py:1553
+msgid "Could not create the field"
+msgstr "Не удалось создать поле"
+
+#: apps/contacts/views.py:1555
+msgid "Field created"
+msgstr "Поле создано"
+
+#: apps/contacts/views.py:1568
+msgid "Could not rename the field"
+msgstr "Не удалось переименовать поле"
+
+#: apps/contacts/views.py:1570
+msgid "Field renamed"
+msgstr "Поле переименовано"
+
+#: apps/contacts/views.py:1583
+msgid "Field deleted"
+msgstr "Поле удалено"
+
+#: apps/contacts/views.py:1585
+#, python-format
+msgid "%(name)s — %(count)s stored value removed."
+msgid_plural "%(name)s — %(count)s stored values removed."
+msgstr[0] "%(name)s — удалено %(count)s сохранённое значение."
+msgstr[1] "%(name)s — удалено %(count)s сохранённых значения."
+msgstr[2] "%(name)s — удалено %(count)s сохранённых значений."
+msgstr[3] "%(name)s — удалено %(count)s сохранённых значений."
+
+#: apps/contacts/views.py:1672
+msgid "Could not erase this contact"
+msgstr "Не удалось стереть этот контакт"
+
+#: apps/contacts/views.py:1677
+msgid "Contact erased"
+msgstr "Контакт стёрт"
+
+#: apps/contacts/views.py:1677
+msgid "Erasure started"
+msgstr "Стирание начато"
+
+#: apps/contacts/views.py:1679
+#, python-format
+msgid "%(name)s and everything held about them are gone."
+msgstr "%(name)s и всё, что о них хранилось, удалено."
+
+#: apps/contacts/views.py:1681
+#, python-format
+msgid ""
+"%(name)s is hidden everywhere already; the rest is being removed in the "
+"background."
+msgstr "%(name)s уже скрыт везде; остальное удаляется в фоновом режиме."
+
+#: apps/contacts/views.py:1713 apps/contacts/views.py:1766
+msgid "Erasure not confirmed"
+msgstr "Стирание не подтверждено"
+
+#: apps/contacts/views.py:1714 apps/contacts/views.py:1767
+#, python-format
+msgid "Type %(word)s to confirm. Nothing was changed."
+msgstr "Введите %(word)s для подтверждения. Ничего не изменено."
+
+#: apps/contacts/views.py:1745
+msgid ""
+"They are hidden everywhere already. Their messages, identities and consent "
+"records are being removed."
+msgstr ""
+"Они уже скрыты везде. Их сообщения, идентификаторы и записи согласия "
+"удаляются."
+
+#: apps/contacts/views.py:1749
+#, python-format
+msgid ""
+"%(untouched)s of the %(named)s selected was not touched — already deleted, "
+"already being erased, or not in this workspace."
+msgid_plural ""
+"%(untouched)s of the %(named)s selected were not touched — already deleted, "
+"already being erased, or not in this workspace."
+msgstr[0] ""
+"%(untouched)s из %(named)s выбранных не был затронут — уже удалён, уже "
+"стирается, или не в этом пространстве."
+msgstr[1] ""
+"%(untouched)s из %(named)s выбранных не были затронуты — уже удалены, уже "
+"стираются, или не в этом пространстве."
+msgstr[2] ""
+"%(untouched)s из %(named)s выбранных не были затронуты — уже удалены, уже "
+"стираются, или не в этом пространстве."
+msgstr[3] ""
+"%(untouched)s из %(named)s выбранных не были затронуты — уже удалены, уже "
+"стираются, или не в этом пространстве."
+
+#: apps/contacts/views.py:1756
+#, python-format
+#| msgid "%(counter)s character"
+#| msgid_plural "%(counter)s characters"
+msgid "Erasing %(count)s contact"
+msgid_plural "Erasing %(count)s contacts"
+msgstr[0] "Стирание %(count)s контакта"
+msgstr[1] "Стирание %(count)s контактов"
+msgstr[2] "Стирание %(count)s контактов"
+msgstr[3] "Стирание %(count)s контактов"
+
+#: apps/contacts/views.py:1772
+msgid "That form was for a different contact"
+msgstr "Эта форма была для другого контакта"
+
+#: apps/contacts/views.py:1773
+msgid "Reload the page and try again. Nothing was changed."
+msgstr "Перезагрузите страницу и попробуйте снова. Ничего не изменено."
 
 #: apps/flows/starter.py:45
 msgid "Hi! Thanks for getting in touch — how can we help?"
@@ -1204,7 +1800,8 @@ msgstr "файл"
 msgid "Still not sent"
 msgstr "Всё ещё не отправлено"
 
-#: apps/inbox/views.py:910 templates/inbox/_thread_body.html:151
+#: apps/inbox/views.py:910 templates/contacts/_activity.html:99
+#: templates/inbox/_thread_body.html:151
 msgid "Sent"
 msgstr "Отправлено"
 
@@ -1249,21 +1846,9 @@ msgstr "Автоматизация приостановлена"
 msgid "Nothing running"
 msgstr "Ничего не запущено"
 
-#: apps/inbox/views.py:1106
-msgid "Automation stopped"
-msgstr "Автоматизация остановлена"
-
 #: apps/inbox/views.py:1127
 msgid "No tag selected"
 msgstr "Тег не выбран"
-
-#: apps/inbox/views.py:1131
-msgid "Tag removed"
-msgstr "Тег удалён"
-
-#: apps/inbox/views.py:1133
-msgid "Tag added"
-msgstr "Тег добавлен"
 
 #: apps/inbox/views.py:1157
 msgid "Not labelled"
@@ -1288,8 +1873,6 @@ msgstr[3] "Метка удалена из %(count)s диалогов"
 
 #: apps/inbox/views.py:1207
 #, python-format
-#| msgid "%(count)s conversation unassigned"
-#| msgid_plural "%(count)s conversations unassigned"
 msgid "Label added to %(count)s conversation"
 msgid_plural "Label added to %(count)s conversations"
 msgstr[0] "Метка добавлена в %(count)s диалог"
@@ -1935,12 +2518,6 @@ msgstr ""
 msgid "Read the API reference"
 msgstr "Прочитать справочник по API"
 
-#: templates/api/key_created.html:26 templates/api/webhook_secret.html:22
-#: templates/channels/secret.html:57
-#: templates/inbox/_conversation_rows.html:71
-msgid "Done"
-msgstr "Готово"
-
 #: templates/api/keys_list.html:14 templates/api/keys_list.html:21
 msgid "API keys"
 msgstr "API-ключи"
@@ -1982,10 +2559,12 @@ msgid "Issue key"
 msgstr "Выпустить ключ"
 
 #: templates/api/keys_list.html:62 templates/api/webhooks_list.html:52
-#: templates/inbox/_deferred.html:31 templates/inbox/_deferred.html:46
-#: templates/inbox/_label_rows.html:51 templates/inbox/label_settings.html:41
-#: templates/members/list.html:65 templates/members/list.html:108
-#: templates/organizations/workspaces.html:40
+#: templates/contacts/_field_rows.html:57 templates/contacts/_tag_rows.html:59
+#: templates/contacts/_tag_rows.html:71 templates/contacts/field_list.html:36
+#: templates/contacts/tag_list.html:42 templates/inbox/_deferred.html:31
+#: templates/inbox/_deferred.html:46 templates/inbox/_label_rows.html:51
+#: templates/inbox/label_settings.html:41 templates/members/list.html:65
+#: templates/members/list.html:108 templates/organizations/workspaces.html:40
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -2021,7 +2600,8 @@ msgstr "никогда не использовался"
 msgid "revoked %(revoked_at)s"
 msgstr "отозван %(revoked_at)s"
 
-#: templates/api/keys_list.html:101 templates/inbox/_label_rows.html:35
+#: templates/api/keys_list.html:101 templates/contacts/_field_rows.html:43
+#: templates/contacts/_tag_rows.html:38 templates/inbox/_label_rows.html:35
 #: templates/inbox/_rule_rows.html:62 templates/members/list.html:88
 #: templates/organizations/workspaces.html:65
 #, python-format
@@ -2086,6 +2666,7 @@ msgstr "Включено"
 #: templates/api/webhook_detail.html:45 templates/channels/detail.html:112
 #: templates/channels/sms_settings.html:70
 #: templates/channels/whatsapp_cost_hints.html:17
+#: templates/contacts/_field_rows.html:56 templates/contacts/_tag_rows.html:58
 #: templates/inbox/_label_rows.html:50
 msgid "Save"
 msgstr "Сохранить"
@@ -2137,7 +2718,7 @@ msgstr "Когда"
 msgid "Event"
 msgstr "Событие"
 
-#: templates/api/webhook_detail.html:70
+#: templates/api/webhook_detail.html:70 templates/contacts/import_list.html:50
 msgid "Result"
 msgstr "Результат"
 
@@ -2164,7 +2745,9 @@ msgstr "Пока ничего не доставлено."
 
 #: templates/api/webhook_detail.html:91
 #: templates/channels/whatsapp_templates.html:70
-#: templates/inbox/_label_rows.html:42 templates/inbox/_rule_rows.html:70
+#: templates/contacts/_field_rows.html:50 templates/contacts/_tag_rows.html:47
+#: templates/contacts/list.html:243 templates/inbox/_label_rows.html:42
+#: templates/inbox/_rule_rows.html:70
 msgid "Delete"
 msgstr "Удалить"
 
@@ -2362,6 +2945,7 @@ msgstr "Вы перестанете получать письма от этог�
 
 #: templates/channels/_unsubscribe_body.html:27
 #: templates/channels/unsubscribe_confirm.html:3
+#: templates/contacts/list.html:233
 msgid "Unsubscribe"
 msgstr "Отписаться"
 
@@ -2393,10 +2977,6 @@ msgstr ""
 #: templates/channels/detail.html:60
 msgid "What this platform carries"
 msgstr "Что поддерживает эта платформа"
-
-#: templates/channels/detail.html:62
-msgid "Text"
-msgstr "Текст"
 
 #: templates/channels/detail.html:63
 #, python-format
@@ -3699,14 +4279,11 @@ msgid "Category"
 msgstr "Категория"
 
 #: templates/channels/whatsapp_templates.html:26
-msgid "Number"
-msgstr "Номер"
-
-#: templates/channels/whatsapp_templates.html:26
 msgid "Variables"
 msgstr "Переменные"
 
 #: templates/channels/whatsapp_templates.html:26
+#: templates/contacts/import_list.html:50
 msgid "Status"
 msgstr "Статус"
 
@@ -3745,6 +4322,948 @@ msgstr ""
 "пространства, когда приходит ответ; отклонённый шаблон показывает причину "
 "Meta выше и может быть отредактирован и отправлен повторно. Маркетинговые "
 "шаблоны проверяются строже всего и стоят дороже всего при отправке."
+
+#: templates/contacts/_activity.html:21
+msgid "Activity"
+msgstr "Активность"
+
+#: templates/contacts/_activity.html:35
+msgid ""
+"Stop this automation? The run is expired and its pending timers are "
+"cancelled."
+msgstr ""
+"Остановить эту автоматизацию? Выполнение истекает, а ожидающие таймеры "
+"отменяются."
+
+#: templates/contacts/_activity.html:36 templates/inbox/_sidebar.html:56
+msgid "Stop automation"
+msgstr "Остановить автоматизацию"
+
+#: templates/contacts/_activity.html:40
+msgid "No automation running."
+msgstr "Нет запущенной автоматизации."
+
+#: templates/contacts/_activity.html:48
+msgid "Flow"
+msgstr "Сценарий"
+
+#: templates/contacts/_activity.html:50
+msgid "Start a flow…"
+msgstr "Запустить сценарий…"
+
+#: templates/contacts/_activity.html:53
+msgid "Start"
+msgstr "Запустить"
+
+#: templates/contacts/_activity.html:60
+msgid "Starting a flow ends whatever this contact is already running."
+msgstr ""
+"Запуск сценария завершает всё, что уже выполняется для этого контакта."
+
+#: templates/contacts/_activity.html:77 templates/contacts/list.html:228
+msgid "Sequence"
+msgstr "Цепочка"
+
+#: templates/contacts/_activity.html:81
+msgid "Enrol"
+msgstr "Записать"
+
+#: templates/contacts/_activity.html:82 templates/inbox/list.html:141
+msgid "Remove"
+msgstr "Удалить"
+
+#: templates/contacts/_activity.html:83
+msgid "Enrolling restarts the sequence at step 1."
+msgstr "Запись перезапускает цепочку с шага 1."
+
+#: templates/contacts/_activity.html:88
+#, python-format
+msgid ""
+"No sequences yet. <a href=\"%(campaigns_url)s\">create one</a>\n"
+"      to enrol this contact."
+msgstr ""
+"Пока нет цепочек. <a href=\"%(campaigns_url)s\">Создайте одну</a>, чтобы "
+"записать этот контакт."
+
+#: templates/contacts/_activity.html:95
+msgid "Recent messages"
+msgstr "Недавние сообщения"
+
+#: templates/contacts/_activity.html:99
+msgid "Received"
+msgstr "Получено"
+
+#: templates/contacts/_activity.html:101
+msgid "Internal note"
+msgstr "Внутренняя заметка"
+
+#: templates/contacts/_activity.html:108
+msgid "Open in inbox"
+msgstr "Открыть во входящих"
+
+#: templates/contacts/_activity.html:111
+msgid "No text"
+msgstr "Нет текста"
+
+#: templates/contacts/_activity.html:113
+#, python-format
+#| msgid "%(counter)s segment"
+#| msgid_plural "%(counter)s segments"
+msgid "%(count)s attachment"
+msgid_plural "%(count)s attachments"
+msgstr[0] "%(count)s вложение"
+msgstr[1] "%(count)s вложения"
+msgstr[2] "%(count)s вложений"
+msgstr[3] "%(count)s вложений"
+
+#: templates/contacts/_activity.html:118
+msgid "Nothing yet. Messages appear here as soon as this contact writes in."
+msgstr ""
+"Пока ничего. Сообщения появятся здесь, как только этот контакт напишет."
+
+#: templates/contacts/_channels.html:37 templates/inbox/_sidebar.html:31
+#, python-format
+msgid "Opted out %(date)s"
+msgstr "Отказался %(date)s"
+
+#: templates/contacts/_channels.html:39 templates/inbox/_sidebar.html:33
+msgid "Opted in"
+msgstr "Согласился"
+
+#: templates/contacts/_channels.html:41
+msgid "No consent recorded"
+msgstr "Согласие не зафиксировано"
+
+#: templates/contacts/_channels.html:52
+msgid "Captured before a connection existed; it attaches at first send"
+msgstr "Получено до появления подключения; привязывается при первой отправке"
+
+#: templates/contacts/_channels.html:54
+#, python-format
+msgid "Window closes in %(time)s"
+msgstr "Окно закрывается через %(time)s"
+
+#: templates/contacts/_channels.html:56
+msgid "Window closed"
+msgstr "Окно закрыто"
+
+#: templates/contacts/_channels.html:61
+#, python-format
+msgid ""
+"Opt this contact out on %(platform)s? This cannot be undone from here. Only "
+"the contact can re-subscribe."
+msgstr ""
+"Отписать этот контакт от %(platform)s? Это нельзя отменить отсюда. Только "
+"контакт может подписаться снова."
+
+#: templates/contacts/_channels.html:66
+msgid "Opt out"
+msgstr "Отписать"
+
+#: templates/contacts/_channels.html:72
+msgid ""
+"No channels yet. A contact becomes reachable when they message one of this\n"
+"      workspace's connections. Importing an address does not create one."
+msgstr ""
+"Пока нет каналов. Контакт становится доступным, когда пишет одному из "
+"подключений этого пространства. Импорт адреса не создаёт канал."
+
+#: templates/contacts/_field_rows.html:38
+#, python-format
+#| msgid "%(count)s conversation unassigned"
+#| msgid_plural "%(count)s conversations unassigned"
+msgid "%(count)s value stored"
+msgid_plural "%(count)s values stored"
+msgstr[0] "%(count)s значение сохранено"
+msgstr[1] "%(count)s значения сохранено"
+msgstr[2] "%(count)s значений сохранено"
+msgstr[3] "%(count)s значений сохранено"
+
+#: templates/contacts/_field_rows.html:41 templates/contacts/_tag_rows.html:36
+msgid "Rename"
+msgstr "Переименовать"
+
+#: templates/contacts/_field_rows.html:49
+#, python-format
+#| msgid ""
+#| "Delete “%(name)s”? Conversations it has already labelled keep their labels."
+msgid "Delete “%(name)s”? %(count)s stored value will go with it."
+msgid_plural "Delete “%(name)s”? %(count)s stored values will go with it."
+msgstr[0] ""
+"Удалить «%(name)s»? %(count)s сохранённое значение уйдёт вместе с ним."
+msgstr[1] ""
+"Удалить «%(name)s»? %(count)s сохранённых значения уйдут вместе с ним."
+msgstr[2] ""
+"Удалить «%(name)s»? %(count)s сохранённых значений уйдут вместе с ним."
+msgstr[3] ""
+"Удалить «%(name)s»? %(count)s сохранённых значений уйдут вместе с ним."
+
+#: templates/contacts/_field_rows.html:64
+msgid "No custom fields yet"
+msgstr "Пока нет пользовательских полей"
+
+#: templates/contacts/_field_rows.html:66
+msgid ""
+"A field is where a flow puts an answer it collected — a size, a booking "
+"date, a plan — so a filter can search on it later."
+msgstr ""
+"Поле — это место, куда сценарий помещает собранный ответ: размер, дату "
+"бронирования, тариф — чтобы фильтр мог позже искать по нему."
+
+#: templates/contacts/_field_rows.html:68
+#: templates/contacts/field_list.html:20
+msgid "New field"
+msgstr "Новое поле"
+
+#: templates/contacts/_filter_bar.html:32
+msgid "Match"
+msgstr "Соответствие"
+
+#: templates/contacts/_filter_bar.html:34
+msgid "Match all rules"
+msgstr "Соответствие всем правилам"
+
+#: templates/contacts/_filter_bar.html:35
+msgid "Match any rule"
+msgstr "Соответствие любому правилу"
+
+#: templates/contacts/_filter_bar.html:37
+msgid "Add rule"
+msgstr "Добавить правило"
+
+#: templates/contacts/_filter_bar.html:39 templates/inbox/list.html:142
+#: templates/workspaces/settings.html:73 templates/workspaces/settings.html:83
+msgid "Clear"
+msgstr "Очистить"
+
+#: templates/contacts/_filter_bar.html:41
+msgid "No filter: showing everyone."
+msgstr "Без фильтра: показаны все."
+
+#: templates/contacts/_filter_bar.html:47
+msgid "Look at"
+msgstr "Смотреть на"
+
+#: templates/contacts/_filter_bar.html:56
+msgid "Which one"
+msgstr "Какой"
+
+#: templates/contacts/_filter_bar.html:58
+msgid "Choose…"
+msgstr "Выберите…"
+
+#: templates/contacts/_filter_bar.html:65
+msgid "Condition"
+msgstr "Условие"
+
+#: templates/contacts/_filter_bar.html:80
+msgid "Value"
+msgstr "Значение"
+
+#: templates/contacts/_filter_bar.html:85 templates/contacts/_rows.html:118
+msgid "Yes"
+msgstr "Да"
+
+#: templates/contacts/_filter_bar.html:86
+msgid "No"
+msgstr "Нет"
+
+#: templates/contacts/_filter_bar.html:98
+msgid "on a date"
+msgstr "на дату"
+
+#: templates/contacts/_filter_bar.html:99
+msgid "a number of days away"
+msgstr "через число дней"
+
+#: templates/contacts/_filter_bar.html:116
+msgid "Negative is days ago, positive is days from now"
+msgstr "Отрицательное — дней назад, положительное — дней от сейчас"
+
+#: templates/contacts/_filter_bar.html:129
+msgid "Remove rule"
+msgstr "Удалить правило"
+
+#: templates/contacts/_filter_bar.html:144
+msgid "Apply filter"
+msgstr "Применить фильтр"
+
+#: templates/contacts/_filter_bar.html:162
+#, python-format
+msgid "Update “%(name)s”"
+msgstr "Обновить «%(name)s»"
+
+#: templates/contacts/_filter_bar.html:166
+msgid "Segment name"
+msgstr "Название сегмента"
+
+#: templates/contacts/_filter_bar.html:167
+msgid "Save as a new segment…"
+msgstr "Сохранить как новый сегмент…"
+
+#: templates/contacts/_filter_bar.html:172
+msgid "Save as segment"
+msgstr "Сохранить как сегмент"
+
+#: templates/contacts/_filter_bar.html:177
+msgid "Delete segment"
+msgstr "Удалить сегмент"
+
+#: templates/contacts/_filter_bar.html:181
+msgid "of"
+msgstr "из"
+
+#: templates/contacts/_filter_bar.html:182
+msgid "rules"
+msgstr "правил"
+
+#: templates/contacts/_import_progress.html:20
+#, python-format
+msgid "%(processed)s of %(total)s rows"
+msgstr "%(processed)s из %(total)s строк"
+
+#: templates/contacts/_import_progress.html:32
+#: templates/contacts/import_list.html:58
+#, python-format
+msgid "%(count)s created"
+msgstr "%(count)s создано"
+
+#: templates/contacts/_import_progress.html:33
+#: templates/contacts/import_list.html:59
+#, python-format
+msgid "%(count)s updated"
+msgstr "%(count)s обновлено"
+
+#: templates/contacts/_import_progress.html:34
+#: templates/contacts/import_list.html:60
+#, python-format
+msgid "%(count)s skipped"
+msgstr "%(count)s пропущено"
+
+#: templates/contacts/_import_progress.html:35
+#: templates/contacts/import_list.html:61
+#, python-format
+#| msgid "%(counter)s character"
+#| msgid_plural "%(counter)s characters"
+msgid "%(count)s error"
+msgid_plural "%(count)s errors"
+msgstr[0] "%(count)s ошибка"
+msgstr[1] "%(count)s ошибки"
+msgstr[2] "%(count)s ошибок"
+msgstr[3] "%(count)s ошибок"
+
+#: templates/contacts/_import_progress.html:37
+msgid ""
+"Nothing has been written yet. These are the numbers the import would "
+"produce."
+msgstr "Пока ничего не записано. Это числа, которые даст импорт."
+
+#: templates/contacts/_import_progress.html:42
+msgid "Rows that will not import"
+msgstr "Строки, которые не импортируются"
+
+#: templates/contacts/_import_progress.html:44
+msgid "Row"
+msgstr "Строка"
+
+#: templates/contacts/_import_progress.html:44
+#: templates/contacts/import_detail.html:55
+msgid "Column"
+msgstr "Столбец"
+
+#: templates/contacts/_import_progress.html:44
+msgid "Problem"
+msgstr "Проблема"
+
+#: templates/contacts/_import_progress.html:56
+#, python-format
+msgid "Showing 20 of %(count)s. Download the report for the rest."
+msgstr "Показано 20 из %(count)s. Скачайте отчёт для остальных."
+
+#: templates/contacts/_import_progress.html:60
+#, python-format
+msgid ""
+"Only the first %(shown)s row errors were stored; the remaining\n"
+"        %(hidden)s were counted but not recorded."
+msgstr ""
+"Сохранены только первые %(shown)s ошибок строк; оставшиеся %(hidden)s были "
+"посчитаны, но не записаны."
+
+#: templates/contacts/_import_progress.html:64
+msgid "Download the report (CSV)"
+msgstr "Скачать отчёт (CSV)"
+
+#: templates/contacts/_import_progress.html:68
+#, python-format
+msgid "Import %(count)s row(s) now?"
+msgstr "Импортировать %(count)s строк(и) сейчас?"
+
+#: templates/contacts/_import_progress.html:73
+msgid "Import for real"
+msgstr "Импортировать по-настоящему"
+
+#: templates/contacts/_import_progress.html:74
+msgid "Rows listed above are skipped; everything else is written."
+msgstr "Перечисленные выше строки пропускаются; всё остальное записывается."
+
+#: templates/contacts/_rows.html:23
+#, python-format
+msgid ""
+"This filter could not be applied, so no contacts are shown: %(list_error)s"
+msgstr ""
+"Этот фильтр не удалось применить, поэтому контакты не показаны: "
+"%(list_error)s"
+
+#: templates/contacts/_rows.html:46
+msgid "Select this page"
+msgstr "Выбрать эту страницу"
+
+#: templates/contacts/_rows.html:53
+msgid "Last seen"
+msgstr "Последний раз видели"
+
+#: templates/contacts/_rows.html:54
+msgid "Contactable"
+msgstr "Доступен для связи"
+
+#: templates/contacts/_rows.html:61 templates/inbox/_conversation_rows.html:40
+#, python-format
+msgid "Select %(name)s"
+msgstr "Выбрать %(name)s"
+
+#: templates/contacts/_rows.html:80
+msgid "No email or phone yet"
+msgstr "Пока нет email или телефона"
+
+#: templates/contacts/_rows.html:96 templates/inbox/_conversation_rows.html:70
+#, python-format
+msgid "%(time)s ago"
+msgstr "%(time)s назад"
+
+#: templates/contacts/_rows.html:114
+msgid "Opted out on at least one channel, still opted in on another"
+msgstr "Отписан хотя бы на одном канале, но подписан на другом"
+
+#: templates/contacts/_rows.html:115
+msgid "On some channels"
+msgstr "На некоторых каналах"
+
+#: templates/contacts/_rows.html:122
+msgid "Not yet"
+msgstr "Пока нет"
+
+#: templates/contacts/_rows.html:132
+#, python-format
+msgid "Page %(number)s of %(pages)s."
+msgstr "Страница %(number)s из %(pages)s."
+
+#: templates/contacts/_rows.html:133
+#, python-format
+#| msgid "%(count)s conversation unassigned"
+#| msgid_plural "%(count)s conversations unassigned"
+msgid "%(count)s contact in all."
+msgid_plural "%(count)s contacts in all."
+msgstr[0] "%(count)s контакт всего."
+msgstr[1] "%(count)s контакта всего."
+msgstr[2] "%(count)s контактов всего."
+msgstr[3] "%(count)s контактов всего."
+
+#: templates/contacts/_rows.html:137
+msgid "Previous"
+msgstr "Назад"
+
+#: templates/contacts/_rows.html:142
+msgid "Next"
+msgstr "Далее"
+
+#: templates/contacts/_rows.html:147
+msgid "No contacts match this filter."
+msgstr "Ни один контакт не соответствует этому фильтру."
+
+#: templates/contacts/_rows.html:148
+msgid ""
+"No contacts yet. They arrive when someone messages a connected channel, or "
+"when you import a CSV."
+msgstr ""
+"Пока нет контактов. Они появляются, когда кто-то пишет в подключённый канал,"
+" или когда вы импортируете CSV."
+
+#: templates/contacts/_tag_chips.html:24
+#, python-format
+msgid "Remove %(name)s"
+msgstr "Удалить %(name)s"
+
+#: templates/contacts/_tag_chips.html:32
+msgid "No tags yet."
+msgstr "Пока нет тегов."
+
+#: templates/contacts/_tag_chips.html:44
+msgid "Find or add a tag"
+msgstr "Найти или добавить тег"
+
+#: templates/contacts/_tag_chips.html:46
+msgid "Find a tag"
+msgstr "Найти тег"
+
+#: templates/contacts/_tag_rows.html:33
+#, python-format
+#| msgid "%(counter)s character"
+#| msgid_plural "%(counter)s characters"
+msgid "On %(count)s contact"
+msgid_plural "On %(count)s contacts"
+msgstr[0] "На %(count)s контакте"
+msgstr[1] "На %(count)s контактах"
+msgstr[2] "На %(count)s контактах"
+msgstr[3] "На %(count)s контактах"
+
+#: templates/contacts/_tag_rows.html:44
+msgid "Merge into another tag…"
+msgstr "Объединить с другим тегом…"
+
+#: templates/contacts/_tag_rows.html:46
+#, python-format
+#| msgid "Label removed from %(count)s conversation"
+#| msgid_plural "Label removed from %(count)s conversations"
+msgid "Delete “%(name)s”? It will be removed from %(count)s contact."
+msgid_plural "Delete “%(name)s”? It will be removed from %(count)s contacts."
+msgstr[0] "Удалить «%(name)s»? Он будет удалён с %(count)s контакта."
+msgstr[1] "Удалить «%(name)s»? Он будет удалён с %(count)s контактов."
+msgstr[2] "Удалить «%(name)s»? Он будет удалён с %(count)s контактов."
+msgstr[3] "Удалить «%(name)s»? Он будет удалён с %(count)s контактов."
+
+#: templates/contacts/_tag_rows.html:62
+#, python-format
+msgid ""
+"Merge “%(name)s” into the chosen tag? “%(name)s” is deleted and its "
+"%(count)s contact keep the other one."
+msgid_plural ""
+"Merge “%(name)s” into the chosen tag? “%(name)s” is deleted and its "
+"%(count)s contacts keep the other one."
+msgstr[0] ""
+"Объединить «%(name)s» с выбранным тегом? «%(name)s» удаляется, и его "
+"%(count)s контакт сохранит другой."
+msgstr[1] ""
+"Объединить «%(name)s» с выбранным тегом? «%(name)s» удаляется, и его "
+"%(count)s контакта сохранят другой."
+msgstr[2] ""
+"Объединить «%(name)s» с выбранным тегом? «%(name)s» удаляется, и его "
+"%(count)s контактов сохранят другой."
+msgstr[3] ""
+"Объединить «%(name)s» с выбранным тегом? «%(name)s» удаляется, и его "
+"%(count)s контактов сохранят другой."
+
+#: templates/contacts/_tag_rows.html:64
+#, python-format
+msgid "Merge %(name)s into"
+msgstr "Объединить %(name)s с"
+
+#: templates/contacts/_tag_rows.html:67 templates/contacts/list.html:208
+msgid "Choose a tag…"
+msgstr "Выберите тег…"
+
+#: templates/contacts/_tag_rows.html:70
+msgid "Merge"
+msgstr "Объединить"
+
+#: templates/contacts/_tag_rows.html:84
+msgid "No tags yet"
+msgstr "Пока нет тегов"
+
+#: templates/contacts/_tag_rows.html:86
+msgid ""
+"A tag is how a flow says “this person asked about pricing”, so a filter can "
+"find them again later."
+msgstr ""
+"Тег — это способ сценария сказать «этот человек спрашивал о ценах», чтобы "
+"фильтр мог найти его снова."
+
+#: templates/contacts/_tag_rows.html:88 templates/contacts/tag_list.html:27
+msgid "New tag"
+msgstr "Новый тег"
+
+#: templates/contacts/_tag_suggestions.html:24
+#, python-format
+msgid "Create “%(term)s”"
+msgstr "Создать «%(term)s»"
+
+#: templates/contacts/_tag_suggestions.html:31
+#, python-format
+msgid "No tag matches “%(term)s”."
+msgstr "Нет тега, соответствующего «%(term)s»."
+
+#: templates/contacts/_tag_suggestions.html:31
+msgid "Every tag is already on this contact."
+msgstr "Все теги уже на этом контакте."
+
+#: templates/contacts/detail.html:30
+#, python-format
+msgid "Added %(added)s"
+msgstr "Добавлен %(added)s"
+
+#: templates/contacts/detail.html:30
+#, python-format
+msgid "last seen %(seen)s"
+msgstr "последний раз виден %(seen)s"
+
+#: templates/contacts/detail.html:35
+msgid "Back to contacts"
+msgstr "Назад к контактам"
+
+#: templates/contacts/detail.html:44
+msgid "Export data"
+msgstr "Экспортировать данные"
+
+#: templates/contacts/detail.html:47
+#, python-format
+msgid ""
+"Delete %(name)s? They are hidden everywhere, drop out of every segment, and "
+"any running automation stops."
+msgstr ""
+"Удалить %(name)s? Они скрываются везде, выпадают из каждого сегмента, и "
+"любая работающая автоматизация останавливается."
+
+#: templates/contacts/detail.html:53
+msgid "Delete contact"
+msgstr "Удалить контакт"
+
+#: templates/contacts/detail.html:66
+msgid "Details"
+msgstr "Детали"
+
+#: templates/contacts/detail.html:68
+msgid "Each field saves on its own when you leave it."
+msgstr "Каждое поле сохраняется само, когда вы его покидаете."
+
+#: templates/contacts/detail.html:70
+msgid "You have read-only access to this workspace."
+msgstr "У вас доступ только для чтения к этому пространству."
+
+#: templates/contacts/detail.html:91 templates/contacts/field_list.html:8
+#: templates/contacts/field_list.html:15
+msgid "Custom fields"
+msgstr "Пользовательские поля"
+
+#: templates/contacts/detail.html:104
+msgid "True"
+msgstr "Истина"
+
+#: templates/contacts/detail.html:105
+msgid "False"
+msgstr "Ложь"
+
+#: templates/contacts/detail.html:129
+msgid "Emptying a field removes its value entirely."
+msgstr "Очистка поля полностью удаляет его значение."
+
+#: templates/contacts/detail.html:132
+msgid "No custom fields yet."
+msgstr "Пока нет пользовательских полей."
+
+#: templates/contacts/detail.html:133
+msgid "Add one"
+msgstr "Добавить"
+
+#: templates/contacts/detail.html:154
+msgid "Erase permanently"
+msgstr "Стереть навсегда"
+
+#: templates/contacts/detail.html:156
+#, python-format
+msgid ""
+"Removes %(name)s outright: their profile, custom field values, tags, channel\n"
+"          identities, consent records, conversations and message bodies. Counters stay, anonymised. A\n"
+"          suppressed email address is kept, because that is a fact about a mailbox rather than about this\n"
+"          contact. <strong>This cannot be undone.</strong>"
+msgstr ""
+"Полностью удаляет %(name)s: профиль, значения пользовательских полей, теги, "
+"идентификаторы каналов, записи согласия, диалоги и тексты сообщений. "
+"Счётчики остаются, обезличенные. Подавленный email-адрес сохраняется, "
+"поскольку это факт о почтовом ящике, а не об этом контакте. <strong>Это "
+"нельзя отменить.</strong>"
+
+#: templates/contacts/detail.html:161
+#, python-format
+msgid ""
+"Erase %(name)s permanently? Their messages, identities and consent records "
+"are removed for good. This cannot be undone."
+msgstr ""
+"Стереть %(name)s навсегда? Их сообщения, идентификаторы и записи согласия "
+"удаляются безвозвратно. Это нельзя отменить."
+
+#: templates/contacts/detail.html:168
+#, python-format
+msgid "Type <code>%(word)s</code> to confirm"
+msgstr "Введите <code>%(word)s</code> для подтверждения"
+
+#: templates/contacts/detail.html:171
+msgid "Erase contact"
+msgstr "Стереть контакт"
+
+#: templates/contacts/field_list.html:17
+msgid ""
+"An extra detail you keep on a contact that is not already built in: a size, "
+"a booking date, a plan. Flows fill them in and filters can search on them."
+msgstr ""
+"Дополнительная деталь о контакте, которой ещё нет: размер, дата "
+"бронирования, тариф. Сценарии их заполняют, а фильтры могут по ним искать."
+
+#: templates/contacts/field_list.html:23
+msgid "Plan"
+msgstr "Тариф"
+
+#: templates/contacts/field_list.html:26
+msgid "What is the field called?"
+msgstr "Как называется поле?"
+
+#: templates/contacts/field_list.html:30
+msgid "Type"
+msgstr "Тип"
+
+#: templates/contacts/field_list.html:35 templates/contacts/tag_list.html:41
+#: templates/inbox/label_settings.html:40
+msgid "Add it"
+msgstr "Добавить"
+
+#: templates/contacts/field_list.html:40
+msgid ""
+"Pick the type carefully: it is fixed once the field exists, and it decides "
+"how a filter can compare it."
+msgstr ""
+"Выбирайте тип внимательно: он фиксируется, как только поле создано, и "
+"определяет, как фильтр может его сравнивать."
+
+#: templates/contacts/import_detail.html:15
+msgid "Import"
+msgstr "Импорт"
+
+#: templates/contacts/import_detail.html:17
+#: templates/contacts/import_list.html:13
+#: templates/contacts/import_list.html:16
+msgid "Import contacts"
+msgstr "Импорт контактов"
+
+#: templates/contacts/import_detail.html:23
+#, python-format
+msgid "Uploaded %(date)s"
+msgstr "Загружен %(date)s"
+
+#: templates/contacts/import_detail.html:25
+msgid "All imports"
+msgstr "Все импорты"
+
+#: templates/contacts/import_detail.html:44
+msgid "Map the columns"
+msgstr "Сопоставить столбцы"
+
+#: templates/contacts/import_detail.html:46
+msgid ""
+"Leave a column unmapped to ignore it. Mapping a column to <strong>Tags</strong> splits\n"
+"      its cell on <code>;</code> or <code>,</code> and attaches each name, creating tags that\n"
+"      do not exist yet."
+msgstr ""
+"Оставьте столбец без сопоставления, чтобы игнорировать его. Сопоставление "
+"столбца с <strong>Тегами</strong> разбивает его ячейку по <code>;</code> или"
+" <code>,</code> и прикрепляет каждое имя, создавая ещё не существующие теги."
+
+#: templates/contacts/import_detail.html:51
+msgid "(unnamed)"
+msgstr "(без имени)"
+
+#: templates/contacts/import_detail.html:55
+msgid "Sample"
+msgstr "Пример"
+
+#: templates/contacts/import_detail.html:55
+msgid "Import as"
+msgstr "Импортировать как"
+
+#: templates/contacts/import_detail.html:64
+#, python-format
+msgid "Import column %(name)s as"
+msgstr "Импортировать столбец %(name)s как"
+
+#: templates/contacts/import_detail.html:67
+msgid "Ignore"
+msgstr "Игнорировать"
+
+#: templates/contacts/import_detail.html:82
+msgid "When a row matches an existing contact"
+msgstr "Когда строка совпадает с существующим контактом"
+
+#: templates/contacts/import_detail.html:89
+msgid ""
+"Matched on email when you map one, otherwise on phone. Blank cells never "
+"clear a stored value. Emptying a field is an edit you make on the contact."
+msgstr ""
+"Сопоставление по email, если он указан, иначе по телефону. Пустые ячейки "
+"никогда не очищают сохранённое значение. Очистка поля — это правка, которую "
+"вы делаете на контакте."
+
+#: templates/contacts/import_detail.html:92
+msgid "Check the file"
+msgstr "Проверить файл"
+
+#: templates/contacts/import_list.html:17
+msgid "Upload a CSV, map its columns, check it, then import."
+msgstr "Загрузите CSV, сопоставьте столбцы, проверьте и импортируйте."
+
+#: templates/contacts/import_list.html:22
+msgid "Upload a file"
+msgstr "Загрузить файл"
+
+#: templates/contacts/import_list.html:27
+msgid "CSV file"
+msgstr "Файл CSV"
+
+#: templates/contacts/import_list.html:30
+#, python-format
+msgid ""
+"Up to %(mb)s MB and %(rows)s rows. The first row must hold the column names."
+msgstr ""
+"До %(mb)s МБ и %(rows)s строк. Первая строка должна содержать названия "
+"столбцов."
+
+#: templates/contacts/import_list.html:36
+msgid ""
+"I understand that imported contacts are <strong>not reachable on any channel</strong>\n"
+"        until they message this workspace first. Importing an email address or a phone number\n"
+"        does not create a messaging identity and is not a record of consent."
+msgstr ""
+"Я понимаю, что импортированные контакты <strong>недоступны ни на одном "
+"канале</strong>, пока не напишут в это пространство первыми. Импорт email-"
+"адреса или номера телефона не создаёт идентификатор для обмена сообщениями и"
+" не является записью согласия."
+
+#: templates/contacts/import_list.html:42
+msgid "Upload"
+msgstr "Загрузить"
+
+#: templates/contacts/import_list.html:47
+msgid "Recent imports"
+msgstr "Недавние импорты"
+
+#: templates/contacts/import_list.html:50
+msgid "File"
+msgstr "Файл"
+
+#: templates/contacts/import_list.html:50
+msgid "Rows"
+msgstr "Строки"
+
+#: templates/contacts/import_list.html:50
+msgid "Started by"
+msgstr "Начал(а)"
+
+#: templates/contacts/import_list.html:70
+msgid "No imports yet."
+msgstr "Пока нет импортов."
+
+#: templates/contacts/list.html:49
+#, python-format
+msgid "%(count)s person has messaged you or been imported."
+msgid_plural "%(count)s people have messaged you or been imported."
+msgstr[0] "%(count)s человек написал вам или был импортирован."
+msgstr[1] "%(count)s человека написали вам или были импортированы."
+msgstr[2] "%(count)s человек написали вам или были импортированы."
+msgstr[3] "%(count)s человек написали вам или были импортированы."
+
+#: templates/contacts/list.html:51
+msgid "Everyone who has messaged you or been imported."
+msgstr "Все, кто писал вам или был импортирован."
+
+#: templates/contacts/list.html:65
+msgid "Export"
+msgstr "Экспорт"
+
+#: templates/contacts/list.html:66
+msgid "Import a CSV"
+msgstr "Импортировать CSV"
+
+#: templates/contacts/list.html:100
+msgid "Everyone"
+msgstr "Все"
+
+#: templates/contacts/list.html:122
+msgid "Search by name, email or phone"
+msgstr "Поиск по имени, email или телефону"
+
+#: templates/contacts/list.html:124
+msgid "Search contacts"
+msgstr "Поиск контактов"
+
+#: templates/contacts/list.html:141
+msgid "Filter"
+msgstr "Фильтр"
+
+#: templates/contacts/list.html:144
+msgid "Sort"
+msgstr "Сортировка"
+
+#: templates/contacts/list.html:186
+#, python-format
+msgid ""
+"Delete “%(name)s”? The contacts stay; any flow whose condition node "
+"references this segment stops validating."
+msgstr ""
+"Удалить «%(name)s»? Контакты остаются; любой сценарий, чей узел условия "
+"ссылается на этот сегмент, перестаёт проходить проверку."
+
+#: templates/contacts/list.html:197 templates/inbox/list.html:133
+msgid "selected"
+msgstr "выбрано"
+
+#: templates/contacts/list.html:206
+msgid "Tag"
+msgstr "Тег"
+
+#: templates/contacts/list.html:211
+msgid "Add tag"
+msgstr "Добавить тег"
+
+#: templates/contacts/list.html:212 templates/inbox/_sidebar.html:78
+msgid "Remove tag"
+msgstr "Удалить тег"
+
+#: templates/contacts/list.html:232 templates/organizations/billing.html:114
+msgid "Subscribe"
+msgstr "Оформить подписку"
+
+#: templates/contacts/list.html:241
+msgid ""
+"Delete the selected contacts? They are hidden everywhere and drop out of "
+"every segment."
+msgstr ""
+"Удалить выбранные контакты? Они скрываются везде и выпадают из каждого "
+"сегмента."
+
+#: templates/contacts/list.html:254
+#, python-format
+msgid "Type %(word)s to confirm"
+msgstr "Введите %(word)s для подтверждения"
+
+#: templates/contacts/list.html:258
+msgid ""
+"Erase the selected contacts permanently? Their messages, identities and "
+"consent records are removed for good. This cannot be undone."
+msgstr ""
+"Стереть выбранные контакты навсегда? Их сообщения, идентификаторы и записи "
+"согласия удаляются безвозвратно. Это нельзя отменить."
+
+#: templates/contacts/list.html:266
+msgid "Clear selection"
+msgstr "Очистить выбор"
+
+#: templates/contacts/tag_list.html:24
+msgid ""
+"A tag labels a person. Flows add and remove them, segments filter on them, "
+"and deleting one takes it off every contact carrying it."
+msgstr ""
+"Тег помечает человека. Сценарии добавляют и удаляют их, сегменты фильтруют "
+"по ним, а удаление тега снимает его со всех контактов."
+
+#: templates/contacts/tag_list.html:38
+msgid "What is the tag called?"
+msgstr "Как называется тег?"
 
 #: templates/inbox/_composer.html:33
 msgid "Reply"
@@ -3840,19 +5359,9 @@ msgstr "Вы можете читать этот почтовый ящик, но 
 msgid "No conversations match these filters."
 msgstr "Ни один диалог не соответствует этим фильтрам."
 
-#: templates/inbox/_conversation_rows.html:40
-#, python-format
-msgid "Select %(name)s"
-msgstr "Выбрать %(name)s"
-
 #: templates/inbox/_conversation_rows.html:64
 msgid "Unread"
 msgstr "Непрочитано"
-
-#: templates/inbox/_conversation_rows.html:70
-#, python-format
-msgid "%(time)s ago"
-msgstr "%(time)s назад"
 
 #: templates/inbox/_conversation_rows.html:80
 msgid "Something is scheduled on this conversation"
@@ -4115,19 +5624,10 @@ msgstr[3] ""
 "сопоставляет сегодняшние данные контакта со старыми сообщениями, поэтому это"
 " предпросмотр, а не воспроизведение того, что произошло бы в тот момент."
 
-#: templates/inbox/_sidebar.html:31
-#, python-format
-msgid "Opted out %(date)s"
-msgstr "Отказался %(date)s"
-
 #: templates/inbox/_sidebar.html:33
 #, python-format
 msgid "Opted in via %(source)s"
 msgstr "Согласился через %(source)s"
-
-#: templates/inbox/_sidebar.html:33
-msgid "Opted in"
-msgstr "Согласился"
 
 #: templates/inbox/_sidebar.html:35
 msgid "No opt-in recorded"
@@ -4150,10 +5650,6 @@ msgstr "Адреса каналов не зафиксированы."
 msgid "Automation"
 msgstr "Автоматизация"
 
-#: templates/inbox/_sidebar.html:56
-msgid "Stop automation"
-msgstr "Остановить автоматизацию"
-
 #: templates/inbox/_sidebar.html:60
 msgid "Nothing running for this contact."
 msgstr "Для этого контакта ничего не запущено."
@@ -4165,10 +5661,6 @@ msgstr "Возобновить автоматизацию"
 #: templates/inbox/_sidebar.html:66
 msgid "Pause automation"
 msgstr "Приостановить автоматизацию"
-
-#: templates/inbox/_sidebar.html:78
-msgid "Remove tag"
-msgstr "Удалить тег"
 
 #: templates/inbox/_sidebar.html:84
 msgid "None yet."
@@ -4287,10 +5779,6 @@ msgstr "Ожидает доставки"
 msgid "What is the label called?"
 msgstr "Как называется метка?"
 
-#: templates/inbox/label_settings.html:40
-msgid "Add it"
-msgstr "Добавить"
-
 #: templates/inbox/list.html:31
 msgid "Every conversation across your connected channels."
 msgstr "Все диалоги во всех подключённых каналах."
@@ -4303,10 +5791,6 @@ msgstr "Все каналы"
 msgid "Any label"
 msgstr "Любая метка"
 
-#: templates/inbox/list.html:133
-msgid "selected"
-msgstr "выбрано"
-
 #: templates/inbox/list.html:135
 msgid "Label"
 msgstr "Метка"
@@ -4318,15 +5802,6 @@ msgstr "Выберите метку…"
 #: templates/inbox/list.html:140
 msgid "Add"
 msgstr "Добавить"
-
-#: templates/inbox/list.html:141
-msgid "Remove"
-msgstr "Удалить"
-
-#: templates/inbox/list.html:142 templates/workspaces/settings.html:73
-#: templates/workspaces/settings.html:83
-msgid "Clear"
-msgstr "Очистить"
 
 #: templates/inbox/list.html:167
 msgid "Pick a conversation to read it."
@@ -4442,10 +5917,6 @@ msgstr ""
 #: templates/members/list.html:28 templates/members/list.html:35
 msgid "Invite someone"
 msgstr "Пригласить"
-
-#: templates/members/list.html:37
-msgid "Email"
-msgstr "Email"
 
 #: templates/members/list.html:41 templates/members/list.html:103
 msgid "Organization role"
@@ -4600,10 +6071,6 @@ msgstr "Ежемесячно"
 #: templates/organizations/billing.html:102
 msgid "Yearly"
 msgstr "Ежегодно"
-
-#: templates/organizations/billing.html:114
-msgid "Subscribe"
-msgstr "Оформить подписку"
 
 #: templates/organizations/billing.html:129
 #, python-format

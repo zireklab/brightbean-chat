@@ -41,6 +41,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.functional import Promise
 from django.utils.text import slugify
 from django.views.decorators.http import require_GET, require_http_methods, require_POST
 
@@ -544,7 +545,7 @@ def _options(workspace: Any, lists: dict[str, list[dict[str, Any]]], requirement
     return []
 
 
-def _field_types() -> list[tuple[str, str]]:
+def _field_types() -> list[tuple[str, str | Promise]]:
     """The types a "create it" answer may pick for a new custom field.
 
     Read off the model's own choices so the wizard cannot offer one

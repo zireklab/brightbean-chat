@@ -67,6 +67,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.db import transaction
 from django.utils import timezone
+from django.utils.translation import gettext
 
 from apps.contacts.errors import ContactsError
 from apps.contacts.models import (
@@ -543,12 +544,18 @@ def _run_batch(run: ContactImport, *, mode: str, offset: int) -> None:
             # the run stops. Counting it would make `total_rows` one larger than
             # the work the import pass will do, so the progress bar would stop a
             # row short of full for every capped file.
-            errors.append(RowError(number, "", f"This file has more than {max_rows:,} rows; the rest were skipped."))
+            errors.append(
+                RowError(
+                    number,
+                    "",
+                    gettext("This file has more than %(max)s rows; the rest were skipped.") % {"max": f"{max_rows:,}"},
+                )
+            )
             capped = True
             break
         processed += 1
         if sum(len(cell) for cell in row) > MAX_ROW_CHARS:
-            errors.append(RowError(number, "", "That row is too long to import."))
+            errors.append(RowError(number, "", gettext("That row is too long to import.")))
             continue
         try:
             outcome = _apply_row(run, mapping, row, number, write=mode == MODE_IMPORT, seen=seen)
@@ -726,7 +733,9 @@ def _apply_row(
         # import, and a dry run that skipped the check would promise a clean file
         # and then report the failure only after half of it had been written.
         if len(name) > MAX_TAG_NAME_CHARS:
-            return RowError(number, TAGS_TARGET, f"A tag name is at most {MAX_TAG_NAME_CHARS} characters.")
+            return RowError(
+                number, TAGS_TARGET, gettext("A tag name is at most %(max)s characters.") % {"max": MAX_TAG_NAME_CHARS}
+            )
 
     key = _match_key(values, mapping)
     existing = _match(run.workspace_id, values, mapping) if mapping.match_field else None
@@ -807,7 +816,7 @@ def _validate_system(values: dict[str, str], number: int) -> RowError | None:
         try:
             validate_email(email)
         except ValidationError:
-            return RowError(number, "email", "That is not an email address.")
+            return RowError(number, "email", gettext("That is not an email address."))
     return None
 
 
