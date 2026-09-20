@@ -1,12 +1,13 @@
 {% extends "base.html" %}
-{% block title %}Notifications · BrightBean Chat{% endblock %}
+{% load i18n %}
+{% block title %}{% translate "Notifications" %} · BrightBean Chat{% endblock %}
 
-{% block page_header %}<h1 class="page-title">Notifications</h1>{% endblock %}
+{% block page_header %}<h1 class="page-title">{% translate "Notifications" %}</h1>{% endblock %}
 
 {% block content %}
 <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
     <p class="text-sm" style="color: var(--text-secondary);">
-        {% if unread_notification_count %}{{ unread_notification_count }} unread{% else %}All caught up{% endif %}
+        {% if unread_notification_count %}{% blocktranslate count count=unread_notification_count %}{{ count }} unread{% plural %}{{ count }} unread{% endblocktranslate %}{% else %}{% translate "All caught up" %}{% endif %}
     </p>
     <div class="flex items-center gap-3">
         {% comment %}
@@ -19,32 +20,32 @@
             <label class="bb-toggle text-xs" style="color: var(--text-secondary);">
                 <input type="checkbox" name="email_enabled" {% if email_enabled %}checked{% endif %}>
                 <span class="bb-toggle-track"></span>
-                <span>Email me</span>
+                <span>{% translate "Email me" %}</span>
             </label>
         </form>
         {% if unread_notification_count %}
         <button type="button" class="btn-outline btn-inline text-xs"
                 hx-post="{% url 'notifications:mark_all_read' %}"
-                hx-swap="none">Mark all read</button>
+                hx-swap="none">{% translate "Mark all read" %}</button>
         {% endif %}
     </div>
 </div>
 
 <div class="flex flex-wrap items-center gap-2 mb-4">
-    <select name="event_type" aria-label="Filter by type" class="bb-filter-select"
+    <select name="event_type" aria-label="{% translate 'Filter by type' %}" class="bb-filter-select"
             hx-get="{% url 'notifications:list' %}" hx-target="#notification-history" hx-swap="innerHTML"
             hx-include="[name='read_state']">
-        <option value="">All types</option>
+        <option value="">{% translate "All types" %}</option>
         {% for value, label in event_type_choices %}
         <option value="{{ value }}" {% if value == selected_event_type %}selected{% endif %}>{{ label }}</option>
         {% endfor %}
     </select>
-    <select name="read_state" aria-label="Filter by read state" class="bb-filter-select"
+    <select name="read_state" aria-label="{% translate 'Filter by read state' %}" class="bb-filter-select"
             hx-get="{% url 'notifications:list' %}" hx-target="#notification-history" hx-swap="innerHTML"
             hx-include="[name='event_type']">
-        <option value="">Read and unread</option>
-        <option value="unread" {% if selected_read_state == "unread" %}selected{% endif %}>Unread only</option>
-        <option value="read" {% if selected_read_state == "read" %}selected{% endif %}>Read only</option>
+        <option value="">{% translate "Read and unread" %}</option>
+        <option value="unread" {% if selected_read_state == "unread" %}selected{% endif %}>{% translate "Unread only" %}</option>
+        <option value="read" {% if selected_read_state == "read" %}selected{% endif %}>{% translate "Read only" %}</option>
     </select>
 </div>
 

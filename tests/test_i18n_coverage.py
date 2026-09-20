@@ -141,6 +141,35 @@ _I18N_TEMPLATES = [
     "broadcasts/compose.html",
     "broadcasts/detail.html",
     "broadcasts/list.html",
+    # Phase 2f (campaigns, analytics, media_library, shared shell)
+    "campaigns/_list_rows.html",
+    "campaigns/_step_fields.html",
+    "campaigns/_steps.html",
+    "campaigns/_subscriber_suggestions.html",
+    "campaigns/_subscribers.html",
+    "campaigns/detail.html",
+    "campaigns/list.html",
+    "analytics/_counter_cards.html",
+    "analytics/_range.html",
+    "analytics/flow_detail.html",
+    "analytics/overview.html",
+    "analytics/settings.html",
+    "media_library/_asset_detail.html",
+    "media_library/_asset_grid.html",
+    "media_library/_folder_rail.html",
+    "media_library/library.html",
+    "403.html",
+    "404.html",
+    "500.html",
+    "layouts/error.html",
+    "notifications/list.html",
+    "notifications/partials/_bell.html",
+    "notifications/partials/_bell_panel.html",
+    "notifications/partials/_history_list.html",
+    "partials/_coming_soon_body.html",
+    "partials/_copy_field.html",
+    "partials/_toast_host.html",
+    "components/ui_select.html",
 ]
 
 #: Every Python module a landed phase put gettext/gettext_lazy copy in.
@@ -204,6 +233,16 @@ _I18N_MODULES = [
     "apps/broadcasts/models.py",
     "apps/broadcasts/services.py",
     "apps/broadcasts/views.py",
+    # Phase 2f (campaigns, analytics, media_library)
+    "apps/campaigns/models.py",
+    "apps/campaigns/services.py",
+    "apps/campaigns/views.py",
+    "apps/analytics/views.py",
+    "apps/media_library/mimes.py",
+    "apps/media_library/quotas.py",
+    "apps/media_library/models.py",
+    "apps/media_library/services.py",
+    "apps/media_library/views.py",
 ]
 
 
