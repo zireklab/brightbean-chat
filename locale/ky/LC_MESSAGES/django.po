@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-21 10:10+0600\n"
+"POT-Creation-Date: 2026-09-21 10:19+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ky\n"
@@ -237,6 +237,28 @@ msgstr[0] ""
 #: apps/billing/entitlements.py:406
 msgid "The public API is available on the paid plan."
 msgstr "Ачык API акылуу тарифте жеткиликтүү."
+
+#: apps/billing/selectors.py:72
+msgid "Contacts reached this month"
+msgstr "Бул айда байланышылган контакттар"
+
+#: apps/billing/selectors.py:73
+msgid "Channels connected"
+msgstr "Туташтырылган каналдар"
+
+#: apps/billing/selectors.py:74
+msgid "Active automations"
+msgstr "Активдүү автоматташтыруулар"
+
+#: apps/billing/selectors.py:75
+msgid "Users"
+msgstr "Колдонуучулар"
+
+#: apps/billing/selectors.py:76 apps/common/context_processors.py:375
+#: templates/organizations/workspaces.html:15
+#: templates/organizations/workspaces.html:22
+msgid "Workspaces"
+msgstr "Жумуш мейкиндиктери"
 
 #: apps/billing/services.py:53
 msgid "Choose a monthly or yearly plan."
@@ -1346,12 +1368,6 @@ msgstr "Вебхуктар"
 #: apps/common/context_processors.py:364
 msgid "Organisation"
 msgstr "Уюм"
-
-#: apps/common/context_processors.py:375
-#: templates/organizations/workspaces.html:15
-#: templates/organizations/workspaces.html:22
-msgid "Workspaces"
-msgstr "Жумуш мейкиндиктери"
 
 #: apps/common/context_processors.py:381
 msgid "People & roles"

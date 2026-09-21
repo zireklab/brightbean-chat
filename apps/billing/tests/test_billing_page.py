@@ -76,6 +76,20 @@ class TestSelfHosted:
         assert "Contacts reached this month" in text
         assert "Channels connected" in text
 
+    def test_the_usage_labels_are_translated(self, client_for: Any, tenancy: Any, settings: Any) -> None:
+        """_usage_rows() builds its labels at request time, not import time —
+        gettext(), not gettext_lazy — so a plain, never-wrapped string here
+        would be the easiest of the two to miss."""
+        settings.STRIPE_ENABLED = False
+        tenancy.owner.language = "ru"
+        tenancy.owner.save(update_fields=["language"])
+
+        text = body(client_for(tenancy.owner).get(URL))
+
+        assert "Contacts reached this month" not in text
+        assert "Контакты, с которыми связались в этом месяце" in text
+        assert "Подключено каналов" in text
+
     def test_no_usage_figure_claims_a_limit(self, client_for: Any, tenancy: Any, settings: Any) -> None:
         """ "3 of 25" on a box with no limits would be a lie told in a number."""
         settings.STRIPE_ENABLED = False

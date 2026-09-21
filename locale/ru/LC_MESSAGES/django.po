@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-21 10:10+0600\n"
+"POT-Creation-Date: 2026-09-21 10:19+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ru\n"
@@ -256,6 +256,28 @@ msgstr[3] ""
 #: apps/billing/entitlements.py:406
 msgid "The public API is available on the paid plan."
 msgstr "Публичный API доступен на платном тарифе."
+
+#: apps/billing/selectors.py:72
+msgid "Contacts reached this month"
+msgstr "Контакты, с которыми связались в этом месяце"
+
+#: apps/billing/selectors.py:73
+msgid "Channels connected"
+msgstr "Подключено каналов"
+
+#: apps/billing/selectors.py:74
+msgid "Active automations"
+msgstr "Активные автоматизации"
+
+#: apps/billing/selectors.py:75
+msgid "Users"
+msgstr "Пользователи"
+
+#: apps/billing/selectors.py:76 apps/common/context_processors.py:375
+#: templates/organizations/workspaces.html:15
+#: templates/organizations/workspaces.html:22
+msgid "Workspaces"
+msgstr "Рабочие пространства"
 
 #: apps/billing/services.py:53
 msgid "Choose a monthly or yearly plan."
@@ -1364,12 +1386,6 @@ msgstr "Вебхуки"
 #: apps/common/context_processors.py:364
 msgid "Organisation"
 msgstr "Организация"
-
-#: apps/common/context_processors.py:375
-#: templates/organizations/workspaces.html:15
-#: templates/organizations/workspaces.html:22
-msgid "Workspaces"
-msgstr "Рабочие пространства"
 
 #: apps/common/context_processors.py:381
 msgid "People & roles"
