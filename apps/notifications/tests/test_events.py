@@ -73,6 +73,17 @@ class TestTheShippedVocabulary:
 
         assert labels == sorted(labels)
 
+    def test_the_filter_dropdown_labels_are_actually_translated(self):
+        """Every registered label is gettext_lazy, not a plain string left
+        over from before the type was widened to CopyText."""
+        from django.utils.translation import override
+
+        with override("ru"):
+            labels = {str(label) for _, label in registered_choices()}
+
+        assert "Flow run failed" not in labels
+        assert "Запуск сценария завершился ошибкой" in labels
+
     def test_burst_prone_events_do_not_email(self):
         """flow_execution_failed fires once per execution, so one broken flow in
         a busy workspace would be a mail storm."""

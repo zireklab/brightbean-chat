@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-21 09:45+0600\n"
+"POT-Creation-Date: 2026-09-21 10:10+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ru\n"
@@ -45,7 +45,7 @@ msgstr "Контакт подписан на цепочку"
 msgid "Contact unsubscribed from a sequence"
 msgstr "Контакт отписан от цепочки"
 
-#: apps/api/events.py:100
+#: apps/api/events.py:100 apps/notifications/events.py:322
 msgid "Broadcast finished"
 msgstr "Рассылка завершена"
 
@@ -329,12 +329,12 @@ msgstr "Ожидание"
 msgid "Skipped"
 msgstr "Пропущено"
 
-#: apps/broadcasts/notifications.py:40 apps/notifications/events.py:319
+#: apps/broadcasts/notifications.py:40 apps/notifications/events.py:325
 #, python-brace-format
 msgid "Broadcast \"{broadcast_name}\" finished"
 msgstr "Рассылка «{broadcast_name}» завершена"
 
-#: apps/broadcasts/notifications.py:41 apps/notifications/events.py:320
+#: apps/broadcasts/notifications.py:41 apps/notifications/events.py:326
 #, python-brace-format
 msgid "{sent} sent, {failed} failed, {skipped} skipped."
 msgstr "Отправлено: {sent}, ошибок: {failed}, пропущено: {skipped}."
@@ -982,16 +982,56 @@ msgstr "Одобрен"
 msgid "Rejected"
 msgstr "Отклонён"
 
-#: apps/channels/views.py:402
+#: apps/channels/views.py:88
+msgid "Paste a BotFather token and we do the rest."
+msgstr "Вставьте токен BotFather, остальное сделаем мы."
+
+#: apps/channels/views.py:89
+msgid ""
+"Sign in with the Instagram account and grant the messaging permissions."
+msgstr ""
+"Войдите через аккаунт Instagram и предоставьте разрешения на отправку "
+"сообщений."
+
+#: apps/channels/views.py:90
+msgid ""
+"Paste your Cloud API ids and system user token; we verify them with Meta "
+"first."
+msgstr ""
+"Вставьте идентификаторы Cloud API и токен системного пользователя; сначала "
+"мы проверим их в Meta."
+
+#: apps/channels/views.py:91
+msgid "Sign in with Facebook and pick the page to connect."
+msgstr "Войдите через Facebook и выберите страницу для подключения."
+
+#: apps/channels/views.py:92
+msgid "Paste your Twilio account SID, auth token and number."
+msgstr "Вставьте SID аккаунта Twilio, токен авторизации и номер."
+
+#: apps/channels/views.py:93
+msgid "Pick SMTP, Resend or SES; we check the credentials before saving them."
+msgstr ""
+"Выберите SMTP, Resend или SES; мы проверим учётные данные перед сохранением."
+
+#: apps/channels/views.py:102
+msgid "Message templates"
+msgstr "Шаблоны сообщений"
+
+#: apps/channels/views.py:103 templates/channels/whatsapp_templates.html:19
+msgid "Cost estimates"
+msgstr "Оценки стоимости"
+
+#: apps/channels/views.py:404
 msgid "That is not a status you can set by hand."
 msgstr "Такой статус нельзя установить вручную."
 
-#: apps/channels/views.py:416
+#: apps/channels/views.py:418
 #, python-format
 msgid "%(name)s is now %(status)s."
 msgstr "%(name)s теперь %(status)s."
 
-#: apps/channels/views.py:461
+#: apps/channels/views.py:463
 #, python-format
 msgid "Disconnected %(name)s."
 msgstr "%(name)s отключён."
@@ -1415,21 +1455,21 @@ msgstr "Открыть"
 msgid "Color must be a 6-digit hex value like #3B82F6."
 msgstr "Цвет должен быть 6-значным hex-значением, например #3B82F6."
 
-#: apps/contacts/imports.py:551
+#: apps/contacts/imports.py:569
 #, python-format
 msgid "This file has more than %(max)s rows; the rest were skipped."
 msgstr "В этом файле больше %(max)s строк; остальные были пропущены."
 
-#: apps/contacts/imports.py:558
+#: apps/contacts/imports.py:576
 msgid "That row is too long to import."
 msgstr "Эта строка слишком длинная для импорта."
 
-#: apps/contacts/imports.py:737
+#: apps/contacts/imports.py:755
 #, python-format
 msgid "A tag name is at most %(max)s characters."
 msgstr "Имя тега не длиннее %(max)s символов."
 
-#: apps/contacts/imports.py:819
+#: apps/contacts/imports.py:837
 msgid "That is not an email address."
 msgstr "Это не адрес электронной почты."
 
@@ -3279,78 +3319,78 @@ msgstr "Запланированный ответ для {contact_name} не б�
 msgid "A scheduled reply was not sent"
 msgstr "Запланированный ответ не был отправлен"
 
-#: apps/inbox/rendering.py:103
+#: apps/inbox/rendering.py:104
 msgid "This message was deleted."
 msgstr "Это сообщение было удалено."
 
-#: apps/inbox/rendering.py:104
+#: apps/inbox/rendering.py:105
 msgid "[deleted]"
 msgstr "[удалено]"
 
-#: apps/inbox/rendering.py:136
+#: apps/inbox/rendering.py:137
 msgid "Attached image"
 msgstr "Прикреплённое изображение"
 
-#: apps/inbox/rendering.py:173
+#: apps/inbox/rendering.py:174
 msgid "Attachment"
 msgstr "Вложение"
 
-#: apps/inbox/rendering.py:382
+#: apps/inbox/rendering.py:383
 msgid "This message has no displayable content."
 msgstr "Это сообщение не содержит отображаемого содержимого."
 
-#: apps/inbox/rendering.py:464
+#: apps/inbox/rendering.py:465
 msgid "Unreadable content."
 msgstr "Нечитаемое содержимое."
 
-#: apps/inbox/rendering.py:468
+#: apps/inbox/rendering.py:469
 msgid "Empty message."
 msgstr "Пустое сообщение."
 
-#: apps/inbox/rendering.py:482
+#: apps/inbox/rendering.py:483
 msgid "Empty gallery."
 msgstr "Пустая галерея."
 
-#: apps/inbox/rendering.py:483
+#: apps/inbox/rendering.py:484
 msgid "Unsupported content."
 msgstr "Неподдерживаемое содержимое."
 
-#: apps/inbox/rendering.py:511
+#: apps/inbox/rendering.py:512
 msgid "An attachment was recorded without an identifier."
 msgstr "Вложение было записано без идентификатора."
 
-#: apps/inbox/rendering.py:525
+#: apps/inbox/rendering.py:526
 msgid "An attachment could not be linked."
 msgstr "Не удалось создать ссылку на вложение."
 
-#: apps/inbox/rendering.py:618
+#: apps/inbox/rendering.py:619
 msgid "It could not be sent."
 msgstr "Не удалось отправить."
 
-#: apps/inbox/rendering.py:644
+#: apps/inbox/rendering.py:645
 #, python-format
 msgid "Channel is %(list)s"
 msgstr "Канал: %(list)s"
 
-#: apps/inbox/rendering.py:647
+#: apps/inbox/rendering.py:648
 #, python-format
 msgid "Connection is %(list)s"
 msgstr "Подключение: %(list)s"
 
-#: apps/inbox/rendering.py:651
+#: apps/inbox/rendering.py:652
 #, python-format
 msgid "Message mentions %(list)s"
 msgstr "Сообщение упоминает %(list)s"
 
-#: apps/inbox/rendering.py:656
+#: apps/inbox/rendering.py:657
 msgid "all"
 msgstr "всем"
 
-#: apps/inbox/rendering.py:656
+#: apps/inbox/rendering.py:657
 msgid "any"
 msgstr "любому"
 
-#: apps/inbox/rendering.py:659
+#: apps/inbox/rendering.py:660
 #, python-format
 msgid "Contact matches %(mode)s of %(count)s condition"
 msgid_plural "Contact matches %(mode)s of %(count)s conditions"
@@ -3359,35 +3399,35 @@ msgstr[1] "Контакт соответствует %(mode)s из %(count)s у�
 msgstr[2] "Контакт соответствует %(mode)s из %(count)s условий"
 msgstr[3] "Контакт соответствует %(mode)s из %(count)s условий"
 
-#: apps/inbox/rendering.py:673
+#: apps/inbox/rendering.py:674
 #, python-format
 msgid "Add label %(label)s"
 msgstr "Добавить метку %(label)s"
 
-#: apps/inbox/rendering.py:677
+#: apps/inbox/rendering.py:678
 #, python-format
 msgid "Assign to %(member)s"
 msgstr "Назначить %(member)s"
 
-#: apps/inbox/rendering.py:680 templates/inbox/_rule_form.html:141
+#: apps/inbox/rendering.py:681 templates/inbox/_rule_form.html:141
 #: templates/inbox/_thread_header.html:44
 msgid "Mark done"
 msgstr "Отметить как выполненное"
 
-#: apps/inbox/rendering.py:694
+#: apps/inbox/rendering.py:695
 msgid "(deleted)"
 msgstr "(удалено)"
 
-#: apps/inbox/rendering.py:701 apps/inbox/views.py:848
+#: apps/inbox/rendering.py:702 apps/inbox/views.py:848
 #, python-format
 msgid "%(list)s or %(last)s"
 msgstr "%(list)s или %(last)s"
 
-#: apps/inbox/rendering.py:706
+#: apps/inbox/rendering.py:707
 msgid "someone who has left"
 msgstr "тот, кто покинул пространство"
 
-#: apps/inbox/rendering.py:707
+#: apps/inbox/rendering.py:708
 msgid "a teammate"
 msgstr "коллега"
 
@@ -4089,12 +4129,16 @@ msgstr "Доступ к пространству обновлён."
 msgid "You have joined %(name)s."
 msgstr "Вы присоединились к %(name)s."
 
-#: apps/notifications/events.py:225
+#: apps/notifications/events.py:220
+msgid "Flow hit the loop cap"
+msgstr "Сценарий достиг предела циклов"
+
+#: apps/notifications/events.py:231
 #, python-brace-format
 msgid "Flow \"{flow_name}\" hit the loop cap"
 msgstr "Сценарий «{flow_name}» достиг лимита циклов"
 
-#: apps/notifications/events.py:227
+#: apps/notifications/events.py:233
 #, python-brace-format
 msgid ""
 "It ran 30 blocks without pausing for {contact_name} and was stopped. Open "
@@ -4103,22 +4147,30 @@ msgstr ""
 "Он выполнил 30 блоков подряд без паузы для {contact_name} и был остановлен. "
 "Откройте сценарий и найдите цикл без ожидания."
 
-#: apps/notifications/events.py:240
+#: apps/notifications/events.py:243
+msgid "Flow run failed"
+msgstr "Запуск сценария завершился ошибкой"
+
+#: apps/notifications/events.py:246
 #, python-brace-format
 msgid "Flow \"{flow_name}\" failed"
 msgstr "Сценарий «{flow_name}» завершился с ошибкой"
 
-#: apps/notifications/events.py:241
+#: apps/notifications/events.py:247
 #, python-brace-format
 msgid "The run for {contact_name} stopped at {node_label}: {error}"
 msgstr "Выполнение для {contact_name} остановилось на «{node_label}»: {error}"
 
-#: apps/notifications/events.py:256
+#: apps/notifications/events.py:259
+msgid "Channel needs reconnecting"
+msgstr "Канал нужно переподключить"
+
+#: apps/notifications/events.py:262
 #, python-brace-format
 msgid "{channel_name} needs reconnecting"
 msgstr "Канал {channel_name} нужно переподключить"
 
-#: apps/notifications/events.py:258
+#: apps/notifications/events.py:264
 #, python-brace-format
 msgid ""
 "{platform_label} stopped accepting the stored credentials. Nothing will send"
@@ -4127,11 +4179,15 @@ msgstr ""
 "{platform_label} перестал принимать сохранённые учётные данные. Пока канал "
 "не переподключат, отправка и приём сообщений через него невозможны."
 
-#: apps/notifications/events.py:273
+#: apps/notifications/events.py:274
+msgid "Outbound webhook disabled"
+msgstr "Исходящий вебхук отключён"
+
+#: apps/notifications/events.py:279
 msgid "Webhook disabled after repeated failures"
 msgstr "Вебхук отключён после повторяющихся сбоев"
 
-#: apps/notifications/events.py:275
+#: apps/notifications/events.py:281
 #, python-brace-format
 msgid ""
 "{url} failed {failure_count} times in a row and has been switched off. Re-"
@@ -4141,16 +4197,28 @@ msgstr ""
 "снова, когда эндпоинт заработает."
 
 #: apps/notifications/events.py:291
+msgid "Inbox reminder"
+msgstr "Напоминание в диалоге"
+
+#: apps/notifications/events.py:297
 #, python-brace-format
 msgid "Reminder: {contact_name}"
 msgstr "Напоминание: {contact_name}"
 
-#: apps/notifications/events.py:306
+#: apps/notifications/events.py:308
+msgid "Mentioned by a teammate"
+msgstr "Упоминание от коллеги"
+
+#: apps/notifications/events.py:312
 #, python-brace-format
 msgid "{actor_name} mentioned you"
 msgstr "{actor_name} упомянул(а) вас"
 
-#: apps/notifications/events.py:332
+#: apps/notifications/events.py:335
+msgid "WhatsApp template reviewed"
+msgstr "Шаблон WhatsApp проверен"
+
+#: apps/notifications/events.py:338
 #, python-brace-format
 msgid "WhatsApp template \"{template_name}\" was {status}"
 msgstr "Шаблон WhatsApp «{template_name}» получил статус: {status}"
@@ -7088,10 +7156,6 @@ msgid ""
 msgstr ""
 "Пока не подключён ни один номер WhatsApp, поэтому отправлять шаблон не к "
 "чему."
-
-#: templates/channels/whatsapp_templates.html:19
-msgid "Cost estimates"
-msgstr "Оценки стоимости"
 
 #: templates/channels/whatsapp_templates.html:20
 msgid "estimates only, never metered"

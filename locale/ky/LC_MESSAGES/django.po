@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-21 09:45+0600\n"
+"POT-Creation-Date: 2026-09-21 10:10+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ky\n"
@@ -45,7 +45,7 @@ msgstr "Байланыш ырааттуулукка жазылды"
 msgid "Contact unsubscribed from a sequence"
 msgstr "Байланыш ырааттуулуктан чыгарылды"
 
-#: apps/api/events.py:100
+#: apps/api/events.py:100 apps/notifications/events.py:322
 msgid "Broadcast finished"
 msgstr "Жайылтуу аяктады"
 
@@ -313,12 +313,12 @@ msgstr "Күтүүдө"
 msgid "Skipped"
 msgstr "Өткөрүп жиберилди"
 
-#: apps/broadcasts/notifications.py:40 apps/notifications/events.py:319
+#: apps/broadcasts/notifications.py:40 apps/notifications/events.py:325
 #, python-brace-format
 msgid "Broadcast \"{broadcast_name}\" finished"
 msgstr "«{broadcast_name}» жайылтуусу аяктады"
 
-#: apps/broadcasts/notifications.py:41 apps/notifications/events.py:320
+#: apps/broadcasts/notifications.py:41 apps/notifications/events.py:326
 #, python-brace-format
 msgid "{sent} sent, {failed} failed, {skipped} skipped."
 msgstr "Жөнөтүлдү: {sent}, ката: {failed}, өткөрүп жиберилди: {skipped}."
@@ -962,16 +962,56 @@ msgstr "Бекитилди"
 msgid "Rejected"
 msgstr "Четке кагылды"
 
-#: apps/channels/views.py:402
+#: apps/channels/views.py:88
+msgid "Paste a BotFather token and we do the rest."
+msgstr "BotFather токенин коюңуз, калганын биз жасайбыз."
+
+#: apps/channels/views.py:89
+msgid ""
+"Sign in with the Instagram account and grant the messaging permissions."
+msgstr ""
+"Instagram аккаунту менен кириңиз жана билдирүү жөнөтүү укуктарын бериңиз."
+
+#: apps/channels/views.py:90
+msgid ""
+"Paste your Cloud API ids and system user token; we verify them with Meta "
+"first."
+msgstr ""
+"Cloud API идентификаторлорун жана тутум колдонуучунун токенин коюңуз; аларды"
+" алгач Meta'да текшеребиз."
+
+#: apps/channels/views.py:91
+msgid "Sign in with Facebook and pick the page to connect."
+msgstr "Facebook аркылуу кирип, туташтыра турган баракты тандаңыз."
+
+#: apps/channels/views.py:92
+msgid "Paste your Twilio account SID, auth token and number."
+msgstr ""
+"Twilio аккаунтуңуздун SID'ин, авторизация токенин жана номерин коюңуз."
+
+#: apps/channels/views.py:93
+msgid "Pick SMTP, Resend or SES; we check the credentials before saving them."
+msgstr ""
+"SMTP, Resend же SES тандаңыз; маалыматтарды сактаардан мурун текшеребиз."
+
+#: apps/channels/views.py:102
+msgid "Message templates"
+msgstr "Билдирүү шаблондору"
+
+#: apps/channels/views.py:103 templates/channels/whatsapp_templates.html:19
+msgid "Cost estimates"
+msgstr "Баа болжолдору"
+
+#: apps/channels/views.py:404
 msgid "That is not a status you can set by hand."
 msgstr "Мындай статусту кол менен коюуга болбойт."
 
-#: apps/channels/views.py:416
+#: apps/channels/views.py:418
 #, python-format
 msgid "%(name)s is now %(status)s."
 msgstr "%(name)s эми %(status)s."
 
-#: apps/channels/views.py:461
+#: apps/channels/views.py:463
 #, python-format
 msgid "Disconnected %(name)s."
 msgstr "%(name)s ажыратылды."
@@ -1397,21 +1437,21 @@ msgstr "Ачуу"
 msgid "Color must be a 6-digit hex value like #3B82F6."
 msgstr "Түс #3B82F6 сыяктуу 6 орундуу hex мааниси болушу керек."
 
-#: apps/contacts/imports.py:551
+#: apps/contacts/imports.py:569
 #, python-format
 msgid "This file has more than %(max)s rows; the rest were skipped."
 msgstr "Бул файлда %(max)s сатырдан көп бар; калгандары өткөрүп жиберилди."
 
-#: apps/contacts/imports.py:558
+#: apps/contacts/imports.py:576
 msgid "That row is too long to import."
 msgstr "Бул сап импорттоо үчүн өтө узун."
 
-#: apps/contacts/imports.py:737
+#: apps/contacts/imports.py:755
 #, python-format
 msgid "A tag name is at most %(max)s characters."
 msgstr "Тег аты эң көп %(max)s белгиден турат."
 
-#: apps/contacts/imports.py:819
+#: apps/contacts/imports.py:837
 msgid "That is not an email address."
 msgstr "Бул электрондук почта дареги эмес."
 
@@ -3206,112 +3246,112 @@ msgstr "{contact_name} үчүн пландалган жооп жөнөтүлгө
 msgid "A scheduled reply was not sent"
 msgstr "Пландалган жооп жөнөтүлгөн жок"
 
-#: apps/inbox/rendering.py:103
+#: apps/inbox/rendering.py:104
 msgid "This message was deleted."
 msgstr "Бул билдирүү өчүрүлдү."
 
-#: apps/inbox/rendering.py:104
+#: apps/inbox/rendering.py:105
 msgid "[deleted]"
 msgstr "[өчүрүлдү]"
 
-#: apps/inbox/rendering.py:136
+#: apps/inbox/rendering.py:137
 msgid "Attached image"
 msgstr "Тиркелген сүрөт"
 
-#: apps/inbox/rendering.py:173
+#: apps/inbox/rendering.py:174
 msgid "Attachment"
 msgstr "Тиркеме"
 
-#: apps/inbox/rendering.py:382
+#: apps/inbox/rendering.py:383
 msgid "This message has no displayable content."
 msgstr "Бул билдирүүдө көрсөтүлө турган мазмун жок."
 
-#: apps/inbox/rendering.py:464
+#: apps/inbox/rendering.py:465
 msgid "Unreadable content."
 msgstr "Окулбай турган мазмун."
 
-#: apps/inbox/rendering.py:468
+#: apps/inbox/rendering.py:469
 msgid "Empty message."
 msgstr "Бош билдирүү."
 
-#: apps/inbox/rendering.py:482
+#: apps/inbox/rendering.py:483
 msgid "Empty gallery."
 msgstr "Бош галерея."
 
-#: apps/inbox/rendering.py:483
+#: apps/inbox/rendering.py:484
 msgid "Unsupported content."
 msgstr "Колдоого алынбаган мазмун."
 
-#: apps/inbox/rendering.py:511
+#: apps/inbox/rendering.py:512
 msgid "An attachment was recorded without an identifier."
 msgstr "Тиркеме идентификаторсуз жазылган."
 
-#: apps/inbox/rendering.py:525
+#: apps/inbox/rendering.py:526
 msgid "An attachment could not be linked."
 msgstr "Тиркемеге шилтеме түзүү мүмкүн болгон жок."
 
-#: apps/inbox/rendering.py:618
+#: apps/inbox/rendering.py:619
 msgid "It could not be sent."
 msgstr "Жөнөтүү мүмкүн болгон жок."
 
-#: apps/inbox/rendering.py:644
+#: apps/inbox/rendering.py:645
 #, python-format
 msgid "Channel is %(list)s"
 msgstr "Канал: %(list)s"
 
-#: apps/inbox/rendering.py:647
+#: apps/inbox/rendering.py:648
 #, python-format
 msgid "Connection is %(list)s"
 msgstr "Туташуу: %(list)s"
 
-#: apps/inbox/rendering.py:651
+#: apps/inbox/rendering.py:652
 #, python-format
 msgid "Message mentions %(list)s"
 msgstr "Билдирүү %(list)s эскерет"
 
-#: apps/inbox/rendering.py:656
+#: apps/inbox/rendering.py:657
 msgid "all"
 msgstr "баарына"
 
-#: apps/inbox/rendering.py:656
+#: apps/inbox/rendering.py:657
 msgid "any"
 msgstr "каалаганына"
 
-#: apps/inbox/rendering.py:659
+#: apps/inbox/rendering.py:660
 #, python-format
 msgid "Contact matches %(mode)s of %(count)s condition"
 msgid_plural "Contact matches %(mode)s of %(count)s conditions"
 msgstr[0] "Байланыш %(count)s шарттын %(mode)s дал келет"
 
-#: apps/inbox/rendering.py:673
+#: apps/inbox/rendering.py:674
 #, python-format
 msgid "Add label %(label)s"
 msgstr "%(label)s меткасын кошуу"
 
-#: apps/inbox/rendering.py:677
+#: apps/inbox/rendering.py:678
 #, python-format
 msgid "Assign to %(member)s"
 msgstr "%(member)sга дайындоо"
 
-#: apps/inbox/rendering.py:680 templates/inbox/_rule_form.html:141
+#: apps/inbox/rendering.py:681 templates/inbox/_rule_form.html:141
 #: templates/inbox/_thread_header.html:44
 msgid "Mark done"
 msgstr "Аткарылды деп белгилөө"
 
-#: apps/inbox/rendering.py:694
+#: apps/inbox/rendering.py:695
 msgid "(deleted)"
 msgstr "(өчүрүлдү)"
 
-#: apps/inbox/rendering.py:701 apps/inbox/views.py:848
+#: apps/inbox/rendering.py:702 apps/inbox/views.py:848
 #, python-format
 msgid "%(list)s or %(last)s"
 msgstr "%(list)s же %(last)s"
 
-#: apps/inbox/rendering.py:706
+#: apps/inbox/rendering.py:707
 msgid "someone who has left"
 msgstr "кеткен адам"
 
-#: apps/inbox/rendering.py:707
+#: apps/inbox/rendering.py:708
 msgid "a teammate"
 msgstr "кесиптеш"
 
@@ -4000,12 +4040,16 @@ msgstr "Мейкиндикке мүмкүнчүлүк жаңырды."
 msgid "You have joined %(name)s."
 msgstr "Сиз %(name)s кошулдуңуз."
 
-#: apps/notifications/events.py:225
+#: apps/notifications/events.py:220
+msgid "Flow hit the loop cap"
+msgstr "Сценарий цикл чегине жетти"
+
+#: apps/notifications/events.py:231
 #, python-brace-format
 msgid "Flow \"{flow_name}\" hit the loop cap"
 msgstr "«{flow_name}» сценарийи циклдер чегине жетти"
 
-#: apps/notifications/events.py:227
+#: apps/notifications/events.py:233
 #, python-brace-format
 msgid ""
 "It ran 30 blocks without pausing for {contact_name} and was stopped. Open "
@@ -4014,22 +4058,30 @@ msgstr ""
 "Ал {contact_name} үчүн 30 блокту тыныгуусуз аткарып, токтотулду. Сценарийди "
 "ачып, күтүүсүз циклди табыңыз."
 
-#: apps/notifications/events.py:240
+#: apps/notifications/events.py:243
+msgid "Flow run failed"
+msgstr "Сценарийдин иштеши ишке ашкан жок"
+
+#: apps/notifications/events.py:246
 #, python-brace-format
 msgid "Flow \"{flow_name}\" failed"
 msgstr "«{flow_name}» сценарийи катасы менен аяктады"
 
-#: apps/notifications/events.py:241
+#: apps/notifications/events.py:247
 #, python-brace-format
 msgid "The run for {contact_name} stopped at {node_label}: {error}"
 msgstr "{contact_name} үчүн аткаруу «{node_label}» жеринде токтоду: {error}"
 
-#: apps/notifications/events.py:256
+#: apps/notifications/events.py:259
+msgid "Channel needs reconnecting"
+msgstr "Канал кайра туташтырылышы керек"
+
+#: apps/notifications/events.py:262
 #, python-brace-format
 msgid "{channel_name} needs reconnecting"
 msgstr "{channel_name} каналын кайра туташтыруу керек"
 
-#: apps/notifications/events.py:258
+#: apps/notifications/events.py:264
 #, python-brace-format
 msgid ""
 "{platform_label} stopped accepting the stored credentials. Nothing will send"
@@ -4039,11 +4091,15 @@ msgstr ""
 " туташтырылганга чейин бул канал аркылуу эч нерсе жөнөтүлбөйт же кабыл "
 "алынбайт."
 
-#: apps/notifications/events.py:273
+#: apps/notifications/events.py:274
+msgid "Outbound webhook disabled"
+msgstr "Чыгуучу вебхук өчүрүлгөн"
+
+#: apps/notifications/events.py:279
 msgid "Webhook disabled after repeated failures"
 msgstr "Вебхук кайталанган каталардан кийин өчүрүлдү"
 
-#: apps/notifications/events.py:275
+#: apps/notifications/events.py:281
 #, python-brace-format
 msgid ""
 "{url} failed {failure_count} times in a row and has been switched off. Re-"
@@ -4053,16 +4109,28 @@ msgstr ""
 "кайра иштей баштаганда аны кайра күйгүзүңүз."
 
 #: apps/notifications/events.py:291
+msgid "Inbox reminder"
+msgstr "Маектеги эскертүү"
+
+#: apps/notifications/events.py:297
 #, python-brace-format
 msgid "Reminder: {contact_name}"
 msgstr "Эскертүү: {contact_name}"
 
-#: apps/notifications/events.py:306
+#: apps/notifications/events.py:308
+msgid "Mentioned by a teammate"
+msgstr "Кесиптеш белгиледи"
+
+#: apps/notifications/events.py:312
 #, python-brace-format
 msgid "{actor_name} mentioned you"
 msgstr "{actor_name} сизди эскерди"
 
-#: apps/notifications/events.py:332
+#: apps/notifications/events.py:335
+msgid "WhatsApp template reviewed"
+msgstr "WhatsApp шаблону текшерилди"
+
+#: apps/notifications/events.py:338
 #, python-brace-format
 msgid "WhatsApp template \"{template_name}\" was {status}"
 msgstr "WhatsApp'тагы «{template_name}» шаблону {status} болду"
@@ -6980,10 +7048,6 @@ msgid ""
 msgstr ""
 "Азырынча бир да WhatsApp номери туташтырылган эмес, ошондуктан шаблон жөнөтө"
 " турган эч нерсе жок."
-
-#: templates/channels/whatsapp_templates.html:19
-msgid "Cost estimates"
-msgstr "Баа болжолдору"
 
 #: templates/channels/whatsapp_templates.html:20
 msgid "estimates only, never metered"

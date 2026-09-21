@@ -33,7 +33,9 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.timesince import timesince
+from django.utils.functional import Promise
 from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_GET, require_POST
 
 from apps.channels.capabilities import capabilities_for
@@ -82,23 +84,23 @@ CONNECT_FLOW_ISSUES: dict[str, str] = {
 #: continuations of "Telegram — set it up — …", so they read correctly only in
 #: that one line of markup; the moment the page grew a card layout they became
 #: lowercase sentences under a heading.
-CONNECT_HINTS: dict[str, str] = {
-    Platform.TELEGRAM: "Paste a BotFather token and we do the rest.",
-    Platform.INSTAGRAM: "Sign in with the Instagram account and grant the messaging permissions.",
-    Platform.WHATSAPP: "Paste your Cloud API ids and system user token; we verify them with Meta first.",
-    Platform.MESSENGER: "Sign in with Facebook and pick the page to connect.",
-    Platform.SMS: "Paste your Twilio account SID, auth token and number.",
-    Platform.EMAIL: "Pick SMTP, Resend or SES; we check the credentials before saving them.",
+CONNECT_HINTS: dict[str, str | Promise] = {
+    Platform.TELEGRAM: _("Paste a BotFather token and we do the rest."),
+    Platform.INSTAGRAM: _("Sign in with the Instagram account and grant the messaging permissions."),
+    Platform.WHATSAPP: _("Paste your Cloud API ids and system user token; we verify them with Meta first."),
+    Platform.MESSENGER: _("Sign in with Facebook and pick the page to connect."),
+    Platform.SMS: _("Paste your Twilio account SID, auth token and number."),
+    Platform.EMAIL: _("Pick SMTP, Resend or SES; we check the credentials before saving them."),
 }
 
 #: Extra settings pages a platform brings with it, as ``(label, route)`` pairs.
 #: A dict rather than a per-platform ``if`` in the template, for the same reason
 #: ``CONNECT_ROUTES`` is one: the next adapter adds a line here instead of
 #: teaching the list page about itself.
-PLATFORM_EXTRA_LINKS: dict[str, tuple[tuple[str, str], ...]] = {
+PLATFORM_EXTRA_LINKS: dict[str, tuple[tuple[str | Promise, str], ...]] = {
     Platform.WHATSAPP: (
-        ("Message templates", "channels:whatsapp_templates"),
-        ("Cost estimates", "channels:whatsapp_cost_hints"),
+        (_("Message templates"), "channels:whatsapp_templates"),
+        (_("Cost estimates"), "channels:whatsapp_cost_hints"),
     ),
 }
 
