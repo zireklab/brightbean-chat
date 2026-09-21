@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-21 10:19+0600\n"
+"POT-Creation-Date: 2026-09-21 10:24+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ru\n"
@@ -256,6 +256,90 @@ msgstr[3] ""
 #: apps/billing/entitlements.py:406
 msgid "The public API is available on the paid plan."
 msgstr "Публичный API доступен на платном тарифе."
+
+#: apps/billing/plans.py:119
+msgid "Free forever"
+msgstr "Бесплатно навсегда"
+
+#: apps/billing/plans.py:125 apps/billing/plans.py:126
+msgid "/month"
+msgstr "/мес."
+
+#: apps/billing/plans.py:125
+msgid "Billed monthly"
+msgstr "Оплата ежемесячно"
+
+#: apps/billing/plans.py:126
+msgid "Billed yearly, $144 up front"
+msgstr "Оплата ежегодно, $144 сразу"
+
+#: apps/billing/plans.py:132
+msgid "Save 20%"
+msgstr "Сэкономьте 20%"
+
+#: apps/billing/plans.py:181
+msgid "Free"
+msgstr "Бесплатно"
+
+#: apps/billing/plans.py:182
+msgid "Enough to prove it works."
+msgstr "Достаточно, чтобы убедиться, что это работает."
+
+#: apps/billing/plans.py:185
+msgid "25 contacts a month"
+msgstr "25 контактов в месяц"
+
+#: apps/billing/plans.py:186
+msgid "2 channels"
+msgstr "2 канала"
+
+#: apps/billing/plans.py:187
+msgid "4 active automations"
+msgstr "4 активные автоматизации"
+
+#: apps/billing/plans.py:188
+msgid "1 user"
+msgstr "1 пользователь"
+
+#: apps/billing/plans.py:189 apps/billing/plans.py:203
+msgid "Shared inbox, labels and reminders"
+msgstr "Общий инбокс, метки и напоминания"
+
+#: apps/billing/plans.py:190 apps/billing/plans.py:204
+msgid "Contacts, tags and segments"
+msgstr "Контакты, теги и сегменты"
+
+#: apps/billing/plans.py:195
+msgid "Pro Chat"
+msgstr "Pro Chat"
+
+#: apps/billing/plans.py:196
+msgid "Everything, with nothing counted."
+msgstr "Всё, без ограничений и подсчётов."
+
+#: apps/billing/plans.py:198
+msgid "Unlimited contacts"
+msgstr "Безлимитные контакты"
+
+#: apps/billing/plans.py:199
+msgid "Every channel"
+msgstr "Все каналы"
+
+#: apps/billing/plans.py:200
+msgid "Unlimited automations"
+msgstr "Безлимитные автоматизации"
+
+#: apps/billing/plans.py:201
+msgid "Unlimited sequences and broadcasts"
+msgstr "Безлимитные цепочки и рассылки"
+
+#: apps/billing/plans.py:202
+msgid "Unlimited users"
+msgstr "Неограниченное количество пользователей"
+
+#: apps/billing/plans.py:205
+msgid "Public API and outbound webhooks"
+msgstr "Публичный API и исходящие вебхуки"
 
 #: apps/billing/selectors.py:72
 msgid "Contacts reached this month"

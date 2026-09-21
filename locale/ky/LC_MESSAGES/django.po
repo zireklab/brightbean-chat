@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-21 10:19+0600\n"
+"POT-Creation-Date: 2026-09-21 10:24+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ky\n"
@@ -237,6 +237,90 @@ msgstr[0] ""
 #: apps/billing/entitlements.py:406
 msgid "The public API is available on the paid plan."
 msgstr "Ачык API акылуу тарифте жеткиликтүү."
+
+#: apps/billing/plans.py:119
+msgid "Free forever"
+msgstr "Түбөлүккө акысыз"
+
+#: apps/billing/plans.py:125 apps/billing/plans.py:126
+msgid "/month"
+msgstr "/ай"
+
+#: apps/billing/plans.py:125
+msgid "Billed monthly"
+msgstr "Айына төлөнөт"
+
+#: apps/billing/plans.py:126
+msgid "Billed yearly, $144 up front"
+msgstr "Жылына төлөнөт, $144 алдын ала"
+
+#: apps/billing/plans.py:132
+msgid "Save 20%"
+msgstr "20% үнөмдөңүз"
+
+#: apps/billing/plans.py:181
+msgid "Free"
+msgstr "Акысыз"
+
+#: apps/billing/plans.py:182
+msgid "Enough to prove it works."
+msgstr "Иштээрин көрсөтүү үчүн жетиштүү."
+
+#: apps/billing/plans.py:185
+msgid "25 contacts a month"
+msgstr "Айына 25 контакт"
+
+#: apps/billing/plans.py:186
+msgid "2 channels"
+msgstr "2 канал"
+
+#: apps/billing/plans.py:187
+msgid "4 active automations"
+msgstr "4 активдүү автоматташтыруу"
+
+#: apps/billing/plans.py:188
+msgid "1 user"
+msgstr "1 колдонуучу"
+
+#: apps/billing/plans.py:189 apps/billing/plans.py:203
+msgid "Shared inbox, labels and reminders"
+msgstr "Жалпы инбокс, белгилер жана эскертүүлөр"
+
+#: apps/billing/plans.py:190 apps/billing/plans.py:204
+msgid "Contacts, tags and segments"
+msgstr "Контакттар, тегдер жана сегменттер"
+
+#: apps/billing/plans.py:195
+msgid "Pro Chat"
+msgstr "Pro Chat"
+
+#: apps/billing/plans.py:196
+msgid "Everything, with nothing counted."
+msgstr "Баары, эч нерсе эсептелбейт."
+
+#: apps/billing/plans.py:198
+msgid "Unlimited contacts"
+msgstr "Чектелбеген контакттар"
+
+#: apps/billing/plans.py:199
+msgid "Every channel"
+msgstr "Бардык каналдар"
+
+#: apps/billing/plans.py:200
+msgid "Unlimited automations"
+msgstr "Чектелбеген автоматташтыруулар"
+
+#: apps/billing/plans.py:201
+msgid "Unlimited sequences and broadcasts"
+msgstr "Чектелбеген чынжырлар жана жайылтуулар"
+
+#: apps/billing/plans.py:202
+msgid "Unlimited users"
+msgstr "Чектелбеген колдонуучулар"
+
+#: apps/billing/plans.py:205
+msgid "Public API and outbound webhooks"
+msgstr "Ачык API жана чыгуучу вебхуктар"
 
 #: apps/billing/selectors.py:72
 msgid "Contacts reached this month"

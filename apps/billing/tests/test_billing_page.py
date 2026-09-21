@@ -79,12 +79,25 @@ class TestSelfHosted:
     def test_the_usage_labels_are_translated(self, client_for: Any, tenancy: Any, settings: Any) -> None:
         """_usage_rows() builds its labels at request time, not import time —
         gettext(), not gettext_lazy — so a plain, never-wrapped string here
-        would be the easiest of the two to miss."""
+        would be the easiest of the two to miss.
+
+        LanguagePreferenceMiddleware activates the language straight off
+        request.user for the duration of this request, and — unlike
+        translation.override() — nothing undoes that once the response is
+        back: Django's own LocaleMiddleware relies on the *next* request to
+        activate its own language rather than restoring one. Left alone, "ru"
+        stays active for whatever test runs next in this process. override()
+        restores whatever was active before it, regardless of what happens
+        inside — the correct thing whether or not the assertions below pass.
+        """
+        from django.utils.translation import override
+
         settings.STRIPE_ENABLED = False
         tenancy.owner.language = "ru"
         tenancy.owner.save(update_fields=["language"])
 
-        text = body(client_for(tenancy.owner).get(URL))
+        with override(None):
+            text = body(client_for(tenancy.owner).get(URL))
 
         assert "Contacts reached this month" not in text
         assert "Контакты, с которыми связались в этом месяце" in text
@@ -352,6 +365,28 @@ class TestThePricing:
     def test_the_paid_plan_is_named_pro_chat(self, client_for: Any, tenancy: Any) -> None:
         assert "Pro Chat" in body(client_for(tenancy.owner).get(URL))
 
+    def test_the_plan_comparison_is_translated(self, client_for: Any, tenancy: Any) -> None:
+        """PLAN_COPY's taglines and feature bullets are gettext_lazy, built at
+        import time — the module-level-copy pattern the rest of the billing
+        page already follows, not the request-time gettext() usage_rows uses.
+
+        override(None) undoes whatever LanguagePreferenceMiddleware activates
+        for this one request — see test_the_usage_labels_are_translated's
+        docstring for why that does not happen on its own.
+        """
+        from django.utils.translation import override
+
+        tenancy.owner.language = "ru"
+        tenancy.owner.save(update_fields=["language"])
+
+        with override(None):
+            text = body(client_for(tenancy.owner).get(URL))
+
+        assert "Enough to prove it works." not in text
+        assert "Достаточно, чтобы убедиться, что это работает." in text
+        assert "Безлимитные контакты" in text
+        assert "Сэкономьте 20%" in text
+
     def test_the_saving_claim_matches_the_two_prices(self) -> None:
         """The one number on this page that is *derived* rather than chosen.
 
@@ -376,7 +411,7 @@ class TestThePricing:
 
         yearly = int(PAID_PRICES["yearly"].amount.lstrip("$"))
 
-        assert f"${yearly * 12}" in PAID_PRICES["yearly"].note
+        assert f"${yearly * 12}" in str(PAID_PRICES["yearly"].note)
 
     def test_the_prices_are_display_copy_and_never_reach_stripe(self) -> None:
         """The amounts here are quoted to a reader; Stripe charges whatever the
