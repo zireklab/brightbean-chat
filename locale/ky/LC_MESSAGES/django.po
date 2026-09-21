@@ -1245,7 +1245,7 @@ msgid ""
 " to start receiving messages — see docs/channels/instagram.md."
 msgstr ""
 "%(name)s туташтырылды. Билдирүүлөрдү ала баштоо үчүн Meta колдонмоңузду бул "
-"аккаунттун webhook талааларына жаздырыңыз — docs/channels/instagram.md "
+"аккаунттун webhook бөлүктөрүнө жаздырыңыз — docs/channels/instagram.md "
 "караңыз."
 
 #: apps/channels/views_messenger.py:94
@@ -1586,13 +1586,13 @@ msgid ""
 "A custom field value populates exactly one column; this row populates "
 "%(count)s."
 msgstr ""
-"Атайын талаанын мааниси так бир мамычаны толтурат; бул сап %(count)s "
+"Атайын бөлүктүн мааниси так бир мамычаны толтурат; бул сап %(count)s "
 "толтурат."
 
 #: apps/contacts/models.py:356
 #, python-format
 msgid "A %(type)s field stores its value in %(column)s."
-msgstr "%(type)s түрүндөгү талаа өз маанисин %(column)s ичинде сактайт."
+msgstr "%(type)s түрүндөгү бөлүк өз маанисин %(column)s ичинде сактайт."
 
 #: apps/contacts/models.py:406 templates/media_library/_asset_detail.html:22
 msgid "Uploaded"
@@ -1974,23 +1974,23 @@ msgstr[0] "%(count)s байланыш %(name)sга которулду."
 
 #: apps/contacts/views.py:1553
 msgid "Could not create the field"
-msgstr "Талааны түзүү мүмкүн болгон жок"
+msgstr "Бөлүктү түзүү мүмкүн болгон жок"
 
 #: apps/contacts/views.py:1555
 msgid "Field created"
-msgstr "Талаа түзүлдү"
+msgstr "Бөлүк түзүлдү"
 
 #: apps/contacts/views.py:1568
 msgid "Could not rename the field"
-msgstr "Талаанын атын өзгөртүү мүмкүн болгон жок"
+msgstr "Бөлүктун атын өзгөртүү мүмкүн болгон жок"
 
 #: apps/contacts/views.py:1570
 msgid "Field renamed"
-msgstr "Талаанын аты өзгөртүлдү"
+msgstr "Бөлүктун аты өзгөртүлдү"
 
 #: apps/contacts/views.py:1583
 msgid "Field deleted"
-msgstr "Талаа өчүрүлдү"
+msgstr "Бөлүк өчүрүлдү"
 
 #: apps/contacts/views.py:1585
 #, python-format
@@ -2069,7 +2069,7 @@ msgstr "Баракчаны кайра жүктөп, дагы аракет кыл
 #: apps/flows/portability/cards.py:29 templates/contacts/detail.html:91
 #: templates/contacts/field_list.html:8 templates/contacts/field_list.html:15
 msgid "Custom fields"
-msgstr "Атайын талаалар"
+msgstr "Атайын бөлүктөр" 
 
 #: apps/flows/portability/cards.py:31
 msgid "Segments"
@@ -2130,7 +2130,7 @@ msgid ""
 msgstr ""
 "Бул сценарий бул маалыматтарды контакттын картасына сактайт, бирок алар "
 "сиздин иш жайыңызда да жок. Ар бири үчүн: аны түзүңүз же мурунтан "
-"бар талаага көрсөтүңүз. (Кошумча талаа — бул демейки боюнча жок көрсөткүч — "
+"бар бөлүккө көрсөтүңүз. (Кошумча бөлүк — бул демейки боюнча жок көрсөткүч — "
 "өлчөм, брондоо күнү, буйрутма номери. Анын түрү эмнени сактай турганыңызды "
 "аныктайт жана кийин өзгөртүлбөйт.)"
 
@@ -2299,7 +2299,7 @@ msgstr "«%(name)s» аталышындагы %(noun)s мурунтан бар �
 
 #: apps/flows/portability/imports.py:749
 msgid "That is not a field type."
-msgstr "Бул талаа түрү эмес."
+msgstr "Бул бөлүк түрү эмес."
 
 #: apps/flows/portability/imports.py:974
 #, python-format
@@ -3007,7 +3007,7 @@ msgstr "Бул жерде бир нерсе болот"
 msgid ""
 "Runs when something happens to a contact — a tag added, a field changed."
 msgstr ""
-"Контакт менен бир нерсе болгондо иштейт — тег кошулганда, талаа өзгөргөндө."
+"Контакт менен бир нерсе болгондо иштейт — тег кошулганда, бөлүк өзгөргөндө."
 
 #: apps/flows/triggers/registry.py:212
 msgid "Another system"
@@ -3266,7 +3266,7 @@ msgstr "Тег өчүрүлдү"
 
 #: apps/flows/views_triggers.py:68
 msgid "A field changes"
-msgstr "Талаа өзгөрдү"
+msgstr "Бөлүк өзгөрдү"
 
 #: apps/flows/views_triggers.py:69
 msgid "Subscribed to a sequence"
@@ -4734,9 +4734,9 @@ msgid ""
 " field values, starting flows and sending messages. No scope grants channel,"
 " member or key management."
 msgstr ""
-"<strong>Окуу</strong> байланыштардын, тегдердин, талаалардын жана "
+"<strong>Окуу</strong> байланыштардын, тегдердин, бөлүктөрдүн жана "
 "сценарийлердин тизмесин берет. <strong>Жазуу</strong> байланыштарды түзүү "
-"жана өзгөртүү, тег коюу, талаа маанилерин коюу, сценарийлерди баштоо жана "
+"жана өзгөртүү, тег коюу, бөлүк маанилерин коюу, сценарийлерди баштоо жана "
 "билдирүү жөнөтүүнү кошот. Эч бир чөйрө каналдарды, мүчөлөрдү же ачкычтарды "
 "башкарууга уруксат бербейт."
 
@@ -5977,7 +5977,7 @@ msgstr "Ошол теманын билдирүүлөрү гана кабыл а�
 
 #: templates/channels/detail.html:113
 msgid "Leave a field blank to keep what is already stored."
-msgstr "Мурунтан сакталган маанини калтыруу үчүн талааны бош калтырыңыз."
+msgstr "Мурунтан сакталган маанини калтыруу үчүн бөлүктү бош калтырыңыз."
 
 #: templates/channels/detail.html:119 templates/channels/detail.html:123
 msgid "Send a test email"
@@ -6072,7 +6072,7 @@ msgstr "Кайсы провайдер катты жөнөтөт"
 
 #: templates/channels/email_connect.html:51
 msgid "Pick one and the fields below change to match."
-msgstr "Бирин тандаңыз — төмөндөгү талаалар ага ылайык өзгөрөт."
+msgstr "Бирин тандаңыз — төмөндөгү бөлүктөр ага ылайык өзгөрөт."
 
 #: templates/channels/email_connect.html:55
 msgid "Your own SMTP server"
@@ -6474,7 +6474,7 @@ msgid ""
 "into the Messenger webhook's <em>Verify token</em> field."
 msgstr ""
 "<code>PLATFORM_MESSENGER_VERIFY_TOKEN</code> маанисин коюп, ошол эле маанини"
-" Messenger webhook'унун <em>Verify token</em> талаасына чаптаңыз."
+" Messenger webhook'унун <em>Verify token</em> бөлүгүнө чаптаңыз."
 
 #: templates/channels/messenger_connect.html:55
 msgid "Choose the page"
@@ -6496,7 +6496,7 @@ msgstr "Facebook'тон эмнени сурайбыз"
 
 #: templates/channels/messenger_connect.html:68
 msgid "Webhook fields we subscribe the page to"
-msgstr "Баракты жаздыра турган webhook талаалары"
+msgstr "Баракты жаздыра турган webhook бөлүктөрү" 
 
 #: templates/channels/messenger_connect.html:70
 msgid ""
@@ -6753,7 +6753,7 @@ msgstr ""
 "Twilio'до алыстан жөндөө мүмкүнчүлүгү жок, ошондуктан акыркы кадам сиздики: "
 "Twilio консолунда номерди (же messaging service'ти) ачып, туташуу "
 "баракчасында көрсөтүлгөн webhook URL'ин <em>A message comes in</em> "
-"талаасына <code>POST</code> катары чаптаңыз."
+"бөлүгүнө <code>POST</code> катары чаптаңыз."
 
 #: templates/channels/sms_connect.html:95
 msgid ""
@@ -6783,7 +6783,7 @@ msgid ""
 msgstr ""
 "Байланыш операторлору жөнөтүүнү талап кылган жооптордун тексти жана "
 "композитор үчүн бир нече кеңеш. Жооптордун өзү милдеттүү эмес жана бул "
-"жерден өчүрүлбөйт. Талааны бош калтырсаңыз, эч нерсе жөнөтүлбөй, демейки "
+"жерден өчүрүлбөйт. Бөлүктү бош калтырсаңыз, эч нерсе жөнөтүлбөй, демейки "
 "текст колдонулат."
 
 #: templates/channels/sms_settings.html:11
@@ -7351,20 +7351,20 @@ msgstr[0] ""
 
 #: templates/contacts/_field_rows.html:64
 msgid "No custom fields yet"
-msgstr "Азырынча атайын талаалар жок"
+msgstr "Азырынча атайын бөлүктөр жок"
 
 #: templates/contacts/_field_rows.html:66
 msgid ""
 "A field is where a flow puts an answer it collected — a size, a booking "
 "date, a plan — so a filter can search on it later."
 msgstr ""
-"Талаа — сценарий жыйнаган жоопту (өлчөм, брондоо күнү, тариф) коё турган "
+"Бөлүк — сценарий жыйнаган жоопту (өлчөм, брондоо күнү, тариф) коё турган "
 "жер, ошондуктан чыпка кийинчерээк ал боюнча издей алат."
 
 #: templates/contacts/_field_rows.html:68
 #: templates/contacts/field_list.html:20
 msgid "New field"
-msgstr "Жаңы талаа"
+msgstr "Жаңы бөлүк"
 
 #: templates/contacts/_filter_bar.html:32
 msgid "Match"
@@ -7756,7 +7756,7 @@ msgstr "Чоо-жайы"
 
 #: templates/contacts/detail.html:68
 msgid "Each field saves on its own when you leave it."
-msgstr "Ар бир талаа андан чыкканыңызда өзү сакталат."
+msgstr "Ар бир бөлүк андан чыкканыңызда өзү сакталат."
 
 #: templates/contacts/detail.html:70
 msgid "You have read-only access to this workspace."
@@ -7776,7 +7776,7 @@ msgstr "Бөлүктү бошотсоңуз анын мааниси толугу
 
 #: templates/contacts/detail.html:132
 msgid "No custom fields yet."
-msgstr "Азырынча атайын талаалар жок."
+msgstr "Азырынча атайын бөлүктөр жок."
 
 #: templates/contacts/detail.html:133
 msgid "Add one"
@@ -7794,7 +7794,7 @@ msgid ""
 "          suppressed email address is kept, because that is a fact about a mailbox rather than about this\n"
 "          contact. <strong>This cannot be undone.</strong>"
 msgstr ""
-"%(name)sды толугу менен өчүрөт: профилин, атайын талаа маанилерин, тегдерин,"
+"%(name)sды толугу менен өчүрөт: профилин, атайын бөлүк маанилерин, тегдерин,"
 " канал идентификаторлорун, макулдук жазууларын, маектерин жана билдирүү "
 "тексттерин. Эсептегичтер аноним түрдө калат. Тыюу салынган email дареги "
 "сакталып калат, себеби бул почта жайы жөнүндөгү факт, бул байланыш жөнүндө "
@@ -7832,7 +7832,7 @@ msgstr "Тариф"
 
 #: templates/contacts/field_list.html:26
 msgid "What is the field called?"
-msgstr "Талаа кандай аталат?"
+msgstr "Бөлүк кандай аталат?"
 
 #: templates/contacts/field_list.html:30
 #: templates/media_library/_asset_detail.html:17
@@ -7849,7 +7849,7 @@ msgid ""
 "Pick the type carefully: it is fixed once the field exists, and it decides "
 "how a filter can compare it."
 msgstr ""
-"Түрдү кылдаттык менен тандаңыз: талаа түзүлгөндөн кийин ал бекитилет жана "
+"Түрдү кылдаттык менен тандаңыз: бөлүк түзүлгөндөн кийин ал бекитилет жана "
 "чыпка аны кантип салыштыра турганын аныктайт."
 
 #: templates/contacts/import_detail.html:15
@@ -7917,7 +7917,7 @@ msgid ""
 "clear a stored value. Emptying a field is an edit you make on the contact."
 msgstr ""
 "Дал келтирсеңиз email боюнча, болбосо телефон боюнча дал келет. Бош "
-"клеткалар сакталган маанини эч качан тазалабайт. Талааны бошотуу — "
+"клеткалар сакталган маанини эч качан тазалабайт. Бөлүктү бошотуу — "
 "байланышта өзүңүз жасаган түзөтүү."
 
 #: templates/contacts/import_detail.html:92
@@ -8178,7 +8178,7 @@ msgstr "Жаңы %(name)s үчүн ат"
 
 #: templates/flows/_import_requirement.html:156
 msgid "What this field holds"
-msgstr "Бул талаа эмнени сактайт"
+msgstr "Бул бөлүк эмнени сактайт"
 
 #: templates/flows/_import_requirement.html:165
 msgid "Media asset"
@@ -8807,12 +8807,12 @@ msgstr "Талаа"
 
 #: templates/flows/triggers/_form_rule.html:41
 msgid "Any field"
-msgstr "Каалаган талаа"
+msgstr "Каалаган бөлүк"
 
 #: templates/flows/triggers/_form_rule.html:47
 msgid "Use the conditions below to match the field's new value."
 msgstr ""
-"Талаанын жаңы маанисине дал келтирүү үчүн төмөнкү шарттарды колдонуңуз."
+"Бөлүктун жаңы маанисине дал келтирүү үчүн төмөнкү шарттарды колдонуңуз."
 
 #: templates/flows/triggers/_form_rule.html:51
 msgid "Only when the contact matches"
