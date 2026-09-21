@@ -28,6 +28,34 @@ def _isolate_cache(request: Any) -> Any:
     cache.clear()
 
 
+@pytest.fixture(autouse=True)
+def _reset_active_language(request: Any) -> Any:
+    """End every test with no language activated.
+
+    ``LanguagePreferenceMiddleware`` activates a signed-in user's language for
+    the length of one request — see its own docstring — and Django's
+    ``LocaleMiddleware`` never calls ``deactivate()`` afterward; a real server
+    does not need it to, because the *next* request activates its own language
+    regardless of what the last one left active. A test process has no such
+    guarantee: a test that logs in as a Russian-preferring user and never runs
+    another request leaves "ru" active for whatever test happens to run next
+    in the same process, and that test can be one that compares translated
+    text with no request — and therefore no re-activation — of its own.
+
+    ``translation.override()`` does not need this: it always restores
+    whatever was active before it on exit, request or no request. Only a test
+    that reaches translation activation some other way — signing in as a user
+    with a stored language and making a request being the one path this app
+    has — needs the guard, hence gating on ``db`` the same way
+    ``_isolate_cache`` does.
+    """
+    yield
+    if "db" in request.fixturenames:
+        from django.utils import translation
+
+        translation.deactivate_all()
+
+
 @pytest.fixture
 def secret_value() -> str:
     """An opaque high-entropy secret with no recognisable credential shape.

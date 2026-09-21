@@ -81,23 +81,15 @@ class TestSelfHosted:
         gettext(), not gettext_lazy — so a plain, never-wrapped string here
         would be the easiest of the two to miss.
 
-        LanguagePreferenceMiddleware activates the language straight off
-        request.user for the duration of this request, and — unlike
-        translation.override() — nothing undoes that once the response is
-        back: Django's own LocaleMiddleware relies on the *next* request to
-        activate its own language rather than restoring one. Left alone, "ru"
-        stays active for whatever test runs next in this process. override()
-        restores whatever was active before it, regardless of what happens
-        inside — the correct thing whether or not the assertions below pass.
+        conftest.py's _reset_active_language deactivates whatever this
+        request's login activates once the test ends, so the "ru" set below
+        cannot leak into whatever test runs next in this process.
         """
-        from django.utils.translation import override
-
         settings.STRIPE_ENABLED = False
         tenancy.owner.language = "ru"
         tenancy.owner.save(update_fields=["language"])
 
-        with override(None):
-            text = body(client_for(tenancy.owner).get(URL))
+        text = body(client_for(tenancy.owner).get(URL))
 
         assert "Contacts reached this month" not in text
         assert "Контакты, с которыми связались в этом месяце" in text
@@ -369,18 +361,13 @@ class TestThePricing:
         """PLAN_COPY's taglines and feature bullets are gettext_lazy, built at
         import time — the module-level-copy pattern the rest of the billing
         page already follows, not the request-time gettext() usage_rows uses.
-
-        override(None) undoes whatever LanguagePreferenceMiddleware activates
-        for this one request — see test_the_usage_labels_are_translated's
-        docstring for why that does not happen on its own.
+        See test_the_usage_labels_are_translated for why "ru" set below does
+        not leak into the next test.
         """
-        from django.utils.translation import override
-
         tenancy.owner.language = "ru"
         tenancy.owner.save(update_fields=["language"])
 
-        with override(None):
-            text = body(client_for(tenancy.owner).get(URL))
+        text = body(client_for(tenancy.owner).get(URL))
 
         assert "Enough to prove it works." not in text
         assert "Достаточно, чтобы убедиться, что это работает." in text
