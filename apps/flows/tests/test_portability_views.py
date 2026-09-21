@@ -474,7 +474,9 @@ class TestTheTemplateGallery:
         for card in cards:
             # ``escape`` because a name is author text and reaches the page
             # escaped, which is the property the XSS test below asserts directly.
-            assert escape(card.name) in body
+            # ``str()`` because a translated title is lazy, and Django's escape()
+            # stays lazy over a lazy input rather than resolving it.
+            assert str(escape(card.name)) in body
 
     def test_it_warns_when_a_channel_is_not_connected(self, tenancy: Any, client_for: Any) -> None:
         """The whole reason the badge is on the card: the review page asks this

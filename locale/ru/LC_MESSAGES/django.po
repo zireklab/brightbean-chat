@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-21 08:00+0600\n"
+"POT-Creation-Date: 2026-09-21 08:11+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ru\n"
@@ -15,9 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #: apps/analytics/views.py:210
 msgid "Email tracking settings saved."
@@ -71,9 +69,10 @@ msgstr "Успешно"
 #: apps/contacts/models.py:411 apps/contacts/models.py:571
 #: templates/analytics/_counter_cards.html:29
 #: templates/analytics/flow_detail.html:60
-#: templates/analytics/flow_detail.html:95 templates/analytics/overview.html:43
-#: templates/analytics/overview.html:82 templates/broadcasts/_counters.html:64
-#: templates/broadcasts/detail.html:113 templates/inbox/_thread_body.html:152
+#: templates/analytics/flow_detail.html:95
+#: templates/analytics/overview.html:43 templates/analytics/overview.html:82
+#: templates/broadcasts/_counters.html:64 templates/broadcasts/detail.html:113
+#: templates/inbox/_thread_body.html:152
 msgid "Failed"
 msgstr "Ошибка"
 
@@ -88,8 +87,8 @@ msgstr ""
 
 #: apps/api/services.py:76
 msgid ""
-"You need the manage_api_keys permission in that workspace to issue a key for "
-"it."
+"You need the manage_api_keys permission in that workspace to issue a key for"
+" it."
 msgstr "Для выпуска ключа в этом пространстве нужно право manage_api_keys."
 
 #: apps/api/services.py:82
@@ -123,8 +122,8 @@ msgid ""
 "This workspace already has %(limit)s active keys. Revoke one before issuing "
 "another."
 msgstr ""
-"В этом пространстве уже %(limit)s активных ключей. Отзовите один, прежде чем "
-"выпускать новый."
+"В этом пространстве уже %(limit)s активных ключей. Отзовите один, прежде чем"
+" выпускать новый."
 
 #: apps/api/services.py:189
 #, python-format
@@ -230,11 +229,11 @@ msgstr[1] ""
 "В ваш тариф входит %(limit)s пользователя. Перейдите на другой тариф, чтобы "
 "добавить ещё."
 msgstr[2] ""
-"В ваш тариф входит %(limit)s пользователей. Перейдите на другой тариф, чтобы "
-"добавить ещё."
+"В ваш тариф входит %(limit)s пользователей. Перейдите на другой тариф, чтобы"
+" добавить ещё."
 msgstr[3] ""
-"В ваш тариф входит %(limit)s пользователей. Перейдите на другой тариф, чтобы "
-"добавить ещё."
+"В ваш тариф входит %(limit)s пользователей. Перейдите на другой тариф, чтобы"
+" добавить ещё."
 
 #: apps/billing/entitlements.py:386
 #, python-format
@@ -307,10 +306,10 @@ msgstr "Отправляется"
 #: apps/broadcasts/models.py:72 apps/broadcasts/models.py:92
 #: apps/inbox/views.py:912 templates/analytics/_counter_cards.html:21
 #: templates/analytics/flow_detail.html:58
-#: templates/analytics/flow_detail.html:93 templates/analytics/overview.html:41
-#: templates/analytics/overview.html:80 templates/broadcasts/_counters.html:56
-#: templates/broadcasts/_rows.html:20 templates/contacts/_activity.html:99
-#: templates/inbox/_thread_body.html:151
+#: templates/analytics/flow_detail.html:93
+#: templates/analytics/overview.html:41 templates/analytics/overview.html:80
+#: templates/broadcasts/_counters.html:56 templates/broadcasts/_rows.html:20
+#: templates/contacts/_activity.html:99 templates/inbox/_thread_body.html:151
 msgid "Sent"
 msgstr "Отправлено"
 
@@ -403,8 +402,8 @@ msgstr "Эта рассылка уже отправляется."
 
 #: apps/broadcasts/services.py:531
 msgid ""
-"That template is no longer approved on this channel. Pick another one before "
-"sending."
+"That template is no longer approved on this channel. Pick another one before"
+" sending."
 msgstr ""
 "Этот шаблон больше не одобрен на этом канале. Выберите другой перед "
 "отправкой."
@@ -1017,8 +1016,8 @@ msgid ""
 "AWS did not accept those credentials. Check the access key, secret and "
 "region, and that the key is allowed to use SES."
 msgstr ""
-"AWS не принял эти учётные данные. Проверьте ключ доступа, секрет и регион, а "
-"также что ключу разрешено использовать SES."
+"AWS не принял эти учётные данные. Проверьте ключ доступа, секрет и регион, а"
+" также что ключу разрешено использовать SES."
 
 #: apps/channels/views_email.py:215
 #, python-format
@@ -1037,8 +1036,8 @@ msgstr "Введите ключ доступа, секрет и регион AWS
 msgid ""
 "That is not an AWS region name. It looks like eu-west-1 or us-gov-east-1."
 msgstr ""
-"Это не похоже на название региона AWS. Оно выглядит как eu-west-1 или us-gov-"
-"east-1."
+"Это не похоже на название региона AWS. Оно выглядит как eu-west-1 или us-"
+"gov-east-1."
 
 #: apps/channels/views_email.py:256
 msgid "Enter the SMTP host your provider gave you."
@@ -1088,8 +1087,8 @@ msgid ""
 "environment. See docs/channels/instagram.md."
 msgstr ""
 "У этого развёртывания пока нет учётных данных приложения Instagram. Задайте "
-"PLATFORM_INSTAGRAM_CLIENT_ID и PLATFORM_INSTAGRAM_CLIENT_SECRET в переменных "
-"окружения. См. docs/channels/instagram.md."
+"PLATFORM_INSTAGRAM_CLIENT_ID и PLATFORM_INSTAGRAM_CLIENT_SECRET в переменных"
+" окружения. См. docs/channels/instagram.md."
 
 #: apps/channels/views_instagram.py:77
 msgid ""
@@ -1113,8 +1112,8 @@ msgstr "%(name)s переподключён."
 #: apps/channels/views_instagram.py:270
 #, python-format
 msgid ""
-"Connected %(name)s. Subscribe your Meta app to this account's webhook fields "
-"to start receiving messages — see docs/channels/instagram.md."
+"Connected %(name)s. Subscribe your Meta app to this account's webhook fields"
+" to start receiving messages — see docs/channels/instagram.md."
 msgstr ""
 "Подключено: %(name)s. Подпишите своё приложение Meta на поля вебхука этого "
 "аккаунта, чтобы начать получать сообщения — см. docs/channels/instagram.md."
@@ -1124,8 +1123,8 @@ msgid ""
 "Facebook did not complete that connection. Start the setup again from this "
 "page, and make sure you accept every permission it asks for."
 msgstr ""
-"Facebook не завершил подключение. Начните настройку заново с этой страницы и "
-"убедитесь, что вы приняли все запрошенные разрешения."
+"Facebook не завершил подключение. Начните настройку заново с этой страницы и"
+" убедитесь, что вы приняли все запрошенные разрешения."
 
 #: apps/channels/views_messenger.py:102
 msgid ""
@@ -1134,13 +1133,13 @@ msgid ""
 "environment; see docs/channels/messenger.md."
 msgstr ""
 "У этого развёртывания пока нет учётных данных приложения Facebook. Задайте "
-"PLATFORM_MESSENGER_CLIENT_ID и PLATFORM_MESSENGER_CLIENT_SECRET в переменных "
-"окружения; см. docs/channels/messenger.md."
+"PLATFORM_MESSENGER_CLIENT_ID и PLATFORM_MESSENGER_CLIENT_SECRET в переменных"
+" окружения; см. docs/channels/messenger.md."
 
 #: apps/channels/views_messenger.py:111
 msgid ""
-"That page connected, but Facebook would not start sending its messages here. "
-"The app needs pages_messaging and pages_manage_metadata on this page; see "
+"That page connected, but Facebook would not start sending its messages here."
+" The app needs pages_messaging and pages_manage_metadata on this page; see "
 "docs/channels/messenger.md."
 msgstr ""
 "Страница подключена, но Facebook не начал присылать сюда сообщения. "
@@ -1154,17 +1153,18 @@ msgstr "Выберите одну из страниц ниже."
 #: apps/channels/views_messenger.py:364
 #, python-format
 msgid ""
-"Connected %(name)s, but the Get Started button could not be configured — the "
-"welcome trigger will not fire until it is. See docs/channels/messenger.md."
+"Connected %(name)s, but the Get Started button could not be configured — the"
+" welcome trigger will not fire until it is. See docs/channels/messenger.md."
 msgstr ""
 "Подключено: %(name)s, но не удалось настроить кнопку Get Started — "
-"приветственный триггер не сработает, пока это не будет сделано. См. docs/"
-"channels/messenger.md."
+"приветственный триггер не сработает, пока это не будет сделано. См. "
+"docs/channels/messenger.md."
 
 #: apps/channels/views_messenger.py:372 apps/channels/views_whatsapp.py:181
 #, python-format
 msgid "Connected %(name)s. Send it a message to check it works."
-msgstr "Подключено: %(name)s. Отправьте ему сообщение, чтобы проверить работу."
+msgstr ""
+"Подключено: %(name)s. Отправьте ему сообщение, чтобы проверить работу."
 
 #: apps/channels/views_sms.py:238
 #, python-format
@@ -1182,8 +1182,8 @@ msgstr "Настройки SMS сохранены."
 #: apps/channels/views_sms.py:283
 #, python-format
 msgid ""
-"SMS settings saved, but the price per segment was not a number between 0 and "
-"%(max)s and was left unchanged."
+"SMS settings saved, but the price per segment was not a number between 0 and"
+" %(max)s and was left unchanged."
 msgstr ""
 "Настройки SMS сохранены, но цена за сегмент не была числом от 0 до %(max)s, "
 "поэтому осталась без изменений."
@@ -1227,9 +1227,9 @@ msgstr ""
 
 #: apps/channels/views_whatsapp.py:69
 msgid ""
-"Those credentials work, but this app could not be subscribed to the WhatsApp "
-"Business Account's webhooks. Nothing will be delivered until it is; see docs/"
-"channels/whatsapp.md."
+"Those credentials work, but this app could not be subscribed to the WhatsApp"
+" Business Account's webhooks. Nothing will be delivered until it is; see "
+"docs/channels/whatsapp.md."
 msgstr ""
 "Эти учётные данные работают, но это приложение не удалось подписать на "
 "вебхуки WhatsApp Business Account. Ничего не будет доставлено, пока это не "
@@ -1290,12 +1290,14 @@ msgstr "Медиатека"
 
 #: apps/common/context_processors.py:307 apps/flows/portability/cards.py:28
 #: templates/contacts/_rows.html:52 templates/contacts/_tag_chips.html:17
-#: templates/contacts/import_detail.html:71 templates/contacts/tag_list.html:15
-#: templates/contacts/tag_list.html:22 templates/inbox/_sidebar.html:70
+#: templates/contacts/import_detail.html:71
+#: templates/contacts/tag_list.html:15 templates/contacts/tag_list.html:22
+#: templates/inbox/_sidebar.html:70
 msgid "Tags"
 msgstr "Теги"
 
-#: apps/common/context_processors.py:315 templates/inbox/label_settings.html:12
+#: apps/common/context_processors.py:315
+#: templates/inbox/label_settings.html:12
 #: templates/inbox/label_settings.html:19
 msgid "Labels"
 msgstr "Метки"
@@ -1332,7 +1334,8 @@ msgstr "Рабочие пространства"
 msgid "People & roles"
 msgstr "Люди и роли"
 
-#: apps/common/context_processors.py:385 templates/organizations/billing.html:3
+#: apps/common/context_processors.py:385
+#: templates/organizations/billing.html:3
 #: templates/organizations/billing.html:9
 msgid "Plan & billing"
 msgstr "Тариф и оплата"
@@ -1505,7 +1508,8 @@ msgstr "Выполняется"
 
 #: apps/contacts/models.py:570 apps/inbox/views.py:522
 #: templates/api/key_created.html:26 templates/api/webhook_secret.html:22
-#: templates/channels/secret.html:57 templates/inbox/_conversation_rows.html:71
+#: templates/channels/secret.html:57
+#: templates/inbox/_conversation_rows.html:71
 msgid "Done"
 msgstr "Готово"
 
@@ -1577,7 +1581,8 @@ msgstr "Этого тега не существует"
 
 #: apps/contacts/views.py:648
 msgid ""
-"Creating tags needs the manage_crm permission. Ask an editor to add it first."
+"Creating tags needs the manage_crm permission. Ask an editor to add it "
+"first."
 msgstr ""
 "Для создания тегов нужно право manage_crm. Попросите редактора сначала "
 "добавить его."
@@ -2021,9 +2026,9 @@ msgstr "Посты для триггера комментариев"
 #: apps/flows/portability/cards.py:50
 msgid ""
 "This flow labels people with the tags below, and your workspace does not "
-"have them yet. For each one: create it under this name, or point it at a tag "
-"you already use. (A tag is a label on a person — “VIP”, “Newsletter” — that "
-"you can search and filter by later.)"
+"have them yet. For each one: create it under this name, or point it at a tag"
+" you already use. (A tag is a label on a person — “VIP”, “Newsletter” — that"
+" you can search and filter by later.)"
 msgstr ""
 "Этот сценарий помечает людей тегами ниже, а в вашем рабочем пространстве их "
 "ещё нет. Для каждого: создайте его под этим именем или укажите на уже "
@@ -2041,16 +2046,16 @@ msgstr ""
 "Этот сценарий сохраняет эти данные в карточке контакта, а в вашем рабочем "
 "пространстве их ещё нет. Для каждого: создайте его или укажите на уже "
 "существующее поле. (Дополнительное поле — это показатель, которого нет по "
-"умолчанию — размер, дата бронирования, номер заказа. Его тип определяет, что "
-"можно в нём хранить, и его нельзя изменить позже.)"
+"умолчанию — размер, дата бронирования, номер заказа. Его тип определяет, что"
+" можно в нём хранить, и его нельзя изменить позже.)"
 
 #: apps/flows/portability/cards.py:62
 msgid ""
 "A sequence is a series of messages sent over days. A new one arrives empty, "
 "so add its messages afterwards."
 msgstr ""
-"Цепочка — это серия сообщений, отправляемых в течение нескольких дней. Новая "
-"цепочка создаётся пустой, поэтому добавьте сообщения после импорта."
+"Цепочка — это серия сообщений, отправляемых в течение нескольких дней. Новая"
+" цепочка создаётся пустой, поэтому добавьте сообщения после импорта."
 
 #: apps/flows/portability/cards.py:64
 msgid ""
@@ -2062,15 +2067,16 @@ msgstr ""
 
 #: apps/flows/portability/cards.py:65
 msgid "Who the flow assigns conversations to and notifies. Defaults to you."
-msgstr "Кому сценарий назначает диалоги и кого уведомляет. По умолчанию — вам."
+msgstr ""
+"Кому сценарий назначает диалоги и кого уведомляет. По умолчанию — вам."
 
 #: apps/flows/portability/cards.py:66
 msgid ""
 "Flows this one hands over to. A file exported with everything it uses "
 "carries them along."
 msgstr ""
-"Сценарии, которым этот передаёт диалог. Файл, экспортированный «со всем, что "
-"использует», включает и их."
+"Сценарии, которым этот передаёт диалог. Файл, экспортированный «со всем, что"
+" использует», включает и их."
 
 #: apps/flows/portability/cards.py:67
 msgid ""
@@ -2109,7 +2115,8 @@ msgstr ""
 
 #: apps/flows/portability/cards.py:77
 msgid ""
-"The public @handle a link was built from was stripped when the file was made."
+"The public @handle a link was built from was stripped when the file was "
+"made."
 msgstr ""
 "Публичный @юзернейм, из которого была построена ссылка, был удалён при "
 "создании файла."
@@ -2168,8 +2175,8 @@ msgstr "запись указывает на %(entry)r, а такого сцен
 #: apps/flows/portability/imports.py:648
 #, python-format
 msgid ""
-"Pick the %(platform)s account this trigger should watch, or choose to let it "
-"watch them all."
+"Pick the %(platform)s account this trigger should watch, or choose to let it"
+" watch them all."
 msgstr ""
 "Выберите аккаунт %(platform)s, который должен отслеживать этот триггер, или "
 "разрешите отслеживать все."
@@ -2221,40 +2228,520 @@ msgstr "«%(name)s» нельзя будет сохранить после со�
 msgid "The %(type)s trigger on “%(name)s” cannot be created here: %(issues)s"
 msgstr "Триггер %(type)s в «%(name)s» здесь создать нельзя: %(issues)s"
 
-#: apps/flows/portability/library.py:157 apps/flows/portability/library.py:176
-#: apps/flows/portability/library.py:220 apps/flows/portability/library.py:300
-#: apps/flows/portability/library.py:312 apps/flows/portability/library.py:328
+#: apps/flows/portability/library.py:167 apps/flows/portability/library.py:189
+#: apps/flows/portability/library.py:243 apps/flows/portability/library.py:342
+#: apps/flows/portability/library.py:357 apps/flows/portability/library.py:377
 msgid "Starters"
 msgstr "Начало"
 
-#: apps/flows/portability/library.py:164 apps/flows/portability/library.py:194
-#: apps/flows/portability/library.py:234 apps/flows/portability/library.py:240
-#: apps/flows/portability/library.py:256 apps/flows/portability/library.py:264
-#: apps/flows/portability/library.py:268 apps/flows/portability/library.py:276
-#: apps/flows/portability/library.py:332
+#: apps/flows/portability/library.py:174 apps/flows/portability/library.py:211
+#: apps/flows/portability/library.py:260 apps/flows/portability/library.py:267
+#: apps/flows/portability/library.py:287 apps/flows/portability/library.py:297
+#: apps/flows/portability/library.py:302 apps/flows/portability/library.py:312
+#: apps/flows/portability/library.py:382
 msgid "Grow"
 msgstr "Рост"
 
-#: apps/flows/portability/library.py:168 apps/flows/portability/library.py:172
-#: apps/flows/portability/library.py:184 apps/flows/portability/library.py:224
-#: apps/flows/portability/library.py:244 apps/flows/portability/library.py:248
-#: apps/flows/portability/library.py:252 apps/flows/portability/library.py:260
-#: apps/flows/portability/library.py:284 apps/flows/portability/library.py:288
-#: apps/flows/portability/library.py:304 apps/flows/portability/library.py:308
-#: apps/flows/portability/library.py:316 apps/flows/portability/library.py:324
-#: apps/flows/portability/library.py:336 apps/flows/portability/library.py:340
+#: apps/flows/portability/library.py:175
+msgid "Ask for an email address"
+msgstr "Спросить email-адрес"
+
+#: apps/flows/portability/library.py:176
+msgid ""
+"Asks for an email address, checks it looks real, and saves it to the contact"
+" before replying."
+msgstr ""
+"Запрашивает email-адрес, проверяет, что он выглядит настоящим, и сохраняет "
+"его в контакте перед ответом."
+
+#: apps/flows/portability/library.py:179 apps/flows/portability/library.py:184
+#: apps/flows/portability/library.py:199 apps/flows/portability/library.py:248
+#: apps/flows/portability/library.py:272 apps/flows/portability/library.py:277
+#: apps/flows/portability/library.py:282 apps/flows/portability/library.py:292
+#: apps/flows/portability/library.py:322 apps/flows/portability/library.py:327
+#: apps/flows/portability/library.py:347 apps/flows/portability/library.py:352
+#: apps/flows/portability/library.py:362 apps/flows/portability/library.py:372
+#: apps/flows/portability/library.py:387 apps/flows/portability/library.py:392
 msgid "Engage"
 msgstr "Вовлечение"
 
-#: apps/flows/portability/library.py:180 apps/flows/portability/library.py:188
-#: apps/flows/portability/library.py:198 apps/flows/portability/library.py:202
-#: apps/flows/portability/library.py:206 apps/flows/portability/library.py:210
-#: apps/flows/portability/library.py:216 apps/flows/portability/library.py:230
-#: apps/flows/portability/library.py:272 apps/flows/portability/library.py:280
-#: apps/flows/portability/library.py:292 apps/flows/portability/library.py:296
-#: apps/flows/portability/library.py:320
+#: apps/flows/portability/library.py:180
+msgid "Remind people about an event"
+msgstr "Напомнить о мероприятии"
+
+#: apps/flows/portability/library.py:181
+msgid ""
+"Signs someone up for an event over Telegram, then messages them again nearer"
+" the time."
+msgstr ""
+"Записывает человека на мероприятие через Telegram, а затем снова пишет ему "
+"ближе к дате."
+
+#: apps/flows/portability/library.py:185
+msgid "Ask how it went after a purchase"
+msgstr "Спросить впечатления после покупки"
+
+#: apps/flows/portability/library.py:186
+msgid ""
+"Waits until the order has landed, asks how it went, and routes the answer by"
+" what they say."
+msgstr ""
+"Ждёт, пока заказ не будет доставлен, спрашивает, как всё прошло, и "
+"направляет ответ в зависимости от того, что скажут."
+
+#: apps/flows/portability/library.py:190
+msgid "Welcome someone new"
+msgstr "Поприветствовать нового контакта"
+
+#: apps/flows/portability/library.py:191
+msgid ""
+"The first thing a new Telegram contact hears, with a follow-up a little "
+"later."
+msgstr ""
+"Первое, что слышит новый контакт в Telegram, с повторным сообщением чуть "
+"позже."
+
+#: apps/flows/portability/library.py:194 apps/flows/portability/library.py:204
+#: apps/flows/portability/library.py:216 apps/flows/portability/library.py:221
+#: apps/flows/portability/library.py:226 apps/flows/portability/library.py:231
+#: apps/flows/portability/library.py:238 apps/flows/portability/library.py:255
+#: apps/flows/portability/library.py:307 apps/flows/portability/library.py:317
+#: apps/flows/portability/library.py:332 apps/flows/portability/library.py:337
+#: apps/flows/portability/library.py:367
 msgid "Convert"
 msgstr "Конверсия"
+
+#: apps/flows/portability/library.py:195
+msgid "Follow up an enquiry that went quiet"
+msgstr "Напомнить о заглохшем обращении"
+
+#: apps/flows/portability/library.py:196
+msgid ""
+"Chases an enquiry that went quiet twice, spaced out, then tags it so you can"
+" see who never replied."
+msgstr ""
+"Дважды, с паузами, напоминает о заглохшем обращении, а затем ставит тег, "
+"чтобы было видно, кто так и не ответил."
+
+#: apps/flows/portability/library.py:200
+msgid "Hand over to a person"
+msgstr "Передать диалог человеку"
+
+#: apps/flows/portability/library.py:201
+msgid ""
+"Takes the conversation off automation and assigns it to a teammate, with a "
+"note saying why."
+msgstr ""
+"Снимает диалог с автоматизации и назначает его коллеге, с пометкой о "
+"причине."
+
+#: apps/flows/portability/library.py:205
+msgid "Affiliate picks from comments"
+msgstr "Партнёрские товары из комментариев"
+
+#: apps/flows/portability/library.py:207
+msgid ""
+"A comment on the post sends a swipeable gallery of your affiliate picks, "
+"each card linking straight out."
+msgstr ""
+"Комментарий к посту отправляет прокручиваемую галерею партнёрских товаров, "
+"каждая карточка ведёт по прямой ссылке."
+
+#: apps/flows/portability/library.py:212
+msgid "Follow to unlock"
+msgstr "Подписка за подписку"
+
+#: apps/flows/portability/library.py:213
+msgid ""
+"Ask for the follow before you hand over the freebie, then tag whoever "
+"confirms."
+msgstr ""
+"Просит подписаться, прежде чем отдать бесплатный материал, а затем ставит "
+"тег всем, кто подтвердил."
+
+#: apps/flows/portability/library.py:217
+msgid "Auto-DM the link from comments"
+msgstr "Автоответ со ссылкой на комментарии"
+
+#: apps/flows/portability/library.py:218
+msgid ""
+"Someone comments, you reply publicly and DM them the link. The classic "
+"comment-to-DM."
+msgstr ""
+"Кто-то комментирует, вы отвечаете публично и отправляете ссылку в личные "
+"сообщения. Классика: из комментария в личку."
+
+#: apps/flows/portability/library.py:222
+msgid "Product lineup in DMs"
+msgstr "Витрина товаров в личных сообщениях"
+
+#: apps/flows/portability/library.py:223
+msgid ""
+"Send the whole lineup as a gallery, then answer the two questions that stop "
+"a sale."
+msgstr ""
+"Отправляет всю линейку товаров галереей, а затем отвечает на два вопроса, "
+"которые чаще всего мешают покупке."
+
+#: apps/flows/portability/library.py:227
+msgid "Sell from Reel comments"
+msgstr "Продажи из комментариев к Reels"
+
+#: apps/flows/portability/library.py:228
+msgid "A Reel got people asking. DM them the product and tag the interest."
+msgstr ""
+"Reels вызвал вопросы. Отправьте товар в личные сообщения и отметьте интерес "
+"тегом."
+
+#: apps/flows/portability/library.py:232
+msgid "Comments into RSVPs"
+msgstr "Комментарии в подтверждённое участие"
+
+#: apps/flows/portability/library.py:234
+msgid ""
+"Turn “comment to join” into a confirmed RSVP with a calendar link and a tag "
+"to broadcast to later."
+msgstr ""
+"Превращает «прокомментируй, чтобы участвовать» в подтверждённое участие со "
+"ссылкой на календарь и тегом для будущей рассылки."
+
+#: apps/flows/portability/library.py:239
+msgid "Comment for a discount code"
+msgstr "Комментарий на промокод"
+
+#: apps/flows/portability/library.py:240
+msgid ""
+"A comment sends the discount code by DM, then follows up in case it went "
+"unused."
+msgstr ""
+"Комментарий отправляет промокод в личные сообщения, а затем напоминает, если"
+" он не был использован."
+
+#: apps/flows/portability/library.py:244
+msgid "Comment-to-DM lead magnet"
+msgstr "Лид-магнит из комментария в личку"
+
+#: apps/flows/portability/library.py:245
+msgid ""
+"Comment-triggered DM that delivers a guide and collects an email address."
+msgstr "DM по комментарию, который присылает гайд и собирает email-адрес."
+
+#: apps/flows/portability/library.py:249
+msgid "Respond to every DM"
+msgstr "Отвечать на каждое сообщение"
+
+#: apps/flows/portability/library.py:251
+msgid ""
+"Catch every DM nothing else answered, greet people by name and route them to"
+" buy, ask or reach a person."
+msgstr ""
+"Ловит каждое сообщение, на которое больше никто не ответил, приветствует по "
+"имени и направляет: купить, спросить или позвать человека."
+
+#: apps/flows/portability/library.py:256
+msgid "Early access to the launch"
+msgstr "Ранний доступ к запуску"
+
+#: apps/flows/portability/library.py:257
+msgid ""
+"A keyword puts people on the launch waitlist and tags them for the broadcast"
+" on the day."
+msgstr ""
+"Ключевое слово добавляет человека в лист ожидания запуска и ставит тег для "
+"рассылки в день запуска."
+
+#: apps/flows/portability/library.py:261
+msgid "Move the conversation to SMS"
+msgstr "Перевести диалог в SMS"
+
+#: apps/flows/portability/library.py:263
+msgid ""
+"Move the conversation to SMS before Instagram's 24-hour window closes, with "
+"a DM fallback if the text fails."
+msgstr ""
+"Переводит диалог в SMS до того, как закроется 24-часовое окно Instagram, с "
+"резервным DM, если сообщение не доставлено."
+
+#: apps/flows/portability/library.py:268
+msgid "Grow the email list"
+msgstr "Расширить список email-адресов"
+
+#: apps/flows/portability/library.py:269
+msgid ""
+"Trade a download for an email address. The answer records consent alongside "
+"it."
+msgstr ""
+"Обменивает материал на email-адрес. Ответ фиксирует согласие вместе с ним."
+
+#: apps/flows/portability/library.py:273
+msgid "Answer the usual questions"
+msgstr "Отвечать на частые вопросы"
+
+#: apps/flows/portability/library.py:274
+msgid "One keyword, one hub, four answers, and a way through to a person."
+msgstr "Одно ключевое слово, один хаб, четыре ответа и переход к человеку."
+
+#: apps/flows/portability/library.py:278
+msgid "Drop the link in DMs"
+msgstr "Отправить ссылку в личку"
+
+#: apps/flows/portability/library.py:279
+msgid "The simplest one: a keyword in the DM, the link straight back."
+msgstr ""
+"Самый простой сценарий: ключевое слово в сообщении — и сразу ссылка в ответ."
+
+#: apps/flows/portability/library.py:283
+msgid "Qualify with a quiz"
+msgstr "Квалифицировать через тест"
+
+#: apps/flows/portability/library.py:284
+msgid ""
+"Two questions that tag people by where they are, then send each group a "
+"different offer."
+msgstr ""
+"Два вопроса помечают человека тегом по тому, где он находится, а затем "
+"каждой группе отправляется своё предложение."
+
+#: apps/flows/portability/library.py:288
+msgid "Grow the SMS list"
+msgstr "Расширить список для SMS"
+
+#: apps/flows/portability/library.py:289
+msgid "Collect phone numbers with the consent wording the SMS rules expect."
+msgstr ""
+"Собирает номера телефонов с формулировкой согласия, которую требуют правила "
+"SMS-рассылок."
+
+#: apps/flows/portability/library.py:293
+msgid "Answer 'where is this from?'"
+msgstr "Ответить «откуда это?»"
+
+#: apps/flows/portability/library.py:294
+msgid ""
+"Answer “where is this from?” the moment it lands, with the product and a "
+"link."
+msgstr "Отвечает на «откуда это?» сразу же, с товаром и ссылкой."
+
+#: apps/flows/portability/library.py:298
+msgid "Send people to YouTube"
+msgstr "Отправить на YouTube"
+
+#: apps/flows/portability/library.py:299
+msgid "Send your Instagram audience to the long version on YouTube."
+msgstr "Отправляет аудиторию Instagram на полную версию на YouTube."
+
+#: apps/flows/portability/library.py:303
+msgid "Link in bio opens a chat"
+msgstr "Ссылка в профиле открывает чат"
+
+#: apps/flows/portability/library.py:304
+msgid ""
+"The link in your bio opens a chat that already knows where they came from."
+msgstr ""
+"Ссылка в профиле открывает чат, который уже знает, откуда пришёл человек."
+
+#: apps/flows/portability/library.py:308
+msgid "Answer price questions on Instagram"
+msgstr "Отвечать на вопросы о цене"
+
+#: apps/flows/portability/library.py:309
+msgid ""
+"Answers “how much?” in the comments by DM, and asks what they are after "
+"before quoting."
+msgstr ""
+"Отвечает на «сколько стоит?» в комментариях через личные сообщения и "
+"уточняет, что нужно, перед тем как назвать цену."
+
+#: apps/flows/portability/library.py:313
+msgid "Sort collab requests from Stories"
+msgstr "Сортировать заявки на коллаборацию"
+
+#: apps/flows/portability/library.py:314
+msgid ""
+"Sort collab replies into brands and creators, capture a brief and tag the "
+"request."
+msgstr ""
+"Сортирует ответы на коллаборации по брендам и авторам, собирает бриф и "
+"ставит тег заявке."
+
+#: apps/flows/portability/library.py:318
+msgid "Limited-time offer from Stories"
+msgstr "Ограниченное предложение из историй"
+
+#: apps/flows/portability/library.py:319
+msgid ""
+"Send the code from your Story, then nudge once before the window closes."
+msgstr ""
+"Отправляет код из истории, а затем один раз напоминает, прежде чем "
+"закончится время действия."
+
+#: apps/flows/portability/library.py:323
+msgid "Thank someone for a story mention"
+msgstr "Поблагодарить за упоминание в истории"
+
+#: apps/flows/portability/library.py:324
+msgid ""
+"Thanks somebody who mentioned you in a story, and comes back later with an "
+"offer."
+msgstr ""
+"Благодарит того, кто упомянул вас в истории, и возвращается позже с "
+"предложением."
+
+#: apps/flows/portability/library.py:328
+msgid "Story reply starts a conversation"
+msgstr "Ответ на историю начинает диалог"
+
+#: apps/flows/portability/library.py:329
+msgid ""
+"Turns a story reply into a real conversation instead of a notification you "
+"never answer."
+msgstr ""
+"Превращает ответ на историю в настоящий диалог вместо уведомления, на "
+"которое вы никогда не отвечаете."
+
+#: apps/flows/portability/library.py:333
+msgid "Reply to a Facebook comment privately"
+msgstr "Ответить на комментарий Facebook в личку"
+
+#: apps/flows/portability/library.py:334
+msgid ""
+"Replies to a Facebook comment privately, which is the reply that can "
+"actually ask for something."
+msgstr ""
+"Отвечает на комментарий Facebook в личные сообщения — а это ответ, в котором"
+" действительно можно о чём-то попросить."
+
+#: apps/flows/portability/library.py:338
+msgid "Collect the details for a quote"
+msgstr "Собрать данные для расчёта стоимости"
+
+#: apps/flows/portability/library.py:339
+msgid ""
+"Collects the three details you need to quote, one question at a time, and "
+"saves each one."
+msgstr ""
+"Собирает три детали, нужные для расчёта стоимости, по одному вопросу за раз,"
+" и сохраняет каждую."
+
+#: apps/flows/portability/library.py:343
+msgid "Messenger welcome"
+msgstr "Приветствие в Messenger"
+
+#: apps/flows/portability/library.py:344
+msgid ""
+"What a first-time Messenger contact hears, in four short messages rather "
+"than one wall."
+msgstr ""
+"Что слышит новый контакт в Messenger впервые — четырьмя короткими "
+"сообщениями вместо одной стены текста."
+
+#: apps/flows/portability/library.py:348
+msgid "Reply outside opening hours"
+msgstr "Ответ вне рабочего времени"
+
+#: apps/flows/portability/library.py:349
+msgid ""
+"Answers outside opening hours with when you are next open, so nobody is left"
+" waiting."
+msgstr ""
+"Отвечает вне рабочего времени, сообщая, когда вы снова будете на связи, "
+"чтобы никто не ждал впустую."
+
+#: apps/flows/portability/library.py:353
+msgid "Remind someone of an appointment"
+msgstr "Напомнить о записи"
+
+#: apps/flows/portability/library.py:354
+msgid "Texts a reminder before the appointment, and again when it is close."
+msgstr ""
+"Отправляет напоминание перед записью, а затем ещё раз, когда время "
+"приближается."
+
+#: apps/flows/portability/library.py:358
+msgid "SMS keyword opt-in"
+msgstr "Подписка по ключевому слову через SMS"
+
+#: apps/flows/portability/library.py:359
+msgid "Keyword opt-in over SMS that records consent and tags the subscriber."
+msgstr ""
+"Подписка по ключевому слову через SMS, которая фиксирует согласие и ставит "
+"тег подписчику."
+
+#: apps/flows/portability/library.py:363
+msgid "Ask for a review"
+msgstr "Попросить отзыв"
+
+#: apps/flows/portability/library.py:364
+msgid ""
+"Waits a few days, asks for a review, and stops asking the people who already"
+" left one."
+msgstr ""
+"Ждёт несколько дней, просит оставить отзыв и перестаёт спрашивать тех, кто "
+"уже его оставил."
+
+#: apps/flows/portability/library.py:368
+msgid "Take a booking enquiry"
+msgstr "Принять заявку на бронирование"
+
+#: apps/flows/portability/library.py:369
+msgid ""
+"Takes a booking enquiry over Telegram and saves the date, the size and the "
+"contact."
+msgstr ""
+"Принимает заявку на бронирование через Telegram и сохраняет дату, размер "
+"группы и контакт."
+
+#: apps/flows/portability/library.py:373
+msgid "Sort support messages"
+msgstr "Сортировать обращения в поддержку"
+
+#: apps/flows/portability/library.py:374
+msgid ""
+"Sorts an incoming support message into the right queue and tags it for "
+"whoever picks it up."
+msgstr ""
+"Сортирует входящее обращение в поддержку по нужной очереди и ставит тег для "
+"того, кто его возьмёт в работу."
+
+#: apps/flows/portability/library.py:378
+msgid "Telegram welcome and FAQ"
+msgstr "Приветствие и FAQ в Telegram"
+
+#: apps/flows/portability/library.py:379
+msgid ""
+"Telegram welcome message with a three-way FAQ menu behind quick replies."
+msgstr ""
+"Приветственное сообщение в Telegram с меню из трёх вопросов FAQ за быстрыми "
+"ответами."
+
+#: apps/flows/portability/library.py:383
+msgid "Join a waitlist"
+msgstr "Записать в лист ожидания"
+
+#: apps/flows/portability/library.py:384
+msgid ""
+"Collects an email for the waitlist and tags the person so you can message "
+"the list later."
+msgstr ""
+"Собирает email для листа ожидания и ставит тег человеку, чтобы позже можно "
+"было ему написать."
+
+#: apps/flows/portability/library.py:388
+msgid "Answer when you are open"
+msgstr "Ответить, что вы открыты"
+
+#: apps/flows/portability/library.py:389
+msgid "Answers “are you open?” with the real answer for the day it is asked."
+msgstr ""
+"Отвечает на «вы открыты?» реальным ответом на день, когда задан вопрос."
+
+#: apps/flows/portability/library.py:393
+msgid "Check an order"
+msgstr "Проверить заказ"
+
+#: apps/flows/portability/library.py:394
+msgid "Asks for the order number, looks it up, and says where it is."
+msgstr "Запрашивает номер заказа, находит его и сообщает, где он находится."
 
 #: apps/flows/starter.py:45
 msgid "Hi! Thanks for getting in touch — how can we help?"
@@ -2634,8 +3121,8 @@ msgstr "Этот файл уже был импортирован."
 
 #: apps/flows/views_portability.py:388
 msgid ""
-"Imported as a draft, with its trigger switched off. Read the messages below, "
-"then switch the trigger on and set it live."
+"Imported as a draft, with its trigger switched off. Read the messages below,"
+" then switch the trigger on and set it live."
 msgstr ""
 "Импортирован как черновик, с выключенным триггером. Прочитайте сообщения "
 "ниже, затем включите триггер и запустите сценарий."
@@ -2655,11 +3142,11 @@ msgstr[1] ""
 "%(count)s сценария пришли как черновики с выключенными триггерами. Откройте "
 "каждый, чтобы прочитать сообщения, прежде чем что-либо заработает."
 msgstr[2] ""
-"%(count)s сценариев пришли как черновики с выключенными триггерами. Откройте "
-"каждый, чтобы прочитать сообщения, прежде чем что-либо заработает."
+"%(count)s сценариев пришли как черновики с выключенными триггерами. Откройте"
+" каждый, чтобы прочитать сообщения, прежде чем что-либо заработает."
 msgstr[3] ""
-"%(count)s сценариев пришли как черновики с выключенными триггерами. Откройте "
-"каждый, чтобы прочитать сообщения, прежде чем что-либо заработает."
+"%(count)s сценариев пришли как черновики с выключенными триггерами. Откройте"
+" каждый, чтобы прочитать сообщения, прежде чем что-либо заработает."
 
 #: apps/flows/views_portability.py:614 apps/flows/views_portability.py:641
 #: apps/flows/views_portability.py:671
@@ -2918,8 +3405,8 @@ msgstr "Это условие слишком большое."
 
 #: apps/inbox/rules.py:262
 msgid ""
-"A rule needs at least one condition: a channel, a keyword or something about "
-"the contact."
+"A rule needs at least one condition: a channel, a keyword or something about"
+" the contact."
 msgstr ""
 "Правилу нужно хотя бы одно условие: канал, ключевое слово или что-то о "
 "контакте."
@@ -3284,7 +3771,8 @@ msgstr "Файл пуст или не удалось его прочитать."
 
 #: apps/media_library/mimes.py:193
 msgid "Matroska (.mkv) video is not accepted; convert it to MP4 or WebM."
-msgstr "Видео Matroska (.mkv) не принимается; преобразуйте его в MP4 или WebM."
+msgstr ""
+"Видео Matroska (.mkv) не принимается; преобразуйте его в MP4 или WebM."
 
 #: apps/media_library/mimes.py:203
 msgid "Zip-based files (including .docx, .xlsx and .zip) are not accepted."
@@ -3475,7 +3963,8 @@ msgstr "Этот человек уже состоит в вашей органи
 
 #: apps/members/services.py:218
 msgid ""
-"An invitation is already pending for this address. You can resend it instead."
+"An invitation is already pending for this address. You can resend it "
+"instead."
 msgstr ""
 "Приглашение для этого адреса уже отправлено. Вы можете отправить его "
 "повторно."
@@ -3631,8 +4120,8 @@ msgstr "Канал {channel_name} нужно переподключить"
 #: apps/notifications/events.py:258
 #, python-brace-format
 msgid ""
-"{platform_label} stopped accepting the stored credentials. Nothing will send "
-"or receive on this channel until it is reconnected."
+"{platform_label} stopped accepting the stored credentials. Nothing will send"
+" or receive on this channel until it is reconnected."
 msgstr ""
 "{platform_label} перестал принимать сохранённые учётные данные. Пока канал "
 "не переподключат, отправка и приём сообщений через него невозможны."
@@ -3850,11 +4339,11 @@ msgstr "или"
 #: templates/account/login.html:43
 #, python-format
 msgid ""
-"No account yet? <a href=\"%(signup_url)s\" style=\"color: var(--primary);"
-"\">Create one</a>."
+"No account yet? <a href=\"%(signup_url)s\" style=\"color: "
+"var(--primary);\">Create one</a>."
 msgstr ""
-"Ещё нет аккаунта? <a href=\"%(signup_url)s\" style=\"color: var(--primary);"
-"\">Создать</a>."
+"Ещё нет аккаунта? <a href=\"%(signup_url)s\" style=\"color: "
+"var(--primary);\">Создать</a>."
 
 #: templates/account/signup.html:4 templates/account/signup.html:8
 msgid "Create your account"
@@ -3864,8 +4353,8 @@ msgstr "Создайте аккаунт"
 msgid ""
 "You were invited to join an organization. Signing up here adds you to it."
 msgstr ""
-"Вас пригласили присоединиться к организации. Регистрация здесь добавит вас в "
-"неё."
+"Вас пригласили присоединиться к организации. Регистрация здесь добавит вас в"
+" неё."
 
 #: templates/account/signup.html:53
 msgid "Create account"
@@ -3874,11 +4363,11 @@ msgstr "Создать аккаунт"
 #: templates/account/signup.html:58
 #, python-format
 msgid ""
-"Already have an account? <a href=\"%(login_url)s\" style=\"color: var(--"
-"primary);\">Sign in</a>."
+"Already have an account? <a href=\"%(login_url)s\" style=\"color: "
+"var(--primary);\">Sign in</a>."
 msgstr ""
-"Уже есть аккаунт? <a href=\"%(login_url)s\" style=\"color: var(--primary);"
-"\">Войти</a>."
+"Уже есть аккаунт? <a href=\"%(login_url)s\" style=\"color: "
+"var(--primary);\">Войти</a>."
 
 #: templates/accounts/preferences.html:15
 msgid "How BrightBean Chat looks and speaks to you."
@@ -3932,16 +4421,17 @@ msgstr "Добавить ещё один email"
 
 #: templates/analytics/_counter_cards.html:25
 #: templates/analytics/flow_detail.html:59
-#: templates/analytics/flow_detail.html:94 templates/analytics/overview.html:42
-#: templates/analytics/overview.html:81 templates/broadcasts/_counters.html:60
-#: templates/broadcasts/detail.html:118 templates/inbox/_thread_body.html:150
+#: templates/analytics/flow_detail.html:94
+#: templates/analytics/overview.html:42 templates/analytics/overview.html:81
+#: templates/broadcasts/_counters.html:60 templates/broadcasts/detail.html:118
+#: templates/inbox/_thread_body.html:150
 msgid "Delivered"
 msgstr "Доставлено"
 
 #: templates/analytics/_counter_cards.html:33
 #: templates/analytics/flow_detail.html:61
-#: templates/analytics/flow_detail.html:96 templates/analytics/overview.html:44
-#: templates/broadcasts/detail.html:91
+#: templates/analytics/flow_detail.html:96
+#: templates/analytics/overview.html:44 templates/broadcasts/detail.html:91
 msgid "Clicked"
 msgstr "Кликнули"
 
@@ -4064,7 +4554,8 @@ msgid "Nothing has been sent from this workspace in this range."
 msgstr "Из этого рабочего пространства ничего не отправлялось за этот период."
 
 #: templates/analytics/settings.html:28
-msgid "Click and open tracking for email. Both are off until you turn them on."
+msgid ""
+"Click and open tracking for email. Both are off until you turn them on."
 msgstr ""
 "Отслеживание кликов и открытий для email. Оба выключены, пока вы их не "
 "включите."
@@ -4080,8 +4571,8 @@ msgid ""
 "their status bar rather than the destination."
 msgstr ""
 "Каждая ссылка в отправляемом вами письме заменяется на ту, что записывает "
-"клик и перенаправляет на исходный адрес. Получатели видят в строке состояния "
-"переадресующую ссылку, а не конечный адрес."
+"клик и перенаправляет на исходный адрес. Получатели видят в строке состояния"
+" переадресующую ссылку, а не конечный адрес."
 
 #: templates/analytics/settings.html:47
 msgid "Add an open-tracking pixel"
@@ -4125,13 +4616,13 @@ msgstr "Отправляйте его как bearer-токен в каждом �
 #: templates/api/key_created.html:22
 #, python-format
 msgid ""
-"“%(key_name)s” acts in <strong>%(workspace_name)s</strong> and nowhere else. "
-"Revoking it takes effect on the very next request. If you lose it, revoke it "
-"and issue another. It cannot be recovered."
+"“%(key_name)s” acts in <strong>%(workspace_name)s</strong> and nowhere else."
+" Revoking it takes effect on the very next request. If you lose it, revoke "
+"it and issue another. It cannot be recovered."
 msgstr ""
 "«%(key_name)s» действует только в <strong>%(workspace_name)s</strong> и "
-"нигде больше. Отзыв вступает в силу с самого следующего запроса. Если вы его "
-"потеряли — отзовите и выпустите новый. Восстановить его нельзя."
+"нигде больше. Отзыв вступает в силу с самого следующего запроса. Если вы его"
+" потеряли — отзовите и выпустите новый. Восстановить его нельзя."
 
 #: templates/api/key_created.html:25
 msgid "Read the API reference"
@@ -4144,14 +4635,14 @@ msgstr "API-ключи"
 #: templates/api/keys_list.html:24
 #, python-format
 msgid ""
-"A key authenticates calls to the <a href=\"%(api_docs_url)s\">public API</a> "
-"as one workspace. Keys are organization-level because they span every "
+"A key authenticates calls to the <a href=\"%(api_docs_url)s\">public API</a>"
+" as one workspace. Keys are organization-level because they span every "
 "workspace in the organization, but each key acts inside exactly one."
 msgstr ""
 "Ключ подтверждает вызовы к <a href=\"%(api_docs_url)s\">публичному API</a> "
 "от имени одного пространства. Ключи выпускаются на уровне организации, "
-"потому что охватывают все её пространства, но каждый ключ действует только в "
-"одном."
+"потому что охватывают все её пространства, но каждый ключ действует только в"
+" одном."
 
 #: templates/api/keys_list.html:28 templates/api/keys_list.html:37
 msgid "Issue a key"
@@ -4163,15 +4654,15 @@ msgstr "Области доступа"
 
 #: templates/api/keys_list.html:57
 msgid ""
-"<strong>Read</strong> lists contacts, tags, fields and flows. <strong>Write</"
-"strong> adds creating and updating contacts, tagging, setting field values, "
-"starting flows and sending messages. No scope grants channel, member or key "
-"management."
+"<strong>Read</strong> lists contacts, tags, fields and flows. "
+"<strong>Write</strong> adds creating and updating contacts, tagging, setting"
+" field values, starting flows and sending messages. No scope grants channel,"
+" member or key management."
 msgstr ""
 "<strong>Чтение</strong> позволяет получать список контактов, тегов, полей и "
-"сценариев. <strong>Запись</strong> добавляет создание и изменение контактов, "
-"теги, значения полей, запуск сценариев и отправку сообщений. Ни одна область "
-"не даёт управление каналами, участниками или ключами."
+"сценариев. <strong>Запись</strong> добавляет создание и изменение контактов,"
+" теги, значения полей, запуск сценариев и отправку сообщений. Ни одна "
+"область не даёт управление каналами, участниками или ключами."
 
 #: templates/api/keys_list.html:61
 msgid "Issue key"
@@ -4198,9 +4689,9 @@ msgid ""
 "<code>manage_api_keys</code> permission in any workspace, so there is "
 "nowhere to issue a key. A workspace admin can grant it."
 msgstr ""
-"Вы администратор организации, но у вас нет права <code>manage_api_keys</"
-"code> ни в одном пространстве, поэтому выпустить ключ негде. Администратор "
-"пространства может выдать это право."
+"Вы администратор организации, но у вас нет права "
+"<code>manage_api_keys</code> ни в одном пространстве, поэтому выпустить ключ"
+" негде. Администратор пространства может выдать это право."
 
 #: templates/api/keys_list.html:77
 msgid "Existing keys"
@@ -4263,7 +4754,8 @@ msgstr "Отключено после %(limit)s подряд неудачных 
 
 #: templates/api/webhook_detail.html:19
 msgid ""
-"Fix the endpoint, then tick <em>Enabled</em> below to start delivering again."
+"Fix the endpoint, then tick <em>Enabled</em> below to start delivering "
+"again."
 msgstr ""
 "Исправьте конечную точку, затем отметьте <em>Включено</em> ниже, чтобы "
 "возобновить доставку."
@@ -4417,12 +4909,12 @@ msgstr "Исходящие вебхуки"
 #: templates/api/webhooks_list.html:24
 #, python-format
 msgid ""
-"BrightBean Chat POSTs a signed JSON document to your endpoint when something "
-"happens in this workspace. See the <a href=\"%(api_docs_url)s\">API "
+"BrightBean Chat POSTs a signed JSON document to your endpoint when something"
+" happens in this workspace. See the <a href=\"%(api_docs_url)s\">API "
 "reference</a> for the payload shape and a signature-verification snippet."
 msgstr ""
-"BrightBean Chat отправляет подписанный JSON-документ на вашу конечную точку, "
-"когда что-то происходит в этом пространстве. Форма содержимого и фрагмент "
+"BrightBean Chat отправляет подписанный JSON-документ на вашу конечную точку,"
+" когда что-то происходит в этом пространстве. Форма содержимого и фрагмент "
 "проверки подписи — в <a href=\"%(api_docs_url)s\">справочнике API</a>."
 
 #: templates/api/webhooks_list.html:27 templates/api/webhooks_list.html:34
@@ -4460,8 +4952,8 @@ msgid ""
 "An endpoint is how something outside BrightBean Chat hears about a new "
 "message, a finished flow or a tagged contact, as it happens."
 msgstr ""
-"Конечная точка — это способ, которым что-то вне BrightBean Chat сразу узнаёт "
-"о новом сообщении, завершённом сценарии или помеченном контакте."
+"Конечная точка — это способ, которым что-то вне BrightBean Chat сразу узнаёт"
+" о новом сообщении, завершённом сценарии или помеченном контакте."
 
 #: templates/base.html:170
 msgid "Toggle menu"
@@ -4528,7 +5020,8 @@ msgstr "Подсчитываем, кого это охватит"
 msgid "Working out who this reaches…"
 msgstr "Подсчитываем, кого это охватит…"
 
-#: templates/broadcasts/_counters.html:52 templates/inbox/_thread_body.html:153
+#: templates/broadcasts/_counters.html:52
+#: templates/inbox/_thread_body.html:153
 msgid "Queued"
 msgstr "В очереди"
 
@@ -4559,7 +5052,8 @@ msgstr "В этой группе никого нет."
 msgid "Status"
 msgstr "Статус"
 
-#: templates/broadcasts/_rows.html:42 templates/campaigns/_subscribers.html:104
+#: templates/broadcasts/_rows.html:42
+#: templates/campaigns/_subscribers.html:104
 #, python-format
 msgid "Finished %(when)s"
 msgstr "Завершено %(when)s"
@@ -4576,8 +5070,8 @@ msgstr "Пока нет рассылок."
 #: templates/broadcasts/_rows.html:62
 #, python-format
 msgid ""
-"Showing the %(page_size)s most recent. Search or filter by status to find an "
-"older one."
+"Showing the %(page_size)s most recent. Search or filter by status to find an"
+" older one."
 msgstr ""
 "Показаны %(page_size)s последних. Чтобы найти более старую, воспользуйтесь "
 "поиском или фильтром по статусу."
@@ -4774,11 +5268,11 @@ msgstr "Отправить в"
 
 #: templates/broadcasts/_step_schedule.html:43
 msgid ""
-"A scheduled broadcast can be cancelled up to the moment it starts, and while "
-"it is sending."
+"A scheduled broadcast can be cancelled up to the moment it starts, and while"
+" it is sending."
 msgstr ""
-"Запланированную рассылку можно отменить вплоть до начала отправки и во время "
-"отправки."
+"Запланированную рассылку можно отменить вплоть до начала отправки и во время"
+" отправки."
 
 #: templates/broadcasts/_step_schedule.html:47
 #: templates/inbox/_composer.html:109
@@ -4844,8 +5338,8 @@ msgstr "Дошли до провайдера"
 msgid ""
 "One message to many contacts, filtered for compliance before it goes out."
 msgstr ""
-"Одно сообщение многим контактам, отфильтрованное на соответствие требованиям "
-"перед отправкой."
+"Одно сообщение многим контактам, отфильтрованное на соответствие требованиям"
+" перед отправкой."
 
 #: templates/broadcasts/list.html:31
 msgid "New broadcast name"
@@ -4862,8 +5356,7 @@ msgid ""
 "No channel in this workspace accepts broadcasts yet. Connect one in\n"
 "    <a href=\"%(channel_settings_url)s\">channel settings</a> first."
 msgstr ""
-"Ни один канал в этом рабочем пространстве пока не принимает рассылки. "
-"Сначала подключите канал в\n"
+"Ни один канал в этом рабочем пространстве пока не принимает рассылки. Сначала подключите канал в\n"
 "    <a href=\"%(channel_settings_url)s\">настройках каналов</a>."
 
 #: templates/broadcasts/list.html:68
@@ -4888,14 +5381,15 @@ msgstr "Ничего не соответствует этим фильтрам."
 
 #: templates/campaigns/_list_rows.html:13
 msgid ""
-"Create one above, add a step, then subscribe contacts from a flow, a rule or "
-"the contact list."
+"Create one above, add a step, then subscribe contacts from a flow, a rule or"
+" the contact list."
 msgstr ""
 "Создайте её выше, добавьте шаг, затем подписывайте контакты из сценария, "
 "правила или списка контактов."
 
 #: templates/campaigns/_list_rows.html:37
-#: templates/flows/_template_card.html:91 templates/flows/import_review.html:50
+#: templates/flows/_template_card.html:91
+#: templates/flows/import_review.html:50
 #, python-format
 msgid "%(count)s step"
 msgid_plural "%(count)s steps"
@@ -5046,10 +5540,11 @@ msgid ""
 "Remove step %(position)s? Anyone waiting on it moves to whatever takes its "
 "place."
 msgstr ""
-"Удалить шаг %(position)s? Все, кто его ждал, перейдут к тому, что займёт его "
-"место."
+"Удалить шаг %(position)s? Все, кто его ждал, перейдут к тому, что займёт его"
+" место."
 
-#: templates/campaigns/_steps.html:49 templates/campaigns/_subscribers.html:115
+#: templates/campaigns/_steps.html:49
+#: templates/campaigns/_subscribers.html:115
 #: templates/contacts/_activity.html:82 templates/inbox/list.html:141
 msgid "Remove"
 msgstr "Удалить"
@@ -5091,12 +5586,10 @@ msgstr "Найти контакт для подписки"
 #, python-format
 msgid ""
 "Or subscribe people in bulk from the\n"
-"        <a href=\"%(contacts_list_url)s\" class=\"btn-text-hover-"
-"primary\">contact list</a>."
+"        <a href=\"%(contacts_list_url)s\" class=\"btn-text-hover-primary\">contact list</a>."
 msgstr ""
 "Или подпишите людей массово из\n"
-"        <a href=\"%(contacts_list_url)s\" class=\"btn-text-hover-"
-"primary\">списка контактов</a>."
+"        <a href=\"%(contacts_list_url)s\" class=\"btn-text-hover-primary\">списка контактов</a>."
 
 #: templates/campaigns/_subscribers.html:51
 msgid "completed"
@@ -5127,8 +5620,7 @@ msgid ""
 "            Filter or export from the contact list to see the rest."
 msgstr ""
 "Показаны %(cap)s последних из %(total)s.\n"
-"            Чтобы увидеть остальных, отфильтруйте или экспортируйте из "
-"списка контактов."
+"            Чтобы увидеть остальных, отфильтруйте или экспортируйте из списка контактов."
 
 #: templates/campaigns/_subscribers.html:84
 #, python-format
@@ -5262,8 +5754,8 @@ msgid ""
 "add you again. For your protection we cannot re-subscribe you from here."
 msgstr ""
 "Вы можете закрыть эту страницу. Если вы отписались по ошибке, попросите "
-"отправителя добавить вас снова. Для вашей безопасности мы не можем подписать "
-"вас отсюда."
+"отправителя добавить вас снова. Для вашей безопасности мы не можем подписать"
+" вас отсюда."
 
 #: templates/channels/_unsubscribe_body.html:18
 msgid "Already unsubscribed"
@@ -5347,7 +5839,8 @@ msgstr "До %(max_qr)s"
 
 #: templates/channels/detail.html:71
 msgid "Not supported: quick replies become numbered replies"
-msgstr "Не поддерживается: быстрые ответы становятся пронумерованными ответами"
+msgstr ""
+"Не поддерживается: быстрые ответы становятся пронумерованными ответами"
 
 #: templates/channels/detail.html:74
 msgid "Carousels"
@@ -5395,17 +5888,18 @@ msgid ""
 "first, then paste back what it gives you. Until the relevant one is set, "
 "bounce and complaint notifications are ignored rather than trusted."
 msgstr ""
-"Оба параметра можно задать только после создания канала, так как URL вебхука "
-"выше содержит его id: сначала создайте эндпоинт у провайдера, затем вставьте "
-"то, что он выдаст. Пока нужный параметр не задан, уведомления об отказах и "
-"жалобах игнорируются, а не принимаются на веру."
+"Оба параметра можно задать только после создания канала, так как URL вебхука"
+" выше содержит его id: сначала создайте эндпоинт у провайдера, затем "
+"вставьте то, что он выдаст. Пока нужный параметр не задан, уведомления об "
+"отказах и жалобах игнорируются, а не принимаются на веру."
 
 #: templates/channels/detail.html:102
 msgid "Resend signing secret"
 msgstr "Секрет подписи Resend"
 
 #: templates/channels/detail.html:104
-msgid "From the Resend webhook you pointed at the URL above. Stored encrypted."
+msgid ""
+"From the Resend webhook you pointed at the URL above. Stored encrypted."
 msgstr ""
 "Из вебхука Resend, направленного на указанный выше URL. Хранится в "
 "зашифрованном виде."
@@ -5442,8 +5936,8 @@ msgstr ""
 msgid ""
 "Stored encrypted and never displayed again. Rotating issues a new secret "
 "immediately, so deliveries carrying the old one are rejected until the "
-"platform has the new one. Where the platform accepts it over its own API, as "
-"Telegram does, that happens as part of rotating, and the next page says so."
+"platform has the new one. Where the platform accepts it over its own API, as"
+" Telegram does, that happens as part of rotating, and the next page says so."
 msgstr ""
 "Хранится в зашифрованном виде и больше никогда не отображается. Ротация "
 "сразу выдаёт новый секрет, поэтому доставки со старым секретом отклоняются, "
@@ -5451,7 +5945,8 @@ msgstr ""
 "собственный API, как Telegram, это происходит в рамках ротации, о чём "
 "сообщит следующая страница."
 
-#: templates/channels/detail.html:138 templates/channels/email_connect.html:176
+#: templates/channels/detail.html:138
+#: templates/channels/email_connect.html:176
 #: templates/channels/instagram_connect.html:71
 #: templates/channels/messenger_connect.html:82
 #: templates/channels/messenger_pages.html:37 templates/channels/new.html:34
@@ -5549,8 +6044,8 @@ msgstr "Адрес отправителя"
 
 #: templates/channels/email_connect.html:70
 msgid ""
-"Its domain becomes this channel's identity, and only one workspace can claim "
-"a domain."
+"Its domain becomes this channel's identity, and only one workspace can claim"
+" a domain."
 msgstr ""
 "Его домен становится идентификатором этого канала, и заявить домен может "
 "только одно рабочее пространство."
@@ -5564,7 +6059,8 @@ msgid "Channel name"
 msgstr "Название канала"
 
 #: templates/channels/email_connect.html:79
-msgid "What this channel is called in BrightBean Chat. Defaults to the domain."
+msgid ""
+"What this channel is called in BrightBean Chat. Defaults to the domain."
 msgstr "Как этот канал называется в BrightBean Chat. По умолчанию — домен."
 
 #: templates/channels/email_connect.html:84
@@ -5623,8 +6119,8 @@ msgstr "Секрет подписи вебхука"
 #: templates/channels/email_connect.html:125
 msgid ""
 "Optional now, required for bounce handling. Create a webhook endpoint in "
-"Resend pointing at the URL this page shows after you connect, then paste the "
-"secret it gives you."
+"Resend pointing at the URL this page shows after you connect, then paste the"
+" secret it gives you."
 msgstr ""
 "Сейчас необязательно, но требуется для обработки отказов доставки. Создайте "
 "эндпоинт вебхука в Resend, указывающий на URL, который эта страница покажет "
@@ -5656,8 +6152,9 @@ msgstr ""
 
 #: templates/channels/email_connect.html:154
 msgid ""
-"The key needs <code>ses:SendEmail</code>, and <code>sns:ConfirmSubscription</"
-"code> if you want bounce handling. See docs/channels/email.md."
+"The key needs <code>ses:SendEmail</code>, and "
+"<code>sns:ConfirmSubscription</code> if you want bounce handling. See "
+"docs/channels/email.md."
 msgstr ""
 "Ключу нужны права <code>ses:SendEmail</code>, а для обработки отказов — ещё "
 "и <code>sns:ConfirmSubscription</code>. См. docs/channels/email.md."
@@ -5679,15 +6176,15 @@ msgstr "Что будет дальше"
 
 #: templates/channels/email_connect.html:167
 msgid ""
-"We check the credentials with your provider before saving anything. Once the "
-"channel exists, its page shows the webhook URL to paste into Resend or to "
+"We check the credentials with your provider before saving anything. Once the"
+" channel exists, its page shows the webhook URL to paste into Resend or to "
 "subscribe an SNS topic to, and a button that sends a test email to your own "
 "address."
 msgstr ""
 "Прежде чем что-либо сохранить, мы проверяем учётные данные у вашего "
 "провайдера. После создания канала на его странице появится URL вебхука для "
-"вставки в Resend или подписки на тему SNS, а также кнопка отправки тестового "
-"письма на ваш собственный адрес."
+"вставки в Resend или подписки на тему SNS, а также кнопка отправки тестового"
+" письма на ваш собственный адрес."
 
 #: templates/channels/email_connect.html:170
 msgid ""
@@ -5707,15 +6204,15 @@ msgstr "Подключить аккаунт Instagram"
 
 #: templates/channels/instagram_connect.html:28
 msgid ""
-"BrightBean Chat uses the <strong>Instagram API with Instagram Login</"
-"strong>, so the account you connect must be a <strong>professional</strong> "
-"account, Business or Creator. You will be sent to Instagram to authorise it, "
-"and we never see your password."
+"BrightBean Chat uses the <strong>Instagram API with Instagram "
+"Login</strong>, so the account you connect must be a "
+"<strong>professional</strong> account, Business or Creator. You will be sent"
+" to Instagram to authorise it, and we never see your password."
 msgstr ""
-"BrightBean Chat использует <strong>Instagram API с Instagram Login</strong>, "
-"поэтому подключаемый аккаунт должен быть <strong>профессиональным</strong> — "
-"Business или Creator. Вы будете перенаправлены в Instagram для авторизации, "
-"и мы никогда не увидим ваш пароль."
+"BrightBean Chat использует <strong>Instagram API с Instagram Login</strong>,"
+" поэтому подключаемый аккаунт должен быть <strong>профессиональным</strong> "
+"— Business или Creator. Вы будете перенаправлены в Instagram для "
+"авторизации, и мы никогда не увидим ваш пароль."
 
 #: templates/channels/instagram_connect.html:38
 msgid "Create a Meta app with the <em>Instagram</em> product added."
@@ -5723,11 +6220,11 @@ msgstr "Создайте приложение Meta с добавленным п�
 
 #: templates/channels/instagram_connect.html:40
 msgid ""
-"Add this deployment's callback URL to the app's <em>Business login settings</"
-"em>, exactly as written."
+"Add this deployment's callback URL to the app's <em>Business login "
+"settings</em>, exactly as written."
 msgstr ""
-"Добавьте callback-URL этого развёртывания в <em>Business login settings</em> "
-"приложения точно в том виде, в каком он указан."
+"Добавьте callback-URL этого развёртывания в <em>Business login settings</em>"
+" приложения точно в том виде, в каком он указан."
 
 #: templates/channels/instagram_connect.html:41
 msgid "Callback URL"
@@ -5788,8 +6285,8 @@ msgstr "%(name)s перестал получать сообщения"
 #, python-format
 msgid "%(label)s revoked the connection. Reconnect to start receiving again."
 msgstr ""
-"%(label)s отозвал подключение. Переподключитесь, чтобы снова начать получать "
-"сообщения."
+"%(label)s отозвал подключение. Переподключитесь, чтобы снова начать получать"
+" сообщения."
 
 #: templates/channels/list.html:57
 msgid "Reconnect"
@@ -5879,13 +6376,13 @@ msgid ""
 "products to it."
 msgstr ""
 "Создайте приложение Meta типа <strong>Business</strong> и добавьте в него "
-"продукты <strong>Messenger</strong> и <strong>Facebook Login for Business</"
-"strong>."
+"продукты <strong>Messenger</strong> и <strong>Facebook Login for "
+"Business</strong>."
 
 #: templates/channels/messenger_connect.html:41
 msgid ""
-"Add this exact redirect URI to Facebook Login for Business → <em>Valid OAuth "
-"Redirect URIs</em>."
+"Add this exact redirect URI to Facebook Login for Business → <em>Valid OAuth"
+" Redirect URIs</em>."
 msgstr ""
 "Добавьте именно этот redirect URI в Facebook Login for Business → <em>Valid "
 "OAuth Redirect URIs</em>."
@@ -5917,7 +6414,8 @@ msgid "Choose the page"
 msgstr "Выберите страницу"
 
 #: templates/channels/messenger_connect.html:57
-msgid "You will be sent to Facebook to sign in and pick which page to connect."
+msgid ""
+"You will be sent to Facebook to sign in and pick which page to connect."
 msgstr ""
 "Вы будете перенаправлены в Facebook, чтобы войти и выбрать страницу для "
 "подключения."
@@ -5944,12 +6442,12 @@ msgstr ""
 
 #: templates/channels/messenger_connect.html:76
 msgid ""
-"To serve pages other than your own app's test page, Meta requires App Review "
-"and Business Verification. Full setup notes are in docs/channels/"
-"messenger.md."
+"To serve pages other than your own app's test page, Meta requires App Review"
+" and Business Verification. Full setup notes are in "
+"docs/channels/messenger.md."
 msgstr ""
-"Чтобы обслуживать страницы, отличные от тестовой страницы вашего приложения, "
-"Meta требует App Review и Business Verification. Полные инструкции по "
+"Чтобы обслуживать страницы, отличные от тестовой страницы вашего приложения,"
+" Meta требует App Review и Business Verification. Полные инструкции по "
 "настройке — в docs/channels/messenger.md."
 
 #: templates/channels/messenger_pages.html:3
@@ -5966,8 +6464,8 @@ msgid ""
 "subscribes it to this deployment's webhook and sets its Get Started button."
 msgstr ""
 "Это страницы Facebook, к которым вы только что предоставили доступ. "
-"Подключение подписывает страницу на вебхук этого развёртывания и настраивает "
-"её кнопку Get Started."
+"Подключение подписывает страницу на вебхук этого развёртывания и настраивает"
+" её кнопку Get Started."
 
 #: templates/channels/messenger_pages.html:28
 msgid "Connect this page"
@@ -5980,8 +6478,9 @@ msgid ""
 "check that you are an admin of the page you meant."
 msgstr ""
 "Этот аккаунт Facebook не предоставил ни одной страницы. Facebook Login for "
-"Business спрашивает, какими страницами поделиться, при входе. Начните заново "
-"и выберите хотя бы одну или убедитесь, что вы администратор нужной страницы."
+"Business спрашивает, какими страницами поделиться, при входе. Начните заново"
+" и выберите хотя бы одну или убедитесь, что вы администратор нужной "
+"страницы."
 
 #: templates/channels/messenger_pages.html:34
 msgid "Start again"
@@ -5998,8 +6497,8 @@ msgid ""
 "adapter."
 msgstr ""
 "Это создаёт подключение и его секрет вебхука. Учётные данные вводятся в "
-"собственном процессе подключения каждой платформы, который появляется вместе "
-"с адаптером этой платформы."
+"собственном процессе подключения каждой платформы, который появляется вместе"
+" с адаптером этой платформы."
 
 #: templates/channels/new.html:15
 msgid "Platform"
@@ -6059,8 +6558,8 @@ msgid ""
 "Rotate again to retry. If it keeps failing, disconnect and reconnect the "
 "channel."
 msgstr ""
-"Выполните ротацию ещё раз, чтобы повторить попытку. Если ошибка повторяется, "
-"отключите и заново подключите канал."
+"Выполните ротацию ещё раз, чтобы повторить попытку. Если ошибка повторяется,"
+" отключите и заново подключите канал."
 
 #: templates/channels/secret.html:43
 msgid "Configure the platform to deliver events to:"
@@ -6068,8 +6567,8 @@ msgstr "Настройте платформу отправлять событи�
 
 #: templates/channels/secret.html:48
 msgid ""
-"Deliveries that do not carry a valid signature for this secret are rejected, "
-"and a source that keeps failing is temporarily blocked."
+"Deliveries that do not carry a valid signature for this secret are rejected,"
+" and a source that keeps failing is temporarily blocked."
 msgstr ""
 "Доставки без действительной подписи для этого секрета отклоняются, а "
 "источник, который постоянно ошибается, временно блокируется."
@@ -6098,8 +6597,8 @@ msgid ""
 "credential: anyone holding it can send as your number and read your "
 "messages, so it is stored encrypted and never shown again."
 msgstr ""
-"BrightBean Chat отправляет SMS через ваш собственный аккаунт Twilio, поэтому "
-"сообщения, номер и счёт — полностью ваши. Auth Token — это весь секрет "
+"BrightBean Chat отправляет SMS через ваш собственный аккаунт Twilio, поэтому"
+" сообщения, номер и счёт — полностью ваши. Auth Token — это весь секрет "
 "целиком: любой, у кого он есть, может отправлять от имени вашего номера и "
 "читать ваши сообщения, поэтому он хранится в зашифрованном виде и больше "
 "никогда не показывается."
@@ -6112,31 +6611,31 @@ msgstr "Перед тем как вставить"
 
 #: templates/channels/sms_connect.html:36
 msgid ""
-"Open the <a href=\"https://console.twilio.com/\" rel=\"noopener noreferrer\" "
-"target=\"_blank\">Twilio console</a> and copy the Account SID and Auth Token "
-"from the dashboard."
+"Open the <a href=\"https://console.twilio.com/\" rel=\"noopener noreferrer\""
+" target=\"_blank\">Twilio console</a> and copy the Account SID and Auth "
+"Token from the dashboard."
 msgstr ""
-"Откройте <a href=\"https://console.twilio.com/\" rel=\"noopener noreferrer\" "
-"target=\"_blank\">консоль Twilio</a> и скопируйте Account SID и Auth Token "
+"Откройте <a href=\"https://console.twilio.com/\" rel=\"noopener noreferrer\""
+" target=\"_blank\">консоль Twilio</a> и скопируйте Account SID и Auth Token "
 "из панели управления."
 
 #: templates/channels/sms_connect.html:37
 msgid ""
-"Copy either a phone number you own, in E.164 form (<code>+15551234567</"
-"code>), or a Messaging Service SID (<code>MG…</code>) if you send through "
-"one."
+"Copy either a phone number you own, in E.164 form "
+"(<code>+15551234567</code>), or a Messaging Service SID (<code>MG…</code>) "
+"if you send through one."
 msgstr ""
-"Скопируйте либо свой номер телефона в формате E.164 (<code>+15551234567</"
-"code>), либо Messaging Service SID (<code>MG…</code>), если отправляете "
-"через него."
+"Скопируйте либо свой номер телефона в формате E.164 "
+"(<code>+15551234567</code>), либо Messaging Service SID (<code>MG…</code>), "
+"если отправляете через него."
 
 #: templates/channels/sms_connect.html:38
 msgid ""
 "US traffic also needs A2P 10DLC registration, which happens in Twilio and "
 "not here. There is a checklist on the SMS settings page."
 msgstr ""
-"Для трафика в США также требуется регистрация A2P 10DLC, которая выполняется "
-"в Twilio, а не здесь. Чек-лист есть на странице настроек SMS."
+"Для трафика в США также требуется регистрация A2P 10DLC, которая выполняется"
+" в Twilio, а не здесь. Чек-лист есть на странице настроек SMS."
 
 #: templates/channels/sms_connect.html:44
 msgid "Your Twilio account"
@@ -6178,32 +6677,32 @@ msgstr "Messaging Service SID"
 
 #: templates/channels/sms_connect.html:92
 msgid ""
-"We check the credentials and confirm the sender belongs to the account, then "
-"store the connection. Twilio has no way for us to configure your number "
+"We check the credentials and confirm the sender belongs to the account, then"
+" store the connection. Twilio has no way for us to configure your number "
 "remotely, so the last step is yours: open the number (or the messaging "
 "service) in the Twilio console and paste the webhook URL shown on the "
 "connection's page into <em>A message comes in</em>, as a <code>POST</code>."
 msgstr ""
 "Мы проверяем учётные данные и подтверждаем, что отправитель принадлежит "
-"аккаунту, затем сохраняем подключение. У нас нет способа настроить ваш номер "
-"в Twilio удалённо, поэтому последний шаг — за вами: откройте номер (или "
+"аккаунту, затем сохраняем подключение. У нас нет способа настроить ваш номер"
+" в Twilio удалённо, поэтому последний шаг — за вами: откройте номер (или "
 "сервис сообщений) в консоли Twilio и вставьте URL вебхука, показанный на "
-"странице подключения, в поле <em>A message comes in</em> как <code>POST</"
-"code>."
+"странице подключения, в поле <em>A message comes in</em> как "
+"<code>POST</code>."
 
 #: templates/channels/sms_connect.html:95
 msgid ""
 "That URL has to match <strong>exactly</strong>, trailing slash included: "
 "Twilio signs each delivery with an HMAC computed over the URL itself, so a "
 "URL that differs by one character fails verification. It also has to be "
-"reachable from the public internet over HTTPS. Full setup notes are in docs/"
-"channels/sms.md."
+"reachable from the public internet over HTTPS. Full setup notes are in "
+"docs/channels/sms.md."
 msgstr ""
 "Этот URL должен совпадать <strong>точно</strong>, включая завершающий слэш: "
 "Twilio подписывает каждую доставку HMAC, вычисленным по самому URL, поэтому "
 "URL, отличающийся хотя бы на один символ, не пройдёт проверку. Он также "
-"должен быть доступен из публичного интернета по HTTPS. Полные инструкции — в "
-"docs/channels/sms.md."
+"должен быть доступен из публичного интернета по HTTPS. Полные инструкции — в"
+" docs/channels/sms.md."
 
 #: templates/channels/sms_settings.html:3
 #: templates/channels/sms_settings.html:4
@@ -6219,8 +6718,8 @@ msgid ""
 msgstr ""
 "Текст ответов, которые операторы связи требуют отправлять, и пара подсказок "
 "для композера. Сами ответы не являются опциональными и не могут быть "
-"отключены здесь. Если оставить поле пустым, используется текст по умолчанию, "
-"а не отсутствие ответа."
+"отключены здесь. Если оставить поле пустым, используется текст по умолчанию,"
+" а не отсутствие ответа."
 
 #: templates/channels/sms_settings.html:11
 #: templates/flows/triggers/_form_keyword.html:26
@@ -6296,8 +6795,8 @@ msgstr "Цена за сегмент"
 #: templates/channels/sms_settings.html:49
 msgid ""
 "Used only to estimate what a broadcast will cost. BrightBean Chat never "
-"meters or bills anything. Your Twilio invoice is the real number, and prices "
-"differ per destination."
+"meters or bills anything. Your Twilio invoice is the real number, and prices"
+" differ per destination."
 msgstr ""
 "Используется только для оценки стоимости рассылки. BrightBean Chat никогда "
 "ничего не считает и не выставляет счета. Реальную цифру даёт счёт Twilio, и "
@@ -6309,15 +6808,15 @@ msgstr "Чек-лист A2P 10DLC"
 
 #: templates/channels/sms_settings.html:55
 msgid ""
-"US carriers require application-to-person traffic on a 10-digit long code to "
-"be registered. All of it happens in the Twilio console; nothing on this page "
-"performs or verifies registration, and these boxes are your own record that "
-"it is done."
+"US carriers require application-to-person traffic on a 10-digit long code to"
+" be registered. All of it happens in the Twilio console; nothing on this "
+"page performs or verifies registration, and these boxes are your own record "
+"that it is done."
 msgstr ""
-"Операторы связи США требуют регистрации трафика application-to-person на 10-"
-"значном длинном номере. Всё это происходит в консоли Twilio; ничто на этой "
-"странице не выполняет и не проверяет регистрацию — эти флажки лишь ваша "
-"собственная отметка о том, что она сделана."
+"Операторы связи США требуют регистрации трафика application-to-person на "
+"10-значном длинном номере. Всё это происходит в консоли Twilio; ничто на "
+"этой странице не выполняет и не проверяет регистрацию — эти флажки лишь ваша"
+" собственная отметка о том, что она сделана."
 
 #: templates/channels/sms_settings.html:60
 msgid "Brand registered in Twilio"
@@ -6350,9 +6849,9 @@ msgstr "Подключить бота Telegram"
 
 #: templates/channels/telegram_connect.html:35
 msgid ""
-"Telegram bots are created by talking to BotFather. The token it gives you is "
-"the whole credential: anyone holding it can read and send as your bot, so it "
-"is stored encrypted and never shown again."
+"Telegram bots are created by talking to BotFather. The token it gives you is"
+" the whole credential: anyone holding it can read and send as your bot, so "
+"it is stored encrypted and never shown again."
 msgstr ""
 "Боты Telegram создаются через общение с BotFather. Выданный им токен — это "
 "весь секрет целиком: любой, у кого он есть, может читать и отправлять "
@@ -6360,15 +6859,17 @@ msgstr ""
 "больше никогда не показывается."
 
 #: templates/channels/telegram_connect.html:51
-msgid "Open <code>@BotFather</code> in Telegram and send <code>/newbot</code>."
+msgid ""
+"Open <code>@BotFather</code> in Telegram and send <code>/newbot</code>."
 msgstr ""
-"Откройте <code>@BotFather</code> в Telegram и отправьте <code>/newbot</code>."
+"Откройте <code>@BotFather</code> в Telegram и отправьте "
+"<code>/newbot</code>."
 
 #: templates/channels/telegram_connect.html:52
 msgid "Choose a display name and a username ending in <code>bot</code>."
 msgstr ""
-"Выберите отображаемое имя и имя пользователя, заканчивающееся на <code>bot</"
-"code>."
+"Выберите отображаемое имя и имя пользователя, заканчивающееся на "
+"<code>bot</code>."
 
 #: templates/channels/telegram_connect.html:53
 msgid ""
@@ -6392,8 +6893,8 @@ msgstr ""
 
 #: templates/channels/telegram_connect.html:80
 msgid ""
-"We call <code>getMe</code> to check the token and learn your bot's username, "
-"then point Telegram at this deployment with <code>setWebhook</code> and a "
+"We call <code>getMe</code> to check the token and learn your bot's username,"
+" then point Telegram at this deployment with <code>setWebhook</code> and a "
 "secret only the two of us know."
 msgstr ""
 "Мы вызываем <code>getMe</code>, чтобы проверить токен и узнать имя "
@@ -6409,13 +6910,13 @@ msgstr "Доставки поступают на"
 msgid ""
 "That URL has to be reachable from the public internet over HTTPS with a "
 "valid certificate. Telegram will not deliver to anything else. On a local "
-"machine, put a tunnel in front of it first. Full setup notes are in docs/"
-"channels/telegram.md."
+"machine, put a tunnel in front of it first. Full setup notes are in "
+"docs/channels/telegram.md."
 msgstr ""
 "Этот URL должен быть доступен из публичного интернета по HTTPS с "
 "действительным сертификатом. Telegram не будет доставлять ни на что другое. "
-"На локальной машине сначала настройте туннель. Полные инструкции — в docs/"
-"channels/telegram.md."
+"На локальной машине сначала настройте туннель. Полные инструкции — в "
+"docs/channels/telegram.md."
 
 #: templates/channels/whatsapp_connect.html:20
 msgid "Connect WhatsApp"
@@ -6507,8 +7008,8 @@ msgid ""
 "pricing page. Leaving them at zero simply hides the estimate."
 msgstr ""
 "Скопируйте тарифы для стран, в которые вы действительно отправляете "
-"сообщения, со страницы цен самой Meta. Если оставить их равными нулю, оценка "
-"просто не будет показана."
+"сообщения, со страницы цен самой Meta. Если оставить их равными нулю, оценка"
+" просто не будет показана."
 
 #: templates/channels/whatsapp_cost_hints.html:20
 #: templates/channels/whatsapp_template_form.html:44
@@ -6530,9 +7031,9 @@ msgstr "Новый шаблон"
 
 #: templates/channels/whatsapp_template_form.html:12
 msgid ""
-"This template is with Meta, or already approved, so it cannot be edited. the "
-"copy under review is the one Meta holds. Delete it and write a new one if it "
-"needs to change."
+"This template is with Meta, or already approved, so it cannot be edited. the"
+" copy under review is the one Meta holds. Delete it and write a new one if "
+"it needs to change."
 msgstr ""
 "Этот шаблон находится у Meta или уже одобрен, поэтому его нельзя "
 "редактировать. Версия на проверке — та, что хранится у Meta. Если нужно "
@@ -6550,8 +7051,8 @@ msgstr ""
 "Напишите сообщение один раз и отметьте изменяемые части как "
 "<code>%(open_brace)s1%(close_brace)s</code>, "
 "<code>%(open_brace)s2%(close_brace)s</code> и так далее. Meta нумерует "
-"переменные отдельно для каждого раздела, поэтому первая переменная заголовка "
-"и первая переменная текста — это два разных значения."
+"переменные отдельно для каждого раздела, поэтому первая переменная заголовка"
+" и первая переменная текста — это два разных значения."
 
 #: templates/channels/whatsapp_template_form.html:38
 msgid "Preview"
@@ -6576,8 +7077,8 @@ msgid ""
 "becomes available to flows and broadcasts once the review comes back."
 msgstr ""
 "Через 24 часа после последнего сообщения контакта WhatsApp принимает только "
-"шаблоны, уже одобренные Meta. Напишите шаблон здесь, отправьте на проверку — "
-"и после её завершения он станет доступен в сценариях и рассылках."
+"шаблоны, уже одобренные Meta. Напишите шаблон здесь, отправьте на проверку —"
+" и после её завершения он станет доступен в сценариях и рассылках."
 
 #: templates/channels/whatsapp_templates.html:13
 msgid ""
@@ -6624,8 +7125,8 @@ msgstr "Как проходит проверка"
 msgid ""
 "Meta usually answers within minutes, occasionally within a day. BrightBean "
 "Chat checks every hour and notifies workspace admins when the answer "
-"arrives; a rejected template shows Meta's reason above and can be edited and "
-"resubmitted. Marketing templates are reviewed most strictly and cost the "
+"arrives; a rejected template shows Meta's reason above and can be edited and"
+" resubmitted. Marketing templates are reviewed most strictly and cost the "
 "most to send."
 msgstr ""
 "Meta обычно отвечает в течение нескольких минут, иногда в течение суток. "
@@ -6669,7 +7170,8 @@ msgstr "Запустить"
 
 #: templates/contacts/_activity.html:60
 msgid "Starting a flow ends whatever this contact is already running."
-msgstr "Запуск сценария завершает всё, что уже выполняется для этого контакта."
+msgstr ""
+"Запуск сценария завершает всё, что уже выполняется для этого контакта."
 
 #: templates/contacts/_activity.html:77 templates/contacts/list.html:228
 msgid "Sequence"
@@ -6807,7 +7309,8 @@ msgstr ""
 "Поле — это место, куда сценарий помещает собранный ответ: размер, дату "
 "бронирования, тариф — чтобы фильтр мог позже искать по нему."
 
-#: templates/contacts/_field_rows.html:68 templates/contacts/field_list.html:20
+#: templates/contacts/_field_rows.html:68
+#: templates/contacts/field_list.html:20
 msgid "New field"
 msgstr "Новое поле"
 
@@ -6946,7 +7449,8 @@ msgstr[3] "%(count)s ошибок"
 
 #: templates/contacts/_import_progress.html:37
 msgid ""
-"Nothing has been written yet. These are the numbers the import would produce."
+"Nothing has been written yet. These are the numbers the import would "
+"produce."
 msgstr "Пока ничего не записано. Это числа, которые даст импорт."
 
 #: templates/contacts/_import_progress.html:42
@@ -7076,8 +7580,8 @@ msgid ""
 "No contacts yet. They arrive when someone messages a connected channel, or "
 "when you import a CSV."
 msgstr ""
-"Пока нет контактов. Они появляются, когда кто-то пишет в подключённый канал, "
-"или когда вы импортируете CSV."
+"Пока нет контактов. Они появляются, когда кто-то пишет в подключённый канал,"
+" или когда вы импортируете CSV."
 
 #: templates/contacts/_tag_chips.html:24
 #, python-format
@@ -7252,12 +7756,9 @@ msgstr "Стереть навсегда"
 #: templates/contacts/detail.html:156
 #, python-format
 msgid ""
-"Removes %(name)s outright: their profile, custom field values, tags, "
-"channel\n"
-"          identities, consent records, conversations and message bodies. "
-"Counters stay, anonymised. A\n"
-"          suppressed email address is kept, because that is a fact about a "
-"mailbox rather than about this\n"
+"Removes %(name)s outright: their profile, custom field values, tags, channel\n"
+"          identities, consent records, conversations and message bodies. Counters stay, anonymised. A\n"
+"          suppressed email address is kept, because that is a fact about a mailbox rather than about this\n"
 "          contact. <strong>This cannot be undone.</strong>"
 msgstr ""
 "Полностью удаляет %(name)s: профиль, значения пользовательских полей, теги, "
@@ -7343,15 +7844,13 @@ msgstr "Сопоставить столбцы"
 
 #: templates/contacts/import_detail.html:46
 msgid ""
-"Leave a column unmapped to ignore it. Mapping a column to <strong>Tags</"
-"strong> splits\n"
-"      its cell on <code>;</code> or <code>,</code> and attaches each name, "
-"creating tags that\n"
+"Leave a column unmapped to ignore it. Mapping a column to <strong>Tags</strong> splits\n"
+"      its cell on <code>;</code> or <code>,</code> and attaches each name, creating tags that\n"
 "      do not exist yet."
 msgstr ""
 "Оставьте столбец без сопоставления, чтобы игнорировать его. Сопоставление "
-"столбца с <strong>Тегами</strong> разбивает его ячейку по <code>;</code> или "
-"<code>,</code> и прикрепляет каждое имя, создавая ещё не существующие теги."
+"столбца с <strong>Тегами</strong> разбивает его ячейку по <code>;</code> или"
+" <code>,</code> и прикрепляет каждое имя, создавая ещё не существующие теги."
 
 #: templates/contacts/import_detail.html:51
 msgid "(unnamed)"
@@ -7413,16 +7912,14 @@ msgstr ""
 
 #: templates/contacts/import_list.html:36
 msgid ""
-"I understand that imported contacts are <strong>not reachable on any "
-"channel</strong>\n"
-"        until they message this workspace first. Importing an email address "
-"or a phone number\n"
+"I understand that imported contacts are <strong>not reachable on any channel</strong>\n"
+"        until they message this workspace first. Importing an email address or a phone number\n"
 "        does not create a messaging identity and is not a record of consent."
 msgstr ""
 "Я понимаю, что импортированные контакты <strong>недоступны ни на одном "
 "канале</strong>, пока не напишут в это пространство первыми. Импорт email-"
-"адреса или номера телефона не создаёт идентификатор для обмена сообщениями и "
-"не является записью согласия."
+"адреса или номера телефона не создаёт идентификатор для обмена сообщениями и"
+" не является записью согласия."
 
 #: templates/contacts/import_list.html:42
 msgid "Upload"
@@ -7494,7 +7991,8 @@ msgstr ""
 "Удалить «%(name)s»? Контакты остаются; любой сценарий, чей узел условия "
 "ссылается на этот сегмент, перестаёт проходить проверку."
 
-#: templates/contacts/list.html:206 templates/flows/triggers/_form_rule.html:26
+#: templates/contacts/list.html:206
+#: templates/flows/triggers/_form_rule.html:26
 msgid "Tag"
 msgstr "Тег"
 
@@ -7569,14 +8067,11 @@ msgstr ""
 #: templates/flows/_import_requirement.html:44
 #, python-format
 msgid ""
-"This flow sends the approved template <span class=\"font-"
-"mono\">%(template_name)s</span>.\n"
+"This flow sends the approved template <span class=\"font-mono\">%(template_name)s</span>.\n"
 "        Nothing to answer here. Make sure your WhatsApp account has it."
 msgstr ""
-"Этот сценарий отправляет одобренный шаблон <span class=\"font-"
-"mono\">%(template_name)s</span>.\n"
-"        Отвечать здесь не нужно. Убедитесь, что он есть в вашем аккаунте "
-"WhatsApp."
+"Этот сценарий отправляет одобренный шаблон <span class=\"font-mono\">%(template_name)s</span>.\n"
+"        Отвечать здесь не нужно. Убедитесь, что он есть в вашем аккаунте WhatsApp."
 
 #: templates/flows/_import_requirement.html:64
 msgid "Post ids, comma separated. Blank matches no posts"
@@ -7604,13 +8099,11 @@ msgstr "Все аккаунты, на которых работает этот �
 #, python-format
 msgid ""
 "No %(name)s account is connected yet. You can\n"
-"        <a href=\"%(connect_url)s\" class=\"btn-text-hover-primary\" "
-"style=\"text-decoration: underline;\">connect one</a>\n"
+"        <a href=\"%(connect_url)s\" class=\"btn-text-hover-primary\" style=\"text-decoration: underline;\">connect one</a>\n"
 "        and come back, or import now and pick the account later."
 msgstr ""
 "Пока не подключён ни один аккаунт %(name)s. Вы можете\n"
-"        <a href=\"%(connect_url)s\" class=\"btn-text-hover-primary\" "
-"style=\"text-decoration: underline;\">подключить его</a>\n"
+"        <a href=\"%(connect_url)s\" class=\"btn-text-hover-primary\" style=\"text-decoration: underline;\">подключить его</a>\n"
 "        и вернуться, или импортировать сейчас и выбрать аккаунт позже."
 
 #: templates/flows/_import_requirement.html:104
@@ -7835,19 +8328,17 @@ msgid ""
 "What starts this flow. Lower numbers run first and the first match wins, "
 "across every flow in this workspace, not just this one."
 msgstr ""
-"Что запускает этот сценарий. Меньшие номера срабатывают первыми, и побеждает "
-"первое совпадение — по всем сценариям в этом рабочем пространстве, а не "
+"Что запускает этот сценарий. Меньшие номера срабатывают первыми, и побеждает"
+" первое совпадение — по всем сценариям в этом рабочем пространстве, а не "
 "только по этому."
 
 #: templates/flows/_triggers_panel.html:37
 #, python-format
 msgid ""
-"More than one “%(label)s” trigger is enabled on this flow. Only the one with "
-"the\n"
+"More than one “%(label)s” trigger is enabled on this flow. Only the one with the\n"
 "        lowest number will ever run."
 msgstr ""
-"На этом сценарии включено более одного триггера «%(label)s». Сработает "
-"только тот, у которого\n"
+"На этом сценарии включено более одного триггера «%(label)s». Сработает только тот, у которого\n"
 "        меньше номер."
 
 #: templates/flows/_triggers_panel.html:45
@@ -7874,7 +8365,8 @@ msgstr "Только для чтения"
 
 #: templates/flows/edit.html:85
 msgid "This flow and every flow it hands over to, as one file"
-msgstr "Этот сценарий и все сценарии, которым он передаёт диалог, одним файлом"
+msgstr ""
+"Этот сценарий и все сценарии, которым он передаёт диалог, одним файлом"
 
 #: templates/flows/edit.html:85
 msgid "With everything it uses"
@@ -7890,12 +8382,10 @@ msgstr "Не удалось загрузить редактор сценарие
 
 #: templates/flows/edit.html:144
 msgid ""
-"Its JavaScript bundle has not been built. Run <code>make frontend</code> and "
-"reload,\n"
+"Its JavaScript bundle has not been built. Run <code>make frontend</code> and reload,\n"
 "                or rebuild the container image."
 msgstr ""
-"Его JavaScript-сборка не собрана. Выполните <code>make frontend</code> и "
-"перезагрузите страницу,\n"
+"Его JavaScript-сборка не собрана. Выполните <code>make frontend</code> и перезагрузите страницу,\n"
 "                или пересоберите образ контейнера."
 
 #: templates/flows/edit.html:158
@@ -7941,7 +8431,8 @@ msgid ""
 msgstr ""
 "Ничего не запускается само собой. Каждый сценарий приходит как черновик с "
 "выключенным триггером, поэтому после импорта вы открываете его, проверяете, "
-"что сообщения звучат так, как нужно, включаете триггер и запускаете сценарий."
+"что сообщения звучат так, как нужно, включаете триггер и запускаете "
+"сценарий."
 
 #: templates/flows/import_review.html:76
 msgid "This flow calls out to the internet"
@@ -7966,8 +8457,8 @@ msgstr "Стоит знать"
 
 #: templates/flows/import_review.html:133
 msgid ""
-"What starts each flow. Keeping one imports it switched off, ready for you to "
-"turn on once you have read the flow. Skipping one leaves it out of the "
+"What starts each flow. Keeping one imports it switched off, ready for you to"
+" turn on once you have read the flow. Skipping one leaves it out of the "
 "import entirely."
 msgstr ""
 "Что запускает каждый сценарий. Если оставить триггер, он импортируется "
@@ -8018,8 +8509,8 @@ msgstr "Сохраните ответы, чтобы перепроверить."
 
 #: templates/flows/import_upload.html:18
 msgid ""
-"Upload a flow template. You will see exactly what it needs, and what it will "
-"call out to, before anything is created."
+"Upload a flow template. You will see exactly what it needs, and what it will"
+" call out to, before anything is created."
 msgstr ""
 "Загрузите шаблон сценария. Вы точно увидите, что ему нужно и куда он будет "
 "обращаться, прежде чем что-либо создастся."
@@ -8044,26 +8535,24 @@ msgstr ""
 #: templates/flows/import_upload.html:51
 #, python-format
 msgid ""
-"Or <a href=\"%(template_gallery_url)s\" class=\"btn-link\">start from one of "
-"the built-in templates</a>."
+"Or <a href=\"%(template_gallery_url)s\" class=\"btn-link\">start from one of"
+" the built-in templates</a>."
 msgstr ""
-"Или <a href=\"%(template_gallery_url)s\" class=\"btn-link\">начните с одного "
-"из встроенных шаблонов</a>."
+"Или <a href=\"%(template_gallery_url)s\" class=\"btn-link\">начните с одного"
+" из встроенных шаблонов</a>."
 
 #: templates/flows/import_upload.html:56
 msgid ""
-"Imported flows arrive as <strong>unpublished drafts</strong> with their "
-"triggers switched off.\n"
+"Imported flows arrive as <strong>unpublished drafts</strong> with their triggers switched off.\n"
 "                Nothing runs until you publish it yourself."
 msgstr ""
-"Импортированные сценарии приходят как <strong>неопубликованные черновики</"
-"strong> с выключенными триггерами.\n"
+"Импортированные сценарии приходят как <strong>неопубликованные черновики</strong> с выключенными триггерами.\n"
 "                Ничего не запустится, пока вы сами не опубликуете сценарий."
 
 #: templates/flows/list.html:53
 msgid ""
-"A flow replies for you when something happens: a comment, a keyword, a reply "
-"to your story."
+"A flow replies for you when something happens: a comment, a keyword, a reply"
+" to your story."
 msgstr ""
 "Сценарий отвечает за вас, когда что-то происходит: комментарий, ключевое "
 "слово, ответ на вашу историю."
@@ -8134,15 +8623,11 @@ msgstr "Поиск шаблонов"
 
 #: templates/flows/template_gallery.html:86
 msgid ""
-"Every template arrives as an <strong>unpublished draft</strong> with its "
-"triggers switched off,\n"
-"            and its links and tags are placeholders. Nothing runs until you "
-"edit it and publish it yourself."
+"Every template arrives as an <strong>unpublished draft</strong> with its triggers switched off,\n"
+"            and its links and tags are placeholders. Nothing runs until you edit it and publish it yourself."
 msgstr ""
-"Каждый шаблон приходит как <strong>неопубликованный черновик</strong> с "
-"выключенными триггерами,\n"
-"            а его ссылки и теги — это заглушки. Ничего не запустится, пока "
-"вы сами не отредактируете и не опубликуете его."
+"Каждый шаблон приходит как <strong>неопубликованный черновик</strong> с выключенными триггерами,\n"
+"            а его ссылки и теги — это заглушки. Ничего не запустится, пока вы сами не отредактируете и не опубликуете его."
 
 #: templates/flows/template_gallery.html:93
 msgid "No templates are installed"
@@ -8152,12 +8637,10 @@ msgstr "Шаблоны не установлены"
 #, python-format
 msgid ""
 "This installation ships none, or none of them could be read.\n"
-"        You can still <a href=\"%(upload_url)s\" class=\"btn-link\">upload a "
-"template file</a>."
+"        You can still <a href=\"%(upload_url)s\" class=\"btn-link\">upload a template file</a>."
 msgstr ""
 "В этой установке их нет, либо ни один не удалось прочитать.\n"
-"        Вы всё ещё можете <a href=\"%(upload_url)s\" class=\"btn-"
-"link\">загрузить файл шаблона</a>."
+"        Вы всё ещё можете <a href=\"%(upload_url)s\" class=\"btn-link\">загрузить файл шаблона</a>."
 
 #: templates/flows/triggers/_form_comment.html:26
 msgid "Posts"
@@ -8226,8 +8709,8 @@ msgid ""
 "The public reply goes out first; the flow's first message follows as a "
 "private reply, once per comment and within seven days of it."
 msgstr ""
-"Сначала уходит публичный ответ; первое сообщение сценария следует как личное "
-"сообщение — один раз на комментарий, в течение семи дней после него."
+"Сначала уходит публичный ответ; первое сообщение сценария следует как личное"
+" сообщение — один раз на комментарий, в течение семи дней после него."
 
 #: templates/flows/triggers/_form_keyword.html:15
 msgid "Exact"
@@ -8266,7 +8749,8 @@ msgid ""
 "Letters, digits, hyphens and underscores. It appears in the link and inside "
 "the QR code."
 msgstr ""
-"Буквы, цифры, дефисы и подчёркивания. Отображается в ссылке и внутри QR-кода."
+"Буквы, цифры, дефисы и подчёркивания. Отображается в ссылке и внутри QR-"
+"кода."
 
 #: templates/flows/triggers/_form_ref_url.html:19
 msgid "Public username"
@@ -8283,8 +8767,8 @@ msgid ""
 "Needed to build the link on channels that have not reported their username. "
 "Messenger does not need one."
 msgstr ""
-"Нужен, чтобы построить ссылку на каналах, которые не сообщили свой юзернейм. "
-"Messenger не требует его."
+"Нужен, чтобы построить ссылку на каналах, которые не сообщили свой юзернейм."
+" Messenger не требует его."
 
 #: templates/flows/triggers/_form_rule.html:28
 msgid "Any tag"
@@ -8316,13 +8800,13 @@ msgstr "Только когда контакт соответствует"
 
 #: templates/flows/triggers/_form_rule.html:56
 msgid ""
-"Checked after the change, so a rule can ask what the contact looks like now. "
-"Leave empty to fire for everyone. Each contact can start this flow at most "
+"Checked after the change, so a rule can ask what the contact looks like now."
+" Leave empty to fire for everyone. Each contact can start this flow at most "
 "once a minute."
 msgstr ""
 "Проверяется после изменения, поэтому правило может спросить, как контакт "
-"выглядит сейчас. Оставьте пустым, чтобы срабатывало для всех. Каждый контакт "
-"может запустить этот сценарий не чаще раза в минуту."
+"выглядит сейчас. Оставьте пустым, чтобы срабатывало для всех. Каждый контакт"
+" может запустить этот сценарий не чаще раза в минуту."
 
 #: templates/inbox/_composer.html:42
 msgid "Write a reply…"
@@ -8448,20 +8932,24 @@ msgid ""
 "Delete “%(name)s”? It is removed from %(used)s conversation. Rules that add "
 "it keep running and will show it as deleted."
 msgid_plural ""
-"Delete “%(name)s”? It is removed from %(used)s conversations. Rules that add "
-"it keep running and will show it as deleted."
+"Delete “%(name)s”? It is removed from %(used)s conversations. Rules that add"
+" it keep running and will show it as deleted."
 msgstr[0] ""
 "Удалить «%(name)s»? Метка будет удалена из %(used)s диалога. Правила, "
-"которые её добавляют, продолжат работать и будут показывать её как удалённую."
+"которые её добавляют, продолжат работать и будут показывать её как "
+"удалённую."
 msgstr[1] ""
 "Удалить «%(name)s»? Метка будет удалена из %(used)s диалогов. Правила, "
-"которые её добавляют, продолжат работать и будут показывать её как удалённую."
+"которые её добавляют, продолжат работать и будут показывать её как "
+"удалённую."
 msgstr[2] ""
 "Удалить «%(name)s»? Метка будет удалена из %(used)s диалогов. Правила, "
-"которые её добавляют, продолжат работать и будут показывать её как удалённую."
+"которые её добавляют, продолжат работать и будут показывать её как "
+"удалённую."
 msgstr[3] ""
 "Удалить «%(name)s»? Метка будет удалена из %(used)s диалогов. Правила, "
-"которые её добавляют, продолжат работать и будут показывать её как удалённую."
+"которые её добавляют, продолжат работать и будут показывать её как "
+"удалённую."
 
 #: templates/inbox/_label_rows.html:48 templates/inbox/label_settings.html:37
 msgid "Colour"
@@ -8473,8 +8961,7 @@ msgstr "Пока нет меток"
 
 #: templates/inbox/_label_rows.html:60
 msgid ""
-"A label files one conversation — \"waiting on shipping\", \"needs a refund\" "
-"— and stops being\n"
+"A label files one conversation — \"waiting on shipping\", \"needs a refund\" — and stops being\n"
 "      true when the thread is answered."
 msgstr ""
 "Метка файлирует один диалог — «ожидает доставки», «нужен возврат средств» — "
@@ -8615,8 +9102,7 @@ msgstr "Пока нет правил"
 
 #: templates/inbox/_rule_rows.html:81
 msgid ""
-"A rule reads an inbound message and files, assigns or closes the "
-"conversation it belongs to,\n"
+"A rule reads an inbound message and files, assigns or closes the conversation it belongs to,\n"
 "      before any flow replies."
 msgstr ""
 "Правило читает входящее сообщение и файлирует, назначает или закрывает "
@@ -8634,30 +9120,28 @@ msgstr "Пока нет входящих сообщений, поэтому пр
 #, python-format
 msgid ""
 "Matched %(matched)s of the last %(sample)s inbound message.\n"
-"      This scores today's contact details against older messages, so it is "
-"a\n"
+"      This scores today's contact details against older messages, so it is a\n"
 "      preview rather than a replay of what would have happened at the time."
 msgid_plural ""
 "Matched %(matched)s of the last %(sample)s inbound messages.\n"
-"      This scores today's contact details against older messages, so it is "
-"a\n"
+"      This scores today's contact details against older messages, so it is a\n"
 "      preview rather than a replay of what would have happened at the time."
 msgstr[0] ""
 "Совпало %(matched)s из последних %(sample)s входящего сообщения. Это "
-"сопоставляет сегодняшние данные контакта со старыми сообщениями, поэтому это "
-"предпросмотр, а не воспроизведение того, что произошло бы в тот момент."
+"сопоставляет сегодняшние данные контакта со старыми сообщениями, поэтому это"
+" предпросмотр, а не воспроизведение того, что произошло бы в тот момент."
 msgstr[1] ""
 "Совпало %(matched)s из последних %(sample)s входящих сообщений. Это "
-"сопоставляет сегодняшние данные контакта со старыми сообщениями, поэтому это "
-"предпросмотр, а не воспроизведение того, что произошло бы в тот момент."
+"сопоставляет сегодняшние данные контакта со старыми сообщениями, поэтому это"
+" предпросмотр, а не воспроизведение того, что произошло бы в тот момент."
 msgstr[2] ""
 "Совпало %(matched)s из последних %(sample)s входящих сообщений. Это "
-"сопоставляет сегодняшние данные контакта со старыми сообщениями, поэтому это "
-"предпросмотр, а не воспроизведение того, что произошло бы в тот момент."
+"сопоставляет сегодняшние данные контакта со старыми сообщениями, поэтому это"
+" предпросмотр, а не воспроизведение того, что произошло бы в тот момент."
 msgstr[3] ""
 "Совпало %(matched)s из последних %(sample)s входящих сообщений. Это "
-"сопоставляет сегодняшние данные контакта со старыми сообщениями, поэтому это "
-"предпросмотр, а не воспроизведение того, что произошло бы в тот момент."
+"сопоставляет сегодняшние данные контакта со старыми сообщениями, поэтому это"
+" предпросмотр, а не воспроизведение того, что произошло бы в тот момент."
 
 #: templates/inbox/_sidebar.html:33
 #, python-format
@@ -8787,16 +9271,13 @@ msgstr "Добавить метку…"
 
 #: templates/inbox/label_settings.html:21
 msgid ""
-"Labels file a conversation. They are the inbox's own filing system, and they "
-"are not\n"
-"                contact tags: a tag like \"VIP\" follows a person across "
-"every channel they use, while\n"
-"                a label like \"waiting on shipping\" is true of one thread "
-"and stops being true when\n"
+"Labels file a conversation. They are the inbox's own filing system, and they are not\n"
+"                contact tags: a tag like \"VIP\" follows a person across every channel they use, while\n"
+"                a label like \"waiting on shipping\" is true of one thread and stops being true when\n"
 "                it is answered. Inbox rules can add labels automatically."
 msgstr ""
-"Метки файлируют диалог. Это собственная система картотеки почтового ящика, и "
-"это не теги контактов: тег вроде «VIP» следует за человеком через все "
+"Метки файлируют диалог. Это собственная система картотеки почтового ящика, и"
+" это не теги контактов: тег вроде «VIP» следует за человеком через все "
 "каналы, которые он использует, а метка вроде «ожидает доставки» верна для "
 "одного диалога и перестаёт быть верной, когда на него отвечают. Правила "
 "почтового ящика могут добавлять метки автоматически."
@@ -8840,10 +9321,8 @@ msgstr ""
 
 #: templates/inbox/rule_settings.html:31
 msgid ""
-"A rule reads every message that arrives and files, assigns or closes the "
-"conversation it\n"
-"        belongs to. It runs before any flow replies, and it keeps running "
-"even where somebody has\n"
+"A rule reads every message that arrives and files, assigns or closes the conversation it\n"
+"        belongs to. It runs before any flow replies, and it keeps running even where somebody has\n"
 "        paused automation on a thread."
 msgstr ""
 "Правило читает каждое приходящее сообщение и файлирует, назначает или "
@@ -8853,8 +9332,7 @@ msgstr ""
 
 #: templates/inbox/rule_settings.html:40
 msgid ""
-"Triggers stop at the first match. Rules do not: <strong>every</strong> rule "
-"that matches\n"
+"Triggers stop at the first match. Rules do not: <strong>every</strong> rule that matches\n"
 "    applies, in the order below."
 msgstr ""
 "Триггеры останавливаются на первом совпадении. Правила — нет: "
@@ -8895,8 +9373,8 @@ msgid ""
 "Described to people using a screen reader, and sent to platforms that "
 "support it."
 msgstr ""
-"Описывается людям, использующим программу чтения с экрана, и отправляется на "
-"платформы, которые это поддерживают."
+"Описывается людям, использующим программу чтения с экрана, и отправляется на"
+" платформы, которые это поддерживают."
 
 #: templates/media_library/_asset_detail.html:59
 msgid "No folder"
@@ -8939,8 +9417,8 @@ msgstr "Попробуйте более короткое слово или оч�
 
 #: templates/media_library/_asset_grid.html:73
 msgid ""
-"Drop a picture or a file above and it is ready to use in any flow, broadcast "
-"or email."
+"Drop a picture or a file above and it is ready to use in any flow, broadcast"
+" or email."
 msgstr ""
 "Перетащите картинку или файл выше, и он будет готов к использованию в любом "
 "сценарии, рассылке или письме."
@@ -8965,8 +9443,8 @@ msgstr "Переименовать %(name)s"
 #: templates/media_library/_folder_rail.html:37
 #, python-format
 msgid ""
-"Delete the folder “%(name)s”? Anything inside it moves up one level; nothing "
-"is deleted."
+"Delete the folder “%(name)s”? Anything inside it moves up one level; nothing"
+" is deleted."
 msgstr ""
 "Удалить папку «%(name)s»? Всё, что внутри, переместится на уровень выше; "
 "ничего не удаляется."
@@ -8987,7 +9465,8 @@ msgstr "Пока нет папок."
 
 #: templates/media_library/library.html:42
 msgid ""
-"Upload a picture or a file once, then use it in any flow, broadcast or email."
+"Upload a picture or a file once, then use it in any flow, broadcast or "
+"email."
 msgstr ""
 "Загрузите картинку или файл один раз, затем используйте его в любом "
 "сценарии, рассылке или письме."
@@ -9029,12 +9508,10 @@ msgstr "Поиск по именам файлов, заголовкам и ал�
 #: templates/media_library/library.html:145
 msgid ""
 "Drop files here, or\n"
-"          <label for=\"media-files\" class=\"btn-link\" "
-"style=\"display:inline; cursor:pointer;\">choose them</label>."
+"          <label for=\"media-files\" class=\"btn-link\" style=\"display:inline; cursor:pointer;\">choose them</label>."
 msgstr ""
 "Перетащите файлы сюда, или\n"
-"          <label for=\"media-files\" class=\"btn-link\" "
-"style=\"display:inline; cursor:pointer;\">выберите их</label>."
+"          <label for=\"media-files\" class=\"btn-link\" style=\"display:inline; cursor:pointer;\">выберите их</label>."
 
 #: templates/media_library/library.html:149
 msgid ""
@@ -9069,8 +9546,8 @@ msgstr "Это приглашение больше недействительн�
 
 #: templates/members/_invite_expired_body.html:7
 msgid ""
-"It may have expired, been revoked, or already been used. Ask whoever invited "
-"you to send a new one."
+"It may have expired, been revoked, or already been used. Ask whoever invited"
+" you to send a new one."
 msgstr ""
 "Возможно, срок его действия истёк, оно было отозвано или уже использовано. "
 "Попросите пригласившего отправить новое."
@@ -9107,7 +9584,8 @@ msgstr ""
 #, python-format
 msgid "%(inviter)s invited you to join %(org_name)s on BrightBean Chat."
 msgstr ""
-"%(inviter)s пригласил(а) вас присоединиться к %(org_name)s в BrightBean Chat."
+"%(inviter)s пригласил(а) вас присоединиться к %(org_name)s в BrightBean "
+"Chat."
 
 #: templates/members/list.html:15 templates/members/list.html:22
 msgid "Team members"
@@ -9223,13 +9701,10 @@ msgstr "Открыть"
 #, python-format
 msgid ""
 "You are receiving this because notification emails are on for your account.\n"
-"          <a href=\"%(settings_url)s\" style=\"color:#F97316;text-"
-"decoration:underline;\">Turn them off</a>."
+"          <a href=\"%(settings_url)s\" style=\"color:#F97316;text-decoration:underline;\">Turn them off</a>."
 msgstr ""
-"Вы получили это письмо, потому что уведомления по email включены для вашего "
-"аккаунта.\n"
-"          <a href=\"%(settings_url)s\" style=\"color:#F97316;text-"
-"decoration:underline;\">Отключить их</a>."
+"Вы получили это письмо, потому что уведомления по email включены для вашего аккаунта.\n"
+"          <a href=\"%(settings_url)s\" style=\"color:#F97316;text-decoration:underline;\">Отключить их</a>."
 
 #: templates/notifications/email/notification.txt:8
 msgid ""
@@ -9368,8 +9843,8 @@ msgstr "Продлится %(renewal_date)s."
 #: templates/organizations/billing.html:132
 #, python-format
 msgid ""
-"Your plan ends on %(end_date)s. Nothing is deleted — you keep everything you "
-"have made."
+"Your plan ends on %(end_date)s. Nothing is deleted — you keep everything you"
+" have made."
 msgstr ""
 "Ваш тариф закончится %(end_date)s. Ничего не удаляется — всё созданное "
 "остаётся с вами."
@@ -9427,11 +9902,11 @@ msgstr "Только администраторы организации мог�
 
 #: templates/organizations/workspaces.html:24
 msgid ""
-"Each workspace has its own channels, contacts and inbox. Archiving one keeps "
-"everything and takes it out of the switcher."
+"Each workspace has its own channels, contacts and inbox. Archiving one keeps"
+" everything and takes it out of the switcher."
 msgstr ""
-"У каждого пространства свои каналы, контакты и входящие. Архивация сохраняет "
-"всё и убирает его из переключателя."
+"У каждого пространства свои каналы, контакты и входящие. Архивация сохраняет"
+" всё и убирает его из переключателя."
 
 #: templates/organizations/workspaces.html:28
 #: templates/partials/_app_sidebar.html:164
@@ -9570,7 +10045,8 @@ msgstr "%(done)s из %(total)s"
 
 #: templates/workspaces/dashboard.html:102
 #, python-format
-msgid "%(counter)s ready-made flow. Pick one and change the words to suit you."
+msgid ""
+"%(counter)s ready-made flow. Pick one and change the words to suit you."
 msgid_plural ""
 "%(counter)s ready-made flows. Pick one and change the words to suit you."
 msgstr[0] ""
