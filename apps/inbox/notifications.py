@@ -29,7 +29,7 @@ EVENT_SCHEDULED_REPLY_FAILED = "scheduled_reply_failed"
 register_event(
     NotificationEvent(
         key=EVENT_SCHEDULED_REPLY_FAILED,
-        label="Scheduled reply failed",
+        label=_("Scheduled reply failed"),
         icon="inbox",
         tone="error",
         title=_("Scheduled reply to {contact_name} was not sent"),

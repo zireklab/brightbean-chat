@@ -5,13 +5,17 @@
  * ("Send Message", "Smart Delay") and its `description` quotes SPEC sections.
  * That is right for the registry, which is read by the API, the exporter and
  * whoever is adding a node type. It is the wrong register for a canvas somebody
- * is reading to work out what their flow does.
+ * is reading to work out what their flow does — and, unlike the eyebrow below,
+ * it is also the wrong *language* the moment the reader is not English: the
+ * registry is never translated (see `nodeTypeLabel`'s own doc for why), so
+ * anywhere that text was the reader's only copy read English regardless of
+ * locale until `nodeTypeLabel`/`nodeTypeDescription` gave it a translated one.
  *
  * So a card now carries two lines: an eyebrow saying what KIND of step this is
  * in the reader's words ("Then send", "Then decide"), and the node's own
- * title underneath.
+ * title underneath, translated.
  *
- * ## Why this is keyed by group, not by type
+ * ## Why the eyebrow (`plainKind`) is keyed by group, not by type
  *
  * Because that is the axis the phrasing actually varies on, and the groups are
  * already data: `apps/flows/schema/nodes.py` assigns every type to one of
@@ -96,6 +100,39 @@ export function plainKind(spec: NodeTypeSpec | undefined, type: string): string 
   if (byType) return byType;
   if (!spec) return fallback;
   return GROUP_PHRASE[groupOf(spec)] ?? fallback;
+}
+
+/**
+ * The node's own name and description, in the reader's words.
+ *
+ * `plainKind()`'s eyebrow answers "what KIND of step is this" at group
+ * granularity — every `send_*` type reads "Then send". The add-step menu and
+ * the empty-preview sentence need more than that: they are naming or
+ * distinguishing ONE type, and a menu whose "Send a message"/"Send a
+ * text"/"Send an email" rows all read the same eyebrow is not choosable. This
+ * is that: a full name and description per type, resolved fresh on every
+ * call the same way `GROUP_PHRASE`/`TYPE_PHRASE` are, and for the same reason
+ * — see this file's own top comment for why it is TypeScript and not the
+ * Python registry.
+ *
+ * Falls through to the registry's own `spec.label`/`spec.description` —
+ * never to a blank string — so a node type registered in a later layer with
+ * no translation entry yet is still nameable, in English, rather than
+ * invisible. Never touches `static/flows/flow-schema.json` itself: that stays
+ * the registry's own developer copy, read by the API and the exporter.
+ */
+export function nodeTypeLabel(spec: NodeTypeSpec | undefined, type: string): string {
+  const key = `nodeTypes.${type}.label`;
+  const rendered = i18n.t(key);
+  return rendered === key ? (spec?.label ?? type) : rendered;
+}
+
+/** The node's description, in the reader's words — see {@link nodeTypeLabel}. */
+export function nodeTypeDescription(spec: NodeTypeSpec | undefined, type: string): string | undefined {
+  if (!spec?.description) return undefined;
+  const key = `nodeTypes.${type}.description`;
+  const rendered = i18n.t(key);
+  return rendered === key ? spec.description : rendered;
 }
 
 /**

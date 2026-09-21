@@ -29,7 +29,7 @@ def register() -> None:
     register_event(
         NotificationEvent(
             key=EVENT_BROADCAST_FINISHED,
-            label="Broadcast finished",
+            label=_("Broadcast finished"),
             icon="broadcasts",
             tone="success",
             # Matches apps.notifications.events's own broadcast_finished exactly

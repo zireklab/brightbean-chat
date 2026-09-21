@@ -15,6 +15,8 @@
  */
 import i18n from "../i18n";
 import { nodeSpec } from "../schema/artifact";
+import { variantLabel } from "../inspector/copy";
+import { nodeTypeLabel } from "../schema/plain";
 import { useBuilder } from "../store/context";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -72,7 +74,7 @@ function Bubbles({ type, config }: { type: string; config: unknown }) {
     if (prompt) {
       return <Bubble text={prompt} />;
     }
-    const label = nodeSpec(type)?.label ?? type;
+    const label = nodeTypeLabel(nodeSpec(type), type);
     return <p className="fb-phone-empty">{i18n.t("preview.doesNotSend", { label })}</p>;
   }
 
@@ -88,7 +90,7 @@ function Bubbles({ type, config }: { type: string; config: unknown }) {
         }
         return (
           <div key={index} className="fb-phone-attachment">
-            {kind ? `${kind.charAt(0).toUpperCase()}${kind.slice(1)}` : i18n.t("preview.attachment")}
+            {kind ? variantLabel(kind) : i18n.t("preview.attachment")}
           </div>
         );
       })}

@@ -15,7 +15,7 @@ import {
 import { memo, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { plainKind } from "../schema/plain";
+import { nodeTypeLabel, plainKind } from "../schema/plain";
 import { groupOf, nodeSpec } from "../schema/artifact";
 import { handleLabel, sourceHandles } from "../schema/handles";
 import { chipValues } from "../stats/chip";
@@ -115,7 +115,7 @@ function FlowNodeCardInner({
           <span className="fb-entry-flag ml-auto">{t("flowNodeCard.startsHere")}</span>
         ) : null}
       </div>
-      <div className="fb-node-title truncate">{spec?.label ?? type}</div>
+      <div className="fb-node-title truncate">{nodeTypeLabel(spec, type)}</div>
 
       <div className="fb-node-body">
         <NodePreview type={type} config={config} picklists={picklists} />

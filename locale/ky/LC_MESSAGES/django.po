@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-21 10:24+0600\n"
+"POT-Creation-Date: 2026-09-21 11:58+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ky\n"
@@ -45,7 +45,8 @@ msgstr "Байланыш ырааттуулукка жазылды"
 msgid "Contact unsubscribed from a sequence"
 msgstr "Байланыш ырааттуулуктан чыгарылды"
 
-#: apps/api/events.py:100 apps/notifications/events.py:322
+#: apps/api/events.py:100 apps/broadcasts/notifications.py:32
+#: apps/notifications/events.py:322
 msgid "Broadcast finished"
 msgstr "Жайылтуу аяктады"
 
@@ -3336,6 +3337,10 @@ msgstr "Триггер сакталган жок"
 #: apps/inbox/codes.py:27
 msgid "That scheduled reply had nothing left to send."
 msgstr "Бул пландалган жооп жөнөтө турган эч нерсе калбады."
+
+#: apps/inbox/notifications.py:32
+msgid "Scheduled reply failed"
+msgstr "Пландалган жооп жөнөтүлгөн жок"
 
 #: apps/inbox/notifications.py:35
 #, python-brace-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-21 10:24+0600\n"
+"POT-Creation-Date: 2026-09-21 11:58+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ru\n"
@@ -45,7 +45,8 @@ msgstr "Контакт подписан на цепочку"
 msgid "Contact unsubscribed from a sequence"
 msgstr "Контакт отписан от цепочки"
 
-#: apps/api/events.py:100 apps/notifications/events.py:322
+#: apps/api/events.py:100 apps/broadcasts/notifications.py:32
+#: apps/notifications/events.py:322
 msgid "Broadcast finished"
 msgstr "Рассылка завершена"
 
@@ -3409,6 +3410,10 @@ msgstr "Триггер не сохранён"
 #: apps/inbox/codes.py:27
 msgid "That scheduled reply had nothing left to send."
 msgstr "Этот запланированный ответ не содержит ничего, что можно отправить."
+
+#: apps/inbox/notifications.py:32
+msgid "Scheduled reply failed"
+msgstr "Не удалось отправить отложенный ответ"
 
 #: apps/inbox/notifications.py:35
 #, python-brace-format

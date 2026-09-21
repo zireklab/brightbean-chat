@@ -482,6 +482,53 @@ export const en = {
     label: "Problems",
     rechecking: "Re-checking…",
   },
+  nodeTypes: {
+    send_message: {
+      label: "Send a message",
+      description: "Sends a message. If it offers buttons or quick replies, the flow waits for an answer.",
+    },
+    action: {
+      label: "Tag, save or assign",
+      description: "Tags a contact, saves a detail, assigns the conversation. Several at once, in order.",
+    },
+    start_flow: {
+      label: "Hand over to another flow",
+      description: "Hands over to another flow. This one stops here.",
+    },
+    condition: {
+      label: "Branch on a condition",
+      description: "Splits the flow in two, on what you know about the contact.",
+    },
+    smart_delay: {
+      label: "Wait",
+      description: "Waits, then carries on. Picks up at the next hour you allow sending.",
+    },
+    randomizer: {
+      label: "Split the traffic",
+      description:
+        "Splits people down different paths, to compare two versions. Each person keeps the path they got.",
+    },
+    external_request: {
+      label: "Call another system",
+      description: "Calls another system and can save what it sends back.",
+    },
+    data_collection: {
+      label: "Ask a question",
+      description: "Asks a question and saves the answer on the contact. Checks emails and phone numbers look real.",
+    },
+    send_sms: {
+      label: "Send a text",
+      description: "Sends a text message. Needs an SMS account connected and a phone number for the contact.",
+    },
+    send_email: {
+      label: "Send an email",
+      description: "Sends an email. Needs an email account connected and an address for the contact.",
+    },
+    note: {
+      label: "Note to yourself",
+      description: "A note to yourself on the canvas. It never runs and never connects to anything.",
+    },
+  },
 };
 
 export type BuilderTranslations = typeof en;
