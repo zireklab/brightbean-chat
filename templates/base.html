@@ -119,7 +119,7 @@
 <div class="flex h-screen overflow-hidden"
      style="background: var(--surface-page);"
      x-data="{ sidebarCollapsed: window.__bbSidebarCollapsed === true, mobileMenuOpen: false }"
-     x-effect="try { localStorage.setItem('sidebarCollapsed', sidebarCollapsed) } catch (e) {}"
+     x-effect="(() => { try { localStorage.setItem('sidebarCollapsed', sidebarCollapsed) } catch (e) {} })()"
      @keydown.escape.window="mobileMenuOpen = false">
 
     {% comment %}
