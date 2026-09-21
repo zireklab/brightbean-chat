@@ -1,5 +1,6 @@
 {% load static i18n %}<!DOCTYPE html>
-<html lang="en">
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,7 +18,11 @@ user, and any template logic touching `request` would render blank. Worse, the
 error page is the one page that must never itself raise.
 
 So: no `request`, no inline script, no context processor output. Only
-{% static %}, which needs none of them.
+{% static %}, which needs none of them — and {% get_current_language %},
+which needs none either: it reads django.utils.translation's active
+language directly, the same one LocaleMiddleware already set for this
+request, rather than the context processor's LANGUAGE_CODE variable this
+page never receives.
 {% endcomment %}
 <body class="auth-bg min-h-screen flex items-center justify-center py-12 px-4" style="font-family: var(--font-body);">
     <div class="auth-card text-center">

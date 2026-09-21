@@ -1,5 +1,6 @@
 {% load i18n %}
-{% blocktranslate with inviter=invited_by.display_name|default:"Someone" %}
+{% translate "Someone" as someone %}
+{% blocktranslate with inviter=invited_by.display_name|default:someone %}
 <p>{{ inviter }} invited you to join
    <strong>{{ org_name }}</strong> on BrightBean Chat.</p>
 {% endblocktranslate %}

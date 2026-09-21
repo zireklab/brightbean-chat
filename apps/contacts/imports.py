@@ -67,6 +67,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.db import transaction
 from django.utils import timezone
+from django.utils import translation
 from django.utils.translation import gettext
 
 from apps.contacts.errors import ContactsError
@@ -482,10 +483,19 @@ def handle_contact_import(payload: dict[str, Any], action: Any) -> None:
             logger.info("Import %s: batch at offset %s is stale (next is %s).", run.pk, offset, run.next_offset)
             return
 
-        try:
-            _run_batch(run, mode=mode, offset=offset)
-        except UnusableImportError as exc:
-            _fail(run, str(exc))
+        # A queue worker has no request and so no locale of its own — every
+        # row error this batch produces (gettext() calls throughout _run_batch)
+        # resolves under whatever LANGUAGE_CODE the process started with unless
+        # something activates one. The importer's own preference is the only
+        # language a persisted, re-rendered-later report can mean: the row and
+        # the report it becomes are read by whoever ran the import, not by the
+        # worker or by whoever eventually looks at the row in a different
+        # language later.
+        with translation.override(run.created_by.language if run.created_by else None):
+            try:
+                _run_batch(run, mode=mode, offset=offset)
+            except UnusableImportError as exc:
+                _fail(run, str(exc))
 
 
 def _locked_run(workspace_id: Any, import_id: Any) -> ContactImport | None:
@@ -497,17 +507,25 @@ def _locked_run(workspace_id: Any, import_id: Any) -> ContactImport | None:
     contact advisory lock the queue takes for contact-scoped work is deliberately
     not in play — these rows name no contact, precisely so a bulk import does not
     hold one (SPEC §9.6).
+
+    ``of=("self",)`` restricts the lock to the import row itself. Without it,
+    ``select_for_update`` tries to lock every joined table too — and
+    ``created_by`` is nullable (``on_delete=SET_NULL``), so Postgres refuses
+    outright: "FOR UPDATE cannot be applied to the nullable side of an outer
+    join". The join itself is still worth having, just not the lock on the far
+    side of it.
     """
     if not import_id:
         return None
     try:
         return (
             ContactImport.objects.for_workspace(workspace_id)
-            .select_for_update()
+            .select_for_update(of=("self",))
             # `enqueue` hands the instance to `schedule`, which wants a Workspace
             # rather than an id; without this every continuation batch pays a
-            # lazy fetch for it.
-            .select_related("workspace")
+            # lazy fetch for it. `created_by` is the same reasoning: every row
+            # error this batch produces is translated under its language.
+            .select_related("workspace", "created_by")
             .filter(pk=import_id)
             .first()
         )

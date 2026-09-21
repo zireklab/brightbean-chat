@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-21 08:11+0600\n"
+"POT-Creation-Date: 2026-09-21 09:45+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ky\n"
@@ -49,23 +49,24 @@ msgstr "Байланыш ырааттуулуктан чыгарылды"
 msgid "Broadcast finished"
 msgstr "Жайылтуу аяктады"
 
-#: apps/api/models.py:75 templates/inbox/_thread_body.html:149
+#: apps/api/models.py:80
+msgctxt "api scope"
 msgid "Read"
 msgstr "Окуу"
 
-#: apps/api/models.py:76
+#: apps/api/models.py:81
 msgid "Write"
 msgstr "Жазуу"
 
-#: apps/api/models.py:77 templates/contacts/list.html:262
+#: apps/api/models.py:82 templates/contacts/list.html:262
 msgid "Erase"
 msgstr "Өчүрүү"
 
-#: apps/api/models.py:88
+#: apps/api/models.py:93
 msgid "Succeeded"
 msgstr "Ийгиликтүү"
 
-#: apps/api/models.py:89 apps/broadcasts/models.py:93
+#: apps/api/models.py:94 apps/broadcasts/models.py:93
 #: apps/contacts/models.py:411 apps/contacts/models.py:571
 #: templates/analytics/_counter_cards.html:29
 #: templates/analytics/flow_detail.html:60
@@ -76,7 +77,7 @@ msgstr "Ийгиликтүү"
 msgid "Failed"
 msgstr "Ката"
 
-#: apps/api/models.py:90
+#: apps/api/models.py:95
 msgid "Blocked"
 msgstr "Бөгөттөлдү"
 
@@ -4201,7 +4202,7 @@ msgstr "Түстөр #3B82F6 сыяктуу 6 орундуу hex мааниси 
 msgid "Workspace settings saved."
 msgstr "Мейкиндик тууралоолору сакталды."
 
-#: templates/403.html:4
+#: templates/403.html:3 templates/403.html:4
 msgid "403 Forbidden"
 msgstr "403 Кирүүгө тыюу салынган"
 
@@ -4209,7 +4210,7 @@ msgstr "403 Кирүүгө тыюу салынган"
 msgid "You do not have permission to view this page."
 msgstr "Бул баракты көрүүгө укугуңуз жок."
 
-#: templates/404.html:4
+#: templates/404.html:3 templates/404.html:4
 msgid "404 Not Found"
 msgstr "404 Табылган жок"
 
@@ -4217,7 +4218,7 @@ msgstr "404 Табылган жок"
 msgid "That page does not exist."
 msgstr "Бул барак жок."
 
-#: templates/500.html:4
+#: templates/500.html:3 templates/500.html:4
 msgid "500 Server Error"
 msgstr "500 Сервер катасы"
 
@@ -6922,7 +6923,7 @@ msgstr "Жаңы шаблон"
 
 #: templates/channels/whatsapp_template_form.html:12
 msgid ""
-"This template is with Meta, or already approved, so it cannot be edited. the"
+"This template is with Meta, or already approved, so it cannot be edited. The"
 " copy under review is the one Meta holds. Delete it and write a new one if "
 "it needs to change."
 msgstr ""
@@ -9050,6 +9051,10 @@ msgstr "Басылды: %(id)s"
 msgid "Ref: %(ref)s"
 msgstr "Шилтеме: %(ref)s"
 
+#: templates/inbox/_thread_body.html:149
+msgid "Read"
+msgstr "Окулду"
+
 #: templates/inbox/_thread_body.html:172
 msgid "Try again"
 msgstr "Кайра аракет кылуу"
@@ -9154,7 +9159,7 @@ msgstr ""
 "Триггерлер биринчи дал келгенде токтойт. Эрежелер токтобойт: дал келген "
 "<strong>ар бир</strong> эреже төмөндөгү тартипте колдонулат."
 
-#: templates/layouts/error.html:27
+#: templates/layouts/error.html:32
 msgid "Back to BrightBean Chat"
 msgstr "BrightBean Chat'ка кайтуу"
 
@@ -9372,7 +9377,11 @@ msgstr ""
 msgid "Invitation"
 msgstr "Чакыруу"
 
-#: templates/members/email/invite.html:2
+#: templates/members/email/invite.html:2 templates/members/email/invite.txt:1
+msgid "Someone"
+msgstr "Бирөө"
+
+#: templates/members/email/invite.html:3
 #, python-format
 msgid ""
 "\n"
@@ -9383,11 +9392,11 @@ msgstr ""
 "<p>%(inviter)s сизди BrightBean Chat'тагы\n"
 "   <strong>%(org_name)s</strong> уюмуна чакырды.</p>\n"
 
-#: templates/members/email/invite.html:6 templates/members/email/invite.txt:3
+#: templates/members/email/invite.html:7 templates/members/email/invite.txt:3
 msgid "Accept the invitation"
 msgstr "Чакырууну кабыл алуу"
 
-#: templates/members/email/invite.html:7 templates/members/email/invite.txt:6
+#: templates/members/email/invite.html:8 templates/members/email/invite.txt:6
 msgid ""
 "This link expires in 7 days. If you were not expecting it, you can ignore "
 "this email."

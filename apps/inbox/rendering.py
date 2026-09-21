@@ -60,6 +60,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from django.urls import NoReverseMatch, reverse
+from django.utils.functional import Promise
 from django.utils.timesince import timeuntil
 from django.utils.translation import gettext, ngettext
 from django.utils.translation import gettext_lazy as _
@@ -278,7 +279,7 @@ class FailedScheduledReply:
     id: str
     preview: str
     due_at: Any
-    reason: str
+    reason: str | Promise
 
 
 @dataclass(frozen=True)

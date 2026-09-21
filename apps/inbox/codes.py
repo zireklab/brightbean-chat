@@ -28,7 +28,17 @@ _COPY: dict[str, str | Promise] = {
 }
 
 
-def describe_inbox_failure(code: str) -> str:
-    """The sentence for ``code``, from this app's table or messaging's."""
+def describe_inbox_failure(code: str) -> str | Promise:
+    """The sentence for ``code``, from this app's table or messaging's.
+
+    Stays lazy when this table has an entry, rather than resolving with
+    ``str()``. A scheduled reply's failure handler (``apps.inbox.handlers._fail``)
+    calls this in a queue worker, before the notification it feeds ever reaches
+    ``apps.notifications.engine.notify``'s per-recipient ``translation.override``
+    — resolving here would freeze the sentence in whichever language happened to
+    be active in the worker process, not the recipient's. ``str.format_map``
+    resolves a lazy value itself, fresh, at the point a notification's title/body
+    template is filled — see ``apps.notifications.events._format``.
+    """
     copy = _COPY.get(code)
-    return str(copy) if copy else describe(code)
+    return copy if copy else describe(code)

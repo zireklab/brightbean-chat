@@ -104,7 +104,7 @@ class NotificationEvent:
     """
 
     key: str
-    label: str
+    label: CopyText
     icon: str
     title: CopyText
     body: CopyText = ""
@@ -156,9 +156,15 @@ def get_event(key: str) -> NotificationEvent | None:
     return None
 
 
-def registered_choices() -> list[tuple[str, str]]:
-    """``(key, label)`` pairs for the history page's type filter and the admin."""
-    return sorted(((event.key, event.label) for event in REGISTRY.values()), key=lambda pair: pair[1])
+def registered_choices() -> list[tuple[str, CopyText]]:
+    """``(key, label)`` pairs for the history page's type filter and the admin.
+
+    Sorted by the *resolved* label — a lazy ``label`` compares and orders by
+    its translation in whatever language is active when this runs, same as
+    ``str(label)`` would, so the filter reads alphabetically in Russian or
+    Kyrgyz rather than by the English word underneath it.
+    """
+    return sorted(((event.key, event.label) for event in REGISTRY.values()), key=lambda pair: str(pair[1]))
 
 
 class _Blanks(dict):
@@ -211,7 +217,7 @@ def _format(template: CopyText, mapping: _Blanks) -> str:
 register_event(
     NotificationEvent(
         key="flow_loop_cap_hit",
-        label="Flow hit the loop cap",
+        label=_("Flow hit the loop cap"),
         icon="flows",
         tone="error",
         # SPEC §9.2: 30 blocks since the last pause fails the run and notifies
@@ -234,7 +240,7 @@ register_event(
 register_event(
     NotificationEvent(
         key="flow_execution_failed",
-        label="Flow run failed",
+        label=_("Flow run failed"),
         icon="flows",
         tone="error",
         title=_('Flow "{flow_name}" failed'),
@@ -250,7 +256,7 @@ register_event(
 register_event(
     NotificationEvent(
         key="channel_needs_reauth",
-        label="Channel needs reconnecting",
+        label=_("Channel needs reconnecting"),
         icon="channels",
         tone="warn",
         title=_("{channel_name} needs reconnecting"),
@@ -265,7 +271,7 @@ register_event(
 register_event(
     NotificationEvent(
         key="outbound_webhook_disabled",
-        label="Outbound webhook disabled",
+        label=_("Outbound webhook disabled"),
         icon="channels",
         tone="error",
         # SPEC §17: auto-disable after 100 consecutive failures, with an admin
@@ -282,7 +288,7 @@ register_event(
 register_event(
     NotificationEvent(
         key="inbox_reminder",
-        label="Inbox reminder",
+        label=_("Inbox reminder"),
         icon="inbox",
         tone="info",
         # SPEC §14: a scheduled_action that becomes an in-app notification.
@@ -299,7 +305,7 @@ register_event(
 register_event(
     NotificationEvent(
         key="member_mentioned",
-        label="Mentioned by a teammate",
+        label=_("Mentioned by a teammate"),
         icon="users",
         tone="info",
         # SPEC §11.2: the action node's notify_members.
@@ -313,7 +319,7 @@ register_event(
 register_event(
     NotificationEvent(
         key="broadcast_finished",
-        label="Broadcast finished",
+        label=_("Broadcast finished"),
         icon="broadcasts",
         tone="success",
         title=_('Broadcast "{broadcast_name}" finished'),
@@ -326,7 +332,7 @@ register_event(
 register_event(
     NotificationEvent(
         key="whatsapp_template_reviewed",
-        label="WhatsApp template reviewed",
+        label=_("WhatsApp template reviewed"),
         icon="channels",
         tone="info",
         title=_('WhatsApp template "{template_name}" was {status}'),

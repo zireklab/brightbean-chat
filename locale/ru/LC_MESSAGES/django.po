@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-21 08:11+0600\n"
+"POT-Creation-Date: 2026-09-21 09:45+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ru\n"
@@ -49,23 +49,24 @@ msgstr "Контакт отписан от цепочки"
 msgid "Broadcast finished"
 msgstr "Рассылка завершена"
 
-#: apps/api/models.py:75 templates/inbox/_thread_body.html:149
+#: apps/api/models.py:80
+msgctxt "api scope"
 msgid "Read"
 msgstr "Чтение"
 
-#: apps/api/models.py:76
+#: apps/api/models.py:81
 msgid "Write"
 msgstr "Запись"
 
-#: apps/api/models.py:77 templates/contacts/list.html:262
+#: apps/api/models.py:82 templates/contacts/list.html:262
 msgid "Erase"
 msgstr "Удаление"
 
-#: apps/api/models.py:88
+#: apps/api/models.py:93
 msgid "Succeeded"
 msgstr "Успешно"
 
-#: apps/api/models.py:89 apps/broadcasts/models.py:93
+#: apps/api/models.py:94 apps/broadcasts/models.py:93
 #: apps/contacts/models.py:411 apps/contacts/models.py:571
 #: templates/analytics/_counter_cards.html:29
 #: templates/analytics/flow_detail.html:60
@@ -76,7 +77,7 @@ msgstr "Успешно"
 msgid "Failed"
 msgstr "Ошибка"
 
-#: apps/api/models.py:90
+#: apps/api/models.py:95
 msgid "Blocked"
 msgstr "Заблокировано"
 
@@ -4291,7 +4292,7 @@ msgstr "Цвета должны быть 6-значным hex-значением
 msgid "Workspace settings saved."
 msgstr "Настройки пространства сохранены."
 
-#: templates/403.html:4
+#: templates/403.html:3 templates/403.html:4
 msgid "403 Forbidden"
 msgstr "403 Доступ запрещён"
 
@@ -4299,7 +4300,7 @@ msgstr "403 Доступ запрещён"
 msgid "You do not have permission to view this page."
 msgstr "У вас нет прав для просмотра этой страницы."
 
-#: templates/404.html:4
+#: templates/404.html:3 templates/404.html:4
 msgid "404 Not Found"
 msgstr "404 Страница не найдена"
 
@@ -4307,7 +4308,7 @@ msgstr "404 Страница не найдена"
 msgid "That page does not exist."
 msgstr "Этой страницы не существует."
 
-#: templates/500.html:4
+#: templates/500.html:3 templates/500.html:4
 msgid "500 Server Error"
 msgstr "500 Ошибка сервера"
 
@@ -7031,7 +7032,7 @@ msgstr "Новый шаблон"
 
 #: templates/channels/whatsapp_template_form.html:12
 msgid ""
-"This template is with Meta, or already approved, so it cannot be edited. the"
+"This template is with Meta, or already approved, so it cannot be edited. The"
 " copy under review is the one Meta holds. Delete it and write a new one if "
 "it needs to change."
 msgstr ""
@@ -9232,6 +9233,10 @@ msgstr "Нажато: %(id)s"
 msgid "Ref: %(ref)s"
 msgstr "Ссылка: %(ref)s"
 
+#: templates/inbox/_thread_body.html:149
+msgid "Read"
+msgstr "Прочитано"
+
 #: templates/inbox/_thread_body.html:172
 msgid "Try again"
 msgstr "Попробовать снова"
@@ -9339,7 +9344,7 @@ msgstr ""
 "<strong>каждое</strong> совпавшее правило применяется, в указанном ниже "
 "порядке."
 
-#: templates/layouts/error.html:27
+#: templates/layouts/error.html:32
 msgid "Back to BrightBean Chat"
 msgstr "Назад в BrightBean Chat"
 
@@ -9557,7 +9562,11 @@ msgstr ""
 msgid "Invitation"
 msgstr "Приглашение"
 
-#: templates/members/email/invite.html:2
+#: templates/members/email/invite.html:2 templates/members/email/invite.txt:1
+msgid "Someone"
+msgstr "Кто-то"
+
+#: templates/members/email/invite.html:3
 #, python-format
 msgid ""
 "\n"
@@ -9568,11 +9577,11 @@ msgstr ""
 "<p>%(inviter)s пригласил(а) вас присоединиться к\n"
 "   <strong>%(org_name)s</strong> в BrightBean Chat.</p>\n"
 
-#: templates/members/email/invite.html:6 templates/members/email/invite.txt:3
+#: templates/members/email/invite.html:7 templates/members/email/invite.txt:3
 msgid "Accept the invitation"
 msgstr "Принять приглашение"
 
-#: templates/members/email/invite.html:7 templates/members/email/invite.txt:6
+#: templates/members/email/invite.html:8 templates/members/email/invite.txt:6
 msgid ""
 "This link expires in 7 days. If you were not expecting it, you can ignore "
 "this email."

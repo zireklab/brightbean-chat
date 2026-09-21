@@ -1,4 +1,4 @@
-{% load i18n %}{% blocktranslate with inviter=invited_by.display_name|default:"Someone" %}{{ inviter }} invited you to join {{ org_name }} on BrightBean Chat.{% endblocktranslate %}
+{% load i18n %}{% translate "Someone" as someone %}{% blocktranslate with inviter=invited_by.display_name|default:someone %}{{ inviter }} invited you to join {{ org_name }} on BrightBean Chat.{% endblocktranslate %}
 
 {% translate "Accept the invitation" %}:
 {{ accept_url }}

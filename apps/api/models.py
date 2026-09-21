@@ -29,6 +29,7 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext_lazy
 
 from apps.common.encryption import EncryptedTextField
 from apps.common.scoping import WorkspaceScopedModel
@@ -72,7 +73,11 @@ class ApiScope(models.TextChoices):
     the issuance form from this enum intersected with ``SCOPE_PERMISSIONS``.
     """
 
-    READ = "read", _("Read")
+    # pgettext_lazy, not _(): "Read" bare collides with the inbox delivery-status
+    # tooltip's own "Read" msgid (templates/inbox/_thread_body.html) — same
+    # English word, different sense ("read access" vs. "this message was read"),
+    # and a shared msgid meant both had to share one translation.
+    READ = "read", pgettext_lazy("api scope", "Read")
     WRITE = "write", _("Write")
     ERASE = "erase", _("Erase")
 
