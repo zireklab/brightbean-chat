@@ -12,6 +12,14 @@ in docs/agent-prompts/layer-2.md.
 
 {% block title %}{% translate "Sequences" %} · BrightBean Chat{% endblock %}
 
+{% comment %}
+The Sequences tab lands here, so the strip it was clicked in has to survive the
+click — without this block the tab that was just selected, and Flows and
+Templates with it, vanish from the page they lead to. Same fix as
+templates/flows/template_gallery.html's own {% templatetag openblock %} block sub_nav {% templatetag closeblock %}.
+{% endcomment %}
+{% block sub_nav %}{% include "partials/_sub_nav.html" with groups=flow_tab_groups %}{% endblock %}
+
 {% block page_header %}
 <div class="flex flex-wrap items-start justify-between gap-3 mb-6">
     <div>
