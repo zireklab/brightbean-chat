@@ -90,7 +90,7 @@ msgstr "API ачкычтарын уюмдун ээси же администра
 msgid ""
 "You need the manage_api_keys permission in that workspace to issue a key for"
 " it."
-msgstr "Бул мейкиндикте ачкыч чыгаруу үчүн manage_api_keys уруксаты керек."
+msgstr "Бул иш жайында ачкыч чыгаруу үчүн manage_api_keys уруксаты керек."
 
 #: apps/api/services.py:82
 msgid "A key needs at least one scope."
@@ -123,7 +123,7 @@ msgid ""
 "This workspace already has %(limit)s active keys. Revoke one before issuing "
 "another."
 msgstr ""
-"Бул мейкиндикте азырынча %(limit)s активдүү ачкыч бар. Жаңысын чыгаруудан "
+"Бул иш жайында азырынча %(limit)s активдүү ачкыч бар. Жаңысын чыгаруудан "
 "мурун бирин жокко чыгарыңыз."
 
 #: apps/api/services.py:189
@@ -158,11 +158,11 @@ msgstr "Бул туура URL сыяктуу эмес."
 #: apps/api/services.py:249
 #, python-format
 msgid "This workspace already has %(limit)s endpoints."
-msgstr "Бул мейкиндикте азырынча %(limit)s эндпоинт бар."
+msgstr "Бул иш жайында азырынча %(limit)s эндпоинт бар."
 
 #: apps/api/views_keys.py:140
 msgid "Choose a workspace."
-msgstr "Мейкиндикти тандаңыз."
+msgstr "Иш жайын тандаңыз."
 
 #: apps/api/views_keys.py:182
 #, python-format
@@ -232,7 +232,7 @@ msgstr[0] ""
 msgid "Your plan includes %(limit)s workspace. Upgrade to add more."
 msgid_plural "Your plan includes %(limit)s workspaces. Upgrade to add more."
 msgstr[0] ""
-"Тарифиңизге %(limit)s мейкиндик кирет. Дагы кошуу үчүн тарифти "
+"Тарифиңизге %(limit)s иш жайы кирет. Дагы кошуу үчүн тарифти "
 "жогорулатыңыз."
 
 #: apps/billing/entitlements.py:406
@@ -343,7 +343,7 @@ msgstr "Колдонуучулар"
 #: templates/organizations/workspaces.html:15
 #: templates/organizations/workspaces.html:22
 msgid "Workspaces"
-msgstr "Жумуш мейкиндиктери"
+msgstr "Иш жайлары"
 
 #: apps/billing/services.py:53
 msgid "Choose a monthly or yearly plan."
@@ -648,7 +648,7 @@ msgstr[0] "%(value)s күн"
 #: apps/campaigns/models.py:173
 #, python-format
 msgid "That %(name)s belongs to a different workspace than the step."
-msgstr "Бул %(name)s кадамдыкынан башка жумуш мейкиндигине таандык."
+msgstr "Бул аттар (%(name)s) кадамдыкынан башка иш жайга таандык."
 
 #: apps/campaigns/models.py:187
 msgid "Completed"
@@ -668,7 +668,7 @@ msgstr "Бул цепочканы иштетүүдөн мурун жок дег�
 
 #: apps/campaigns/services.py:187 apps/campaigns/services.py:222
 msgid "That flow belongs to a different workspace than the sequence."
-msgstr "Бул сценарий цепочкадыкынан башка жумуш мейкиндигине таандык."
+msgstr "Бул сценарий чынжырдыкынан башка иш жайга таандык."
 
 #: apps/campaigns/services.py:190
 #, python-format
@@ -691,7 +691,7 @@ msgstr "Кадам жогору же төмөн жылат."
 
 #: apps/campaigns/services.py:361
 msgid "That contact belongs to a different workspace than the sequence."
-msgstr "Бул контакт цепочкадыкынан башка жумуш мейкиндигине таандык."
+msgstr "Бул контакт цепочкадыкынан башка иш жайына таандык."
 
 #: apps/campaigns/services.py:369
 #, python-format
@@ -1399,7 +1399,7 @@ msgstr "Баа болжолдору сакталды."
 
 #: apps/common/context_processors.py:238 templates/api/keys_list.html:43
 msgid "Workspace"
-msgstr "Жумуш мейкиндиги"
+msgstr "Иш жайы"
 
 #: apps/common/context_processors.py:243 apps/common/context_processors.py:368
 msgid "General"
@@ -2050,7 +2050,7 @@ msgid_plural ""
 "already being erased, or not in this workspace."
 msgstr[0] ""
 "%(named)s тандалгандын %(untouched)sи тийилген жок — мурунтан эле өчүрүлгөн,"
-" өчүрүлүп жатат, же бул иш мейкиндигинде эмес."
+" өчүрүлүп жатат, же бул иш жайында эмес."
 
 #: apps/contacts/views.py:1756
 #, python-format
@@ -2116,7 +2116,7 @@ msgid ""
 " you can search and filter by later.)"
 msgstr ""
 "Бул сценарий адамдарды төмөнкү тегдер менен белгилейт, бирок алар сиздин "
-"жумуш мейкиндигинде дагы жок. Ар бири үчүн: ушул ат менен түзүңүз же "
+"иш жайында дагы жок. Ар бири үчүн: ушул ат менен түзүңүз же "
 "мурунтан бар тегди көрсөтүңүз. (Тег — бул контакттагы белги — «VIP», "
 "«Рассылка» — кийин ошол боюнча издеп, чыпкалай аласыз.)"
 
@@ -2129,7 +2129,7 @@ msgid ""
 "changed later.)"
 msgstr ""
 "Бул сценарий бул маалыматтарды контакттын картасына сактайт, бирок алар "
-"сиздин жумуш мейкиндигинде дагы жок. Ар бири үчүн: аны түзүңүз же мурунтан "
+"сиздин иш жайыңызда да жок. Ар бири үчүн: аны түзүңүз же мурунтан "
 "бар талаага көрсөтүңүз. (Кошумча талаа — бул демейки боюнча жок көрсөткүч — "
 "өлчөм, брондоо күнү, буйрутма номери. Анын түрү эмнени сактай турганыңызды "
 "аныктайт жана кийин өзгөртүлбөйт.)"
@@ -2284,7 +2284,7 @@ msgstr "%(noun)s шаблондон түзүлбөйт; мурунтан бар�
 #: apps/flows/portability/imports.py:694
 #, python-format
 msgid "Pick a %(noun)s in this workspace."
-msgstr "Бул жумуш мейкиндигинен %(noun)s тандаңыз."
+msgstr "Бул иш жайынан %(noun)s тандаңыз."
 
 #: apps/flows/portability/imports.py:700
 #, python-format
@@ -3328,7 +3328,7 @@ msgstr "Бул шилтеме мурунтан алынган"
 #: apps/flows/views_triggers.py:460
 #, python-format
 msgid "Another trigger in this workspace already uses “%(ref)s”."
-msgstr "Бул жумуш мейкиндигинде башка триггер «%(ref)s»ды мурунтан колдонот."
+msgstr "Бул иш жайында башка триггер «%(ref)s»ды мурунтан эле колдонот."
 
 #: apps/flows/views_triggers.py:467
 msgid "Trigger not saved"
@@ -3509,7 +3509,7 @@ msgstr "Бул метка мындан ары жок."
 
 #: apps/inbox/rules.py:300 apps/inbox/views.py:1035
 msgid "That person is not a member of this workspace."
-msgstr "Бул адам бул иш мейкиндигинин мүчөсү эмес."
+msgstr "Бул адам бул иш жайынын мүчөсү эмес."
 
 #: apps/inbox/rules.py:309
 msgid "That rule repeats an action."
@@ -3870,7 +3870,7 @@ msgid ""
 "This workspace has used %(used)s of its %(limit)s media allowance. Delete "
 "something before uploading %(incoming)s."
 msgstr ""
-"Бул жумуш мейкиндиги медиа үчүн %(limit)s чегинен %(used)s колдонду. "
+"Бул иш жайы медиа үчүн %(limit)s чегинен %(used)s колдонду. "
 "%(incoming)s жүктөөдөн мурун бир нерсени өчүрүңүз."
 
 #: apps/media_library/services.py:70
@@ -3879,12 +3879,12 @@ msgstr "Бул файл бул орнотуу кабыл алган каалаг
 
 #: apps/media_library/services.py:172 apps/media_library/services.py:195
 msgid "That folder belongs to a different workspace."
-msgstr "Бул папка башка жумуш мейкиндигине таандык."
+msgstr "Бул папка башка иш жайына таандык."
 
 #: apps/media_library/services.py:203
 #, python-format
 msgid "This workspace already has the maximum of %(limit)s folders."
-msgstr "Бул жумуш мейкиндигинде мурунтан эле максимум %(limit)s папка бар."
+msgstr "Бул иш жайында мурунтан эле максимум %(limit)s папка бар."
 
 #: apps/media_library/services.py:247
 #, python-format
@@ -3989,27 +3989,27 @@ msgstr "Уюм администраторун %(verb)s түзүн уюмдун �
 
 #: apps/members/services.py:158
 msgid "That workspace does not belong to your organization."
-msgstr "Бул мейкиндик сиздин уюмуңузга таандык эмес."
+msgstr "Бул иш жайы сиздин уюмуңузга таандык эмес."
 
 #: apps/members/services.py:160
 #, python-format
 msgid "Unknown workspace role: %(role)r."
-msgstr "Мейкиндикте белгисиз роль: %(role)r."
+msgstr "Иш жайына белгисиз роль: %(role)r."
 
 #: apps/members/services.py:169
 msgid "You cannot manage members in that workspace."
-msgstr "Бул мейкиндикте мүчөлөрдү башкара албайсыз."
+msgstr "Бул иш жайында мүчөлөрдү башкара албайсыз."
 
 #: apps/members/services.py:171
 msgid ""
 "You cannot grant a workspace role higher than your own in that workspace."
-msgstr "Бул мейкиндикте өзүңүздүн ролуңуздан жогору роль бере албайсыз."
+msgstr "Бул иш жайында өзүңүздүн ролуңуздан жогору роль бере албайсыз."
 
 #: apps/members/services.py:187
 msgid ""
 "Cannot remove the last admin of a workspace. Promote someone else first."
 msgstr ""
-"Мейкиндиктин акыркы администраторун өчүрүүгө болбойт. Адегенде башкасын "
+"Иш жайынын акыркы администраторун өчүрүүгө болбойт. Адегенде башкасын "
 "дайындаңыз."
 
 #: apps/members/services.py:207
@@ -4041,7 +4041,7 @@ msgstr "Администратор катары чакырууну уюм ээл
 
 #: apps/members/services.py:238
 msgid "Choose at least one workspace to invite this person into."
-msgstr "Бул адамды чакыруу үчүн кеминде бир мейкиндикти тандаңыз."
+msgstr "Бул адамды чакыруу үчүн кеминде бир иш жайын тандаңыз."
 
 #: apps/members/services.py:288
 msgid "This invitation is no longer available."
@@ -4114,7 +4114,7 @@ msgstr "Уюмдун акыркы ээсинин ролун өзгөртүүгө
 #: apps/members/services.py:534
 msgid ""
 "You cannot modify a workspace membership whose role is higher than your own."
-msgstr "Ролу өзүңүздүкүнөн жогору мейкиндик мүчөлүгүн өзгөртө албайсыз."
+msgstr "Ролу өзүңүздүкүнөн жогору иш жайын мүчөлүгүн өзгөртө албайсыз."
 
 #: apps/members/views.py:133
 msgid "Invitation sent."
@@ -4138,7 +4138,7 @@ msgstr "Мүчө чыгарылды."
 
 #: apps/members/views.py:218
 msgid "Workspace access updated."
-msgstr "Мейкиндикке мүмкүнчүлүк жаңырды."
+msgstr "Иш жайына жол жаңырды."
 
 #: apps/members/views.py:275
 #, python-format
@@ -4254,11 +4254,11 @@ msgstr "Уюм тууралоолору сакталды."
 
 #: apps/organizations/views.py:131 apps/workspaces/views.py:346
 msgid "A workspace needs a name."
-msgstr "Мейкиндикке ат керек."
+msgstr "Иш жайына ат керек."
 
 #: apps/organizations/views.py:134
 msgid "A workspace with that name already exists."
-msgstr "Мындай аттуу мейкиндик мурунтан эле бар."
+msgstr "Мындай аттуу иш жайы мурунтан эле бар."
 
 #: apps/organizations/views.py:149
 #, python-format
@@ -4365,7 +4365,7 @@ msgstr "Жөнөтүлгөнгө чейин текшерип алыңыз."
 
 #: apps/workspaces/views.py:353
 msgid "Another workspace in this organization already has that name."
-msgstr "Бул уюмда мындай аттуу мейкиндик мурунтан эле бар."
+msgstr "Бул уюмда мындай аттуу иш жайы мурунтан эле бар."
 
 #: apps/workspaces/views.py:375
 msgid "Colours must be a 6-digit hex value like #3B82F6."
@@ -4373,7 +4373,7 @@ msgstr "Түстөр #3B82F6 сыяктуу 6 орундуу hex мааниси 
 
 #: apps/workspaces/views.py:382
 msgid "Workspace settings saved."
-msgstr "Мейкиндик тууралоолору сакталды."
+msgstr "Иш жайынын ырастамалары сакталды."
 
 #: templates/403.html:3 templates/403.html:4
 msgid "403 Forbidden"
@@ -4627,7 +4627,7 @@ msgstr "Жеткирүү пайызы"
 
 #: templates/analytics/overview.html:112
 msgid "Nothing has been sent from this workspace in this range."
-msgstr "Бул мезгилде бул жумуш мейкиндигинен эч нерсе жөнөтүлгөн жок."
+msgstr "Бул мезгилде бул иш жайынан эч нерсе жөнөтүлгөн жок."
 
 #: templates/analytics/settings.html:28
 msgid ""
@@ -4715,9 +4715,9 @@ msgid ""
 " as one workspace. Keys are organization-level because they span every "
 "workspace in the organization, but each key acts inside exactly one."
 msgstr ""
-"Ачкыч <a href=\"%(api_docs_url)s\">ачык API</a> чакырууларын бир мейкиндик "
-"атынан ырастайт. Ачкычтар уюм деңгээлинде чыгарылат, анткени уюмдун бардык "
-"мейкиндиктерин камтыйт, бирок ар бир ачкыч бир гана мейкиндикте иштейт."
+"Ачкыч <a href=\"%(api_docs_url)s\">ачык API</a> чакыруулары бир иш жай "
+"атынан иштейт. Ачкычтар уюм деңгээлинде чыгарылат, анткени уюмдун бардык "
+"иш жайларын камтыйт, бирок ар бир ачкыч бир гана иш жайында иштейт."
 
 #: templates/api/keys_list.html:28 templates/api/keys_list.html:37
 msgid "Issue a key"
@@ -4765,9 +4765,9 @@ msgid ""
 "<code>manage_api_keys</code> permission in any workspace, so there is "
 "nowhere to issue a key. A workspace admin can grant it."
 msgstr ""
-"Сиз уюм администраторусуз, бирок эч бир мейкиндикте "
+"Сиз уюм администраторусуз, бирок бир да иш жайына "
 "<code>manage_api_keys</code> уруксатыңыз жок, ошондуктан ачкыч чыгарууга жер"
-" жок. Мейкиндик администратору муну бере алат."
+" жок. Иш жай администраторунан сураңыз."
 
 #: templates/api/keys_list.html:77
 msgid "Existing keys"
@@ -4813,7 +4813,7 @@ msgid ""
 "your own backend — read and write in one workspace."
 msgstr ""
 "Ачкыч BrightBean Chat'дын сыртындагы нерсеге — Zapier сценарийине, скриптке,"
-" өз бэкендиңизге — бир мейкиндикте окуу жана жазууга уруксат берет."
+" өз бэкендиңизге — бир иш жайында окуу жана жазууга уруксат берет."
 
 #: templates/api/webhook_detail.html:3
 msgid "Webhook"
@@ -4988,9 +4988,9 @@ msgid ""
 " happens in this workspace. See the <a href=\"%(api_docs_url)s\">API "
 "reference</a> for the payload shape and a signature-verification snippet."
 msgstr ""
-"Бул мейкиндикте бир нерсе болгондо, BrightBean Chat сиздин эндпоинтиңизге "
-"кол коюлган JSON документин жөнөтөт. Мазмундун түзүлүшү жана кол тамга "
-"текшерүү үлгүсү <a href=\"%(api_docs_url)s\">API справочнигинде</a>."
+"Иш жайыңызда бир иш болгондо, BrightBean Chat сиздин эндпоинтиңизге "
+"санарип кол коюлган JSON документин жөнөтөт. Мазмундун түзүлүшү жана санарип кол тамга "
+"текшерүү үлгүсү <a href=\"%(api_docs_url)s\">API Жол-жобоcун</a> караңыз."
 
 #: templates/api/webhooks_list.html:27 templates/api/webhooks_list.html:34
 #: templates/api/webhooks_list.html:81
@@ -5060,7 +5060,7 @@ msgstr "Бул кимге жетерин көрүү үчүн эреже кошу
 
 #: templates/broadcasts/_compose_script.html:23
 msgid "No per-message price is set for this workspace yet."
-msgstr "Бул жумуш мейкиндиги үчүн билдирүүгө баа дагы эле коюлган эмес."
+msgstr "Бул иш жайы үчүн билдирүүгө баа дагы эле коюлган эмес."
 
 #: templates/broadcasts/_compose_script.html:24
 msgid "About"
@@ -5197,7 +5197,7 @@ msgstr ""
 
 #: templates/broadcasts/_step_channel.html:30
 msgid "No channel in this workspace accepts broadcasts."
-msgstr "Бул жумуш мейкиндигинде бир дагы канал жайылтууларды кабыл албайт."
+msgstr "Бул иш жайында бир дагы канал жайылтууларды кабыл албайт."
 
 #: templates/broadcasts/_step_content.html:45
 msgid "What kind of message?"
@@ -5434,7 +5434,7 @@ msgid ""
 "No channel in this workspace accepts broadcasts yet. Connect one in\n"
 "    <a href=\"%(channel_settings_url)s\">channel settings</a> first."
 msgstr ""
-"Бул жумуш мейкиндигинде азырынча бир дагы канал жайылтууларды кабыл албайт. Адегенде\n"
+"Бул иш жайында азырынча бир дагы канал жайылтууларды кабыл албайт. Адегенде\n"
 "    <a href=\"%(channel_settings_url)s\">канал жөндөөлөрүндө</a> каналды туташтырыңыз."
 
 #: templates/broadcasts/list.html:68
@@ -5569,7 +5569,7 @@ msgid ""
 "back to the workspace's."
 msgstr ""
 "Эч бир күн белгиленбесе — каалаган күн туура келет. Өз убакыт алкагы жок "
-"контакт жумуш мейкиндигинин убакыт алкагын колдонот."
+"контакт иш жайынын убакыт алкагын колдонот."
 
 #: templates/campaigns/_steps.html:17
 msgid "No steps yet"
@@ -5859,7 +5859,7 @@ msgstr "Канал жөндөөлөрү"
 #: templates/channels/detail.html:46
 #, python-format
 msgid "%(label)s settings for this workspace"
-msgstr "Бул иш мейкиндиги үчүн %(label)s жөндөөлөрү"
+msgstr "Бул иш жайы үчүн %(label)s ырастамалар"
 
 #: templates/channels/detail.html:50
 msgid "Webhook URL"
@@ -6112,7 +6112,7 @@ msgid ""
 " a domain."
 msgstr ""
 "Анын домени бул канaлдын өзгөчөлүгү болуп калат, жана бир доменди бир гана "
-"иш мейкиндиги ээлей алат."
+"иш жайы ээлей алат."
 
 #: templates/channels/email_connect.html:73
 msgid "From name"
@@ -7192,7 +7192,7 @@ msgid ""
 "most to send."
 msgstr ""
 "Meta адатта бир нече мүнөттүн ичинде, кээде бир күндүн ичинде жооп берет. "
-"BrightBean Chat ар бир саат сайын текшерип, жооп келгенде иш мейкиндигинин "
+"BrightBean Chat ар бир саат сайын текшерип, жооп келгенде иш жайынын "
 "администраторлоруна билдирет; четке кагылган шаблон жогорудан Meta'нын "
 "себебин көрсөтөт жана түзөтүлүп, кайра жөнөтүлсө болот. Маркетинг шаблондору"
 " эң катуу текшерилет жана жөнөтүү үчүн эң кымбат турат."
@@ -7332,8 +7332,8 @@ msgid ""
 "No channels yet. A contact becomes reachable when they message one of this\n"
 "      workspace's connections. Importing an address does not create one."
 msgstr ""
-"Азырынча каналдар жок. Байланыш бул иш мейкиндигинин туташууларынын бирине "
-"жазганда жеткиликтүү болуп калат. Дарек импорттоо канал түзбөйт."
+"Азырынча каналдар жок. Байланыш бул иш жайынын туташууларынын бирине "
+"жазганда жеткиликтүү болуп калат. Канал даректи импорттогондо түзүбөйт."
 
 #: templates/contacts/_field_rows.html:38
 #, python-format
@@ -7760,7 +7760,7 @@ msgstr "Ар бир талаа андан чыкканыңызда өзү сак
 
 #: templates/contacts/detail.html:70
 msgid "You have read-only access to this workspace."
-msgstr "Сизде бул иш мейкиндигине окуу үчүн гана мүмкүнчүлүк бар."
+msgstr "Сиз бул иш жайында окуй эле аласыз."
 
 #: templates/contacts/detail.html:104
 msgid "True"
@@ -7772,7 +7772,7 @@ msgstr "Жалган"
 
 #: templates/contacts/detail.html:129
 msgid "Emptying a field removes its value entirely."
-msgstr "Талааны бошотуу анын маанисин толугу менен өчүрөт."
+msgstr "Бөлүктү бошотсоңуз анын мааниси толугу менен өчөт."
 
 #: templates/contacts/detail.html:132
 msgid "No custom fields yet."
@@ -7951,7 +7951,7 @@ msgid ""
 "        until they message this workspace first. Importing an email address or a phone number\n"
 "        does not create a messaging identity and is not a record of consent."
 msgstr ""
-"Импорттолгон байланыштар бул иш мейкиндигине биринчи жазмайынча <strong>эч "
+"Импорттолгон байланыштар бул иш жайында биринчи жазмайынча <strong>эч "
 "бир каналда жеткиликтүү эмес</strong> экенин түшүнөм. Email дарегин же "
 "телефон номерин импорттоо билдирүү идентификаторун түзбөйт жана макулдуктун "
 "жазуусу болуп саналбайт."
