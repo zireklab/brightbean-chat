@@ -29,43 +29,43 @@ msgstr "Байланыш түзүлдү"
 msgid "Tag added to a contact"
 msgstr "Байланышка тег кошулду"
 
-#: apps/api/events.py:96
+#: apps/api/events.py:96`
 msgid "Inbound message received"
-msgstr "Кирүүчү билдирүү алынды"
+msgstr "Билдирүү кабыл алынды"
 
 #: apps/api/events.py:97
 msgid "Flow execution completed"
-msgstr "Сценарийдин аткарылышы аяктады"
+msgstr "Сценарий иштеп бүттү"
 
 #: apps/api/events.py:98
 msgid "Contact subscribed to a sequence"
-msgstr "Байланыш ырааттуулукка жазылды"
+msgstr "Байланыш ирээтке катталды"
 
 #: apps/api/events.py:99
 msgid "Contact unsubscribed from a sequence"
-msgstr "Байланыш ырааттуулуктан чыгарылды"
+msgstr "Байланыш ирээттен чыгарылды"
 
 #: apps/api/events.py:100 apps/broadcasts/notifications.py:32
 #: apps/notifications/events.py:322
 msgid "Broadcast finished"
-msgstr "Жайылтуу аяктады"
+msgstr "Жарыя аяктады"
 
 #: apps/api/models.py:80
 msgctxt "api scope"
 msgid "Read"
-msgstr "Окуу"
+msgstr "Окуйм"
 
 #: apps/api/models.py:81
 msgid "Write"
-msgstr "Жазуу"
+msgstr "Жазам"
 
 #: apps/api/models.py:82 templates/contacts/list.html:262
 msgid "Erase"
-msgstr "Өчүрүү"
+msgstr "Өчүрөм"
 
 #: apps/api/models.py:93
 msgid "Succeeded"
-msgstr "Ийгиликтүү"
+msgstr "Ийгилик!"
 
 #: apps/api/models.py:94 apps/broadcasts/models.py:93
 #: apps/contacts/models.py:411 apps/contacts/models.py:571
@@ -76,11 +76,11 @@ msgstr "Ийгиликтүү"
 #: templates/broadcasts/_counters.html:64 templates/broadcasts/detail.html:113
 #: templates/inbox/_thread_body.html:152
 msgid "Failed"
-msgstr "Ката"
+msgstr "Болбой калды"
 
 #: apps/api/models.py:95
 msgid "Blocked"
-msgstr "Бөгөттөлдү"
+msgstr "Блокто"
 
 #: apps/api/services.py:72
 msgid "Only an organization owner or admin can issue API keys."
@@ -94,12 +94,12 @@ msgstr "Бул мейкиндикте ачкыч чыгаруу үчүн manage_
 
 #: apps/api/services.py:82
 msgid "A key needs at least one scope."
-msgstr "Ачкычка кеминде бир мүмкүнчүлүк чөйрөсү керек."
+msgstr "Ачкычка кеминде бир уруксат керек."
 
 #: apps/api/services.py:85
 #, python-format
 msgid "Unknown scope: %(scopes)s."
-msgstr "Белгисиз мүмкүнчүлүк чөйрөсү: %(scopes)s."
+msgstr "Белгисиз уруксат: %(scopes)s."
 
 #: apps/api/services.py:92
 #, python-format
