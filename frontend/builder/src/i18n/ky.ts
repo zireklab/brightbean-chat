@@ -81,7 +81,7 @@ export const ky: LooseTranslations<BuilderTranslations> = {
     no: "Жок",
   },
   flowNodeCard: {
-    startsHere: "Бул жерден башталат",
+    startsHere: "Бияктан башталат",
     errorCount_other: "{{count}} ката",
     warningCount_other: "{{count}} эскертүү",
     failedTitle: "Ийгиликсиз жөнөтүүлөр",
@@ -155,7 +155,7 @@ export const ky: LooseTranslations<BuilderTranslations> = {
     deleteSteps_other: "Бул {{count}} кадамды өчүрүү",
     startTitle: "Сценарий эки нерседен турат",
     startBody:
-      "Аны эмне баштайт жана ал эмне кылат. Алгач аны эмне баштарын тандаңыз, андан кийин холстко биринчи кадамды кошуңуз.",
+      "Аны эмне баштайт жана ал эмне кылат. Алгач аны эмне баштарын чечиңиз, анан холстко биринчи кадамды кошуңуз.",
     steps: "Кадамдар",
     editingStep: "{{count}}-кадам түзөтүлүүдө",
     editingThisStep: "Бул кадам түзөтүлүүдө",
@@ -178,7 +178,7 @@ export const ky: LooseTranslations<BuilderTranslations> = {
       retry_unmatched: "Башка нерсе жазышса, кайталоо",
       actions: "Аракеттер",
       flow_id: "Сценарий",
-      match: "Дал келүү",
+      match: "Дал келтирүү",
       rules: "Эрежелер",
       mode: "Режим",
       duration: "Узактык",
