@@ -47,6 +47,9 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
+from django.utils.functional import Promise
+from django.utils.translation import gettext_lazy as _
+
 __all__ = [
     "LIBRARY_RELATIVE_PATH",
     "STARTER_CATEGORY",
@@ -119,7 +122,7 @@ def read_template(path: Path) -> tuple[dict[str, Any] | None, list[Any]]:
 class TemplateCopy:
     """The two things about a template a machine cannot work out for itself."""
 
-    category: str
+    category: str | Promise
     summary: str
 
 
@@ -135,7 +138,7 @@ class TemplateCard:
     filename: str
     name: str
     summary: str
-    category: str
+    category: str | Promise
     platforms: tuple[str, ...]
     needs: tuple[str, ...]
     trigger_types: tuple[str, ...]
@@ -151,190 +154,190 @@ class TemplateCard:
 #: Named because two places select on it and a bare string in the second would
 #: go quietly wrong if this dict were ever re-worded: the gallery's filter chips
 #: and ``apps.flows.views._featured``.
-STARTER_CATEGORY = "Starters"
+STARTER_CATEGORY = _("Starters")
 
 #: Keyed by filename stem. A template with no entry still gets a card; a stale
 #: entry and a missing one are both caught by a test that compares this against
 #: the directory in both directions.
 TEMPLATE_COPY: dict[str, TemplateCopy] = {
     "collect-an-email-address": TemplateCopy(
-        category="Grow",
+        category=_("Grow"),
         summary=("Asks for an email address, checks it looks real, and saves it to the contact before replying."),
     ),
     "event-reminder": TemplateCopy(
-        category="Engage",
+        category=_("Engage"),
         summary=("Signs someone up for an event over Telegram, then messages them again nearer the time."),
     ),
     "feedback-after-a-purchase": TemplateCopy(
-        category="Engage",
+        category=_("Engage"),
         summary=("Waits until the order has landed, asks how it went, and routes the answer by what they say."),
     ),
     "first-message-welcome": TemplateCopy(
-        category="Starters",
+        category=_("Starters"),
         summary=("The first thing a new Telegram contact hears, with a follow-up a little later."),
     ),
     "follow-up-an-unanswered-enquiry": TemplateCopy(
-        category="Convert",
+        category=_("Convert"),
         summary=("Chases an enquiry that went quiet twice, spaced out, then tags it so you can see who never replied."),
     ),
     "hand-over-to-a-person": TemplateCopy(
-        category="Engage",
+        category=_("Engage"),
         summary=("Takes the conversation off automation and assigns it to a teammate, with a note saying why."),
     ),
     "instagram-comment-affiliate-picks": TemplateCopy(
-        category="Convert",
+        category=_("Convert"),
         summary=(
             "A comment on the post sends a swipeable gallery of your affiliate picks, each card linking straight out."
         ),
     ),
     "instagram-comment-follow-to-unlock": TemplateCopy(
-        category="Grow",
+        category=_("Grow"),
         summary=("Ask for the follow before you hand over the freebie, then tag whoever confirms."),
     ),
     "instagram-comment-link-in-dm": TemplateCopy(
-        category="Convert",
+        category=_("Convert"),
         summary=("Someone comments, you reply publicly and DM them the link. The classic comment-to-DM."),
     ),
     "instagram-comment-product-gallery": TemplateCopy(
-        category="Convert",
+        category=_("Convert"),
         summary=("Send the whole lineup as a gallery, then answer the two questions that stop a sale."),
     ),
     "instagram-comment-reel-to-product": TemplateCopy(
-        category="Convert",
+        category=_("Convert"),
         summary=("A Reel got people asking. DM them the product and tag the interest."),
     ),
     "instagram-comment-rsvp": TemplateCopy(
-        category="Convert",
+        category=_("Convert"),
         summary=(
             "Turn \u201ccomment to join\u201d into a confirmed RSVP with a calendar link and a tag to broadcast to later."
         ),
     ),
     "instagram-comment-to-discount-code": TemplateCopy(
-        category="Convert",
+        category=_("Convert"),
         summary=("A comment sends the discount code by DM, then follows up in case it went unused."),
     ),
     "instagram-comment-to-dm-lead-magnet": TemplateCopy(
-        category="Starters",
+        category=_("Starters"),
         summary=("Comment-triggered DM that delivers a guide and collects an email address."),
     ),
     "instagram-default-reply-autoresponder": TemplateCopy(
-        category="Engage",
+        category=_("Engage"),
         summary=(
             "Catch every DM nothing else answered, greet people by name and route them to buy, ask or reach a person."
         ),
     ),
     "instagram-keyword-course-early-access": TemplateCopy(
-        category="Convert",
+        category=_("Convert"),
         summary=("A keyword puts people on the launch waitlist and tags them for the broadcast on the day."),
     ),
     "instagram-keyword-dm-to-sms": TemplateCopy(
-        category="Grow",
+        category=_("Grow"),
         summary=(
             "Move the conversation to SMS before Instagram's 24-hour window closes, with a DM fallback if the text fails."
         ),
     ),
     "instagram-keyword-email-capture": TemplateCopy(
-        category="Grow",
+        category=_("Grow"),
         summary=("Trade a download for an email address. The answer records consent alongside it."),
     ),
     "instagram-keyword-faq-hub": TemplateCopy(
-        category="Engage",
+        category=_("Engage"),
         summary=("One keyword, one hub, four answers, and a way through to a person."),
     ),
     "instagram-keyword-link-drop": TemplateCopy(
-        category="Engage",
+        category=_("Engage"),
         summary=("The simplest one: a keyword in the DM, the link straight back."),
     ),
     "instagram-keyword-qualify-quiz": TemplateCopy(
-        category="Engage",
+        category=_("Engage"),
         summary=("Two questions that tag people by where they are, then send each group a different offer."),
     ),
     "instagram-keyword-sms-list": TemplateCopy(
-        category="Grow",
+        category=_("Grow"),
         summary=("Collect phone numbers with the consent wording the SMS rules expect."),
     ),
     "instagram-keyword-where-is-this-from": TemplateCopy(
-        category="Engage",
+        category=_("Engage"),
         summary=("Answer \u201cwhere is this from?\u201d the moment it lands, with the product and a link."),
     ),
     "instagram-keyword-youtube-subscribe": TemplateCopy(
-        category="Grow",
+        category=_("Grow"),
         summary=("Send your Instagram audience to the long version on YouTube."),
     ),
     "instagram-link-in-bio-capture": TemplateCopy(
-        category="Grow",
+        category=_("Grow"),
         summary=("The link in your bio opens a chat that already knows where they came from."),
     ),
     "instagram-price-question": TemplateCopy(
-        category="Convert",
+        category=_("Convert"),
         summary=("Answers “how much?” in the comments by DM, and asks what they are after before quoting."),
     ),
     "instagram-story-collab-requests": TemplateCopy(
-        category="Grow",
+        category=_("Grow"),
         summary=("Sort collab replies into brands and creators, capture a brief and tag the request."),
     ),
     "instagram-story-limited-time-offer": TemplateCopy(
-        category="Convert",
+        category=_("Convert"),
         summary=("Send the code from your Story, then nudge once before the window closes."),
     ),
     "instagram-story-mention-thank-you": TemplateCopy(
-        category="Engage",
+        category=_("Engage"),
         summary=("Thanks somebody who mentioned you in a story, and comes back later with an offer."),
     ),
     "instagram-story-reply-to-conversation": TemplateCopy(
-        category="Engage",
+        category=_("Engage"),
         summary=("Turns a story reply into a real conversation instead of a notification you never answer."),
     ),
     "messenger-comment-to-dm": TemplateCopy(
-        category="Convert",
+        category=_("Convert"),
         summary=("Replies to a Facebook comment privately, which is the reply that can actually ask for something."),
     ),
     "messenger-quote-request": TemplateCopy(
-        category="Convert",
+        category=_("Convert"),
         summary=("Collects the three details you need to quote, one question at a time, and saves each one."),
     ),
     "messenger-welcome": TemplateCopy(
-        category="Starters",
+        category=_("Starters"),
         summary=("What a first-time Messenger contact hears, in four short messages rather than one wall."),
     ),
     "out-of-hours-reply": TemplateCopy(
-        category="Engage",
+        category=_("Engage"),
         summary=("Answers outside opening hours with when you are next open, so nobody is left waiting."),
     ),
     "sms-appointment-reminder": TemplateCopy(
-        category="Engage",
+        category=_("Engage"),
         summary=("Texts a reminder before the appointment, and again when it is close."),
     ),
     "sms-keyword-opt-in": TemplateCopy(
-        category="Starters",
+        category=_("Starters"),
         summary=("Keyword opt-in over SMS that records consent and tags the subscriber."),
     ),
     "sms-review-request": TemplateCopy(
-        category="Engage",
+        category=_("Engage"),
         summary=("Waits a few days, asks for a review, and stops asking the people who already left one."),
     ),
     "telegram-booking-enquiry": TemplateCopy(
-        category="Convert",
+        category=_("Convert"),
         summary=("Takes a booking enquiry over Telegram and saves the date, the size and the contact."),
     ),
     "telegram-support-triage": TemplateCopy(
-        category="Engage",
+        category=_("Engage"),
         summary=("Sorts an incoming support message into the right queue and tags it for whoever picks it up."),
     ),
     "telegram-welcome-and-faq": TemplateCopy(
-        category="Starters",
+        category=_("Starters"),
         summary=("Telegram welcome message with a three-way FAQ menu behind quick replies."),
     ),
     "waitlist-signup": TemplateCopy(
-        category="Grow",
+        category=_("Grow"),
         summary=("Collects an email for the waitlist and tags the person so you can message the list later."),
     ),
     "whatsapp-opening-hours": TemplateCopy(
-        category="Engage",
+        category=_("Engage"),
         summary=("Answers “are you open?” with the real answer for the day it is asked."),
     ),
     "whatsapp-order-status": TemplateCopy(
-        category="Engage",
+        category=_("Engage"),
         summary=("Asks for the order number, looks it up, and says where it is."),
     ),
 }
