@@ -9,6 +9,7 @@
 import type { ReactNode } from "react";
 
 import i18n from "../i18n";
+import { variantLabel } from "../inspector/copy";
 import { configSchema } from "../schema/artifact";
 import { deref, isTaggedUnion, typesOf } from "../schema/resolve";
 import type { JsonSchema, Picklists } from "../schema/types";
@@ -80,11 +81,14 @@ function SendMessagePreview({ config }: PreviewProps) {
 /**
  * How to word one operator on a card.
  *
- * Only the symbols, which do not read as words. Everything else is derived from
- * the operator itself — `has_not` reads "has not", `not_in` reads "not in" —
- * so an operator apps/contacts/conditions.py adds later renders sensibly
- * without an entry here. The schema decides which operators exist; this only
- * decides how one looks.
+ * Only the symbols, which do not read as words and so have no place in
+ * `enumLabels`. Everything else goes through the same `variantLabel` table
+ * the condition-rule editor uses (`inspector/copy.ts`) — the operator on the
+ * preview and the operator in the dropdown are the same fact, and a table
+ * this bundle already has to translate that fact into is the one both
+ * should read from, not a second one that only ever gets the English word.
+ * An operator apps/contacts/conditions.py adds later, with no entry in
+ * either table, still falls through to a humanised form.
  */
 const OPERATOR_SYMBOLS: Record<string, string> = {
   "!=": "\u2260",
@@ -94,7 +98,7 @@ const OPERATOR_SYMBOLS: Record<string, string> = {
 
 export function operatorCopy(op: unknown): string {
   const key = String(op ?? "");
-  return OPERATOR_SYMBOLS[key] ?? key.replace(/_/g, " ");
+  return OPERATOR_SYMBOLS[key] ?? variantLabel(key);
 }
 
 function ConditionPreview({ config }: PreviewProps) {
