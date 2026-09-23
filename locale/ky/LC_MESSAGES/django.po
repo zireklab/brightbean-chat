@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-21 11:58+0600\n"
+"POT-Creation-Date: 2026-09-23 19:11+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ky\n"
@@ -29,7 +29,7 @@ msgstr "Байланыш түзүлдү"
 msgid "Tag added to a contact"
 msgstr "Байланышка тег кошулду"
 
-#: apps/api/events.py:96`
+#: apps/api/events.py:96
 msgid "Inbound message received"
 msgstr "Билдирүү кабыл алынды"
 
@@ -67,14 +67,13 @@ msgstr "Өчүрөм"
 msgid "Succeeded"
 msgstr "Ийгилик!"
 
-#: apps/api/models.py:94 apps/broadcasts/models.py:93
+#: apps/api/models.py:94 apps/broadcasts/models.py:94
 #: apps/contacts/models.py:411 apps/contacts/models.py:571
 #: templates/analytics/_counter_cards.html:29
 #: templates/analytics/flow_detail.html:60
-#: templates/analytics/flow_detail.html:95
-#: templates/analytics/overview.html:43 templates/analytics/overview.html:82
-#: templates/broadcasts/_counters.html:64 templates/broadcasts/detail.html:113
-#: templates/inbox/_thread_body.html:152
+#: templates/analytics/flow_detail.html:95 templates/analytics/overview.html:43
+#: templates/analytics/overview.html:82 templates/broadcasts/_counters.html:64
+#: templates/broadcasts/detail.html:113 templates/inbox/_thread_body.html:152
 msgid "Failed"
 msgstr "Болбой калды"
 
@@ -88,8 +87,8 @@ msgstr "API ачкычтарын уюмдун ээси же администра
 
 #: apps/api/services.py:76
 msgid ""
-"You need the manage_api_keys permission in that workspace to issue a key for"
-" it."
+"You need the manage_api_keys permission in that workspace to issue a key for "
+"it."
 msgstr "Бул иш жайында ачкыч чыгаруу үчүн manage_api_keys уруксаты керек."
 
 #: apps/api/services.py:82
@@ -232,8 +231,7 @@ msgstr[0] ""
 msgid "Your plan includes %(limit)s workspace. Upgrade to add more."
 msgid_plural "Your plan includes %(limit)s workspaces. Upgrade to add more."
 msgstr[0] ""
-"Тарифиңизге %(limit)s иш жайы кирет. Дагы кошуу үчүн тарифти "
-"жогорулатыңыз."
+"Тарифиңизге %(limit)s иш жайы кирет. Дагы кошуу үчүн тарифти жогорулатыңыз."
 
 #: apps/billing/entitlements.py:406
 msgid "The public API is available on the paid plan."
@@ -379,43 +377,43 @@ msgstr ""
 "Төлөм порталын ачуу мүмкүн болгон жок. Бир мүнөттөн кийин кайра аракет "
 "кылыңыз."
 
-#: apps/broadcasts/models.py:69 apps/campaigns/models.py:64
+#: apps/broadcasts/models.py:70 apps/campaigns/models.py:64
 #: apps/channels/models.py:566 apps/flows/models.py:60 apps/flows/views.py:202
 #: templates/campaigns/_list_rows.html:33 templates/flows/_list_rows.html:53
 #: templates/flows/edit.html:57
 msgid "Draft"
 msgstr "Долбоор"
 
-#: apps/broadcasts/models.py:70 templates/inbox/_conversation_rows.html:80
+#: apps/broadcasts/models.py:71 templates/inbox/_conversation_rows.html:80
 #: templates/inbox/_deferred.html:39
 msgid "Scheduled"
 msgstr "Пландалды"
 
-#: apps/broadcasts/models.py:71
+#: apps/broadcasts/models.py:72
 msgid "Sending"
 msgstr "Жөнөтүлүүдө"
 
-#: apps/broadcasts/models.py:72 apps/broadcasts/models.py:92
-#: apps/inbox/views.py:912 templates/analytics/_counter_cards.html:21
+#: apps/broadcasts/models.py:73 apps/broadcasts/models.py:93
+#: apps/inbox/views.py:914 templates/analytics/_counter_cards.html:21
 #: templates/analytics/flow_detail.html:58
-#: templates/analytics/flow_detail.html:93
-#: templates/analytics/overview.html:41 templates/analytics/overview.html:80
-#: templates/broadcasts/_counters.html:56 templates/broadcasts/_rows.html:20
-#: templates/contacts/_activity.html:99 templates/inbox/_thread_body.html:151
+#: templates/analytics/flow_detail.html:93 templates/analytics/overview.html:41
+#: templates/analytics/overview.html:80 templates/broadcasts/_counters.html:56
+#: templates/broadcasts/_rows.html:20 templates/contacts/_activity.html:99
+#: templates/inbox/_thread_body.html:151
 msgid "Sent"
 msgstr "Жөнөтүлдү"
 
-#: apps/broadcasts/models.py:73 apps/broadcasts/models.py:95
+#: apps/broadcasts/models.py:74 apps/broadcasts/models.py:96
 #: templates/broadcasts/_counters.html:73
 msgid "Cancelled"
 msgstr "Жокко чыгарылды"
 
-#: apps/broadcasts/models.py:91 apps/contacts/models.py:568
+#: apps/broadcasts/models.py:92 apps/contacts/models.py:568
 #: templates/contacts/_channels.html:52
 msgid "Pending"
 msgstr "Күтүүдө"
 
-#: apps/broadcasts/models.py:94 templates/broadcasts/_counters.html:68
+#: apps/broadcasts/models.py:95 templates/broadcasts/_counters.html:68
 #: templates/broadcasts/_rows.html:21
 msgid "Skipped"
 msgstr "Өткөрүп жиберилди"
@@ -494,11 +492,11 @@ msgstr "Бул жайылтуу азыр эле жөнөтүлүп жатат."
 
 #: apps/broadcasts/services.py:531
 msgid ""
-"That template is no longer approved on this channel. Pick another one before"
-" sending."
+"That template is no longer approved on this channel. Pick another one before "
+"sending."
 msgstr ""
-"Бул шаблон бул каналда мындан ары бекитилген эмес. Жөнөтүүдөн мурун башкасын"
-" тандаңыз."
+"Бул шаблон бул каналда мындан ары бекитилген эмес. Жөнөтүүдөн мурун башкасын "
+"тандаңыз."
 
 #: apps/broadcasts/services.py:548
 #, python-format
@@ -823,7 +821,7 @@ msgid "Could not move the step"
 msgstr "Кадам жылдырылган жок"
 
 #: apps/campaigns/views.py:326 apps/flows/views_triggers.py:299
-#: apps/inbox/views.py:1769
+#: apps/inbox/views.py:1771
 msgid "Order updated"
 msgstr "Тартип жаңыртылды"
 
@@ -1009,8 +1007,7 @@ msgstr ""
 
 #: apps/channels/forms_whatsapp.py:211
 msgid "Use lowercase letters, digits and underscores only."
-msgstr ""
-"Кичине тамгаларды, сандарды жана астыңкы сызыкчаларды гана колдонуңуз."
+msgstr "Кичине тамгаларды, сандарды жана астыңкы сызыкчаларды гана колдонуңуз."
 
 #: apps/channels/forms_whatsapp.py:222
 msgid "A link button needs both a label and a URL."
@@ -1069,13 +1066,20 @@ msgstr "Бекитилди"
 msgid "Rejected"
 msgstr "Четке кагылды"
 
+#: apps/channels/preview.py:123 apps/channels/preview.py:124
+msgid ""
+"Send any message once the chat opens — that first message is what starts the "
+"test."
+msgstr ""
+"Маек ачылганда каалаган билдирүү жазыңыз — тестти баштаган дал ошол биринчи "
+"билдирүү болот."
+
 #: apps/channels/views.py:88
 msgid "Paste a BotFather token and we do the rest."
 msgstr "BotFather токенин коюңуз, калганын биз жасайбыз."
 
 #: apps/channels/views.py:89
-msgid ""
-"Sign in with the Instagram account and grant the messaging permissions."
+msgid "Sign in with the Instagram account and grant the messaging permissions."
 msgstr ""
 "Instagram аккаунту менен кириңиз жана билдирүү жөнөтүү укуктарын бериңиз."
 
@@ -1084,8 +1088,8 @@ msgid ""
 "Paste your Cloud API ids and system user token; we verify them with Meta "
 "first."
 msgstr ""
-"Cloud API идентификаторлорун жана тутум колдонуучунун токенин коюңуз; аларды"
-" алгач Meta'да текшеребиз."
+"Cloud API идентификаторлорун жана тутум колдонуучунун токенин коюңуз; аларды "
+"алгач Meta'да текшеребиз."
 
 #: apps/channels/views.py:91
 msgid "Sign in with Facebook and pick the page to connect."
@@ -1093,8 +1097,7 @@ msgstr "Facebook аркылуу кирип, туташтыра турган ба
 
 #: apps/channels/views.py:92
 msgid "Paste your Twilio account SID, auth token and number."
-msgstr ""
-"Twilio аккаунтуңуздун SID'ин, авторизация токенин жана номерин коюңуз."
+msgstr "Twilio аккаунтуңуздун SID'ин, авторизация токенин жана номерин коюңуз."
 
 #: apps/channels/views.py:93
 msgid "Pick SMTP, Resend or SES; we check the credentials before saving them."
@@ -1216,8 +1219,8 @@ msgid ""
 msgstr ""
 "Бул өнөктүктө азырынча Instagram колдонмосунун эсептик маалыматтары жок. "
 "Чөйрө өзгөрмөлөрүндө PLATFORM_INSTAGRAM_CLIENT_ID жана "
-"PLATFORM_INSTAGRAM_CLIENT_SECRET маанилерин коюңуз. "
-"docs/channels/instagram.md караңыз."
+"PLATFORM_INSTAGRAM_CLIENT_SECRET маанилерин коюңуз. docs/channels/"
+"instagram.md караңыз."
 
 #: apps/channels/views_instagram.py:77
 msgid ""
@@ -1226,8 +1229,8 @@ msgid ""
 "Meta app."
 msgstr ""
 "Instagram туташууну аяктаган жок. «Жөндөөлөр → Каналдар» баракчасынан кайра "
-"баштаңыз жана бул өнөктүктүн callback URL'и Meta колдонмоңузда көрсөтүлгөнүн"
-" текшериңиз."
+"баштаңыз жана бул өнөктүктүн callback URL'и Meta колдонмоңузда көрсөтүлгөнүн "
+"текшериңиз."
 
 #: apps/channels/views_instagram.py:165
 msgid "Instagram was not connected."
@@ -1241,20 +1244,40 @@ msgstr "%(name)s кайра туташтырылды."
 #: apps/channels/views_instagram.py:270
 #, python-format
 msgid ""
-"Connected %(name)s. Subscribe your Meta app to this account's webhook fields"
-" to start receiving messages — see docs/channels/instagram.md."
+"Connected %(name)s. Subscribe your Meta app to this account's webhook fields "
+"to start receiving messages — see docs/channels/instagram.md."
 msgstr ""
 "%(name)s туташтырылды. Билдирүүлөрдү ала баштоо үчүн Meta колдонмоңузду бул "
 "аккаунттун webhook бөлүктөрүнө жаздырыңыз — docs/channels/instagram.md "
 "караңыз."
+
+#: apps/channels/views_instagram.py:325
+msgid "Connect an Instagram account to pick posts from it."
+msgstr "Андан пост тандаш үчүн Instagram аккаунтун кошуңуз."
+
+#: apps/channels/views_instagram.py:333
+msgid ""
+"Instagram would not list this account's posts. Reconnect the channel and try "
+"again."
+msgstr ""
+"Instagram бул аккаунттун посттордун тизмесин көрсөтө алган жок. Каналды "
+"кайра туташтырып, дагы аракет кылыңыз."
+
+#: apps/channels/views_instagram.py:336
+msgid "Instagram's posts could not be loaded just now."
+msgstr "Instagram посттору азыр жүктөлгөн жок."
+
+#: apps/channels/views_instagram.py:338
+msgid "This account has no posts yet."
+msgstr "Бул аккаунтта азырынча посттор жок."
 
 #: apps/channels/views_messenger.py:94
 msgid ""
 "Facebook did not complete that connection. Start the setup again from this "
 "page, and make sure you accept every permission it asks for."
 msgstr ""
-"Facebook туташууну аяктаган жок. Бул баракчадан жөндөөнү кайра баштаңыз жана"
-" сурала турган бардык уруксаттарды кабыл алганыңызды текшериңиз."
+"Facebook туташууну аяктаган жок. Бул баракчадан жөндөөнү кайра баштаңыз жана "
+"сурала турган бардык уруксаттарды кабыл алганыңызды текшериңиз."
 
 #: apps/channels/views_messenger.py:102
 msgid ""
@@ -1264,13 +1287,13 @@ msgid ""
 msgstr ""
 "Бул өнөктүктө азырынча Facebook колдонмосунун эсептик маалыматтары жок. "
 "Чөйрө өзгөрмөлөрүндө PLATFORM_MESSENGER_CLIENT_ID жана "
-"PLATFORM_MESSENGER_CLIENT_SECRET маанилерин коюңуз; "
-"docs/channels/messenger.md караңыз."
+"PLATFORM_MESSENGER_CLIENT_SECRET маанилерин коюңуз; docs/channels/"
+"messenger.md караңыз."
 
 #: apps/channels/views_messenger.py:111
 msgid ""
-"That page connected, but Facebook would not start sending its messages here."
-" The app needs pages_messaging and pages_manage_metadata on this page; see "
+"That page connected, but Facebook would not start sending its messages here. "
+"The app needs pages_messaging and pages_manage_metadata on this page; see "
 "docs/channels/messenger.md."
 msgstr ""
 "Барак туташты, бирок Facebook бул жерге билдирүүлөрдү жөнөтө баштаган жок. "
@@ -1284,17 +1307,70 @@ msgstr "Төмөндөгү барактардын бирин тандаңыз."
 #: apps/channels/views_messenger.py:364
 #, python-format
 msgid ""
-"Connected %(name)s, but the Get Started button could not be configured — the"
-" welcome trigger will not fire until it is. See docs/channels/messenger.md."
+"Connected %(name)s, but the Get Started button could not be configured — the "
+"welcome trigger will not fire until it is. See docs/channels/messenger.md."
 msgstr ""
-"%(name)s туташтырылды, бирок Get Started баскычын жөндөө мүмкүн болгон жок —"
-" бул жасалмайынча куттуктоо триггери иштебейт. docs/channels/messenger.md "
+"%(name)s туташтырылды, бирок Get Started баскычын жөндөө мүмкүн болгон жок — "
+"бул жасалмайынча куттуктоо триггери иштебейт. docs/channels/messenger.md "
 "караңыз."
 
 #: apps/channels/views_messenger.py:372 apps/channels/views_whatsapp.py:181
 #, python-format
 msgid "Connected %(name)s. Send it a message to check it works."
 msgstr "%(name)s туташтырылды. Иштээрин текшерүү үчүн ага билдирүү жөнөтүңүз."
+
+#: apps/channels/views_messenger.py:490
+msgid "Connect a Facebook page to pick posts from it."
+msgstr "Андан пост тандаш үчүн Facebook барагын кошуңуз."
+
+#: apps/channels/views_messenger.py:498
+msgid ""
+"Facebook would not list this page's posts. Reconnect the channel and try "
+"again."
+msgstr ""
+"Facebook бул барактын посттордун тизмесин көрсөтө алган жок. Каналды кайра "
+"туташтырып, дагы аракет кылыңыз."
+
+#: apps/channels/views_messenger.py:501
+msgid "The page's posts could not be loaded just now."
+msgstr "Барактын посттору азыр жүктөлгөн жок."
+
+#: apps/channels/views_messenger.py:503
+msgid "This page has no posts yet."
+msgstr "Бул баракта азырынча посттор жок."
+
+#: apps/channels/views_preview.py:198
+msgid "this flow's channel"
+msgstr "бул флоунун каналы"
+
+#: apps/channels/views_preview.py:203
+#, python-format
+msgid ""
+"There is no live test on %(named)s. Testing works by sending you a link that "
+"opens a real chat, and only Telegram, Messenger and Instagram carry one back."
+msgstr ""
+"%(named)s үчүн түз тест жок. Тестирлөө чыныгы чатты ачкан шилтеме аркылуу "
+"иштейт, ал эми мындай шилтемени Telegram, Messenger жана Instagram гана "
+"кайтарат."
+
+#: apps/channels/views_preview.py:219
+#, python-format
+msgid ""
+"That %(named)s connection has no usable public name, so there is nothing to "
+"link to. Reconnect it through the guided setup so its name comes from the "
+"platform."
+msgstr ""
+"Бул %(named)s байланышында колдонула турган ачык аты жок, андыктан шилтеме "
+"жасаганга эч нерсе жок. Атын платформадан алыш үчүн аны жөндөө устасы "
+"аркылуу кайра туташтырыңыз."
+
+#: apps/channels/views_preview.py:228
+#, python-format
+msgid ""
+"Connect %(named)s first — testing runs the draft in a real chat with it."
+msgstr ""
+"Адегенде %(named)s кошуңуз — тест ошол аркылуу чыныгы чатта долбоорду "
+"иштетет."
 
 #: apps/channels/views_sms.py:238
 #, python-format
@@ -1312,19 +1388,19 @@ msgstr "SMS жөндөөлөрү сакталды."
 #: apps/channels/views_sms.py:283
 #, python-format
 msgid ""
-"SMS settings saved, but the price per segment was not a number between 0 and"
-" %(max)s and was left unchanged."
+"SMS settings saved, but the price per segment was not a number between 0 and "
+"%(max)s and was left unchanged."
 msgstr ""
-"SMS жөндөөлөрү сакталды, бирок сегмент баасы 0 менен %(max)s ортосундагы сан"
-" болбогондуктан өзгөрбөй калды."
+"SMS жөндөөлөрү сакталды, бирок сегмент баасы 0 менен %(max)s ортосундагы сан "
+"болбогондуктан өзгөрбөй калды."
 
 #: apps/channels/views_telegram.py:58
 msgid ""
 "Telegram did not accept that token. Copy it again from BotFather — it looks "
 "like 123456789:AA... — and make sure the bot has not been revoked."
 msgstr ""
-"Telegram бул токенди кабыл алган жок. Аны BotFather'ден кайра көчүрүңүз — ал"
-" 123456789:AA... сыяктуу көрүнөт — жана боттун жокко чыгарылбаганын "
+"Telegram бул токенди кабыл алган жок. Аны BotFather'ден кайра көчүрүңүз — ал "
+"123456789:AA... сыяктуу көрүнөт — жана боттун жокко чыгарылбаганын "
 "текшериңиз."
 
 #: apps/channels/views_telegram.py:73
@@ -1334,8 +1410,8 @@ msgid ""
 "see docs/channels/telegram.md."
 msgstr ""
 "Токен иштейт, бирок Telegram'ды бул өнөктүккө багыттоо мүмкүн болгон жок. "
-"Webhook URL'и жарактуу сертификаты бар ачык HTTPS аркылуу жеткиликтүү болушу"
-" керек; docs/channels/telegram.md караңыз."
+"Webhook URL'и жарактуу сертификаты бар ачык HTTPS аркылуу жеткиликтүү болушу "
+"керек; docs/channels/telegram.md караңыз."
 
 #: apps/channels/views_telegram.py:100
 msgid "Paste the token BotFather gave you."
@@ -1359,9 +1435,9 @@ msgstr ""
 
 #: apps/channels/views_whatsapp.py:69
 msgid ""
-"Those credentials work, but this app could not be subscribed to the WhatsApp"
-" Business Account's webhooks. Nothing will be delivered until it is; see "
-"docs/channels/whatsapp.md."
+"Those credentials work, but this app could not be subscribed to the WhatsApp "
+"Business Account's webhooks. Nothing will be delivered until it is; see docs/"
+"channels/whatsapp.md."
 msgstr ""
 "Бул эсептик маалыматтар иштейт, бирок бул колдонмону WhatsApp Business "
 "Account вебхуктарына жаздыруу мүмкүн болгон жок. Бул жасалмайынча эч нерсе "
@@ -1420,14 +1496,12 @@ msgstr "Медиа китепканасы"
 
 #: apps/common/context_processors.py:307 apps/flows/portability/cards.py:28
 #: templates/contacts/_rows.html:52 templates/contacts/_tag_chips.html:17
-#: templates/contacts/import_detail.html:71
-#: templates/contacts/tag_list.html:15 templates/contacts/tag_list.html:22
-#: templates/inbox/_sidebar.html:70
+#: templates/contacts/import_detail.html:71 templates/contacts/tag_list.html:15
+#: templates/contacts/tag_list.html:22 templates/inbox/_sidebar.html:70
 msgid "Tags"
 msgstr "Тегдер"
 
-#: apps/common/context_processors.py:315
-#: templates/inbox/label_settings.html:12
+#: apps/common/context_processors.py:315 templates/inbox/label_settings.html:12
 #: templates/inbox/label_settings.html:19
 msgid "Labels"
 msgstr "Белгилер"
@@ -1458,8 +1532,7 @@ msgstr "Уюм"
 msgid "People & roles"
 msgstr "Адамдар жана ролдор"
 
-#: apps/common/context_processors.py:385
-#: templates/organizations/billing.html:3
+#: apps/common/context_processors.py:385 templates/organizations/billing.html:3
 #: templates/organizations/billing.html:9
 msgid "Plan & billing"
 msgstr "Тариф жана төлөм"
@@ -1475,8 +1548,10 @@ msgstr "Профиль"
 
 #: apps/common/context_processors.py:411 templates/accounts/preferences.html:8
 #: templates/accounts/preferences.html:14
-msgid "Preferences"
-msgstr "Жеке ырастоолор"
+#: templates/accounts/preferences.html:20
+#: templates/channels/whatsapp_templates.html:26
+msgid "Language"
+msgstr "Тил"
 
 #: apps/common/context_processors.py:435
 msgid "Home"
@@ -1632,8 +1707,7 @@ msgstr "Иштөөдө"
 
 #: apps/contacts/models.py:570 apps/inbox/views.py:522
 #: templates/api/key_created.html:26 templates/api/webhook_secret.html:22
-#: templates/channels/secret.html:57
-#: templates/inbox/_conversation_rows.html:71
+#: templates/channels/secret.html:57 templates/inbox/_conversation_rows.html:71
 msgid "Done"
 msgstr "Бүттү"
 
@@ -1705,8 +1779,7 @@ msgstr "Мындай тег жок"
 
 #: apps/contacts/views.py:648
 msgid ""
-"Creating tags needs the manage_crm permission. Ask an editor to add it "
-"first."
+"Creating tags needs the manage_crm permission. Ask an editor to add it first."
 msgstr ""
 "Тег түзүү үчүн manage_crm укугу керек. Адегенде редактордон аны кошууну "
 "сураңыз."
@@ -1723,7 +1796,7 @@ msgstr "Адегенде тег тандаңыз"
 msgid "Already tagged"
 msgstr "Мурунтан белгиленген"
 
-#: apps/contacts/views.py:664 apps/inbox/views.py:1135
+#: apps/contacts/views.py:664 apps/inbox/views.py:1137
 msgid "Tag added"
 msgstr "Тег кошулду"
 
@@ -1731,7 +1804,7 @@ msgstr "Тег кошулду"
 msgid "That tag was not on this contact"
 msgstr "Бул тег бул байланышта болгон эмес"
 
-#: apps/contacts/views.py:678 apps/inbox/views.py:1133
+#: apps/contacts/views.py:678 apps/inbox/views.py:1135
 msgid "Tag removed"
 msgstr "Тег алынды"
 
@@ -1759,7 +1832,7 @@ msgstr "Сценарий башталды"
 msgid "Nothing was running"
 msgstr "Эч нерсе иштеген жок"
 
-#: apps/contacts/views.py:791 apps/inbox/views.py:1108
+#: apps/contacts/views.py:791 apps/inbox/views.py:1110
 msgid "Automation stopped"
 msgstr "Автоматташтыруу токтотулду"
 
@@ -2049,8 +2122,8 @@ msgid_plural ""
 "%(untouched)s of the %(named)s selected were not touched — already deleted, "
 "already being erased, or not in this workspace."
 msgstr[0] ""
-"%(named)s тандалгандын %(untouched)sи тийилген жок — мурунтан эле өчүрүлгөн,"
-" өчүрүлүп жатат, же бул иш жайында эмес."
+"%(named)s тандалгандын %(untouched)sи тийилген жок — мурунтан эле өчүрүлгөн, "
+"өчүрүлүп жатат, же бул иш жайында эмес."
 
 #: apps/contacts/views.py:1756
 #, python-format
@@ -2069,7 +2142,7 @@ msgstr "Баракчаны кайра жүктөп, дагы аракет кыл
 #: apps/flows/portability/cards.py:29 templates/contacts/detail.html:91
 #: templates/contacts/field_list.html:8 templates/contacts/field_list.html:15
 msgid "Custom fields"
-msgstr "Атайын бөлүктөр" 
+msgstr "Атайын бөлүктөр"
 
 #: apps/flows/portability/cards.py:31
 msgid "Segments"
@@ -2111,14 +2184,14 @@ msgstr "Комментарий триггери үчүн жазуулар"
 #: apps/flows/portability/cards.py:50
 msgid ""
 "This flow labels people with the tags below, and your workspace does not "
-"have them yet. For each one: create it under this name, or point it at a tag"
-" you already use. (A tag is a label on a person — “VIP”, “Newsletter” — that"
-" you can search and filter by later.)"
+"have them yet. For each one: create it under this name, or point it at a tag "
+"you already use. (A tag is a label on a person — “VIP”, “Newsletter” — that "
+"you can search and filter by later.)"
 msgstr ""
-"Бул сценарий адамдарды төмөнкү тегдер менен белгилейт, бирок алар сиздин "
-"иш жайында дагы жок. Ар бири үчүн: ушул ат менен түзүңүз же "
-"мурунтан бар тегди көрсөтүңүз. (Тег — бул контакттагы белги — «VIP», "
-"«Рассылка» — кийин ошол боюнча издеп, чыпкалай аласыз.)"
+"Бул сценарий адамдарды төмөнкү тегдер менен белгилейт, бирок алар сиздин иш "
+"жайында дагы жок. Ар бири үчүн: ушул ат менен түзүңүз же мурунтан бар тегди "
+"көрсөтүңүз. (Тег — бул контакттагы белги — «VIP», «Рассылка» — кийин ошол "
+"боюнча издеп, чыпкалай аласыз.)"
 
 #: apps/flows/portability/cards.py:56
 msgid ""
@@ -2129,8 +2202,8 @@ msgid ""
 "changed later.)"
 msgstr ""
 "Бул сценарий бул маалыматтарды контакттын картасына сактайт, бирок алар "
-"сиздин иш жайыңызда да жок. Ар бири үчүн: аны түзүңүз же мурунтан "
-"бар бөлүккө көрсөтүңүз. (Кошумча бөлүк — бул демейки боюнча жок көрсөткүч — "
+"сиздин иш жайыңызда да жок. Ар бири үчүн: аны түзүңүз же мурунтан бар "
+"бөлүккө көрсөтүңүз. (Кошумча бөлүк — бул демейки боюнча жок көрсөткүч — "
 "өлчөм, брондоо күнү, буйрутма номери. Анын түрү эмнени сактай турганыңызды "
 "аныктайт жана кийин өзгөртүлбөйт.)"
 
@@ -2153,8 +2226,8 @@ msgstr ""
 #: apps/flows/portability/cards.py:65
 msgid "Who the flow assigns conversations to and notifies. Defaults to you."
 msgstr ""
-"Сценарий сүйлөшүүлөрдү кимге дайындайт жана кимге билдирет. Демейки боюнча —"
-" сизге."
+"Сценарий сүйлөшүүлөрдү кимге дайындайт жана кимге билдирет. Демейки боюнча — "
+"сизге."
 
 #: apps/flows/portability/cards.py:66
 msgid ""
@@ -2199,10 +2272,8 @@ msgstr ""
 
 #: apps/flows/portability/cards.py:77
 msgid ""
-"The public @handle a link was built from was stripped when the file was "
-"made."
-msgstr ""
-"Шилтеме түзүлгөн ачык @колдонуучу аты файл түзүлгөндө алынып салынган."
+"The public @handle a link was built from was stripped when the file was made."
+msgstr "Шилтеме түзүлгөн ачык @колдонуучу аты файл түзүлгөндө алынып салынган."
 
 #: apps/flows/portability/cards.py:78
 msgid "The sending address was stripped when the file was made."
@@ -2260,8 +2331,8 @@ msgstr ""
 #: apps/flows/portability/imports.py:648
 #, python-format
 msgid ""
-"Pick the %(platform)s account this trigger should watch, or choose to let it"
-" watch them all."
+"Pick the %(platform)s account this trigger should watch, or choose to let it "
+"watch them all."
 msgstr ""
 "Бул триггер байкашы керек %(platform)s аккаунтун тандаңыз, же баарын "
 "байкатууну тандаңыз."
@@ -2310,8 +2381,7 @@ msgstr "Дал келтиргенден кийин «%(name)s» сакталба
 #, python-format
 msgid "The %(type)s trigger on “%(name)s” cannot be created here: %(issues)s"
 msgstr ""
-"«%(name)s» ичиндеги %(type)s триггерин бул жерден түзүүгө болбойт: "
-"%(issues)s"
+"«%(name)s» ичиндеги %(type)s триггерин бул жерден түзүүгө болбойт: %(issues)s"
 
 #: apps/flows/portability/library.py:167 apps/flows/portability/library.py:189
 #: apps/flows/portability/library.py:243 apps/flows/portability/library.py:342
@@ -2333,8 +2403,8 @@ msgstr "Email дарегин суроо"
 
 #: apps/flows/portability/library.py:176
 msgid ""
-"Asks for an email address, checks it looks real, and saves it to the contact"
-" before replying."
+"Asks for an email address, checks it looks real, and saves it to the contact "
+"before replying."
 msgstr ""
 "Email дарегин сурайт, анын чын экенин текшерет жана жооп бергенге чейин аны "
 "контактка сактайт."
@@ -2356,8 +2426,8 @@ msgstr "Иш-чара тууралуу эскертүү"
 
 #: apps/flows/portability/library.py:181
 msgid ""
-"Signs someone up for an event over Telegram, then messages them again nearer"
-" the time."
+"Signs someone up for an event over Telegram, then messages them again nearer "
+"the time."
 msgstr ""
 "Адамды Telegram аркылуу иш-чарага жаздырат, андан кийин күнү жакындаганда "
 "кайра жазат."
@@ -2368,8 +2438,8 @@ msgstr "Сатып алуудан кийин пикир суроо"
 
 #: apps/flows/portability/library.py:186
 msgid ""
-"Waits until the order has landed, asks how it went, and routes the answer by"
-" what they say."
+"Waits until the order has landed, asks how it went, and routes the answer by "
+"what they say."
 msgstr ""
 "Буйрутма жеткирилгенче күтөт, кандай болгонун сурайт жана жоопко жараша "
 "багыттайт."
@@ -2402,8 +2472,8 @@ msgstr "Унутулган суроого эскертүү"
 
 #: apps/flows/portability/library.py:196
 msgid ""
-"Chases an enquiry that went quiet twice, spaced out, then tags it so you can"
-" see who never replied."
+"Chases an enquiry that went quiet twice, spaced out, then tags it so you can "
+"see who never replied."
 msgstr ""
 "Унутулган суроого эки жолу, аралык менен эскертет, андан кийин ким жооп "
 "бербегенин көрүү үчүн тег коёт."
@@ -2508,8 +2578,7 @@ msgstr "Комментарийден DM'ге лид-магнит"
 #: apps/flows/portability/library.py:245
 msgid ""
 "Comment-triggered DM that delivers a guide and collects an email address."
-msgstr ""
-"Комментарий менен иштелген DM гид жөнөтөт жана email дарегин чогултат."
+msgstr "Комментарий менен иштелген DM гид жөнөтөт жана email дарегин чогултат."
 
 #: apps/flows/portability/library.py:249
 msgid "Respond to every DM"
@@ -2517,8 +2586,8 @@ msgstr "Ар бир DM'ге жооп берүү"
 
 #: apps/flows/portability/library.py:251
 msgid ""
-"Catch every DM nothing else answered, greet people by name and route them to"
-" buy, ask or reach a person."
+"Catch every DM nothing else answered, greet people by name and route them to "
+"buy, ask or reach a person."
 msgstr ""
 "Эч ким жооп бербеген ар бир DM'ди кармайт, атын атап саламдашат жана сатып "
 "алуу, суроо же адамга жетүү багытына багыттайт."
@@ -2529,8 +2598,8 @@ msgstr "Чыгарууга эрте мүмкүнчүлүк"
 
 #: apps/flows/portability/library.py:257
 msgid ""
-"A keyword puts people on the launch waitlist and tags them for the broadcast"
-" on the day."
+"A keyword puts people on the launch waitlist and tags them for the broadcast "
+"on the day."
 msgstr ""
 "Ачкыч сөз адамды жайылтуу тизмесине кошот жана күнү таратуу үчүн тег коёт."
 
@@ -2643,8 +2712,8 @@ msgid ""
 "Sort collab replies into brands and creators, capture a brief and tag the "
 "request."
 msgstr ""
-"Коллаборация жоопторун бренддер жана авторлор боюнча иргейт, брифти чогултат"
-" жана сурамга тег коёт."
+"Коллаборация жоопторун бренддер жана авторлор боюнча иргейт, брифти чогултат "
+"жана сурамга тег коёт."
 
 #: apps/flows/portability/library.py:318
 msgid "Limited-time offer from Stories"
@@ -2723,11 +2792,11 @@ msgstr "Жумуш убактысынан тышкары жооп"
 
 #: apps/flows/portability/library.py:349
 msgid ""
-"Answers outside opening hours with when you are next open, so nobody is left"
-" waiting."
+"Answers outside opening hours with when you are next open, so nobody is left "
+"waiting."
 msgstr ""
-"Жумуш убактысынан тышкары качан байланышка чыгаарыңызды айтып жооп берет, эч"
-" ким күтпөйт."
+"Жумуш убактысынан тышкары качан байланышка чыгаарыңызды айтып жооп берет, эч "
+"ким күтпөйт."
 
 #: apps/flows/portability/library.py:353
 msgid "Remind someone of an appointment"
@@ -2755,8 +2824,8 @@ msgstr "Пикир суроо"
 
 #: apps/flows/portability/library.py:364
 msgid ""
-"Waits a few days, asks for a review, and stops asking the people who already"
-" left one."
+"Waits a few days, asks for a review, and stops asking the people who already "
+"left one."
 msgstr ""
 "Бир нече күн күтөт, пикир калтырууну сурайт жана мурун калтыргандардан "
 "сурабай коёт."
@@ -2969,8 +3038,8 @@ msgid ""
 "up."
 msgstr ""
 "Instagram азырынча колдонмолорго жаңы жазылуучулар жөнүндө билдирбейт, "
-"ошондуктан бул триггер иштебейт. Ал бул жерде, эгер Instagram муну ачса, өзү"
-" иштеп кете турганы үчүн турат."
+"ошондуктан бул триггер иштебейт. Ал бул жерде, эгер Instagram муну ачса, өзү "
+"иштеп кете турганы үчүн турат."
 
 #: apps/flows/triggers/registry.py:177
 msgid "Link or QR code"
@@ -3199,8 +3268,8 @@ msgstr "Бул файл мурунтан эле импорттолгон."
 
 #: apps/flows/views_portability.py:388
 msgid ""
-"Imported as a draft, with its trigger switched off. Read the messages below,"
-" then switch the trigger on and set it live."
+"Imported as a draft, with its trigger switched off. Read the messages below, "
+"then switch the trigger on and set it live."
 msgstr ""
 "Долбоор катары импорттолду, триггери өчүрүлгөн. Төмөнкү билдирүүлөрдү окуп, "
 "триггерди күйгүзүп, сценарийди иштетиңиз."
@@ -3447,7 +3516,7 @@ msgstr "Аткарылды деп белгилөө"
 msgid "(deleted)"
 msgstr "(өчүрүлдү)"
 
-#: apps/inbox/rendering.py:702 apps/inbox/views.py:848
+#: apps/inbox/rendering.py:702 apps/inbox/views.py:850
 #, python-format
 msgid "%(list)s or %(last)s"
 msgstr "%(list)s же %(last)s"
@@ -3475,11 +3544,11 @@ msgstr "Бул шарт өтө чоң."
 
 #: apps/inbox/rules.py:262
 msgid ""
-"A rule needs at least one condition: a channel, a keyword or something about"
-" the contact."
+"A rule needs at least one condition: a channel, a keyword or something about "
+"the contact."
 msgstr ""
-"Эрежеге жок дегенде бир шарт керек: канал, ачкыч сөз же байланыш жөнүндө бир"
-" нерсе."
+"Эрежеге жок дегенде бир шарт керек: канал, ачкыч сөз же байланыш жөнүндө бир "
+"нерсе."
 
 #: apps/inbox/rules.py:277
 msgid "Rule actions must be a list."
@@ -3507,7 +3576,7 @@ msgstr "Белгисиз аракет %(kind)r."
 msgid "That label no longer exists."
 msgstr "Бул метка мындан ары жок."
 
-#: apps/inbox/rules.py:300 apps/inbox/views.py:1035
+#: apps/inbox/rules.py:300 apps/inbox/views.py:1037
 msgid "That person is not a member of this workspace."
 msgstr "Бул адам бул иш жайынын мүчөсү эмес."
 
@@ -3581,7 +3650,7 @@ msgstr "Бул жооп мурунтан жөнөтүлгөн же жокко ч
 msgid "Assigned to me"
 msgstr "Мага дайындалган"
 
-#: apps/inbox/views.py:221 apps/inbox/views.py:520 apps/inbox/views.py:1025
+#: apps/inbox/views.py:221 apps/inbox/views.py:520 apps/inbox/views.py:1027
 #: templates/inbox/_thread_header.html:54
 msgid "Unassigned"
 msgstr "Дайындалган жок"
@@ -3594,207 +3663,207 @@ msgstr "Меники"
 msgid "Nothing to send"
 msgstr "Жөнөтүүчү эч нерсе жок"
 
-#: apps/inbox/views.py:812 templates/inbox/_deferred.html:54
+#: apps/inbox/views.py:813 templates/inbox/_deferred.html:54
 msgid "Not sent"
 msgstr "Жөнөтүлгөн жок"
 
-#: apps/inbox/views.py:813
+#: apps/inbox/views.py:815
 msgid "Note added"
 msgstr "Эскертүү кошулду"
 
-#: apps/inbox/views.py:813
+#: apps/inbox/views.py:815
 msgid "Reply sent"
 msgstr "Жооп жөнөтүлдү"
 
-#: apps/inbox/views.py:821
+#: apps/inbox/views.py:823
 #, python-format
 msgid "%(platform)s cannot carry %(items)s, so that was left off."
 msgstr "%(platform)s %(items)s алып жүрө албайт, ошондуктан ал калтырылды."
 
-#: apps/inbox/views.py:836
+#: apps/inbox/views.py:838
 msgid "an image"
 msgstr "сүрөт"
 
-#: apps/inbox/views.py:837
+#: apps/inbox/views.py:839
 msgid "an audio file"
 msgstr "аудио файл"
 
-#: apps/inbox/views.py:838
+#: apps/inbox/views.py:840
 msgid "a video"
 msgstr "видео"
 
-#: apps/inbox/views.py:839
+#: apps/inbox/views.py:841
 msgid "a file"
 msgstr "файл"
 
-#: apps/inbox/views.py:910
+#: apps/inbox/views.py:912
 msgid "Still not sent"
 msgstr "Дагы деле жөнөтүлгөн жок"
 
-#: apps/inbox/views.py:1034
+#: apps/inbox/views.py:1036
 msgid "Cannot assign"
 msgstr "Дайындоо мүмкүн эмес"
 
-#: apps/inbox/views.py:1040
+#: apps/inbox/views.py:1042
 #, python-format
 msgid "Assigned to %(name)s"
 msgstr "%(name)sга дайындалды"
 
-#: apps/inbox/views.py:1054
+#: apps/inbox/views.py:1056
 msgid "Marked done"
 msgstr "Аткарылды деп белгиленди"
 
-#: apps/inbox/views.py:1064
+#: apps/inbox/views.py:1066
 msgid "Reopened"
 msgstr "Кайра ачылды"
 
-#: apps/inbox/views.py:1066
+#: apps/inbox/views.py:1068
 msgid "Unknown state"
 msgstr "Белгисиз абал"
 
-#: apps/inbox/views.py:1066
+#: apps/inbox/views.py:1068
 msgid "A conversation is either open or done."
 msgstr "Маек же ачык, же аяктаган болот."
 
-#: apps/inbox/views.py:1083
+#: apps/inbox/views.py:1085
 msgid "Automation resumed"
 msgstr "Автоматташтыруу улантылды"
 
-#: apps/inbox/views.py:1085
+#: apps/inbox/views.py:1087
 msgid "Automation paused"
 msgstr "Автоматташтыруу тыныгууда"
 
-#: apps/inbox/views.py:1107
+#: apps/inbox/views.py:1109
 msgid "Nothing running"
 msgstr "Эч нерсе иштебейт"
 
-#: apps/inbox/views.py:1129
+#: apps/inbox/views.py:1131
 msgid "No tag selected"
 msgstr "Тег тандалган жок"
 
-#: apps/inbox/views.py:1159
+#: apps/inbox/views.py:1161
 msgid "Not labelled"
 msgstr "Метка коюлган жок"
 
-#: apps/inbox/views.py:1160
+#: apps/inbox/views.py:1162
 msgid "Labelled"
 msgstr "Меткаланды"
 
-#: apps/inbox/views.py:1171
+#: apps/inbox/views.py:1173
 msgid "Label removed"
 msgstr "Метка алынды"
 
-#: apps/inbox/views.py:1207
+#: apps/inbox/views.py:1209
 #, python-format
 msgid "Label removed from %(count)s conversation"
 msgid_plural "Label removed from %(count)s conversations"
 msgstr[0] "Метка %(count)s маектен алынды"
 
-#: apps/inbox/views.py:1209
+#: apps/inbox/views.py:1211
 #, python-format
 msgid "Label added to %(count)s conversation"
 msgid_plural "Label added to %(count)s conversations"
 msgstr[0] "Метка %(count)s маекке кошулду"
 
-#: apps/inbox/views.py:1231 apps/inbox/views.py:1251
+#: apps/inbox/views.py:1233 apps/inbox/views.py:1253
 msgid "No reminder set"
 msgstr "Эскертүү коюлган жок"
 
-#: apps/inbox/views.py:1231 apps/inbox/views.py:1282
+#: apps/inbox/views.py:1233 apps/inbox/views.py:1284
 msgid "Pick a date and time."
 msgstr "Күндү жана убакытты тандаңыз."
 
-#: apps/inbox/views.py:1252
+#: apps/inbox/views.py:1254
 msgid "Reminder set"
 msgstr "Эскертүү коюлду"
 
-#: apps/inbox/views.py:1264 apps/inbox/views.py:1333
+#: apps/inbox/views.py:1266 apps/inbox/views.py:1335
 msgid "Already gone"
 msgstr "Мурунтан жок болуп кетти"
 
-#: apps/inbox/views.py:1265
+#: apps/inbox/views.py:1267
 msgid "Reminder cancelled"
 msgstr "Эскертүү жокко чыгарылды"
 
-#: apps/inbox/views.py:1282 apps/inbox/views.py:1286 apps/inbox/views.py:1296
+#: apps/inbox/views.py:1284 apps/inbox/views.py:1288 apps/inbox/views.py:1298
 msgid "Not scheduled"
 msgstr "Пландалган жок"
 
-#: apps/inbox/views.py:1297
+#: apps/inbox/views.py:1299
 msgid "Reply scheduled"
 msgstr "Жооп пландалды"
 
-#: apps/inbox/views.py:1314 apps/inbox/views.py:1318
+#: apps/inbox/views.py:1316 apps/inbox/views.py:1320
 msgid "Not changed"
 msgstr "Өзгөртүлгөн жок"
 
-#: apps/inbox/views.py:1319
+#: apps/inbox/views.py:1321
 msgid "Scheduled reply updated"
 msgstr "Пландалган жооп жаңыртылды"
 
-#: apps/inbox/views.py:1334
+#: apps/inbox/views.py:1336
 msgid "Scheduled reply cancelled"
 msgstr "Пландалган жооп жокко чыгарылды"
 
-#: apps/inbox/views.py:1424
+#: apps/inbox/views.py:1426
 msgid "That message is too long."
 msgstr "Бул билдирүү өтө узун."
 
-#: apps/inbox/views.py:1433
+#: apps/inbox/views.py:1435
 #, python-format
 msgid "%(platform)s cannot carry that attachment."
 msgstr "%(platform)s бул тиркемени алып жүрө албайт."
 
-#: apps/inbox/views.py:1436
+#: apps/inbox/views.py:1438
 msgid "Write something first."
 msgstr "Адегенде бир нерсе жазыңыз."
 
-#: apps/inbox/views.py:1465
+#: apps/inbox/views.py:1467
 msgid "One of those attachments is no longer in the library."
 msgstr "Бул тиркемелердин бири китепканада жок болуп калды."
 
-#: apps/inbox/views.py:1547
+#: apps/inbox/views.py:1549
 msgid "Not created"
 msgstr "Түзүлгөн жок"
 
-#: apps/inbox/views.py:1548
+#: apps/inbox/views.py:1550
 msgid "Label created"
 msgstr "Метка түзүлдү"
 
-#: apps/inbox/views.py:1559 apps/inbox/views.py:1693 apps/inbox/views.py:1698
-#: apps/inbox/views.py:1719
+#: apps/inbox/views.py:1561 apps/inbox/views.py:1695 apps/inbox/views.py:1700
+#: apps/inbox/views.py:1721
 msgid "Not saved"
 msgstr "Сакталган жок"
 
-#: apps/inbox/views.py:1560
+#: apps/inbox/views.py:1562
 msgid "Label saved"
 msgstr "Метка сакталды"
 
-#: apps/inbox/views.py:1577
+#: apps/inbox/views.py:1579
 msgid "Label deleted"
 msgstr "Метка өчүрүлдү"
 
-#: apps/inbox/views.py:1693
+#: apps/inbox/views.py:1695
 msgid "A rule needs a name."
 msgstr "Эрежеге ат керек."
 
-#: apps/inbox/views.py:1721 apps/inbox/views.py:1724
+#: apps/inbox/views.py:1723 apps/inbox/views.py:1726
 msgid "Rule saved"
 msgstr "Эреже сакталды"
 
-#: apps/inbox/views.py:1738
+#: apps/inbox/views.py:1740
 msgid "Not enabled"
 msgstr "Күйгүзүлгөн жок"
 
-#: apps/inbox/views.py:1741
+#: apps/inbox/views.py:1743
 msgid "Rule enabled"
 msgstr "Эреже күйгүзүлдү"
 
-#: apps/inbox/views.py:1745
+#: apps/inbox/views.py:1747
 msgid "Rule disabled"
 msgstr "Эреже өчүрүлдү"
 
-#: apps/inbox/views.py:1754
+#: apps/inbox/views.py:1756
 msgid "Rule deleted"
 msgstr "Эреже өчүрүлдү"
 
@@ -3839,8 +3908,7 @@ msgstr ""
 #: apps/media_library/mimes.py:203
 msgid "Zip-based files (including .docx, .xlsx and .zip) are not accepted."
 msgstr ""
-"Zip негизиндеги файлдар (.docx, .xlsx жана .zip кошо алганда) кабыл "
-"алынбайт."
+"Zip негизиндеги файлдар (.docx, .xlsx жана .zip кошо алганда) кабыл алынбайт."
 
 #: apps/media_library/mimes.py:209
 msgid "Unrecognised file type. Accepted: images, audio, video and PDF."
@@ -3870,8 +3938,8 @@ msgid ""
 "This workspace has used %(used)s of its %(limit)s media allowance. Delete "
 "something before uploading %(incoming)s."
 msgstr ""
-"Бул иш жайы медиа үчүн %(limit)s чегинен %(used)s колдонду. "
-"%(incoming)s жүктөөдөн мурун бир нерсени өчүрүңүз."
+"Бул иш жайы медиа үчүн %(limit)s чегинен %(used)s колдонду. %(incoming)s "
+"жүктөөдөн мурун бир нерсени өчүрүңүз."
 
 #: apps/media_library/services.py:70
 msgid "That file is larger than any media type this deployment accepts."
@@ -3930,8 +3998,7 @@ msgstr "Китепкананын тамырына жылдырылды"
 #, python-format
 msgid "%(name)s is gone, and every delivery URL for it now fails."
 msgstr ""
-"%(name)s жок болду, эми ага байланыштуу бардык жеткирүү шилтемелери "
-"иштебейт."
+"%(name)s жок болду, эми ага байланыштуу бардык жеткирүү шилтемелери иштебейт."
 
 #: apps/media_library/views.py:318 apps/media_library/views.py:334
 msgid "A folder needs a name."
@@ -4022,8 +4089,7 @@ msgstr "Бул адам мурунтан эле уюмуңуздун мүчөс�
 
 #: apps/members/services.py:218
 msgid ""
-"An invitation is already pending for this address. You can resend it "
-"instead."
+"An invitation is already pending for this address. You can resend it instead."
 msgstr "Бул дарекке чакыруу мурунтан эле жөнөтүлгөн. Аны кайра жөнөтө аласыз."
 
 #: apps/members/services.py:221
@@ -4145,6 +4211,113 @@ msgstr "Иш жайына жол жаңырды."
 msgid "You have joined %(name)s."
 msgstr "Сиз %(name)s кошулдуңуз."
 
+#: apps/messaging/codes.py:99
+msgid "This platform has no messaging window."
+msgstr "Бул платформада билдирүү жөнөтүү үчүн терезе жок."
+
+#: apps/messaging/codes.py:100
+msgid "The contact messaged recently, so the window is open."
+msgstr "Байланыштагы адам жакында жазган, андыктан терезе ачык."
+
+#: apps/messaging/codes.py:101
+msgid "Sent under the human-agent allowance, available to inbox replies only."
+msgstr ""
+"Адам-агент уруксаты менен жөнөтүлдү — бул кирген кат-кабарлардан жооп "
+"берүүдө гана мүмкүн."
+
+#: apps/messaging/codes.py:102
+msgid "Sent outside the window under an approved message tag."
+msgstr "Терезеден тышкары, бекитилген билдирүү тегин колдонуп жөнөтүлдү."
+
+#: apps/messaging/codes.py:103
+msgid "Sent outside the window using an approved template."
+msgstr "Терезеден тышкары, бекитилген үлгүнү колдонуп жөнөтүлдү."
+
+#: apps/messaging/codes.py:104
+msgid "This contact opted out of messages on this channel."
+msgstr "Бул байланыштагы адам бул каналдагы билдирүүлөрдөн баш тартты."
+
+#: apps/messaging/codes.py:105
+msgid "This contact has been deleted."
+msgstr "Бул байланыштагы адам өчүрүлгөн."
+
+#: apps/messaging/codes.py:106
+msgid ""
+"This contact has never given permission to message them on this channel."
+msgstr ""
+"Бул байланыштагы адам бул каналда ага жазууга эч качан уруксат берген эмес."
+
+#: apps/messaging/codes.py:107
+msgid "There is no address for this contact on this channel."
+msgstr "Бул байланыштагы адамдын бул каналда дареги жок."
+
+#: apps/messaging/codes.py:108
+msgid "This address was captured before a channel connection existed."
+msgstr "Бул дарек канал туташуусу пайда болгонго чейин алынган."
+
+#: apps/messaging/codes.py:109
+msgid "This platform does not permit broadcasts."
+msgstr "Бул платформа жайылтууларга уруксат бербейт."
+
+#: apps/messaging/codes.py:110
+msgid ""
+"The messaging window has closed and this platform offers no way to reopen it."
+msgstr ""
+"Билдирүү терезеси жабылды, бул платформа аны кайра ачуунун жолун сунбайт."
+
+#: apps/messaging/codes.py:111
+msgid ""
+"Your plan's monthly contact limit has been reached, so this did not go out."
+msgstr ""
+"Тарифиңиздин айлык байланыш лимитине жетти, ошондуктан бул жөнөтүлгөн жок."
+
+#: apps/messaging/codes.py:112
+msgid ""
+"Outside the messaging window this platform requires an approved template."
+msgstr ""
+"Билдирүү терезесинен тышкары бул платформа бекитилген үлгүнү талап кылат."
+
+#: apps/messaging/codes.py:113
+msgid ""
+"Outside the messaging window this platform requires an approved message tag."
+msgstr ""
+"Билдирүү терезесинен тышкары бул платформа бекитилген билдирүү тегин талап "
+"кылат."
+
+#: apps/messaging/codes.py:114
+msgid "No adapter is installed for this platform."
+msgstr "Бул платформа үчүн адаптер орнотулган эмес."
+
+#: apps/messaging/codes.py:115
+msgid "The platform rejected the message."
+msgstr "Платформа билдирүүнү четке какты."
+
+#: apps/messaging/codes.py:116
+msgid "The platform could not be reached."
+msgstr "Платформа менен байланышка чыгуу мүмкүн болбоду."
+
+#: apps/messaging/codes.py:117
+msgid "The platform is throttling this connection."
+msgstr "Платформа бул байланышты чектеп жатат."
+
+#: apps/messaging/codes.py:118
+msgid "Waiting for this connection's send rate to allow another message."
+msgstr ""
+"Бул байланыштын жөнөтүү ылдамдыгы дагы бир билдирүүгө уруксат берерин күтүү."
+
+#: apps/messaging/codes.py:119
+msgid "Gave up after retrying this send."
+msgstr "Кайра-кайра аракет кылгандан кийин жөнөтүү токтотулду."
+
+#: apps/messaging/codes.py:120
+msgid "The send failed and another attempt could not be scheduled."
+msgstr "Жөнөтүү ишке ашкан жок, дагы бир аракетти пландаштырууга болбоду."
+
+#: apps/messaging/codes.py:121
+msgid "The work that queued this message was cancelled before it was sent."
+msgstr ""
+"Бул билдирүүнү кезекке койгон тапшырма ал жөнөтүлгөнгө чейин жокко чыгарылды."
+
 #: apps/notifications/events.py:220
 msgid "Flow hit the loop cap"
 msgstr "Сценарий цикл чегине жетти"
@@ -4189,11 +4362,11 @@ msgstr "{channel_name} каналын кайра туташтыруу керек
 #: apps/notifications/events.py:264
 #, python-brace-format
 msgid ""
-"{platform_label} stopped accepting the stored credentials. Nothing will send"
-" or receive on this channel until it is reconnected."
+"{platform_label} stopped accepting the stored credentials. Nothing will send "
+"or receive on this channel until it is reconnected."
 msgstr ""
-"{platform_label} сакталган каттоо маалыматтарын кабыл алууну токтотту. Кайра"
-" туташтырылганга чейин бул канал аркылуу эч нерсе жөнөтүлбөйт же кабыл "
+"{platform_label} сакталган каттоо маалыматтарын кабыл алууну токтотту. Кайра "
+"туташтырылганга чейин бул канал аркылуу эч нерсе жөнөтүлбөйт же кабыл "
 "алынбайт."
 
 #: apps/notifications/events.py:274
@@ -4423,11 +4596,11 @@ msgstr "же"
 #: templates/account/login.html:43
 #, python-format
 msgid ""
-"No account yet? <a href=\"%(signup_url)s\" style=\"color: "
-"var(--primary);\">Create one</a>."
+"No account yet? <a href=\"%(signup_url)s\" style=\"color: var(--primary);"
+"\">Create one</a>."
 msgstr ""
-"Аккаунтуңуз жокпу? <a href=\"%(signup_url)s\" style=\"color: "
-"var(--primary);\">Түзүү</a>."
+"Аккаунтуңуз жокпу? <a href=\"%(signup_url)s\" style=\"color: var(--primary);"
+"\">Түзүү</a>."
 
 #: templates/account/signup.html:4 templates/account/signup.html:8
 msgid "Create your account"
@@ -4436,8 +4609,7 @@ msgstr "Аккаунт түзүңүз"
 #: templates/account/signup.html:13
 msgid ""
 "You were invited to join an organization. Signing up here adds you to it."
-msgstr ""
-"Сиз уюмга кошулууга чакырылдыңыз. Бул жерден катталуу сизди ага кошот."
+msgstr "Сиз уюмга кошулууга чакырылдыңыз. Бул жерден катталуу сизди ага кошот."
 
 #: templates/account/signup.html:53
 msgid "Create account"
@@ -4446,20 +4618,15 @@ msgstr "Аккаунт түзүү"
 #: templates/account/signup.html:58
 #, python-format
 msgid ""
-"Already have an account? <a href=\"%(login_url)s\" style=\"color: "
-"var(--primary);\">Sign in</a>."
+"Already have an account? <a href=\"%(login_url)s\" style=\"color: var(--"
+"primary);\">Sign in</a>."
 msgstr ""
-"Аккаунтуңуз барбы? <a href=\"%(login_url)s\" style=\"color: "
-"var(--primary);\">Кирүү</a>."
+"Аккаунтуңуз барбы? <a href=\"%(login_url)s\" style=\"color: var(--primary);"
+"\">Кирүү</a>."
 
 #: templates/accounts/preferences.html:15
 msgid "How BrightBean Chat looks and speaks to you."
 msgstr "BrightBean Chat сиз үчүн кандай көрүнөт жана кайсы тилде сүйлөйт."
-
-#: templates/accounts/preferences.html:20
-#: templates/channels/whatsapp_templates.html:26
-msgid "Language"
-msgstr "Тил"
 
 #: templates/accounts/preferences.html:24
 msgid "Match my browser"
@@ -4505,17 +4672,16 @@ msgstr "Дагы бир email кошуу"
 
 #: templates/analytics/_counter_cards.html:25
 #: templates/analytics/flow_detail.html:59
-#: templates/analytics/flow_detail.html:94
-#: templates/analytics/overview.html:42 templates/analytics/overview.html:81
-#: templates/broadcasts/_counters.html:60 templates/broadcasts/detail.html:118
-#: templates/inbox/_thread_body.html:150
+#: templates/analytics/flow_detail.html:94 templates/analytics/overview.html:42
+#: templates/analytics/overview.html:81 templates/broadcasts/_counters.html:60
+#: templates/broadcasts/detail.html:118 templates/inbox/_thread_body.html:150
 msgid "Delivered"
 msgstr "Жеткирилди"
 
 #: templates/analytics/_counter_cards.html:33
 #: templates/analytics/flow_detail.html:61
-#: templates/analytics/flow_detail.html:96
-#: templates/analytics/overview.html:44 templates/broadcasts/detail.html:91
+#: templates/analytics/flow_detail.html:96 templates/analytics/overview.html:44
+#: templates/broadcasts/detail.html:91
 msgid "Clicked"
 msgstr "Баскандар саны"
 
@@ -4566,8 +4732,7 @@ msgstr "Кадамдар"
 
 #: templates/analytics/flow_detail.html:50
 msgid "A step you deleted keeps its numbers. Those messages still went out."
-msgstr ""
-"Өчүрүлгөн кадам сандарын сактайт. Ал билдирүүлөр баары бир жөнөтүлгөн."
+msgstr "Өчүрүлгөн кадам сандарын сактайт. Ал билдирүүлөр баары бир жөнөтүлгөн."
 
 #: templates/analytics/flow_detail.html:57
 msgid "Step"
@@ -4630,11 +4795,9 @@ msgid "Nothing has been sent from this workspace in this range."
 msgstr "Бул мезгилде бул иш жайынан эч нерсе жөнөтүлгөн жок."
 
 #: templates/analytics/settings.html:28
-msgid ""
-"Click and open tracking for email. Both are off until you turn them on."
+msgid "Click and open tracking for email. Both are off until you turn them on."
 msgstr ""
-"Email үчүн клик жана ачуу көзөмөлү. Экөө тең сиз күйгүзгөнгө чейин "
-"өчүрүлгөн."
+"Email үчүн клик жана ачуу көзөмөлү. Экөө тең сиз күйгүзгөнгө чейин өчүрүлгөн."
 
 #: templates/analytics/settings.html:37
 msgid "Rewrite links in email bodies"
@@ -4691,12 +4854,12 @@ msgstr "Ар бир суроо-талапта аны bearer-токен ката�
 #: templates/api/key_created.html:22
 #, python-format
 msgid ""
-"“%(key_name)s” acts in <strong>%(workspace_name)s</strong> and nowhere else."
-" Revoking it takes effect on the very next request. If you lose it, revoke "
-"it and issue another. It cannot be recovered."
+"“%(key_name)s” acts in <strong>%(workspace_name)s</strong> and nowhere else. "
+"Revoking it takes effect on the very next request. If you lose it, revoke it "
+"and issue another. It cannot be recovered."
 msgstr ""
-"«%(key_name)s» <strong>%(workspace_name)s</strong> ичинде гана иштейт, башка"
-" жерде эмес. Жокко чыгаруу кийинки эле суроо-талаптан күчүнө кирет. Жоготуп "
+"«%(key_name)s» <strong>%(workspace_name)s</strong> ичинде гана иштейт, башка "
+"жерде эмес. Жокко чыгаруу кийинки эле суроо-талаптан күчүнө кирет. Жоготуп "
 "алсаңыз, аны жокко чыгарып, жаңысын чыгарыңыз. Аны калыбына келтирүү мүмкүн "
 "эмес."
 
@@ -4711,13 +4874,13 @@ msgstr "API ачкычтары"
 #: templates/api/keys_list.html:24
 #, python-format
 msgid ""
-"A key authenticates calls to the <a href=\"%(api_docs_url)s\">public API</a>"
-" as one workspace. Keys are organization-level because they span every "
+"A key authenticates calls to the <a href=\"%(api_docs_url)s\">public API</a> "
+"as one workspace. Keys are organization-level because they span every "
 "workspace in the organization, but each key acts inside exactly one."
 msgstr ""
 "Ачкыч <a href=\"%(api_docs_url)s\">ачык API</a> чакыруулары бир иш жай "
-"атынан иштейт. Ачкычтар уюм деңгээлинде чыгарылат, анткени уюмдун бардык "
-"иш жайларын камтыйт, бирок ар бир ачкыч бир гана иш жайында иштейт."
+"атынан иштейт. Ачкычтар уюм деңгээлинде чыгарылат, анткени уюмдун бардык иш "
+"жайларын камтыйт, бирок ар бир ачкыч бир гана иш жайында иштейт."
 
 #: templates/api/keys_list.html:28 templates/api/keys_list.html:37
 msgid "Issue a key"
@@ -4729,10 +4892,10 @@ msgstr "Мүмкүнчүлүк чөйрөлөрү"
 
 #: templates/api/keys_list.html:57
 msgid ""
-"<strong>Read</strong> lists contacts, tags, fields and flows. "
-"<strong>Write</strong> adds creating and updating contacts, tagging, setting"
-" field values, starting flows and sending messages. No scope grants channel,"
-" member or key management."
+"<strong>Read</strong> lists contacts, tags, fields and flows. <strong>Write</"
+"strong> adds creating and updating contacts, tagging, setting field values, "
+"starting flows and sending messages. No scope grants channel, member or key "
+"management."
 msgstr ""
 "<strong>Окуу</strong> байланыштардын, тегдердин, бөлүктөрдүн жана "
 "сценарийлердин тизмесин берет. <strong>Жазуу</strong> байланыштарды түзүү "
@@ -4765,9 +4928,9 @@ msgid ""
 "<code>manage_api_keys</code> permission in any workspace, so there is "
 "nowhere to issue a key. A workspace admin can grant it."
 msgstr ""
-"Сиз уюм администраторусуз, бирок бир да иш жайына "
-"<code>manage_api_keys</code> уруксатыңыз жок, ошондуктан ачкыч чыгарууга жер"
-" жок. Иш жай администраторунан сураңыз."
+"Сиз уюм администраторусуз, бирок бир да иш жайына <code>manage_api_keys</"
+"code> уруксатыңыз жок, ошондуктан ачкыч чыгарууга жер жок. Иш жай "
+"администраторунан сураңыз."
 
 #: templates/api/keys_list.html:77
 msgid "Existing keys"
@@ -4812,8 +4975,8 @@ msgid ""
 "A key lets something outside BrightBean Chat — a Zapier scenario, a script, "
 "your own backend — read and write in one workspace."
 msgstr ""
-"Ачкыч BrightBean Chat'дын сыртындагы нерсеге — Zapier сценарийине, скриптке,"
-" өз бэкендиңизге — бир иш жайында окуу жана жазууга уруксат берет."
+"Ачкыч BrightBean Chat'дын сыртындагы нерсеге — Zapier сценарийине, скриптке, "
+"өз бэкендиңизге — бир иш жайында окуу жана жазууга уруксат берет."
 
 #: templates/api/webhook_detail.html:3
 msgid "Webhook"
@@ -4830,11 +4993,10 @@ msgstr "%(limit)s ирет катарынан ишке ашпаган жетки
 
 #: templates/api/webhook_detail.html:19
 msgid ""
-"Fix the endpoint, then tick <em>Enabled</em> below to start delivering "
-"again."
+"Fix the endpoint, then tick <em>Enabled</em> below to start delivering again."
 msgstr ""
-"Эндпоинтти оңдоп, кайра жеткирүүнү баштоо үчүн төмөндөгү "
-"<em>Күйгүзүлгөн</em> дегенди белгилеңиз."
+"Эндпоинтти оңдоп, кайра жеткирүүнү баштоо үчүн төмөндөгү <em>Күйгүзүлгөн</"
+"em> дегенди белгилеңиз."
 
 #: templates/api/webhook_detail.html:24
 #: templates/partials/_app_sidebar.html:217
@@ -4972,8 +5134,8 @@ msgid ""
 "on this secret. The <a href=\"%(api_docs_url)s\">API reference</a> has a "
 "verification snippet you can paste into your receiver."
 msgstr ""
-"<code>%(webhook_url)s</code> дарегине жеткирүүлөр убакыт тамгасы менен сурам"
-" телосунан бул сыр аркылуу эсептелген HMAC-SHA256 болгон <code>X-BrightBean-"
+"<code>%(webhook_url)s</code> дарегине жеткирүүлөр убакыт тамгасы менен сурам "
+"телосунан бул сыр аркылуу эсептелген HMAC-SHA256 болгон <code>X-BrightBean-"
 "Signature</code> аталышын алып жүрөт. <a href=\"%(api_docs_url)s\">API "
 "справочнигинде</a> кабылдагычыңызга коюуга боло турган текшерүү үлгүсү бар."
 
@@ -4984,13 +5146,14 @@ msgstr "Чыгуучу вебхуктар"
 #: templates/api/webhooks_list.html:24
 #, python-format
 msgid ""
-"BrightBean Chat POSTs a signed JSON document to your endpoint when something"
-" happens in this workspace. See the <a href=\"%(api_docs_url)s\">API "
+"BrightBean Chat POSTs a signed JSON document to your endpoint when something "
+"happens in this workspace. See the <a href=\"%(api_docs_url)s\">API "
 "reference</a> for the payload shape and a signature-verification snippet."
 msgstr ""
-"Иш жайыңызда бир иш болгондо, BrightBean Chat сиздин эндпоинтиңизге "
-"санарип кол коюлган JSON документин жөнөтөт. Мазмундун түзүлүшү жана санарип кол тамга "
-"текшерүү үлгүсү <a href=\"%(api_docs_url)s\">API Жол-жобоcун</a> караңыз."
+"Иш жайыңызда бир иш болгондо, BrightBean Chat сиздин эндпоинтиңизге санарип "
+"кол коюлган JSON документин жөнөтөт. Мазмундун түзүлүшү жана санарип кол "
+"тамга текшерүү үлгүсү <a href=\"%(api_docs_url)s\">API Жол-жобоcун</a> "
+"караңыз."
 
 #: templates/api/webhooks_list.html:27 templates/api/webhooks_list.html:34
 #: templates/api/webhooks_list.html:81
@@ -5097,8 +5260,7 @@ msgstr "Бул кимге жетерин эсептеп жатабыз"
 msgid "Working out who this reaches…"
 msgstr "Бул кимге жетерин эсептеп жатабыз…"
 
-#: templates/broadcasts/_counters.html:52
-#: templates/inbox/_thread_body.html:153
+#: templates/broadcasts/_counters.html:52 templates/inbox/_thread_body.html:153
 msgid "Queued"
 msgstr "Кезекте"
 
@@ -5129,8 +5291,7 @@ msgstr "Бул топто эч ким жок."
 msgid "Status"
 msgstr "Статус"
 
-#: templates/broadcasts/_rows.html:42
-#: templates/campaigns/_subscribers.html:104
+#: templates/broadcasts/_rows.html:42 templates/campaigns/_subscribers.html:104
 #, python-format
 msgid "Finished %(when)s"
 msgstr "%(when)s аяктады"
@@ -5147,8 +5308,8 @@ msgstr "Азырынча жайылтуу жок."
 #: templates/broadcasts/_rows.html:62
 #, python-format
 msgid ""
-"Showing the %(page_size)s most recent. Search or filter by status to find an"
-" older one."
+"Showing the %(page_size)s most recent. Search or filter by status to find an "
+"older one."
 msgstr ""
 "Акыркы %(page_size)s көрсөтүлүп жатат. Эскисин табуу үчүн издөө же статус "
 "боюнча чыпканы колдонуңуз."
@@ -5345,8 +5506,8 @@ msgstr "Жөнөтүү убактысы"
 
 #: templates/broadcasts/_step_schedule.html:43
 msgid ""
-"A scheduled broadcast can be cancelled up to the moment it starts, and while"
-" it is sending."
+"A scheduled broadcast can be cancelled up to the moment it starts, and while "
+"it is sending."
 msgstr ""
 "Пландаштырылган жайылтууну ал башталганга чейин жана жөнөтүлүп жатканда "
 "жокко чыгарууга болот."
@@ -5396,8 +5557,7 @@ msgstr "Баскандар"
 
 #: templates/broadcasts/detail.html:86
 msgid "Links pressed in this message. Refresh to update."
-msgstr ""
-"Бул билдирүүдөгү басылган шилтемелер. Жаңылоо үчүн баракты жаңыртыңыз."
+msgstr "Бул билдирүүдөгү басылган шилтемелер. Жаңылоо үчүн баракты жаңыртыңыз."
 
 #: templates/broadcasts/detail.html:99
 #, python-format
@@ -5435,7 +5595,8 @@ msgid ""
 "    <a href=\"%(channel_settings_url)s\">channel settings</a> first."
 msgstr ""
 "Бул иш жайында азырынча бир дагы канал жайылтууларды кабыл албайт. Адегенде\n"
-"    <a href=\"%(channel_settings_url)s\">канал жөндөөлөрүндө</a> каналды туташтырыңыз."
+"    <a href=\"%(channel_settings_url)s\">канал жөндөөлөрүндө</a> каналды "
+"туташтырыңыз."
 
 #: templates/broadcasts/list.html:68
 msgid "Search"
@@ -5459,15 +5620,14 @@ msgstr "Бул чыпкаларга эч нерсе дал келбейт."
 
 #: templates/campaigns/_list_rows.html:13
 msgid ""
-"Create one above, add a step, then subscribe contacts from a flow, a rule or"
-" the contact list."
+"Create one above, add a step, then subscribe contacts from a flow, a rule or "
+"the contact list."
 msgstr ""
 "Жогоруда түзүңүз, кадам кошуңуз, андан кийин сценарийден, эрежеден же "
 "контакттар тизмесинен контакттарды жаздырыңыз."
 
 #: templates/campaigns/_list_rows.html:37
-#: templates/flows/_template_card.html:91
-#: templates/flows/import_review.html:50
+#: templates/flows/_template_card.html:91 templates/flows/import_review.html:50
 #, python-format
 msgid "%(count)s step"
 msgid_plural "%(count)s steps"
@@ -5612,8 +5772,7 @@ msgstr ""
 "%(position)s-кадамды өчүрөсүзбү? Аны күткөндөрдүн баары анын ордун баскан "
 "нерсеге өтөт."
 
-#: templates/campaigns/_steps.html:49
-#: templates/campaigns/_subscribers.html:115
+#: templates/campaigns/_steps.html:49 templates/campaigns/_subscribers.html:115
 #: templates/contacts/_activity.html:82 templates/inbox/list.html:141
 msgid "Remove"
 msgstr "Алып салуу"
@@ -5655,10 +5814,12 @@ msgstr "Жаздыруу үчүн контакт табуу"
 #, python-format
 msgid ""
 "Or subscribe people in bulk from the\n"
-"        <a href=\"%(contacts_list_url)s\" class=\"btn-text-hover-primary\">contact list</a>."
+"        <a href=\"%(contacts_list_url)s\" class=\"btn-text-hover-"
+"primary\">contact list</a>."
 msgstr ""
 "Же\n"
-"        <a href=\"%(contacts_list_url)s\" class=\"btn-text-hover-primary\">контакттар тизмесинен</a> адамдарды топтоп жаздырыңыз."
+"        <a href=\"%(contacts_list_url)s\" class=\"btn-text-hover-"
+"primary\">контакттар тизмесинен</a> адамдарды топтоп жаздырыңыз."
 
 #: templates/campaigns/_subscribers.html:51
 msgid "completed"
@@ -5689,7 +5850,8 @@ msgid ""
 "            Filter or export from the contact list to see the rest."
 msgstr ""
 "Акыркы %(cap)s, баары болуп %(total)s'дан көрсөтүлүп жатат.\n"
-"            Калгандарын көрүү үчүн контакттар тизмесинен чыпкалаңыз же экспорттоңуз."
+"            Калгандарын көрүү үчүн контакттар тизмесинен чыпкалаңыз же "
+"экспорттоңуз."
 
 #: templates/campaigns/_subscribers.html:84
 #, python-format
@@ -5803,8 +5965,7 @@ msgstr "Сиз жазылуудан чыктыңыз"
 #: templates/channels/_unsubscribe_body.html:10
 #, python-format
 msgid "%(address)s was already unsubscribed. Nothing changed."
-msgstr ""
-"%(address)s мурунтан эле жазылуудан чыгарылган. Эч нерсе өзгөргөн жок."
+msgstr "%(address)s мурунтан эле жазылуудан чыгарылган. Эч нерсе өзгөргөн жок."
 
 #: templates/channels/_unsubscribe_body.html:12
 #, python-format
@@ -5961,11 +6122,9 @@ msgid "Resend signing secret"
 msgstr "Resend колтамга сыры"
 
 #: templates/channels/detail.html:104
-msgid ""
-"From the Resend webhook you pointed at the URL above. Stored encrypted."
+msgid "From the Resend webhook you pointed at the URL above. Stored encrypted."
 msgstr ""
-"Жогорудагы URL'ге багытталган Resend webhook'унан. Шифрленген түрдө "
-"сакталат."
+"Жогорудагы URL'ге багытталган Resend webhook'унан. Шифрленген түрдө сакталат."
 
 #: templates/channels/detail.html:107
 msgid "SES bounce topic ARN"
@@ -5999,17 +6158,16 @@ msgstr ""
 msgid ""
 "Stored encrypted and never displayed again. Rotating issues a new secret "
 "immediately, so deliveries carrying the old one are rejected until the "
-"platform has the new one. Where the platform accepts it over its own API, as"
-" Telegram does, that happens as part of rotating, and the next page says so."
+"platform has the new one. Where the platform accepts it over its own API, as "
+"Telegram does, that happens as part of rotating, and the next page says so."
 msgstr ""
 "Шифрленген түрдө сакталат жана кайра эч качан көрсөтүлбөйт. Ротация дароо "
 "жаңы сырды берет, ошондуктан платформа жаңысын алганга чейин эски сыр менен "
-"жеткирүүлөр четке кагылат. Платформа муну Telegram сыяктуу өз API'си аркылуу"
-" кабыл алганда, бул ротациянын бир бөлүгү катары болот, кийинки баракча бул "
+"жеткирүүлөр четке кагылат. Платформа муну Telegram сыяктуу өз API'си аркылуу "
+"кабыл алганда, бул ротациянын бир бөлүгү катары болот, кийинки баракча бул "
 "тууралуу айтат."
 
-#: templates/channels/detail.html:138
-#: templates/channels/email_connect.html:176
+#: templates/channels/detail.html:138 templates/channels/email_connect.html:176
 #: templates/channels/instagram_connect.html:71
 #: templates/channels/messenger_connect.html:82
 #: templates/channels/messenger_pages.html:37 templates/channels/new.html:34
@@ -6108,8 +6266,8 @@ msgstr "Жөнөтүүчүнүн дареги"
 
 #: templates/channels/email_connect.html:70
 msgid ""
-"Its domain becomes this channel's identity, and only one workspace can claim"
-" a domain."
+"Its domain becomes this channel's identity, and only one workspace can claim "
+"a domain."
 msgstr ""
 "Анын домени бул канaлдын өзгөчөлүгү болуп калат, жана бир доменди бир гана "
 "иш жайы ээлей алат."
@@ -6123,8 +6281,7 @@ msgid "Channel name"
 msgstr "Канaлдын аты"
 
 #: templates/channels/email_connect.html:79
-msgid ""
-"What this channel is called in BrightBean Chat. Defaults to the domain."
+msgid "What this channel is called in BrightBean Chat. Defaults to the domain."
 msgstr ""
 "Бул канал BrightBean Chat ичинде кандай аталат. Демейки боюнча — домен."
 
@@ -6173,8 +6330,7 @@ msgstr "API ачкычы"
 #: templates/channels/email_connect.html:119
 msgid "From the Resend dashboard. Stored encrypted and never shown again."
 msgstr ""
-"Resend панелинен. Шифрленген түрдө сакталат жана кайра эч качан "
-"көрсөтүлбөйт."
+"Resend панелинен. Шифрленген түрдө сакталат жана кайра эч качан көрсөтүлбөйт."
 
 #: templates/channels/email_connect.html:122
 msgid "Webhook signing secret"
@@ -6183,8 +6339,8 @@ msgstr "Webhook колтамга сыры"
 #: templates/channels/email_connect.html:125
 msgid ""
 "Optional now, required for bounce handling. Create a webhook endpoint in "
-"Resend pointing at the URL this page shows after you connect, then paste the"
-" secret it gives you."
+"Resend pointing at the URL this page shows after you connect, then paste the "
+"secret it gives you."
 msgstr ""
 "Азыр милдеттүү эмес, бирок кайтарылган каттарды иштетүү үчүн керек. "
 "Туташкандан кийин бул баракча көрсөтө турган URL'ге багытталган webhook "
@@ -6216,13 +6372,12 @@ msgstr ""
 
 #: templates/channels/email_connect.html:154
 msgid ""
-"The key needs <code>ses:SendEmail</code>, and "
-"<code>sns:ConfirmSubscription</code> if you want bounce handling. See "
-"docs/channels/email.md."
+"The key needs <code>ses:SendEmail</code>, and <code>sns:ConfirmSubscription</"
+"code> if you want bounce handling. See docs/channels/email.md."
 msgstr ""
 "Ачкычка <code>ses:SendEmail</code> укугу керек, ал эми кайтарылган каттарды "
-"иштетүү үчүн — <code>sns:ConfirmSubscription</code> да керек. "
-"docs/channels/email.md караңыз."
+"иштетүү үчүн — <code>sns:ConfirmSubscription</code> да керек. docs/channels/"
+"email.md караңыз."
 
 #: templates/channels/email_connect.html:160
 #: templates/channels/sms_connect.html:79
@@ -6241,8 +6396,8 @@ msgstr "Мындан кийин эмне болот"
 
 #: templates/channels/email_connect.html:167
 msgid ""
-"We check the credentials with your provider before saving anything. Once the"
-" channel exists, its page shows the webhook URL to paste into Resend or to "
+"We check the credentials with your provider before saving anything. Once the "
+"channel exists, its page shows the webhook URL to paste into Resend or to "
 "subscribe an SNS topic to, and a button that sends a test email to your own "
 "address."
 msgstr ""
@@ -6258,8 +6413,8 @@ msgid ""
 "is what keeps the channel compliant, and it is what the unsubscribe and "
 "suppression handling is built on."
 msgstr ""
-"BrightBean Chat жөнөткөн ар бир кат <code>List-Unsubscribe</code> башын жана"
-" төмөндө жазылуудан чыгуу шилтемесин алып жүрөт. Бул жөндөлбөйт: дал ушул "
+"BrightBean Chat жөнөткөн ар бир кат <code>List-Unsubscribe</code> башын жана "
+"төмөндө жазылуудан чыгуу шилтемесин алып жүрөт. Бул жөндөлбөйт: дал ушул "
 "каналдын талаптарга ылайык болушун камсыз кылат жана жазылуудан чыгууну, "
 "тыюу салууну иштетүү дал ушуга негизделет."
 
@@ -6269,16 +6424,15 @@ msgstr "Instagram аккаунтун туташтыруу"
 
 #: templates/channels/instagram_connect.html:28
 msgid ""
-"BrightBean Chat uses the <strong>Instagram API with Instagram "
-"Login</strong>, so the account you connect must be a "
-"<strong>professional</strong> account, Business or Creator. You will be sent"
-" to Instagram to authorise it, and we never see your password."
+"BrightBean Chat uses the <strong>Instagram API with Instagram Login</"
+"strong>, so the account you connect must be a <strong>professional</strong> "
+"account, Business or Creator. You will be sent to Instagram to authorise it, "
+"and we never see your password."
 msgstr ""
 "BrightBean Chat <strong>Instagram Login менен Instagram API</strong> "
-"колдонот, ошондуктан туташтыра турган аккаунт "
-"<strong>профессионалдык</strong> болушу керек — Business же Creator. Уруксат"
-" берүү үчүн сиз Instagram'га багытталасыз, биз сырсөзүңүздү эч качан "
-"көрбөйбүз."
+"колдонот, ошондуктан туташтыра турган аккаунт <strong>профессионалдык</"
+"strong> болушу керек — Business же Creator. Уруксат берүү үчүн сиз "
+"Instagram'га багытталасыз, биз сырсөзүңүздү эч качан көрбөйбүз."
 
 #: templates/channels/instagram_connect.html:38
 msgid "Create a Meta app with the <em>Instagram</em> product added."
@@ -6286,8 +6440,8 @@ msgstr "<em>Instagram</em> продукту кошулган Meta колдонм
 
 #: templates/channels/instagram_connect.html:40
 msgid ""
-"Add this deployment's callback URL to the app's <em>Business login "
-"settings</em>, exactly as written."
+"Add this deployment's callback URL to the app's <em>Business login settings</"
+"em>, exactly as written."
 msgstr ""
 "Бул өнөктүктүн callback URL'ин колдонмонун <em>Business login settings</em> "
 "бөлүмүнө так жазылганы боюнча кошуңуз."
@@ -6309,8 +6463,8 @@ msgstr ""
 #: templates/channels/instagram_connect.html:46
 msgid "In the account's Instagram settings, allow access to messages."
 msgstr ""
-"Аккаунттун Instagram жөндөөлөрүндө билдирүүлөргө мүмкүнчүлүк берүүгө уруксат"
-" бериңиз."
+"Аккаунттун Instagram жөндөөлөрүндө билдирүүлөргө мүмкүнчүлүк берүүгө уруксат "
+"бериңиз."
 
 #: templates/channels/instagram_connect.html:52
 msgid "Authorise the account"
@@ -6443,13 +6597,13 @@ msgid ""
 "products to it."
 msgstr ""
 "<strong>Business</strong> түрүндөгү Meta колдонмосун түзүп, ага "
-"<strong>Messenger</strong> жана <strong>Facebook Login for Business</strong>"
-" продукттарын кошуңуз."
+"<strong>Messenger</strong> жана <strong>Facebook Login for Business</strong> "
+"продукттарын кошуңуз."
 
 #: templates/channels/messenger_connect.html:41
 msgid ""
-"Add this exact redirect URI to Facebook Login for Business → <em>Valid OAuth"
-" Redirect URIs</em>."
+"Add this exact redirect URI to Facebook Login for Business → <em>Valid OAuth "
+"Redirect URIs</em>."
 msgstr ""
 "Дал ушул redirect URI'ди Facebook Login for Business → <em>Valid OAuth "
 "Redirect URIs</em> бөлүмүнө кошуңуз."
@@ -6473,16 +6627,15 @@ msgid ""
 "Set <code>PLATFORM_MESSENGER_VERIFY_TOKEN</code> and paste the same value "
 "into the Messenger webhook's <em>Verify token</em> field."
 msgstr ""
-"<code>PLATFORM_MESSENGER_VERIFY_TOKEN</code> маанисин коюп, ошол эле маанини"
-" Messenger webhook'унун <em>Verify token</em> бөлүгүнө чаптаңыз."
+"<code>PLATFORM_MESSENGER_VERIFY_TOKEN</code> маанисин коюп, ошол эле маанини "
+"Messenger webhook'унун <em>Verify token</em> бөлүгүнө чаптаңыз."
 
 #: templates/channels/messenger_connect.html:55
 msgid "Choose the page"
 msgstr "Баракты тандаңыз"
 
 #: templates/channels/messenger_connect.html:57
-msgid ""
-"You will be sent to Facebook to sign in and pick which page to connect."
+msgid "You will be sent to Facebook to sign in and pick which page to connect."
 msgstr ""
 "Кирип, туташтыра турган баракты тандоо үчүн сиз Facebook'ко багытталасыз."
 
@@ -6496,7 +6649,7 @@ msgstr "Facebook'тон эмнени сурайбыз"
 
 #: templates/channels/messenger_connect.html:68
 msgid "Webhook fields we subscribe the page to"
-msgstr "Баракты жаздыра турган webhook бөлүктөрү" 
+msgstr "Баракты жаздыра турган webhook бөлүктөрү"
 
 #: templates/channels/messenger_connect.html:70
 msgid ""
@@ -6508,13 +6661,13 @@ msgstr ""
 
 #: templates/channels/messenger_connect.html:76
 msgid ""
-"To serve pages other than your own app's test page, Meta requires App Review"
-" and Business Verification. Full setup notes are in "
-"docs/channels/messenger.md."
+"To serve pages other than your own app's test page, Meta requires App Review "
+"and Business Verification. Full setup notes are in docs/channels/"
+"messenger.md."
 msgstr ""
 "Колдонмоңуздун тест барагынан башка барактарды тейлөө үчүн Meta App Review "
-"жана Business Verification талап кылат. Толук жөндөө көрсөтмөлөрү "
-"docs/channels/messenger.md дарегинде."
+"жана Business Verification талап кылат. Толук жөндөө көрсөтмөлөрү docs/"
+"channels/messenger.md дарегинде."
 
 #: templates/channels/messenger_pages.html:3
 msgid "Choose a page"
@@ -6529,8 +6682,8 @@ msgid ""
 "These are the Facebook pages you just granted access to. Connecting one "
 "subscribes it to this deployment's webhook and sets its Get Started button."
 msgstr ""
-"Булар — сиз жаңы эле мүмкүнчүлүк берген Facebook барактары. Бирин туташтыруу"
-" аны бул өнөктүктүн webhook'уна жаздырат жана анын Get Started баскычын "
+"Булар — сиз жаңы эле мүмкүнчүлүк берген Facebook барактары. Бирин туташтыруу "
+"аны бул өнөктүктүн webhook'уна жаздырат жана анын Get Started баскычын "
 "жөндөйт."
 
 #: templates/channels/messenger_pages.html:28
@@ -6634,8 +6787,8 @@ msgstr "Платформаны окуяларды мындай жерге жет
 
 #: templates/channels/secret.html:48
 msgid ""
-"Deliveries that do not carry a valid signature for this secret are rejected,"
-" and a source that keeps failing is temporarily blocked."
+"Deliveries that do not carry a valid signature for this secret are rejected, "
+"and a source that keeps failing is temporarily blocked."
 msgstr ""
 "Бул сыр үчүн жарактуу колтамгасы жок жеткирүүлөр четке кагылат, ал эми "
 "туруктуу ката берген булак убактылуу бөгөттөлөт."
@@ -6678,9 +6831,9 @@ msgstr "Чаптардан мурун"
 
 #: templates/channels/sms_connect.html:36
 msgid ""
-"Open the <a href=\"https://console.twilio.com/\" rel=\"noopener noreferrer\""
-" target=\"_blank\">Twilio console</a> and copy the Account SID and Auth "
-"Token from the dashboard."
+"Open the <a href=\"https://console.twilio.com/\" rel=\"noopener noreferrer\" "
+"target=\"_blank\">Twilio console</a> and copy the Account SID and Auth Token "
+"from the dashboard."
 msgstr ""
 "<a href=\"https://console.twilio.com/\" rel=\"noopener noreferrer\" "
 "target=\"_blank\">Twilio консолун</a> ачып, башкаруу панелинен Account SID "
@@ -6688,12 +6841,12 @@ msgstr ""
 
 #: templates/channels/sms_connect.html:37
 msgid ""
-"Copy either a phone number you own, in E.164 form "
-"(<code>+15551234567</code>), or a Messaging Service SID (<code>MG…</code>) "
-"if you send through one."
+"Copy either a phone number you own, in E.164 form (<code>+15551234567</"
+"code>), or a Messaging Service SID (<code>MG…</code>) if you send through "
+"one."
 msgstr ""
-"Же E.164 форматындагы өз телефон номериңизди (<code>+15551234567</code>), же"
-" аркылуу жөнөтсөңүз Messaging Service SID'ди (<code>MG…</code>) көчүрүңүз."
+"Же E.164 форматындагы өз телефон номериңизди (<code>+15551234567</code>), же "
+"аркылуу жөнөтсөңүз Messaging Service SID'ди (<code>MG…</code>) көчүрүңүз."
 
 #: templates/channels/sms_connect.html:38
 msgid ""
@@ -6742,8 +6895,8 @@ msgstr "Messaging Service SID"
 
 #: templates/channels/sms_connect.html:92
 msgid ""
-"We check the credentials and confirm the sender belongs to the account, then"
-" store the connection. Twilio has no way for us to configure your number "
+"We check the credentials and confirm the sender belongs to the account, then "
+"store the connection. Twilio has no way for us to configure your number "
 "remotely, so the last step is yours: open the number (or the messaging "
 "service) in the Twilio console and paste the webhook URL shown on the "
 "connection's page into <em>A message comes in</em>, as a <code>POST</code>."
@@ -6752,16 +6905,16 @@ msgstr ""
 "экенин ырастайбыз, андан кийин туташууну сактайбыз. Бизде номериңизди "
 "Twilio'до алыстан жөндөө мүмкүнчүлүгү жок, ошондуктан акыркы кадам сиздики: "
 "Twilio консолунда номерди (же messaging service'ти) ачып, туташуу "
-"баракчасында көрсөтүлгөн webhook URL'ин <em>A message comes in</em> "
-"бөлүгүнө <code>POST</code> катары чаптаңыз."
+"баракчасында көрсөтүлгөн webhook URL'ин <em>A message comes in</em> бөлүгүнө "
+"<code>POST</code> катары чаптаңыз."
 
 #: templates/channels/sms_connect.html:95
 msgid ""
 "That URL has to match <strong>exactly</strong>, trailing slash included: "
 "Twilio signs each delivery with an HMAC computed over the URL itself, so a "
 "URL that differs by one character fails verification. It also has to be "
-"reachable from the public internet over HTTPS. Full setup notes are in "
-"docs/channels/sms.md."
+"reachable from the public internet over HTTPS. Full setup notes are in docs/"
+"channels/sms.md."
 msgstr ""
 "Бул URL <strong>так</strong> дал келиши керек, аягындагы слэш кошо: Twilio "
 "ар бир жеткирүүнү URL'дин өзү боюнча эсептелген HMAC менен колтамгалайт, "
@@ -6797,8 +6950,8 @@ msgid ""
 "Matching is case-insensitive on the whole message, so \"stop\" unsubscribes "
 "and \"stop by tomorrow\" does not."
 msgstr ""
-"Булар баарынан мурун иштетилет жана сценарий тарабынан кармалып калбайт. Дал"
-" келүү регистрге көз каранды эмес жана бүт билдирүүнү эске алат, ошондуктан "
+"Булар баарынан мурун иштетилет жана сценарий тарабынан кармалып калбайт. Дал "
+"келүү регистрге көз каранды эмес жана бүт билдирүүнү эске алат, ошондуктан "
 "«stop» жазылуудан чыгарат, ал эми «stop by tomorrow» чыгарбайт."
 
 #: templates/channels/sms_settings.html:16
@@ -6860,8 +7013,8 @@ msgstr "Сегмент баасы"
 #: templates/channels/sms_settings.html:49
 msgid ""
 "Used only to estimate what a broadcast will cost. BrightBean Chat never "
-"meters or bills anything. Your Twilio invoice is the real number, and prices"
-" differ per destination."
+"meters or bills anything. Your Twilio invoice is the real number, and prices "
+"differ per destination."
 msgstr ""
 "Бул жайылтуунун канчага турарын болжолдоо үчүн гана колдонулат. BrightBean "
 "Chat эч качан эч нерсени өлчөбөйт же эсеп-фактура чыгарбайт. Чыныгы сан — "
@@ -6873,10 +7026,10 @@ msgstr "A2P 10DLC текшерүү тизмеси"
 
 #: templates/channels/sms_settings.html:55
 msgid ""
-"US carriers require application-to-person traffic on a 10-digit long code to"
-" be registered. All of it happens in the Twilio console; nothing on this "
-"page performs or verifies registration, and these boxes are your own record "
-"that it is done."
+"US carriers require application-to-person traffic on a 10-digit long code to "
+"be registered. All of it happens in the Twilio console; nothing on this page "
+"performs or verifies registration, and these boxes are your own record that "
+"it is done."
 msgstr ""
 "АКШ операторлору 10 сандуу узун коддогу application-to-person трафигинин "
 "катталышын талап кылат. Бул баары Twilio консолунда болот; бул баракчада эч "
@@ -6913,18 +7066,17 @@ msgstr "Telegram ботун туташтыруу"
 
 #: templates/channels/telegram_connect.html:35
 msgid ""
-"Telegram bots are created by talking to BotFather. The token it gives you is"
-" the whole credential: anyone holding it can read and send as your bot, so "
-"it is stored encrypted and never shown again."
+"Telegram bots are created by talking to BotFather. The token it gives you is "
+"the whole credential: anyone holding it can read and send as your bot, so it "
+"is stored encrypted and never shown again."
 msgstr ""
-"Telegram боттору BotFather менен сүйлөшүү аркылуу түзүлөт. Ал берген токен —"
-" толук эсептик маалымат: аны ким алса, боттуңуздун атынан оку жана жөнөтө "
+"Telegram боттору BotFather менен сүйлөшүү аркылуу түзүлөт. Ал берген токен — "
+"толук эсептик маалымат: аны ким алса, боттуңуздун атынан оку жана жөнөтө "
 "алат, ошондуктан ал шифрленген түрдө сакталат жана кайра эч качан "
 "көрсөтүлбөйт."
 
 #: templates/channels/telegram_connect.html:51
-msgid ""
-"Open <code>@BotFather</code> in Telegram and send <code>/newbot</code>."
+msgid "Open <code>@BotFather</code> in Telegram and send <code>/newbot</code>."
 msgstr ""
 "Telegram'де <code>@BotFather</code>ди ачып, <code>/newbot</code> жөнөтүңүз."
 
@@ -6952,19 +7104,17 @@ msgstr "Бот токени"
 #: templates/channels/telegram_connect.html:70
 msgid "Pasted once. We verify it with Telegram before saving anything."
 msgstr ""
-"Бир жолу чапталасыз. Эч нерсе сактардан мурун биз аны Telegram'да "
-"текшеребиз."
+"Бир жолу чапталасыз. Эч нерсе сактардан мурун биз аны Telegram'да текшеребиз."
 
 #: templates/channels/telegram_connect.html:80
 msgid ""
-"We call <code>getMe</code> to check the token and learn your bot's username,"
-" then point Telegram at this deployment with <code>setWebhook</code> and a "
+"We call <code>getMe</code> to check the token and learn your bot's username, "
+"then point Telegram at this deployment with <code>setWebhook</code> and a "
 "secret only the two of us know."
 msgstr ""
-"Биз токенди текшерүү жана боттун колдонуучу атын билүү үчүн "
-"<code>getMe</code>ди чакырабыз, андан кийин Telegram'ды "
-"<code>setWebhook</code> жана экөбүз гана билген сыр аркылуу бул өнөктүккө "
-"багыттайбыз."
+"Биз токенди текшерүү жана боттун колдонуучу атын билүү үчүн <code>getMe</"
+"code>ди чакырабыз, андан кийин Telegram'ды <code>setWebhook</code> жана "
+"экөбүз гана билген сыр аркылуу бул өнөктүккө багыттайбыз."
 
 #: templates/channels/telegram_connect.html:82
 #: templates/channels/whatsapp_connect.html:64
@@ -6975,13 +7125,13 @@ msgstr "Жеткирүүлөр мына бул жерге келет"
 msgid ""
 "That URL has to be reachable from the public internet over HTTPS with a "
 "valid certificate. Telegram will not deliver to anything else. On a local "
-"machine, put a tunnel in front of it first. Full setup notes are in "
-"docs/channels/telegram.md."
+"machine, put a tunnel in front of it first. Full setup notes are in docs/"
+"channels/telegram.md."
 msgstr ""
 "Бул URL жарактуу сертификаты бар ачык интернеттен HTTPS аркылуу жеткиликтүү "
 "болушу керек. Telegram башка эч нерсеге жеткирбейт. Жергиликтүү машинада "
-"адегенде туннель коюңуз. Толук жөндөө көрсөтмөлөрү docs/channels/telegram.md"
-" дарегинде."
+"адегенде туннель коюңуз. Толук жөндөө көрсөтмөлөрү docs/channels/telegram.md "
+"дарегинде."
 
 #: templates/channels/whatsapp_connect.html:20
 msgid "Connect WhatsApp"
@@ -7024,8 +7174,8 @@ msgid ""
 "for it."
 msgstr ""
 "<code>whatsapp_business_messaging</code> жана "
-"<code>whatsapp_business_management</code> укуктары бар системалык колдонуучу"
-" түзүп, ага туруктуу токен жаратыңыз."
+"<code>whatsapp_business_management</code> укуктары бар системалык колдонуучу "
+"түзүп, ага туруктуу токен жаратыңыз."
 
 #: templates/channels/whatsapp_connect.html:52
 msgid "Paste the three values"
@@ -7045,8 +7195,8 @@ msgid ""
 "token shown there. Full setup notes are in docs/channels/whatsapp.md."
 msgstr ""
 "Муну колдонмонун WhatsApp webhook конфигурациясына, ошол жерде көрсөтүлгөн "
-"verify token менен бирге чаптаңыз. Толук жөндөө көрсөтмөлөрү "
-"docs/channels/whatsapp.md дарегинде."
+"verify token менен бирге чаптаңыз. Толук жөндөө көрсөтмөлөрү docs/channels/"
+"whatsapp.md дарегинде."
 
 #: templates/channels/whatsapp_cost_hints.html:3
 #: templates/channels/whatsapp_cost_hints.html:4
@@ -7096,9 +7246,9 @@ msgstr "Жаңы шаблон"
 
 #: templates/channels/whatsapp_template_form.html:12
 msgid ""
-"This template is with Meta, or already approved, so it cannot be edited. The"
-" copy under review is the one Meta holds. Delete it and write a new one if "
-"it needs to change."
+"This template is with Meta, or already approved, so it cannot be edited. The "
+"copy under review is the one Meta holds. Delete it and write a new one if it "
+"needs to change."
 msgstr ""
 "Бул шаблон Meta'да же мурунтан эле бекитилген, ошондуктан аны түзөтүүгө "
 "болбойт. Каралып жаткан нускасы — Meta кармап турган нуска. Өзгөртүү керек "
@@ -7151,8 +7301,8 @@ msgid ""
 "No WhatsApp number is connected yet, so there is nothing to submit a "
 "template against."
 msgstr ""
-"Азырынча бир да WhatsApp номери туташтырылган эмес, ошондуктан шаблон жөнөтө"
-" турган эч нерсе жок."
+"Азырынча бир да WhatsApp номери туташтырылган эмес, ошондуктан шаблон жөнөтө "
+"турган эч нерсе жок."
 
 #: templates/channels/whatsapp_templates.html:20
 msgid "estimates only, never metered"
@@ -7187,15 +7337,15 @@ msgstr "Текшерүү кандай өтөт"
 msgid ""
 "Meta usually answers within minutes, occasionally within a day. BrightBean "
 "Chat checks every hour and notifies workspace admins when the answer "
-"arrives; a rejected template shows Meta's reason above and can be edited and"
-" resubmitted. Marketing templates are reviewed most strictly and cost the "
+"arrives; a rejected template shows Meta's reason above and can be edited and "
+"resubmitted. Marketing templates are reviewed most strictly and cost the "
 "most to send."
 msgstr ""
 "Meta адатта бир нече мүнөттүн ичинде, кээде бир күндүн ичинде жооп берет. "
 "BrightBean Chat ар бир саат сайын текшерип, жооп келгенде иш жайынын "
 "администраторлоруна билдирет; четке кагылган шаблон жогорудан Meta'нын "
-"себебин көрсөтөт жана түзөтүлүп, кайра жөнөтүлсө болот. Маркетинг шаблондору"
-" эң катуу текшерилет жана жөнөтүү үчүн эң кымбат турат."
+"себебин көрсөтөт жана түзөтүлүп, кайра жөнөтүлсө болот. Маркетинг шаблондору "
+"эң катуу текшерилет жана жөнөтүү үчүн эң кымбат турат."
 
 #: templates/components/ui_select.html:25 templates/contacts/list.html:197
 #: templates/inbox/list.html:133
@@ -7285,8 +7435,8 @@ msgstr[0] "%(count)s тиркеме"
 #: templates/contacts/_activity.html:118
 msgid "Nothing yet. Messages appear here as soon as this contact writes in."
 msgstr ""
-"Азырынча эч нерсе жок. Бул байланыш жазган замат билдирүүлөр бул жерде пайда"
-" болот."
+"Азырынча эч нерсе жок. Бул байланыш жазган замат билдирүүлөр бул жерде пайда "
+"болот."
 
 #: templates/contacts/_channels.html:37 templates/inbox/_sidebar.html:31
 #, python-format
@@ -7346,8 +7496,7 @@ msgstr[0] "%(count)s маани сакталды"
 msgid "Delete “%(name)s”? %(count)s stored value will go with it."
 msgid_plural "Delete “%(name)s”? %(count)s stored values will go with it."
 msgstr[0] ""
-"«%(name)s»ди өчүрөсүзбү? Аны менен бирге %(count)s сакталган маани жок "
-"болот."
+"«%(name)s»ди өчүрөсүзбү? Аны менен бирге %(count)s сакталган маани жок болот."
 
 #: templates/contacts/_field_rows.html:64
 msgid "No custom fields yet"
@@ -7361,8 +7510,7 @@ msgstr ""
 "Бөлүк — сценарий жыйнаган жоопту (өлчөм, брондоо күнү, тариф) коё турган "
 "жер, ошондуктан чыпка кийинчерээк ал боюнча издей алат."
 
-#: templates/contacts/_field_rows.html:68
-#: templates/contacts/field_list.html:20
+#: templates/contacts/_field_rows.html:68 templates/contacts/field_list.html:20
 msgid "New field"
 msgstr "Жаңы бөлүк"
 
@@ -7498,8 +7646,7 @@ msgstr[0] "%(count)s ката"
 
 #: templates/contacts/_import_progress.html:37
 msgid ""
-"Nothing has been written yet. These are the numbers the import would "
-"produce."
+"Nothing has been written yet. These are the numbers the import would produce."
 msgstr "Азырынча эч нерсе жазылган жок. Бул импорт бере турган сандар."
 
 #: templates/contacts/_import_progress.html:42
@@ -7698,8 +7845,8 @@ msgid ""
 "A tag is how a flow says “this person asked about pricing”, so a filter can "
 "find them again later."
 msgstr ""
-"Тег — сценарийдин «бул адам баа жөнүндө сурады» деп айтуу ыкмасы, ошондуктан"
-" чыпка аны кийин кайра таба алат."
+"Тег — сценарийдин «бул адам баа жөнүндө сурады» деп айтуу ыкмасы, ошондуктан "
+"чыпка аны кийин кайра таба алат."
 
 #: templates/contacts/_tag_rows.html:88 templates/contacts/tag_list.html:27
 msgid "New tag"
@@ -7789,13 +7936,16 @@ msgstr "Биротоло өчүрүү"
 #: templates/contacts/detail.html:156
 #, python-format
 msgid ""
-"Removes %(name)s outright: their profile, custom field values, tags, channel\n"
-"          identities, consent records, conversations and message bodies. Counters stay, anonymised. A\n"
-"          suppressed email address is kept, because that is a fact about a mailbox rather than about this\n"
+"Removes %(name)s outright: their profile, custom field values, tags, "
+"channel\n"
+"          identities, consent records, conversations and message bodies. "
+"Counters stay, anonymised. A\n"
+"          suppressed email address is kept, because that is a fact about a "
+"mailbox rather than about this\n"
 "          contact. <strong>This cannot be undone.</strong>"
 msgstr ""
-"%(name)sды толугу менен өчүрөт: профилин, атайын бөлүк маанилерин, тегдерин,"
-" канал идентификаторлорун, макулдук жазууларын, маектерин жана билдирүү "
+"%(name)sды толугу менен өчүрөт: профилин, атайын бөлүк маанилерин, тегдерин, "
+"канал идентификаторлорун, макулдук жазууларын, маектерин жана билдирүү "
 "тексттерин. Эсептегичтер аноним түрдө калат. Тыюу салынган email дареги "
 "сакталып калат, себеби бул почта жайы жөнүндөгү факт, бул байланыш жөнүндө "
 "эмес. <strong>Муну жокко чыгарууга болбойт.</strong>"
@@ -7806,8 +7956,8 @@ msgid ""
 "Erase %(name)s permanently? Their messages, identities and consent records "
 "are removed for good. This cannot be undone."
 msgstr ""
-"%(name)sды биротоло өчүрөсүзбү? Алардын билдирүүлөрү, идентификаторлору жана"
-" макулдук жазуулары биротоло өчүрүлөт. Муну жокко чыгарууга болбойт."
+"%(name)sды биротоло өчүрөсүзбү? Алардын билдирүүлөрү, идентификаторлору жана "
+"макулдук жазуулары биротоло өчүрүлөт. Муну жокко чыгарууга болбойт."
 
 #: templates/contacts/detail.html:168
 #, python-format
@@ -7877,8 +8027,10 @@ msgstr "Мамычаларды дал келтирүү"
 
 #: templates/contacts/import_detail.html:46
 msgid ""
-"Leave a column unmapped to ignore it. Mapping a column to <strong>Tags</strong> splits\n"
-"      its cell on <code>;</code> or <code>,</code> and attaches each name, creating tags that\n"
+"Leave a column unmapped to ignore it. Mapping a column to <strong>Tags</"
+"strong> splits\n"
+"      its cell on <code>;</code> or <code>,</code> and attaches each name, "
+"creating tags that\n"
 "      do not exist yet."
 msgstr ""
 "Аны эске албоо үчүн мамычаны дал келтирбей калтырыңыз. Мамычаны "
@@ -7947,14 +8099,16 @@ msgstr ""
 
 #: templates/contacts/import_list.html:36
 msgid ""
-"I understand that imported contacts are <strong>not reachable on any channel</strong>\n"
-"        until they message this workspace first. Importing an email address or a phone number\n"
+"I understand that imported contacts are <strong>not reachable on any "
+"channel</strong>\n"
+"        until they message this workspace first. Importing an email address "
+"or a phone number\n"
 "        does not create a messaging identity and is not a record of consent."
 msgstr ""
-"Импорттолгон байланыштар бул иш жайында биринчи жазмайынча <strong>эч "
-"бир каналда жеткиликтүү эмес</strong> экенин түшүнөм. Email дарегин же "
-"телефон номерин импорттоо билдирүү идентификаторун түзбөйт жана макулдуктун "
-"жазуусу болуп саналбайт."
+"Импорттолгон байланыштар бул иш жайында биринчи жазмайынча <strong>эч бир "
+"каналда жеткиликтүү эмес</strong> экенин түшүнөм. Email дарегин же телефон "
+"номерин импорттоо билдирүү идентификаторун түзбөйт жана макулдуктун жазуусу "
+"болуп саналбайт."
 
 #: templates/contacts/import_list.html:42
 msgid "Upload"
@@ -8023,8 +8177,7 @@ msgstr ""
 "«%(name)s»ди өчүрөсүзбү? Байланыштар калат; бул сегментке шилтеме кылган "
 "шарт түйүнү бар кандайдыр бир сценарий текшерүүдөн өтпөй калат."
 
-#: templates/contacts/list.html:206
-#: templates/flows/triggers/_form_rule.html:26
+#: templates/contacts/list.html:206 templates/flows/triggers/_form_rule.html:26
 msgid "Tag"
 msgstr "Тег"
 
@@ -8100,17 +8253,19 @@ msgstr "Бул файлга кошулган. Азыр түзүлүүчү көч
 #: templates/flows/_import_requirement.html:44
 #, python-format
 msgid ""
-"This flow sends the approved template <span class=\"font-mono\">%(template_name)s</span>.\n"
+"This flow sends the approved template <span class=\"font-"
+"mono\">%(template_name)s</span>.\n"
 "        Nothing to answer here. Make sure your WhatsApp account has it."
 msgstr ""
-"Бул сценарий бекитилген <span class=\"font-mono\">%(template_name)s</span> шаблонун жөнөтөт.\n"
-"        Бул жерде жооп берүүнүн кереги жок. WhatsApp аккаунтуңузда бар экенин текшериңиз."
+"Бул сценарий бекитилген <span class=\"font-mono\">%(template_name)s</span> "
+"шаблонун жөнөтөт.\n"
+"        Бул жерде жооп берүүнүн кереги жок. WhatsApp аккаунтуңузда бар "
+"экенин текшериңиз."
 
 #: templates/flows/_import_requirement.html:64
 msgid "Post ids, comma separated. Blank matches no posts"
 msgstr ""
-"Жазуулардын ID'лери үтүр менен бөлүнгөн. Бош болсо — эч бир жазуу дал "
-"келбейт"
+"Жазуулардын ID'лери үтүр менен бөлүнгөн. Бош болсо — эч бир жазуу дал келбейт"
 
 #: templates/flows/_import_requirement.html:64
 msgid "Leave blank to omit"
@@ -8134,11 +8289,13 @@ msgstr "Бул триггер түрү иштеген бардык аккаун�
 #, python-format
 msgid ""
 "No %(name)s account is connected yet. You can\n"
-"        <a href=\"%(connect_url)s\" class=\"btn-text-hover-primary\" style=\"text-decoration: underline;\">connect one</a>\n"
+"        <a href=\"%(connect_url)s\" class=\"btn-text-hover-primary\" "
+"style=\"text-decoration: underline;\">connect one</a>\n"
 "        and come back, or import now and pick the account later."
 msgstr ""
 "Азырынча бир дагы %(name)s аккаунту туташтырылган эмес. Сиз\n"
-"        <a href=\"%(connect_url)s\" class=\"btn-text-hover-primary\" style=\"text-decoration: underline;\">аны туташтырып</a>\n"
+"        <a href=\"%(connect_url)s\" class=\"btn-text-hover-primary\" "
+"style=\"text-decoration: underline;\">аны туташтырып</a>\n"
 "        кайра келсеңиз болот, же азыр импорттоп, аккаунтту кийин тандаңыз."
 
 #: templates/flows/_import_requirement.html:104
@@ -8367,10 +8524,12 @@ msgstr ""
 #: templates/flows/_triggers_panel.html:37
 #, python-format
 msgid ""
-"More than one “%(label)s” trigger is enabled on this flow. Only the one with the\n"
+"More than one “%(label)s” trigger is enabled on this flow. Only the one with "
+"the\n"
 "        lowest number will ever run."
 msgstr ""
-"Бул сценарийде «%(label)s» триггеринен биртен ашык күйгүзүлгөн. Алардын ичинен номери\n"
+"Бул сценарийде «%(label)s» триггеринен биртен ашык күйгүзүлгөн. Алардын "
+"ичинен номери\n"
 "        кичинеси гана иштейт."
 
 #: templates/flows/_triggers_panel.html:45
@@ -8379,8 +8538,7 @@ msgstr "Азырынча триггер жок"
 
 #: templates/flows/_triggers_panel.html:47
 msgid "A published flow with no trigger never runs. Add one below."
-msgstr ""
-"Триггери жок жарыяланган сценарий эч качан иштебейт. Төмөндөн кошуңуз."
+msgstr "Триггери жок жарыяланган сценарий эч качан иштебейт. Төмөндөн кошуңуз."
 
 #: templates/flows/_triggers_panel.html:64
 msgid "Trigger type"
@@ -8412,10 +8570,12 @@ msgstr "Сценарий редактору жүктөлгөн жок."
 
 #: templates/flows/edit.html:144
 msgid ""
-"Its JavaScript bundle has not been built. Run <code>make frontend</code> and reload,\n"
+"Its JavaScript bundle has not been built. Run <code>make frontend</code> and "
+"reload,\n"
 "                or rebuild the container image."
 msgstr ""
-"Анын JavaScript чогулмасы курулган эмес. <code>make frontend</code> иштетип, баракты кайра жүктөңүз,\n"
+"Анын JavaScript чогулмасы курулган эмес. <code>make frontend</code> иштетип, "
+"баракты кайра жүктөңүз,\n"
 "                же контейнер образын кайра курңуз."
 
 #: templates/flows/edit.html:158
@@ -8435,8 +8595,8 @@ msgstr "Бул импортту текшериңиз"
 msgid ""
 "Nothing has been created yet. Answer what it asks for below, then import."
 msgstr ""
-"Азырынча эч нерсе түзүлгөн жок. Төмөндөгү суроолорго жооп берип, андан кийин"
-" импорттоңуз."
+"Азырынча эч нерсе түзүлгөн жок. Төмөндөгү суроолорго жооп берип, андан кийин "
+"импорттоңуз."
 
 #: templates/flows/import_review.html:40
 msgid "Flows in this file"
@@ -8485,8 +8645,8 @@ msgstr "Билип коюу керек"
 
 #: templates/flows/import_review.html:133
 msgid ""
-"What starts each flow. Keeping one imports it switched off, ready for you to"
-" turn on once you have read the flow. Skipping one leaves it out of the "
+"What starts each flow. Keeping one imports it switched off, ready for you to "
+"turn on once you have read the flow. Skipping one leaves it out of the "
 "import entirely."
 msgstr ""
 "Ар бир сценарийди эмне иштетет. Триггерди калтырсаңыз, ал өчүрүлгөн бойдон "
@@ -8534,8 +8694,8 @@ msgstr "Кайра текшерүү үчүн жоопторуңузду сакт
 
 #: templates/flows/import_upload.html:18
 msgid ""
-"Upload a flow template. You will see exactly what it needs, and what it will"
-" call out to, before anything is created."
+"Upload a flow template. You will see exactly what it needs, and what it will "
+"call out to, before anything is created."
 msgstr ""
 "Сценарий шаблонун жүктөңүз. Эч нерсе түзүлгөнгө чейин ага эмне керек экенин "
 "жана кайда кайрыларын так көрөсүз."
@@ -8560,24 +8720,26 @@ msgstr ""
 #: templates/flows/import_upload.html:51
 #, python-format
 msgid ""
-"Or <a href=\"%(template_gallery_url)s\" class=\"btn-link\">start from one of"
-" the built-in templates</a>."
+"Or <a href=\"%(template_gallery_url)s\" class=\"btn-link\">start from one of "
+"the built-in templates</a>."
 msgstr ""
 "Же <a href=\"%(template_gallery_url)s\" class=\"btn-link\">курамдагы "
 "шаблондордун биринен баштаңыз</a>."
 
 #: templates/flows/import_upload.html:56
 msgid ""
-"Imported flows arrive as <strong>unpublished drafts</strong> with their triggers switched off.\n"
+"Imported flows arrive as <strong>unpublished drafts</strong> with their "
+"triggers switched off.\n"
 "                Nothing runs until you publish it yourself."
 msgstr ""
-"Импорттолгон сценарийлер триггерлери өчүрүлгөн <strong>жарыяланбаган долбоорлор</strong> катары келет.\n"
+"Импорттолгон сценарийлер триггерлери өчүрүлгөн <strong>жарыяланбаган "
+"долбоорлор</strong> катары келет.\n"
 "                Өзүңүз жарыялаганча эч нерсе иштебейт."
 
 #: templates/flows/list.html:53
 msgid ""
-"A flow replies for you when something happens: a comment, a keyword, a reply"
-" to your story."
+"A flow replies for you when something happens: a comment, a keyword, a reply "
+"to your story."
 msgstr ""
 "Бир нерсе болгондо сценарий сиздин ордуңузга жооп берет: комментарий, ачкыч "
 "сөз, историяга жооп."
@@ -8641,11 +8803,15 @@ msgstr "Шаблондорду издөө"
 
 #: templates/flows/template_gallery.html:86
 msgid ""
-"Every template arrives as an <strong>unpublished draft</strong> with its triggers switched off,\n"
-"            and its links and tags are placeholders. Nothing runs until you edit it and publish it yourself."
+"Every template arrives as an <strong>unpublished draft</strong> with its "
+"triggers switched off,\n"
+"            and its links and tags are placeholders. Nothing runs until you "
+"edit it and publish it yourself."
 msgstr ""
-"Ар бир шаблон триггерлери өчүрүлгөн <strong>жарыяланбаган долбоор</strong> катары келет,\n"
-"            ал эми шилтемелери жана тегдери — толтургуч гана. Өзүңүз түзөтүп, жарыялаганча эч нерсе иштебейт."
+"Ар бир шаблон триггерлери өчүрүлгөн <strong>жарыяланбаган долбоор</strong> "
+"катары келет,\n"
+"            ал эми шилтемелери жана тегдери — толтургуч гана. Өзүңүз "
+"түзөтүп, жарыялаганча эч нерсе иштебейт."
 
 #: templates/flows/template_gallery.html:93
 msgid "No templates are installed"
@@ -8655,10 +8821,12 @@ msgstr "Шаблондор орнотулган эмес"
 #, python-format
 msgid ""
 "This installation ships none, or none of them could be read.\n"
-"        You can still <a href=\"%(upload_url)s\" class=\"btn-link\">upload a template file</a>."
+"        You can still <a href=\"%(upload_url)s\" class=\"btn-link\">upload a "
+"template file</a>."
 msgstr ""
 "Бул орнотууда алар жок, же бир дагысы окулган жок.\n"
-"        Сиз дагы деле <a href=\"%(upload_url)s\" class=\"btn-link\">шаблон файлын жүктөй</a> аласыз."
+"        Сиз дагы деле <a href=\"%(upload_url)s\" class=\"btn-link\">шаблон "
+"файлын жүктөй</a> аласыз."
 
 #: templates/flows/triggers/_form_comment.html:26
 msgid "Posts"
@@ -8728,8 +8896,8 @@ msgid ""
 "private reply, once per comment and within seven days of it."
 msgstr ""
 "Алгач ачык жооп жөнөтүлөт; сценарийдин биринчи билдирүүсү жеке билдирүү "
-"катары андан кийин келет — ар бир комментарийге бир жолу, андан кийинки жети"
-" күн ичинде."
+"катары андан кийин келет — ар бир комментарийге бир жолу, андан кийинки жети "
+"күн ичинде."
 
 #: templates/flows/triggers/_form_keyword.html:15
 msgid "Exact"
@@ -8756,8 +8924,8 @@ msgid ""
 "Matching ignores case and surrounding spaces. “Contains” matches inside a "
 "word, “whole word” does not."
 msgstr ""
-"Дал келүү регистрди жана четиндеги боштуктарды эске албайт. «Камтыйт» сөздүн"
-" ичинде дал келет, «так эле сөз катары» дал келбейт."
+"Дал келүү регистрди жана четиндеги боштуктарды эске албайт. «Камтыйт» сөздүн "
+"ичинде дал келет, «так эле сөз катары» дал келбейт."
 
 #: templates/flows/triggers/_form_ref_url.html:10
 msgid "Reference"
@@ -8820,8 +8988,8 @@ msgstr "Контакт дал келгенде гана"
 
 #: templates/flows/triggers/_form_rule.html:56
 msgid ""
-"Checked after the change, so a rule can ask what the contact looks like now."
-" Leave empty to fire for everyone. Each contact can start this flow at most "
+"Checked after the change, so a rule can ask what the contact looks like now. "
+"Leave empty to fire for everyone. Each contact can start this flow at most "
 "once a minute."
 msgstr ""
 "Өзгөргөндөн кийин текшерилет, ошондуктан эреже контакт азыр кандай экенин "
@@ -8946,8 +9114,8 @@ msgid ""
 "Delete “%(name)s”? It is removed from %(used)s conversation. Rules that add "
 "it keep running and will show it as deleted."
 msgid_plural ""
-"Delete “%(name)s”? It is removed from %(used)s conversations. Rules that add"
-" it keep running and will show it as deleted."
+"Delete “%(name)s”? It is removed from %(used)s conversations. Rules that add "
+"it keep running and will show it as deleted."
 msgstr[0] ""
 "«%(name)s» өчүрүлсүнбү? Ал %(used)s маектен алынат. Аны кошуучу эрежелер "
 "иштей берет жана аны өчүрүлгөн катары көрсөтөт."
@@ -8962,7 +9130,8 @@ msgstr "Азырынча меткалар жок"
 
 #: templates/inbox/_label_rows.html:60
 msgid ""
-"A label files one conversation — \"waiting on shipping\", \"needs a refund\" — and stops being\n"
+"A label files one conversation — \"waiting on shipping\", \"needs a refund\" "
+"— and stops being\n"
 "      true when the thread is answered."
 msgstr ""
 "Метка бир маекти файлдайт — «жеткирүүнү күтүүдө», «акча кайтаруу керек» — "
@@ -9095,8 +9264,7 @@ msgstr "Бул эрежени күйгүзүү"
 msgid ""
 "Delete “%(name)s”? Conversations it has already labelled keep their labels."
 msgstr ""
-"«%(name)s» өчүрүлсүнбү? Ал мурунтан белгилеген маектер өз белгилерин "
-"сактайт."
+"«%(name)s» өчүрүлсүнбү? Ал мурунтан белгилеген маектер өз белгилерин сактайт."
 
 #: templates/inbox/_rule_rows.html:79
 msgid "No rules yet"
@@ -9104,11 +9272,12 @@ msgstr "Азырынча эрежелер жок"
 
 #: templates/inbox/_rule_rows.html:81
 msgid ""
-"A rule reads an inbound message and files, assigns or closes the conversation it belongs to,\n"
+"A rule reads an inbound message and files, assigns or closes the "
+"conversation it belongs to,\n"
 "      before any flow replies."
 msgstr ""
-"Эреже кирген билдирүүнү окуйт жана ага таандык маекти файлдайт, дайындайт же"
-" жабат, кандайдыр бир сценарий жооп бергенге чейин."
+"Эреже кирген билдирүүнү окуйт жана ага таандык маекти файлдайт, дайындайт же "
+"жабат, кандайдыр бир сценарий жооп бергенге чейин."
 
 #: templates/inbox/_rule_rows.html:84 templates/inbox/rule_settings.html:36
 msgid "New rule"
@@ -9123,11 +9292,13 @@ msgstr ""
 #, python-format
 msgid ""
 "Matched %(matched)s of the last %(sample)s inbound message.\n"
-"      This scores today's contact details against older messages, so it is a\n"
+"      This scores today's contact details against older messages, so it is "
+"a\n"
 "      preview rather than a replay of what would have happened at the time."
 msgid_plural ""
 "Matched %(matched)s of the last %(sample)s inbound messages.\n"
-"      This scores today's contact details against older messages, so it is a\n"
+"      This scores today's contact details against older messages, so it is "
+"a\n"
 "      preview rather than a replay of what would have happened at the time."
 msgstr[0] ""
 "Акыркы %(sample)s кирген билдирүүнүн %(matched)sи дал келди. Бул бүгүнкү "
@@ -9263,16 +9434,19 @@ msgstr "Метка кошуу…"
 
 #: templates/inbox/label_settings.html:21
 msgid ""
-"Labels file a conversation. They are the inbox's own filing system, and they are not\n"
-"                contact tags: a tag like \"VIP\" follows a person across every channel they use, while\n"
-"                a label like \"waiting on shipping\" is true of one thread and stops being true when\n"
+"Labels file a conversation. They are the inbox's own filing system, and they "
+"are not\n"
+"                contact tags: a tag like \"VIP\" follows a person across "
+"every channel they use, while\n"
+"                a label like \"waiting on shipping\" is true of one thread "
+"and stops being true when\n"
 "                it is answered. Inbox rules can add labels automatically."
 msgstr ""
-"Меткалар маекти файлдайт. Бул кирген каттын өз картотека системасы, жана бул"
-" байланыш тегдери эмес: «VIP» сыяктуу тег адамды ал колдонгон бардык "
-"каналдар аркылуу ээрчийт, ал эми «жеткирүүнү күтүүдө» сыяктуу метка бир маек"
-" үчүн туура жана ага жооп берилгенде туура болбой калат. Кирген кат "
-"эрежелери меткаларды автоматтык түрдө кошо алат."
+"Меткалар маекти файлдайт. Бул кирген каттын өз картотека системасы, жана бул "
+"байланыш тегдери эмес: «VIP» сыяктуу тег адамды ал колдонгон бардык каналдар "
+"аркылуу ээрчийт, ал эми «жеткирүүнү күтүүдө» сыяктуу метка бир маек үчүн "
+"туура жана ага жооп берилгенде туура болбой калат. Кирген кат эрежелери "
+"меткаларды автоматтык түрдө кошо алат."
 
 #: templates/inbox/label_settings.html:30
 msgid "Waiting on shipping"
@@ -9312,8 +9486,10 @@ msgstr "Бул бир билдирүү алып жүрө турган тирке
 
 #: templates/inbox/rule_settings.html:31
 msgid ""
-"A rule reads every message that arrives and files, assigns or closes the conversation it\n"
-"        belongs to. It runs before any flow replies, and it keeps running even where somebody has\n"
+"A rule reads every message that arrives and files, assigns or closes the "
+"conversation it\n"
+"        belongs to. It runs before any flow replies, and it keeps running "
+"even where somebody has\n"
 "        paused automation on a thread."
 msgstr ""
 "Эреже келген ар бир билдирүүнү окуйт жана ага таандык маекти файлдайт, "
@@ -9322,7 +9498,8 @@ msgstr ""
 
 #: templates/inbox/rule_settings.html:40
 msgid ""
-"Triggers stop at the first match. Rules do not: <strong>every</strong> rule that matches\n"
+"Triggers stop at the first match. Rules do not: <strong>every</strong> rule "
+"that matches\n"
 "    applies, in the order below."
 msgstr ""
 "Триггерлер биринчи дал келгенде токтойт. Эрежелер токтобойт: дал келген "
@@ -9362,8 +9539,8 @@ msgid ""
 "Described to people using a screen reader, and sent to platforms that "
 "support it."
 msgstr ""
-"Экрандан окуу программасын колдонгон адамдарга сүрөттөлөт жана муну колдогон"
-" платформаларга жөнөтүлөт."
+"Экрандан окуу программасын колдонгон адамдарга сүрөттөлөт жана муну колдогон "
+"платформаларга жөнөтүлөт."
 
 #: templates/media_library/_asset_detail.html:59
 msgid "No folder"
@@ -9406,11 +9583,11 @@ msgstr "Кыскараак сөз колдонуп көрүңүз же чыпк�
 
 #: templates/media_library/_asset_grid.html:73
 msgid ""
-"Drop a picture or a file above and it is ready to use in any flow, broadcast"
-" or email."
+"Drop a picture or a file above and it is ready to use in any flow, broadcast "
+"or email."
 msgstr ""
-"Жогоруга сүрөт же файл таштаңыз, ал каалаган сценарийде, жайылтууда же катта"
-" колдонууга даяр болот."
+"Жогоруга сүрөт же файл таштаңыз, ал каалаган сценарийде, жайылтууда же катта "
+"колдонууга даяр болот."
 
 #: templates/media_library/_folder_rail.html:14
 msgid "Media folders"
@@ -9432,8 +9609,8 @@ msgstr "%(name)sдин атын өзгөртүү"
 #: templates/media_library/_folder_rail.html:37
 #, python-format
 msgid ""
-"Delete the folder “%(name)s”? Anything inside it moves up one level; nothing"
-" is deleted."
+"Delete the folder “%(name)s”? Anything inside it moves up one level; nothing "
+"is deleted."
 msgstr ""
 "«%(name)s» папкасын өчүрөсүзбү? Ичиндеги баары бир деңгээл жогору жылат; эч "
 "нерсе өчүрүлбөйт."
@@ -9454,8 +9631,7 @@ msgstr "Азырынча папка жок."
 
 #: templates/media_library/library.html:42
 msgid ""
-"Upload a picture or a file once, then use it in any flow, broadcast or "
-"email."
+"Upload a picture or a file once, then use it in any flow, broadcast or email."
 msgstr ""
 "Сүрөттү же файлды бир жолу жүктөңүз, андан кийин аны каалаган сценарийде, "
 "жайылтууда же катта колдонуңуз."
@@ -9497,10 +9673,12 @@ msgstr "Файл аттары, аталыштары жана альтернат�
 #: templates/media_library/library.html:145
 msgid ""
 "Drop files here, or\n"
-"          <label for=\"media-files\" class=\"btn-link\" style=\"display:inline; cursor:pointer;\">choose them</label>."
+"          <label for=\"media-files\" class=\"btn-link\" "
+"style=\"display:inline; cursor:pointer;\">choose them</label>."
 msgstr ""
 "Файлдарды бул жерге таштаңыз, же\n"
-"          <label for=\"media-files\" class=\"btn-link\" style=\"display:inline; cursor:pointer;\">аларды тандаңыз</label>."
+"          <label for=\"media-files\" class=\"btn-link\" "
+"style=\"display:inline; cursor:pointer;\">аларды тандаңыз</label>."
 
 #: templates/media_library/library.html:149
 msgid ""
@@ -9535,8 +9713,8 @@ msgstr "Бул чакыруу мындан ары жарактуу эмес"
 
 #: templates/members/_invite_expired_body.html:7
 msgid ""
-"It may have expired, been revoked, or already been used. Ask whoever invited"
-" you to send a new one."
+"It may have expired, been revoked, or already been used. Ask whoever invited "
+"you to send a new one."
 msgstr ""
 "Мөөнөтү бүткөн, жокко чыгарылган же мурунтан эле колдонулган болушу мүмкүн. "
 "Сизди чакырган адамдан жаңысын жөнөтүүнү сураңыз."
@@ -9691,10 +9869,12 @@ msgstr "Көрүү"
 #, python-format
 msgid ""
 "You are receiving this because notification emails are on for your account.\n"
-"          <a href=\"%(settings_url)s\" style=\"color:#F97316;text-decoration:underline;\">Turn them off</a>."
+"          <a href=\"%(settings_url)s\" style=\"color:#F97316;text-"
+"decoration:underline;\">Turn them off</a>."
 msgstr ""
 "Бул катты сиз алдыңыз, анткени аккаунтуңузда email билдирүүлөр күйгүзүлгөн.\n"
-"          <a href=\"%(settings_url)s\" style=\"color:#F97316;text-decoration:underline;\">Аларды өчүрүү</a>."
+"          <a href=\"%(settings_url)s\" style=\"color:#F97316;text-"
+"decoration:underline;\">Аларды өчүрүү</a>."
 
 #: templates/notifications/email/notification.txt:8
 msgid ""
@@ -9831,8 +10011,8 @@ msgstr "%(renewal_date)s жаңыртылат."
 #: templates/organizations/billing.html:132
 #, python-format
 msgid ""
-"Your plan ends on %(end_date)s. Nothing is deleted — you keep everything you"
-" have made."
+"Your plan ends on %(end_date)s. Nothing is deleted — you keep everything you "
+"have made."
 msgstr ""
 "Тарифиңиз %(end_date)s аяктайт. Эч нерсе өчүрүлбөйт — жараткандарыңыздын "
 "баары сизде калат."
@@ -9890,8 +10070,8 @@ msgstr "Муну уюм администраторлору гана өзгөрт
 
 #: templates/organizations/workspaces.html:24
 msgid ""
-"Each workspace has its own channels, contacts and inbox. Archiving one keeps"
-" everything and takes it out of the switcher."
+"Each workspace has its own channels, contacts and inbox. Archiving one keeps "
+"everything and takes it out of the switcher."
 msgstr ""
 "Ар бир мейкиндиктин өз каналдары, байланыштары жана кирүүчүлөрү бар. "
 "Архивдөө баарын сактайт жана которгучтан алып салат."
@@ -10031,8 +10211,7 @@ msgstr "%(total)s ичинен %(done)s"
 
 #: templates/workspaces/dashboard.html:102
 #, python-format
-msgid ""
-"%(counter)s ready-made flow. Pick one and change the words to suit you."
+msgid "%(counter)s ready-made flow. Pick one and change the words to suit you."
 msgid_plural ""
 "%(counter)s ready-made flows. Pick one and change the words to suit you."
 msgstr[0] ""
@@ -10147,3 +10326,6 @@ msgstr "Кошумча"
 #: templates/workspaces/settings.html:81
 msgid "Pick the secondary colour"
 msgstr "Кошумча түстү тандоо"
+
+#~ msgid "Preferences"
+#~ msgstr "Жеке ырастоолор"

@@ -809,7 +809,9 @@ def _deliver(request: WorkspaceRequest, conversation_id: Any, *, internal: bool)
         # Not a 400: the refusal is the answer, and the thread now holds a
         # failed row explaining it. describe() rather than message.error,
         # which is a machine code that can carry a provider suffix.
-        return toast_response(tone="error", title=gettext("Not sent"), body=describe(message.error), events=events)
+        return toast_response(
+            tone="error", title=gettext("Not sent"), body=str(describe(message.error)), events=events
+        )
     title = gettext("Note added") if internal else gettext("Reply sent")
     if dropped:
         # Sent, but not with everything the agent attached. Saying so beats a
@@ -907,7 +909,7 @@ def retry(request: WorkspaceRequest, workspace_id: str, conversation_id: str, me
     events = _refresh(inboxSent=True)
     if message.status == MessageStatus.FAILED:
         return toast_response(
-            tone="error", title=gettext("Still not sent"), body=describe(message.error), events=events
+            tone="error", title=gettext("Still not sent"), body=str(describe(message.error)), events=events
         )
     return toast_response(tone="success", title=gettext("Sent"), events=events)
 

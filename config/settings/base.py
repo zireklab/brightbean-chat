@@ -561,7 +561,7 @@ def _platform_credentials_from_env() -> dict[str, dict[str, str]]:
 PLATFORM_CREDENTIALS_FROM_ENV = _platform_credentials_from_env()
 
 # Internationalization
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "en"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
@@ -573,8 +573,14 @@ USE_TZ = True
 # unauthenticated webhook routes that must never carry a locale prefix, so
 # language is resolved from the cookie (and, for a signed-in user, the account
 # itself) instead of `i18n_patterns()`.
+#
+# "en", not "en-us": Django's own LANG_INFO has no "en-us" entry, so
+# get_language_info("en-us") silently falls back to "en" and returns
+# code="en" — the preferences <select>'s English <option value> and its
+# "selected" comparison against request.user.language then used two
+# different spellings of the same language and never matched.
 LANGUAGES = [
-    ("en-us", "English"),
+    ("en", "English"),
     ("ru", "Русский"),
     ("ky", "Кыргызча"),
 ]

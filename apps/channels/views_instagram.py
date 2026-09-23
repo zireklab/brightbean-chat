@@ -322,7 +322,7 @@ def instagram_posts(request: WorkspaceRequest, workspace_id: str) -> HttpRespons
     )
     context: dict[str, Any] = {"posts": [], "reason": "", "connect_url": ""}
     if connection is None:
-        context["reason"] = "Connect an Instagram account to pick posts from it."
+        context["reason"] = gettext("Connect an Instagram account to pick posts from it.")
         context["connect_url"] = reverse("channels:instagram_connect", kwargs={"workspace_id": workspace_id})
         return render(request, "channels/_instagram_posts.html", context)
 
@@ -330,10 +330,10 @@ def instagram_posts(request: WorkspaceRequest, workspace_id: str) -> HttpRespons
         context["posts"] = instagram.recent_media(connection)
     except APIError:
         logger.info("Instagram post picker: /me/media was refused for connection %s.", connection.pk)
-        context["reason"] = "Instagram would not list this account's posts. Reconnect the channel and try again."
+        context["reason"] = gettext("Instagram would not list this account's posts. Reconnect the channel and try again.")
     except Exception:
         logger.exception("Instagram post picker failed for connection %s.", connection.pk)
-        context["reason"] = "Instagram's posts could not be loaded just now."
+        context["reason"] = gettext("Instagram's posts could not be loaded just now.")
     if not context["posts"] and not context["reason"]:
-        context["reason"] = "This account has no posts yet."
+        context["reason"] = gettext("This account has no posts yet.")
     return render(request, "channels/_instagram_posts.html", context)

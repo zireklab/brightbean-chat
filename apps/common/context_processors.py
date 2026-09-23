@@ -408,7 +408,7 @@ SETTINGS_NAV: list[NavGroup] = [
             # it was pulled. The route is real now (the language picker,
             # apps.accounts.views.account_preferences), so the row goes back in
             # the same commit as the page, per that old comment's own rule.
-            NavItem(key="preferences", label=_("Preferences"), icon="globe", url_name="settings_preferences"),
+            NavItem(key="preferences", label=_("Language"), icon="globe", url_name="settings_preferences"),
         ),
     ),
 ]

@@ -55,6 +55,8 @@ from typing import Any
 from django.db import transaction
 from django.db.models import Q
 from django.utils import timezone
+from django.utils.functional import Promise
+from django.utils.translation import gettext_lazy as _
 
 from apps.channels.events import EventType, NormalizedEvent
 from apps.channels.models import (
@@ -117,9 +119,9 @@ PREVIEW_PLATFORMS: frozenset[str] = frozenset(PREVIEW_LINKS)
 #: does not — the link opens a composer, and the referral rides in with the
 #: first message the tester actually sends. Without saying so, people report a
 #: working link as broken.
-PREVIEW_INSTRUCTIONS: dict[str, str] = {
-    Platform.MESSENGER: "Send any message once the chat opens — that first message is what starts the test.",
-    Platform.INSTAGRAM: "Send any message once the chat opens — that first message is what starts the test.",
+PREVIEW_INSTRUCTIONS: dict[str, str | Promise] = {
+    Platform.MESSENGER: _("Send any message once the chat opens — that first message is what starts the test."),
+    Platform.INSTAGRAM: _("Send any message once the chat opens — that first message is what starts the test."),
 }
 
 

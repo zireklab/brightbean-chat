@@ -44,6 +44,7 @@ from typing import Any
 
 from django.conf import settings
 from django.db import models
+from django.utils.functional import Promise
 from django.utils.translation import gettext_lazy as _
 
 from apps.common.scoping import WorkspaceScopedModel
@@ -273,7 +274,7 @@ class BroadcastRecipient(WorkspaceScopedModel):
         return f"{self.contact_id} ({self.status})"
 
     @property
-    def reason_label(self) -> str:
+    def reason_label(self) -> str | Promise:
         """The sentence for this row's code, looked up rather than stored.
 
         ``apps.messaging.codes.describe`` is the registered copy the inbox

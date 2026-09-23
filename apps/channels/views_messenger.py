@@ -487,7 +487,7 @@ def messenger_posts(request: WorkspaceRequest, workspace_id: str) -> HttpRespons
     )
     context: dict[str, Any] = {"posts": [], "reason": "", "connect_url": ""}
     if connection is None:
-        context["reason"] = "Connect a Facebook page to pick posts from it."
+        context["reason"] = gettext("Connect a Facebook page to pick posts from it.")
         context["connect_url"] = reverse("channels:messenger_connect", kwargs={"workspace_id": workspace_id})
         return render(request, "channels/_messenger_posts.html", context)
 
@@ -495,10 +495,10 @@ def messenger_posts(request: WorkspaceRequest, workspace_id: str) -> HttpRespons
         context["posts"] = messenger_adapter.recent_posts(connection)
     except APIError:
         logger.info("Messenger post picker: the page's posts were refused for connection %s.", connection.pk)
-        context["reason"] = "Facebook would not list this page's posts. Reconnect the channel and try again."
+        context["reason"] = gettext("Facebook would not list this page's posts. Reconnect the channel and try again.")
     except Exception:
         logger.exception("Messenger post picker failed for connection %s.", connection.pk)
-        context["reason"] = "The page's posts could not be loaded just now."
+        context["reason"] = gettext("The page's posts could not be loaded just now.")
     if not context["posts"] and not context["reason"]:
-        context["reason"] = "This page has no posts yet."
+        context["reason"] = gettext("This page has no posts yet.")
     return render(request, "channels/_messenger_posts.html", context)

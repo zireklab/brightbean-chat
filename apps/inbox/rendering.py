@@ -316,7 +316,7 @@ class RenderedMessage:
     #: The postback id or deep-link ref an inbound event carried, if any.
     button_id: str = ""
     ref: str = ""
-    reason: str = ""
+    reason: str | Promise = ""
 
     @property
     def is_inbound(self) -> bool:
