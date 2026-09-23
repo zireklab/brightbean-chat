@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-23 19:11+0600\n"
+"POT-Creation-Date: 2026-09-23 21:23+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ky\n"
@@ -1568,9 +1568,9 @@ msgstr "Кирүүчү кабарлар"
 msgid "Flows"
 msgstr "Сценарийлер"
 
-#: apps/common/context_processors.py:465 templates/broadcasts/compose.html:31
-#: templates/broadcasts/list.html:14 templates/broadcasts/list.html:19
-#: templates/channels/detail.html:82
+#: apps/common/context_processors.py:465 templates/broadcasts/compose.html:15
+#: templates/broadcasts/compose.html:31 templates/broadcasts/list.html:14
+#: templates/broadcasts/list.html:19 templates/channels/detail.html:82
 msgid "Broadcasts"
 msgstr "Жайылтуулар"
 
@@ -1593,8 +1593,8 @@ msgid "Notifications"
 msgstr "Билдирүүлөр"
 
 #: apps/common/context_processors.py:534 apps/flows/portability/cards.py:30
-#: templates/campaigns/detail.html:25 templates/campaigns/list.html:13
-#: templates/campaigns/list.html:26
+#: templates/campaigns/detail.html:12 templates/campaigns/detail.html:25
+#: templates/campaigns/list.html:13 templates/campaigns/list.html:26
 msgid "Sequences"
 msgstr "Ырааттуулуктар"
 
@@ -2892,6 +2892,249 @@ msgstr "Буйрутманы текшерүү"
 #: apps/flows/portability/library.py:394
 msgid "Asks for the order number, looks it up, and says where it is."
 msgstr "Буйрутма номерин сурайт, аны издейт жана кайда экенин айтат."
+
+#: apps/flows/schema/jsonschema.py:133
+#, python-format
+msgid "Expected %(types)s."
+msgstr "%(types)s күтүлөт."
+
+#: apps/flows/schema/jsonschema.py:139
+#, python-format
+msgid "Must be %(value)r."
+msgstr "%(value)r болушу керек."
+
+#: apps/flows/schema/jsonschema.py:145
+#, python-format
+msgid "Must be one of: %(options)s."
+msgstr "Төмөнкүлөрдүн бири болушу керек: %(options)s."
+
+#: apps/flows/schema/jsonschema.py:174
+#, python-format
+msgid "Too short: %(count)s character at least."
+msgid_plural "Too short: %(count)s characters at least."
+msgstr[0] "Өтө кыска: жок дегенде %(count)s символ болушу керек."
+
+#: apps/flows/schema/jsonschema.py:179
+#, python-format
+msgid "Too long: %(count)s character at most."
+msgid_plural "Too long: %(count)s characters at most."
+msgstr[0] "Өтө узун: көп дегенде %(count)s символ болушу керек."
+
+#: apps/flows/schema/jsonschema.py:184
+msgid "Does not match the required format."
+msgstr "Талап кылынган форматка дал келбейт."
+
+#: apps/flows/schema/jsonschema.py:193
+#, python-format
+msgid "Must be at least %(minimum)s."
+msgstr "Жок дегенде %(minimum)s болушу керек."
+
+#: apps/flows/schema/jsonschema.py:195
+#, python-format
+msgid "Must be at most %(maximum)s."
+msgstr "Көп дегенде %(maximum)s болушу керек."
+
+#: apps/flows/schema/jsonschema.py:206
+#, python-format
+msgid "Add at least %(minimum)s more."
+msgstr "Жок дегенде дагы %(minimum)s кошуңуз."
+
+#: apps/flows/schema/jsonschema.py:208
+#, python-format
+msgid "%(maximum)s at most."
+msgstr "Көп дегенде %(maximum)s."
+
+#: apps/flows/schema/jsonschema.py:230
+#, python-format
+msgid "%(name)r is required."
+msgstr "%(name)r милдеттүү."
+
+#: apps/flows/schema/jsonschema.py:242
+#, python-format
+msgid "%(name)r is not a recognised key here. Allowed: %(allowed)s."
+msgstr "%(name)r бул жерде белгисиз ачкыч. Уруксат берилгендер: %(allowed)s."
+
+#: apps/flows/schema/jsonschema.py:243
+msgid "none"
+msgstr "жок"
+
+#: apps/flows/schema/jsonschema.py:290
+#, python-format
+msgid "Matches %(matched)s of the allowed alternatives; exactly one may apply."
+msgstr ""
+"Уруксат берилген варианттардын %(matched)s'ине дал келет; так бирөө гана дал "
+"келиши керек."
+
+#: apps/flows/schema/jsonschema.py:314
+#, python-format
+msgid "%(prop)r is required."
+msgstr "%(prop)r милдеттүү."
+
+#: apps/flows/schema/jsonschema.py:318
+#, python-format
+msgid "Must be one of: %(allowed)s."
+msgstr "Төмөнкүлөрдүн бири болушу керек: %(allowed)s."
+
+#: apps/flows/schema/validation.py:131
+msgid ""
+"A connection points at a step that is not in this flow any more. Delete the "
+"connection and draw it again."
+msgstr ""
+"Байланыш бул флоудо жок болуп калган кадамды көрсөтүп жатат. Байланышты "
+"өчүрүп, кайра тартыңыз."
+
+#: apps/flows/schema/validation.py:145
+msgid ""
+"A note is connected to something. Notes are there for you to read and take "
+"no part in what the flow does, so delete the connection."
+msgstr ""
+"Эскертме бир нерсе менен туташтырылган. Эскертмелер окуу үчүн гана, флоунун "
+"иштешине катышпайт, андыктан байланышты өчүрүңүз."
+
+#: apps/flows/schema/validation.py:159
+msgid ""
+"This step ends the flow, so nothing joined after it can ever run. Delete the "
+"connection leaving it."
+msgstr ""
+"Бул кадам флоуну аяктайт, андыктан андан кийин туташтырылган эч нерсе эч "
+"качан иштебейт. Андан чыккан байланышты өчүрүңүз."
+
+#: apps/flows/schema/validation.py:173
+msgid ""
+"A connection leaves this step by a path that does not exist. Delete it and "
+"draw it again."
+msgstr "Байланыш бул кадамдан жок жол менен чыгат. Аны өчүрүп, кайра тартыңыз."
+
+#: apps/flows/schema/validation.py:187
+msgid ""
+"A connection leaves this step by a path it no longer has, usually because "
+"the button or the option it followed was removed. Delete the connection and "
+"draw it again."
+msgstr ""
+"Байланыш бул кадамдан мурда болгон, азыр жок жол менен чыгат — көбүнчө ал "
+"байланган баскыч же вариант өчүрүлгөндүктөн. Байланышты өчүрүп, кайра "
+"тартыңыз."
+
+#: apps/flows/schema/validation.py:203
+msgid ""
+"Two connections leave this step the same way, and only one of them will be "
+"followed. Delete the one you do not want."
+msgstr ""
+"Бул кадамдан бир эле жол менен эки байланыш чыгат, бирок алардын бири гана "
+"иштейт. Керексизин өчүрүңүз."
+
+#: apps/flows/schema/validation.py:284
+#, python-format
+msgid ""
+"A button and a quick reply on this step are both called %(reply_id)r. A "
+"reply only carries the name, so the flow cannot tell which one was tapped. "
+"Rename one."
+msgstr ""
+"Бул кадамдагы баскыч менен тез жооп бирдей аталат — %(reply_id)r. Жооп "
+"болгону атын гана алып жүрөт, андыктан флоу кайсынысы басылганын биле "
+"албайт. Бирин башкача атаңыз."
+
+#: apps/flows/schema/validation.py:332
+msgid "This flow has no steps yet, so there is nothing to run. Add one."
+msgstr ""
+"Бул флоудо азырынча кадамдар жок, андыктан иштете турган эч нерсе жок. Кадам "
+"кошуңуз."
+
+#: apps/flows/schema/validation.py:341
+msgid ""
+"Every step follows another one, so there is nowhere for the flow to begin. "
+"One step has to have nothing pointing into it: find the connection that "
+"loops back to the step you want first, and delete it."
+msgstr ""
+"Ар бир кадам башка кадамдан кийин келет, андыктан флоу баштала турган жер "
+"жок. Бир кадамга эч нерсе кирбеши керек: биринчи болушун каалаган кадамга "
+"кайра кайтып келген байланышты табыңыз жана өчүрүңүз."
+
+#: apps/flows/schema/validation.py:353
+#, python-format
+msgid ""
+"%(count)s step has nothing pointing into it, so it is not clear where this "
+"flow begins. Exactly one may. Join the others up, or delete them."
+msgid_plural ""
+"%(count)s steps have nothing pointing into them, so it is not clear where "
+"this flow begins. Exactly one may. Join the others up, or delete them."
+msgstr[0] ""
+"%(count)s кадамга эч нерсе киришпейт, ошондуктан флоу кайдан башталарын "
+"билүү мүмкүн эмес. Так бир гана кадам мындай болушу керек. Калгандарын "
+"бириктириңиз же өчүрүңүз."
+
+#: apps/flows/schema/validation.py:402
+msgid ""
+"Nothing leads to this step, so it will never run. Join it up, or delete it."
+msgstr ""
+"Бул кадамга эч нерсе алып келбейт, андыктан ал эч качан иштебейт. Аны "
+"бириктириңиз же өчүрүңүз."
+
+#: apps/flows/schema/validation.py:436
+#, python-format
+msgid ""
+"This step sends over %(platform)s, and no %(platform)s account is connected "
+"here."
+msgstr ""
+"Бул кадам %(platform)s аркылуу жөнөтөт, бирок бул жерге %(platform)s "
+"аккаунту туташтырылган эмес."
+
+#: apps/flows/schema/validation.py:462
+#, python-format
+msgid ""
+"%(platform)s cannot show %(block_type)s properly. It will be sent in a "
+"simpler form."
+msgstr ""
+"%(platform)s %(block_type)s'ти туура көрсөтө албайт. Бул жөнөкөйлөтүлгөн "
+"түрдө жөнөтүлөт."
+
+#: apps/flows/schema/validation.py:471
+#, python-format
+msgid ""
+"%(platform)s cuts messages off at %(limit)s characters and this one is "
+"%(length)s."
+msgstr ""
+"%(platform)s билдирүүлөрдү %(limit)s символдон кыркат, ал эми бул билдирүү "
+"%(length)s."
+
+#: apps/flows/schema/validation.py:484
+#, python-format
+msgid ""
+"%(platform)s shows buttons or quick replies, not both. The quick replies "
+"will arrive as a numbered list at the end of the message instead."
+msgstr ""
+"%(platform)s баскычтарды же тез жоопторду көрсөтөт, экөөнү тең эмес. Тез "
+"жооптор билдирүүнүн аягында номерленген тизме түрүндө келет."
+
+#: apps/flows/schema/validation.py:493
+msgid "buttons"
+msgstr "баскычтар"
+
+#: apps/flows/schema/validation.py:494
+msgid "quick replies"
+msgstr "тез жооптор"
+
+#: apps/flows/schema/validation.py:502
+#, python-format
+msgid ""
+"%(platform)s does not support %(label)s. They will be added to the end of "
+"the message as text instead."
+msgstr ""
+"%(platform)s %(label)s колдобойт. Алар билдирүүнүн аягына текст катары "
+"кошулат."
+
+#: apps/flows/schema/validation.py:510
+#, python-format
+msgid "%(platform)s allows %(ceiling)s %(label)s and this step has %(count)s."
+msgstr ""
+"%(platform)s %(ceiling)s %(label)s гана уруксат берет, ал эми бул кадамда "
+"%(count)s бар."
+
+#: apps/flows/schema/validation.py:521
+#, python-format
+msgid ""
+"%(platform)s has no link buttons; the URL is appended to the text instead."
+msgstr "%(platform)s шилтеме баскычтарын колдобойт; URL текстке кошулат."
 
 #: apps/flows/starter.py:45
 msgid "Hi! Thanks for getting in touch — how can we help?"

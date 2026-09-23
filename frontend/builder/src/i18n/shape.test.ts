@@ -63,6 +63,8 @@ describe("ru.ts and ky.ts mirror en.ts", () => {
         "inspector.enumLabels.sms",
         "inspector.labels.url",
         "inspector.labels.id",
+        // A JSON-Schema path pattern example, not prose.
+        "inspector.help.slot",
       ]);
       const untranslated: string[] = [];
       for (const path of enPaths) {

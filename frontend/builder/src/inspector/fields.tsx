@@ -13,7 +13,7 @@ import type { ConfigPath } from "../store/paths";
 import { formatPath } from "../store/paths";
 import { issuesForField } from "../validation/normalize";
 import { useField } from "./FieldContext";
-import { labelFor, variantLabel } from "./copy";
+import { helpFor, labelFor, variantLabel } from "./copy";
 
 export interface FieldProps {
   /** Already dereferenced. */
@@ -54,6 +54,7 @@ export function FieldShell({
 }: FieldProps & { children: ReactNode; onClear?: () => void }) {
   const { issues, readOnly } = useField();
   const messages = issuesForField(issues, formatPath(path));
+  const help = helpFor(propertyName, schema.description);
 
   return (
     <div className="fb-field">
@@ -73,7 +74,7 @@ export function FieldShell({
         ) : null}
       </div>
       {children}
-      {schema.description ? <p className="fb-field-help">{schema.description}</p> : null}
+      {help ? <p className="fb-field-help">{help}</p> : null}
       {messages.map((issue, index) => (
         <p key={index} className={issue.severity === "error" ? "fb-field-error" : "fb-field-help"}>
           {issue.message}
@@ -147,7 +148,9 @@ export function ToggleField(props: FieldProps) {
         />
         <span>{labelFor(propertyName, schema.title)}</span>
       </label>
-      {schema.description ? <p className="fb-field-help">{schema.description}</p> : null}
+      {helpFor(propertyName, schema.description) ? (
+        <p className="fb-field-help">{helpFor(propertyName, schema.description)}</p>
+      ) : null}
     </div>
   );
 }

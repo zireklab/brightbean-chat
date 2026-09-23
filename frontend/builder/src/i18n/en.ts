@@ -250,6 +250,28 @@ export const en = {
       datetime: "Date and time",
       date: "Date",
     },
+    // Help text under a field. Keyed by property name, like `labels` above —
+    // but only looked up when the schema actually gave that field a
+    // `description` (apps/flows/schema/nodes.py). A property name that means
+    // something different depending on the node type it is on (`id`, for a
+    // button/quick-reply/randomizer-path handle) is left out here rather than
+    // given one wrong translation for the other two meanings; it renders the
+    // artefact's own English text instead.
+    help: {
+      image: "Media library id or URL.",
+      media_id: "Media library asset id.",
+      followup: "Where the flow goes if nobody answers in time.",
+      slot: "header.1, body.2, button.0.1 …",
+      reference: "<name>/<language>, e.g. order_shipped/en_US.",
+      from: "Local time, HH:MM.",
+      to: "Local time, HH:MM.",
+      field: "A date/datetime field.",
+      datetime: "ISO-8601 instant.",
+      weight: "Percent.",
+      sticky: "On by default, so somebody who comes back takes the path they had before.",
+      value: "Can include {{placeholders}}, filled in when the message is sent.",
+      body: "JSON body template; placeholders are substituted, never evaluated.",
+    },
     variantLabels: {
       text: "Text",
       image: "Image",

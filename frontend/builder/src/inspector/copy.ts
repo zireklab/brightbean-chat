@@ -30,6 +30,22 @@ export function labelFor(name: string, title?: string): string {
 }
 
 /**
+ * Help text below a field, translated.
+ *
+ * Unlike `labelFor`, this checks the schema's own `description` *first*: most
+ * fields carry none, and a property name shared across node types (`field`,
+ * `value`) may have a description on one and none on another. Looking the
+ * translation up before checking for a description would show help text on a
+ * field the schema never gave one to. A description with no translated entry
+ * falls back to the artefact's own English copy — the same "still readable"
+ * fallback `labelFor` uses — rather than showing nothing.
+ */
+export function helpFor(name: string, description?: string): string | undefined {
+  if (!description) return undefined;
+  return lookup("help", name) ?? description;
+}
+
+/**
  * Tag copy for the discriminated unions a person actually picks from, falling
  * through to the enum labels below (several keys are shared, e.g. `date`),
  * and finally to `humanize`.

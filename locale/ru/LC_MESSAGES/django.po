@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-23 19:11+0600\n"
+"POT-Creation-Date: 2026-09-23 21:23+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ru\n"
@@ -1590,9 +1590,9 @@ msgstr "Входящие"
 msgid "Flows"
 msgstr "Сценарии"
 
-#: apps/common/context_processors.py:465 templates/broadcasts/compose.html:31
-#: templates/broadcasts/list.html:14 templates/broadcasts/list.html:19
-#: templates/channels/detail.html:82
+#: apps/common/context_processors.py:465 templates/broadcasts/compose.html:15
+#: templates/broadcasts/compose.html:31 templates/broadcasts/list.html:14
+#: templates/broadcasts/list.html:19 templates/channels/detail.html:82
 msgid "Broadcasts"
 msgstr "Рассылки"
 
@@ -1615,8 +1615,8 @@ msgid "Notifications"
 msgstr "Уведомления"
 
 #: apps/common/context_processors.py:534 apps/flows/portability/cards.py:30
-#: templates/campaigns/detail.html:25 templates/campaigns/list.html:13
-#: templates/campaigns/list.html:26
+#: templates/campaigns/detail.html:12 templates/campaigns/detail.html:25
+#: templates/campaigns/list.html:13 templates/campaigns/list.html:26
 msgid "Sequences"
 msgstr "Цепочки"
 
@@ -2958,6 +2958,262 @@ msgstr "Проверить заказ"
 #: apps/flows/portability/library.py:394
 msgid "Asks for the order number, looks it up, and says where it is."
 msgstr "Запрашивает номер заказа, находит его и сообщает, где он находится."
+
+#: apps/flows/schema/jsonschema.py:133
+#, python-format
+msgid "Expected %(types)s."
+msgstr "Ожидается %(types)s."
+
+#: apps/flows/schema/jsonschema.py:139
+#, python-format
+msgid "Must be %(value)r."
+msgstr "Должно быть %(value)r."
+
+#: apps/flows/schema/jsonschema.py:145
+#, python-format
+msgid "Must be one of: %(options)s."
+msgstr "Должно быть одним из: %(options)s."
+
+#: apps/flows/schema/jsonschema.py:174
+#, python-format
+msgid "Too short: %(count)s character at least."
+msgid_plural "Too short: %(count)s characters at least."
+msgstr[0] "Слишком коротко: минимум %(count)s символ."
+msgstr[1] "Слишком коротко: минимум %(count)s символа."
+msgstr[2] "Слишком коротко: минимум %(count)s символов."
+msgstr[3] "Слишком коротко: минимум %(count)s символов."
+
+#: apps/flows/schema/jsonschema.py:179
+#, python-format
+msgid "Too long: %(count)s character at most."
+msgid_plural "Too long: %(count)s characters at most."
+msgstr[0] "Слишком длинно: максимум %(count)s символ."
+msgstr[1] "Слишком длинно: максимум %(count)s символа."
+msgstr[2] "Слишком длинно: максимум %(count)s символов."
+msgstr[3] "Слишком длинно: максимум %(count)s символов."
+
+#: apps/flows/schema/jsonschema.py:184
+msgid "Does not match the required format."
+msgstr "Не соответствует нужному формату."
+
+#: apps/flows/schema/jsonschema.py:193
+#, python-format
+msgid "Must be at least %(minimum)s."
+msgstr "Должно быть не менее %(minimum)s."
+
+#: apps/flows/schema/jsonschema.py:195
+#, python-format
+msgid "Must be at most %(maximum)s."
+msgstr "Должно быть не более %(maximum)s."
+
+#: apps/flows/schema/jsonschema.py:206
+#, python-format
+msgid "Add at least %(minimum)s more."
+msgstr "Добавьте ещё как минимум %(minimum)s."
+
+#: apps/flows/schema/jsonschema.py:208
+#, python-format
+msgid "%(maximum)s at most."
+msgstr "Не более %(maximum)s."
+
+#: apps/flows/schema/jsonschema.py:230
+#, python-format
+msgid "%(name)r is required."
+msgstr "%(name)r обязателен."
+
+#: apps/flows/schema/jsonschema.py:242
+#, python-format
+msgid "%(name)r is not a recognised key here. Allowed: %(allowed)s."
+msgstr "%(name)r — неизвестный ключ здесь. Разрешены: %(allowed)s."
+
+#: apps/flows/schema/jsonschema.py:243
+msgid "none"
+msgstr "нет"
+
+#: apps/flows/schema/jsonschema.py:290
+#, python-format
+msgid "Matches %(matched)s of the allowed alternatives; exactly one may apply."
+msgstr ""
+"Совпадает с %(matched)s из допустимых вариантов; должен подходить ровно один."
+
+#: apps/flows/schema/jsonschema.py:314
+#, python-format
+msgid "%(prop)r is required."
+msgstr "%(prop)r обязателен."
+
+#: apps/flows/schema/jsonschema.py:318
+#, python-format
+msgid "Must be one of: %(allowed)s."
+msgstr "Должно быть одним из: %(allowed)s."
+
+#: apps/flows/schema/validation.py:131
+msgid ""
+"A connection points at a step that is not in this flow any more. Delete the "
+"connection and draw it again."
+msgstr ""
+"Соединение указывает на шаг, которого больше нет в этом флоу. Удалите "
+"соединение и проведите его заново."
+
+#: apps/flows/schema/validation.py:145
+msgid ""
+"A note is connected to something. Notes are there for you to read and take "
+"no part in what the flow does, so delete the connection."
+msgstr ""
+"Заметка с чем-то соединена. Заметки нужны только для чтения и не участвуют в "
+"работе флоу, поэтому удалите соединение."
+
+#: apps/flows/schema/validation.py:159
+msgid ""
+"This step ends the flow, so nothing joined after it can ever run. Delete the "
+"connection leaving it."
+msgstr ""
+"Этот шаг завершает флоу, поэтому всё, что подключено после него, никогда не "
+"выполнится. Удалите соединение, выходящее из него."
+
+#: apps/flows/schema/validation.py:173
+msgid ""
+"A connection leaves this step by a path that does not exist. Delete it and "
+"draw it again."
+msgstr ""
+"Соединение выходит из этого шага по несуществующему пути. Удалите его и "
+"проведите заново."
+
+#: apps/flows/schema/validation.py:187
+msgid ""
+"A connection leaves this step by a path it no longer has, usually because "
+"the button or the option it followed was removed. Delete the connection and "
+"draw it again."
+msgstr ""
+"Соединение выходит из этого шага по пути, которого у него больше нет — "
+"обычно потому, что кнопка или вариант, за которым оно шло, были удалены. "
+"Удалите соединение и проведите его заново."
+
+#: apps/flows/schema/validation.py:203
+msgid ""
+"Two connections leave this step the same way, and only one of them will be "
+"followed. Delete the one you do not want."
+msgstr ""
+"Из этого шага выходят два соединения одним и тем же путём, но выполнится "
+"только одно из них. Удалите то, которое не нужно."
+
+#: apps/flows/schema/validation.py:284
+#, python-format
+msgid ""
+"A button and a quick reply on this step are both called %(reply_id)r. A "
+"reply only carries the name, so the flow cannot tell which one was tapped. "
+"Rename one."
+msgstr ""
+"Кнопка и быстрый ответ на этом шаге называются одинаково — %(reply_id)r. "
+"Ответ передаёт только имя, поэтому флоу не может понять, что именно было "
+"нажато. Переименуйте одно из них."
+
+#: apps/flows/schema/validation.py:332
+msgid "This flow has no steps yet, so there is nothing to run. Add one."
+msgstr "В этом флоу пока нет шагов, поэтому запускать нечего. Добавьте шаг."
+
+#: apps/flows/schema/validation.py:341
+msgid ""
+"Every step follows another one, so there is nowhere for the flow to begin. "
+"One step has to have nothing pointing into it: find the connection that "
+"loops back to the step you want first, and delete it."
+msgstr ""
+"Каждый шаг следует за другим, поэтому флоу негде начаться. У одного шага не "
+"должно быть входящих соединений: найдите соединение, которое замыкается на "
+"нужный вам первый шаг, и удалите его."
+
+#: apps/flows/schema/validation.py:353
+#, python-format
+msgid ""
+"%(count)s step has nothing pointing into it, so it is not clear where this "
+"flow begins. Exactly one may. Join the others up, or delete them."
+msgid_plural ""
+"%(count)s steps have nothing pointing into them, so it is not clear where "
+"this flow begins. Exactly one may. Join the others up, or delete them."
+msgstr[0] ""
+"%(count)s шаг никуда не подключён, поэтому непонятно, откуда начинается "
+"флоу. Должен быть ровно один такой шаг. Соедините остальные или удалите их."
+msgstr[1] ""
+"%(count)s шага никуда не подключены, поэтому непонятно, откуда начинается "
+"флоу. Должен быть ровно один такой шаг. Соедините остальные или удалите их."
+msgstr[2] ""
+"%(count)s шагов никуда не подключены, поэтому непонятно, откуда начинается "
+"флоу. Должен быть ровно один такой шаг. Соедините остальные или удалите их."
+msgstr[3] ""
+"%(count)s шагов никуда не подключены, поэтому непонятно, откуда начинается "
+"флоу. Должен быть ровно один такой шаг. Соедините остальные или удалите их."
+
+#: apps/flows/schema/validation.py:402
+msgid ""
+"Nothing leads to this step, so it will never run. Join it up, or delete it."
+msgstr ""
+"К этому шагу ничего не ведёт, поэтому он никогда не выполнится. Соедините "
+"его или удалите."
+
+#: apps/flows/schema/validation.py:436
+#, python-format
+msgid ""
+"This step sends over %(platform)s, and no %(platform)s account is connected "
+"here."
+msgstr ""
+"Этот шаг отправляет через %(platform)s, но здесь не подключён аккаунт "
+"%(platform)s."
+
+#: apps/flows/schema/validation.py:462
+#, python-format
+msgid ""
+"%(platform)s cannot show %(block_type)s properly. It will be sent in a "
+"simpler form."
+msgstr ""
+"%(platform)s не может корректно показать %(block_type)s. Это будет "
+"отправлено в упрощённом виде."
+
+#: apps/flows/schema/validation.py:471
+#, python-format
+msgid ""
+"%(platform)s cuts messages off at %(limit)s characters and this one is "
+"%(length)s."
+msgstr ""
+"%(platform)s обрезает сообщения на %(limit)s символах, а это сообщение — "
+"%(length)s."
+
+#: apps/flows/schema/validation.py:484
+#, python-format
+msgid ""
+"%(platform)s shows buttons or quick replies, not both. The quick replies "
+"will arrive as a numbered list at the end of the message instead."
+msgstr ""
+"%(platform)s показывает либо кнопки, либо быстрые ответы, но не то и другое "
+"сразу. Быстрые ответы придут в виде нумерованного списка в конце сообщения."
+
+#: apps/flows/schema/validation.py:493
+msgid "buttons"
+msgstr "кнопки"
+
+#: apps/flows/schema/validation.py:494
+msgid "quick replies"
+msgstr "быстрые ответы"
+
+#: apps/flows/schema/validation.py:502
+#, python-format
+msgid ""
+"%(platform)s does not support %(label)s. They will be added to the end of "
+"the message as text instead."
+msgstr ""
+"%(platform)s не поддерживает %(label)s. Они будут добавлены в конец "
+"сообщения как текст."
+
+#: apps/flows/schema/validation.py:510
+#, python-format
+msgid "%(platform)s allows %(ceiling)s %(label)s and this step has %(count)s."
+msgstr ""
+"%(platform)s разрешает %(ceiling)s %(label)s, а в этом шаге их %(count)s."
+
+#: apps/flows/schema/validation.py:521
+#, python-format
+msgid ""
+"%(platform)s has no link buttons; the URL is appended to the text instead."
+msgstr ""
+"%(platform)s не поддерживает кнопки-ссылки; URL будет добавлен в текст."
 
 #: apps/flows/starter.py:45
 msgid "Hi! Thanks for getting in touch — how can we help?"
