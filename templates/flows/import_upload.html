@@ -24,7 +24,7 @@ message from that validation, rendered escaped like all imported text.
 <div class="max-w-2xl">
     {% if errors %}
     <div class="rounded-xl border p-4 mb-4"
-         style="border-color: var(--danger-500); background: rgba(var(--danger-500-rgb), 0.08);">
+         style="border-color: var(--error-500); background: color-mix(in srgb, var(--error-500) 8%, transparent);">
         <p class="text-sm font-medium" style="color: var(--text-primary);">{% translate "That file was not imported" %}</p>
         <ul class="mt-2 space-y-1">
             {% for error in errors %}

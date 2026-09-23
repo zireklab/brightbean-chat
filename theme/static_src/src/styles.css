@@ -2566,7 +2566,7 @@ span.flatpickr-weekday {
   top: 0;
   z-index: 2;
   padding: 0.875rem 0 0.75rem;
-  border-top: 1px solid var(--border-inner);
+  border-top: 1px solid var(--divider);
   /* Opaque, or the list scrolls through it. */
   background: var(--surface-0);
 }
@@ -2682,7 +2682,7 @@ span.flatpickr-weekday {
   text-transform: uppercase;
   color: var(--text-ghost);
   padding-top: 0.875rem;
-  border-top: 1px solid var(--border-inner);
+  border-top: 1px solid var(--divider);
 }
 
 .fb-adder-group { margin-top: 0.75rem; }
@@ -2744,7 +2744,7 @@ span.flatpickr-weekday {
 }
 
 /* What separates the one irreversible control from everything above it. */
-.fb-step-rule { border: 0; border-top: 1px solid var(--border-inner); margin: 1.25rem 0 0.75rem; }
+.fb-step-rule { border: 0; border-top: 1px solid var(--divider); margin: 1.25rem 0 0.75rem; }
 
 /* ── Add a step ──────────────────────────────────────────────── */
 
