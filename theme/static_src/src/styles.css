@@ -13,8 +13,8 @@
    only rows/cols, never a class attribute. Anything that starts generating
    class names in Python needs its path added here. */
 @import "tailwindcss" source(none);
-/* Every colour, font, radius, shadow and motion value. Themes override these;
-   nothing below this line may write a colour literal (tests/test_theme_tokens.py). */
+/* Every theme-able value (colours, fonts, radii, shadows, motion). Themes
+   override these; nothing below this line may write a colour literal (tests/test_theme_tokens.py). */
 @import "./tokens.css";
 
 /* The complete content list. Per-app template directories are deliberately
@@ -46,8 +46,8 @@ body {
 .auth-bg {
   background-color: var(--surface-1);
   background-image:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(var(--brand-500-rgb), 0.08), transparent),
-    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(var(--accent-teal-rgb), 0.04), transparent);
+    radial-gradient(ellipse 80% 50% at 50% -20%, color-mix(in srgb, var(--brand-500) 8%, transparent), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 100%, color-mix(in srgb, var(--accent-teal) 4%, transparent), transparent);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -103,7 +103,7 @@ body {
   cursor: pointer;
   transition: background var(--dur-fast) ease;
 }
-.sidebar-ws-btn:hover { background: rgba(var(--scrim-rgb), 0.04); }
+.sidebar-ws-btn:hover { background: color-mix(in srgb, var(--scrim) 4%, transparent); }
 /* The way out of settings, in the switcher's slot. Quieter than the workspace
    name it stands in for — it is a door, not a title — and its mark is sized
    like the logo mark so the rows below line up the same in both modes. */
@@ -184,7 +184,7 @@ body {
   transition: background var(--dur-fast) ease, color var(--dur-fast) ease;
 }
 .sidebar-menu-item:hover {
-  background: rgba(var(--scrim-rgb), 0.04);
+  background: color-mix(in srgb, var(--scrim) 4%, transparent);
   color: var(--text-primary);
 }
 /* Studio tints the current workspace with a neutral, not the brand, and it is
@@ -272,7 +272,7 @@ body {
   cursor: pointer;
   transition: background var(--dur-fast) ease;
 }
-.sidebar-menu-cta:hover { background: rgba(var(--scrim-rgb), 0.04); }
+.sidebar-menu-cta:hover { background: color-mix(in srgb, var(--scrim) 4%, transparent); }
 .sidebar-menu-section { border-top: 1px solid var(--divider); }
 .sidebar-menu-row {
   display: flex;
@@ -292,7 +292,7 @@ body {
   transition: background var(--dur-fast) ease, color var(--dur-fast) ease;
 }
 .sidebar-menu-row:hover {
-  background: rgba(var(--scrim-rgb), 0.04);
+  background: color-mix(in srgb, var(--scrim) 4%, transparent);
   color: var(--text-primary);
 }
 /* The glyph stays quiet while the row's text takes the hover colour: it is
@@ -334,7 +334,7 @@ body {
   transition: background var(--dur-fast) ease, color var(--dur-fast) ease;
 }
 .sidebar-nav-item:hover {
-  background: rgba(var(--scrim-rgb), 0.04);
+  background: color-mix(in srgb, var(--scrim) 4%, transparent);
   color: var(--text-primary);
 }
 .sidebar-nav-item.active {
@@ -391,7 +391,7 @@ body {
 .sidebar-section-label-wrap:hover .sidebar-section-action,
 .sidebar-section-action:focus-visible { opacity: 1; }
 .sidebar-section-action:hover {
-  background: rgba(var(--scrim-rgb), 0.06);
+  background: color-mix(in srgb, var(--scrim) 6%, transparent);
   color: var(--text-secondary);
 }
 
@@ -464,7 +464,7 @@ body {
   height: 10px;
   border-radius: 9999px;
   box-shadow: 0 0 0 1.5px var(--surface-0);
-  color: var(--text-inverse);
+  color: var(--text-on-fill);
 }
 .sidebar-connect-plus { background: var(--primary); }
 .sidebar-channel-flag {
@@ -496,7 +496,7 @@ body {
   cursor: pointer;
   transition: background var(--dur-fast) ease;
 }
-.sidebar-account:hover { background: rgba(var(--scrim-rgb), 0.04); }
+.sidebar-account:hover { background: color-mix(in srgb, var(--scrim) 4%, transparent); }
 .sidebar-account-name {
   font-size: var(--fs-body);
   font-weight: 600;
@@ -543,7 +543,7 @@ body {
   box-sizing: border-box;
   border-radius: var(--radius-full);
   background: var(--brand-500);
-  color: var(--text-inverse);
+  color: var(--text-on-fill);
   font-size: var(--fs-2xs);
   font-weight: 700;
   line-height: 1.4;
@@ -670,7 +670,7 @@ body {
      .sidebar-toggle's own display, this file being unlayered. */
   .sidebar-footer .sidebar-toggle { display: none; }
 }
-.sidebar-backdrop { background: rgba(var(--scrim-rgb), 0.3); }
+.sidebar-backdrop { background: color-mix(in srgb, var(--scrim) 30%, transparent); }
 
 /* --- The mobile top bar -------------------------------------------------- */
 .mobile-topbar {
@@ -725,7 +725,7 @@ body {
   height: 30px;
   border-radius: var(--radius-md);
   background: var(--primary);
-  color: white;
+  color: var(--text-on-fill);
   font-size: 13px;
   font-weight: 700;
   display: flex;
@@ -843,7 +843,7 @@ img.sidebar-logo-mark {
 }
 .btn-pill-primary {
   background: var(--primary);
-  color: var(--text-inverse);
+  color: var(--text-on-fill);
   border: none;
   box-shadow: var(--shadow-primary);
 }
@@ -923,7 +923,7 @@ img.sidebar-logo-mark {
 .avatar-sm { width: 32px; height: 32px; font-size: var(--fs-sm); }
 .avatar-xs { width: 20px; height: 20px; font-size: 9px; }
 .avatar-lg { width: 56px; height: 56px; font-size: 1.125rem; }
-.avatar-brand { background: var(--brand-green-500); color: var(--text-inverse); }
+.avatar-brand { background: var(--brand-green-500); color: var(--text-on-fill); }
 
 /* One empty state, instead of the four each list grew its own copy of. */
 .empty-state {
@@ -1076,7 +1076,7 @@ img.sidebar-logo-mark {
 }
 .btn-danger-soft:hover {
   background: var(--error-500) !important;
-  color: white !important;
+  color: var(--text-on-fill) !important;
 }
 
 .btn-danger-soft-bg {
@@ -1099,7 +1099,7 @@ img.sidebar-logo-mark {
 .btn-primary-lift:hover {
   background: var(--primary-hover) !important;
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.35);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--primary) 35%, transparent);
 }
 
 .card-hover-lift {
@@ -1162,14 +1162,14 @@ img.sidebar-logo-mark {
   transition: background var(--dur-fast) ease;
 }
 .btn-danger-tint:hover {
-  background: rgba(var(--error-rgb), 0.08) !important;
+  background: color-mix(in srgb, var(--error-500) 8%, transparent) !important;
 }
 
 .btn-primary-tint {
   transition: background var(--dur-fast) ease;
 }
 .btn-primary-tint:hover {
-  background: rgba(var(--primary-rgb), 0.2) !important;
+  background: color-mix(in srgb, var(--primary) 20%, transparent) !important;
 }
 
 .input-focus {
@@ -1225,7 +1225,7 @@ img.sidebar-logo-mark {
   border-color: var(--error-500);
 }
 .form-input-styled.is-error:focus {
-  box-shadow: 0 0 0 3px rgba(var(--error-rgb), 0.15);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--error-500) 15%, transparent);
 }
 
 
@@ -1376,14 +1376,14 @@ img.sidebar-logo-mark {
   transition: all var(--dur-base) var(--ease-out);
   letter-spacing: 0.005em;
   background: var(--primary);
-  color: var(--text-inverse);
+  color: var(--text-on-fill);
   box-shadow: var(--shadow-primary);
   width: 100%;
 }
 .btn-brand:hover {
   background: var(--primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.35);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--primary) 35%, transparent);
 }
 .btn-brand:active {
   transform: translateY(0);
@@ -1544,7 +1544,7 @@ img.sidebar-logo-mark {
   border-radius: var(--radius-full);
   cursor: pointer;
   background: var(--primary);
-  color: var(--text-inverse);
+  color: var(--text-on-fill);
   box-shadow: var(--shadow-primary);
   transition: all var(--dur-base) var(--ease-out);
 }
@@ -1597,7 +1597,7 @@ img.sidebar-logo-mark {
 /* Alert boxes */
 .alert-error {
   background: var(--error-50);
-  border: 1px solid rgba(var(--error-rgb), 0.2);
+  border: 1px solid color-mix(in srgb, var(--error-500) 20%, transparent);
   border-radius: var(--radius-lg);
   padding: 0.75rem 1rem;
   color: var(--error-700);
@@ -1607,7 +1607,7 @@ img.sidebar-logo-mark {
 
 .alert-success {
   background: var(--success-50);
-  border: 1px solid rgba(var(--success-rgb), 0.2);
+  border: 1px solid color-mix(in srgb, var(--success-500) 20%, transparent);
   border-radius: var(--radius-lg);
   padding: 0.75rem 1rem;
   color: var(--success-700);
@@ -1619,7 +1619,7 @@ img.sidebar-logo-mark {
    takes tone in {success, info, warn, error} — the fourth had nowhere to land. */
 .alert-warning {
   background: var(--warning-50);
-  border: 1px solid rgba(var(--warning-rgb), 0.2);
+  border: 1px solid color-mix(in srgb, var(--warning-500) 20%, transparent);
   border-radius: var(--radius-lg);
   padding: 0.75rem 1rem;
   color: var(--warning-700);
@@ -1628,7 +1628,7 @@ img.sidebar-logo-mark {
 }
 .alert-info {
   background: var(--info-50);
-  border: 1px solid rgba(var(--info-rgb), 0.2);
+  border: 1px solid color-mix(in srgb, var(--info-500) 20%, transparent);
   border-radius: var(--radius-lg);
   padding: 0.75rem 1rem;
   color: var(--info-700);
@@ -1746,7 +1746,7 @@ span.flatpickr-weekday {
 .flatpickr-day.selected:hover {
   background: var(--primary);
   border-color: var(--primary);
-  color: var(--text-inverse);
+  color: var(--text-on-fill);
 }
 .flatpickr-day.prevMonthDay,
 .flatpickr-day.nextMonthDay {
@@ -1844,7 +1844,7 @@ span.flatpickr-weekday {
   height: 16px;
   border-radius: 9999px;
   background: var(--surface-0);
-  box-shadow: 0 1px 2px rgba(var(--scrim-rgb), 0.2);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--scrim) 20%, transparent);
   transition: transform 0.15s ease;
 }
 .bb-toggle input:checked + .bb-toggle-track {
@@ -1896,7 +1896,7 @@ span.flatpickr-weekday {
 .bb-filter-select:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.15);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 15%, transparent);
 }
 .bb-filter-select.is-active {
   border-color: var(--brand-300);
@@ -1952,7 +1952,7 @@ span.flatpickr-weekday {
   justify-content: center;
   flex-shrink: 0;
   border-radius: var(--radius-sm);
-  color: var(--text-inverse);
+  color: var(--text-on-fill);
 }
 .pi-telegram  { background: var(--platform-telegram); }
 .pi-instagram { background: var(--platform-instagram); }
@@ -2357,9 +2357,9 @@ span.flatpickr-weekday {
   --xy-controls-button-color-hover: var(--text-primary);
   --xy-controls-box-shadow: var(--shadow-md);
   --xy-minimap-background-color: var(--surface-0);
-  --xy-minimap-mask-background-color: rgba(var(--scrim-rgb), 0.06);
+  --xy-minimap-mask-background-color: color-mix(in srgb, var(--scrim) 6%, transparent);
   --xy-minimap-node-background-color: var(--border-hover);
-  --xy-selection-background-color: rgba(var(--brand-500-rgb), 0.06);
+  --xy-selection-background-color: color-mix(in srgb, var(--brand-500) 6%, transparent);
   --xy-selection-border: 1px dashed var(--primary);
   --xy-attribution-background-color: transparent;
 
@@ -2413,7 +2413,7 @@ span.flatpickr-weekday {
   padding: 0.0625rem 0.375rem;
   border-radius: var(--radius-full);
   background: var(--error-500);
-  color: #fff;
+  color: var(--text-on-fill);
   font-size: var(--fs-2xs);
   font-weight: 700;
   vertical-align: 0.05em;
@@ -2526,7 +2526,7 @@ span.flatpickr-weekday {
   flex: 0 0 auto;
   border-radius: var(--radius-full);
   background: var(--primary);
-  color: #fff;
+  color: var(--text-on-fill);
   font-size: var(--fs-2xs);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -2770,7 +2770,7 @@ span.flatpickr-weekday {
   border: 0;
   border-radius: var(--radius-full);
   background: var(--primary);
-  color: #fff;
+  color: var(--text-on-fill);
   font-size: var(--fs-body);
   font-weight: 600;
   box-shadow: var(--shadow-primary);
@@ -2859,7 +2859,7 @@ span.flatpickr-weekday {
   padding: 0.5rem 0.75rem;
   border-radius: 1rem 1rem 1rem 0.25rem;
   background: var(--primary);
-  color: #fff;
+  color: var(--text-on-fill);
   font-size: var(--fs-body);
   line-height: 1.45;
   white-space: pre-wrap;
@@ -2913,10 +2913,10 @@ span.flatpickr-weekday {
 /* --flow-accent is the dot; --flow-ink is the eyebrow's text, which needs a
    readable weight the dot colour does not have. The four pairs map onto the
    four phrases in schema/plain.ts: When, Then send, If they reply, Then do. */
-.fb-node-content { --flow-accent: var(--flow-group-content); --flow-accent-soft: var(--flow-group-content-soft); --flow-ink: var(--brand-700); }
-.fb-node-logic   { --flow-accent: var(--flow-group-logic);   --flow-accent-soft: var(--flow-group-logic-soft);   --flow-ink: #3730A3; }
-.fb-node-actions { --flow-accent: var(--flow-group-actions); --flow-accent-soft: var(--flow-group-actions-soft); --flow-ink: #0F766E; }
-.fb-node-other   { --flow-accent: var(--flow-group-other);   --flow-accent-soft: var(--flow-group-other-soft);   --flow-ink: var(--text-tertiary); }
+.fb-node-content { --flow-accent: var(--flow-group-content); --flow-accent-soft: var(--flow-group-content-soft); --flow-ink: var(--flow-group-content-ink); }
+.fb-node-logic   { --flow-accent: var(--flow-group-logic);   --flow-accent-soft: var(--flow-group-logic-soft);   --flow-ink: var(--flow-group-logic-ink); }
+.fb-node-actions { --flow-accent: var(--flow-group-actions); --flow-accent-soft: var(--flow-group-actions-soft); --flow-ink: var(--flow-group-actions-ink); }
+.fb-node-other   { --flow-accent: var(--flow-group-other);   --flow-accent-soft: var(--flow-group-other-soft);   --flow-ink: var(--flow-group-other-ink); }
 
 /* A note is an annotation, not a step: no chrome, no handles. */
 .fb-node-note {
@@ -2975,7 +2975,7 @@ span.flatpickr-weekday {
   padding: 0.0625rem 0.3125rem;
   border-radius: var(--radius-full);
   background: var(--primary);
-  color: var(--text-inverse);
+  color: var(--text-on-fill);
   font-size: 0.625rem;
   font-weight: 600;
   letter-spacing: 0.03em;
@@ -3303,7 +3303,7 @@ span.flatpickr-weekday {
   overflow-wrap: anywhere;
 }
 .ib-bubble-in  { background: var(--surface-2); color: var(--text-primary); }
-.ib-bubble-out { background: var(--primary); color: var(--text-inverse); }
+.ib-bubble-out { background: var(--primary); color: var(--text-on-fill); }
 .ib-bubble-note {
   background: var(--warning-50);
   color: var(--warning-700);
@@ -4077,8 +4077,8 @@ span.flatpickr-weekday {
   font-size: var(--fs-body);
   font-weight: 700;
 }
-.bc-step-current .bc-step-index { background: var(--primary); color: var(--text-inverse); }
-.bc-step-done .bc-step-index { background: var(--success-500); color: var(--text-inverse); }
+.bc-step-current .bc-step-index { background: var(--primary); color: var(--text-on-fill); }
+.bc-step-done .bc-step-index { background: var(--success-500); color: var(--text-on-fill); }
 /* The connector. A flex-1 hairline that turns olive once the step behind it is
    done, which is the whole "how far along am I" signal. */
 .bc-step-link {

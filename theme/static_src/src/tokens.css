@@ -38,20 +38,16 @@
   --brand-green-600: #7B8A33;
   --brand-green-700: #5F6B27;
 
-  /* Brand Tokens - channel triplets. Needed wherever a colour is used at
-     partial alpha: CSS cannot extract the channels out of a hex custom
-     property, so rgba() needs them spelled out. Studio references
-     --primary-rgb from .btn-primary-tint but never defines it, so that
-     utility silently falls back to a literal and stops white-labelling. */
-  --brand-500-rgb:   249, 115, 22;
-  --error-500-rgb:   239, 68, 68;
-  --success-500-rgb: 148, 164, 63;  /* = --brand-green-500 */
-  --info-500-rgb:    59, 130, 246;
-  --warning-500-rgb: 234, 179, 8;
-  --accent-teal-rgb: 20, 184, 166;
+  /* Partial alpha is color-mix(in srgb, var(--token) N%, transparent), never
+     rgba() over an "r, g, b" triplet token. The triplets this block used to
+     carry had to be kept in sync with their hex twins by hand, and a triplet
+     cannot follow a colour-scheme switch, which is what the theme modes run
+     on (docs/themes-roadmap.md). Mixing with transparent in srgb is
+     premultiplied, so the result is exactly the rgba() it replaced. */
+
   /* Neutral scrim for hover washes and knob shadows — black, not a brand hue,
-     but tokenised so no literal colour survives outside this block. */
-  --scrim-rgb:       0, 0, 0;
+     but tokenised so no literal colour survives outside this file. */
+  --scrim: #000000;
 
   /* Brand Tokens - messaging platforms. Their official marks, kept here in
      Layer 1 because they are brand values a white-label deployment may need
@@ -80,10 +76,6 @@
      builder's content drawer along with every nav row. */
   --primary-tint:  var(--brand-75);
   --primary-tint-border: #FBD3AF;
-  /* Studio's .btn-primary-tint reads var(--primary-rgb, 249, 115, 22) with no
-     definition anywhere, so the fallback always won and the tint stayed orange
-     after a rebrand. Defined here, it tracks the brand ramp like everything else. */
-  --primary-rgb:   var(--brand-500-rgb);
 
   /* Neutrals - warm stone */
   --neutral-950: #171412;
@@ -135,7 +127,12 @@
   --text-secondary: var(--neutral-600);
   --text-tertiary:  var(--neutral-500);
   --text-ghost:     var(--neutral-400);
+  /* Two different whites that only coincide in light mode:
+     --text-inverse flips with an inverted neutral surface (a --neutral-900
+     chip or toast); --text-on-fill sits on a saturated fill (--primary,
+     --error-500, a platform colour) and stays white in every mode. */
   --text-inverse:   #FFFFFF;
+  --text-on-fill:   #FFFFFF;
 
   /* Illustrations */
   --color-illustration-border: var(--neutral-200);
@@ -160,10 +157,6 @@
   --warning-200: #FDE68A;
   --error-500:   #EF4444; --error-50:   #FEF2F2; --error-700:   #B91C1C;
   --error-600:   #DC2626;
-  --error-rgb:   var(--error-500-rgb);
-  --success-rgb: var(--success-500-rgb);
-  --info-rgb:    var(--info-500-rgb);
-  --warning-rgb: var(--warning-500-rgb);
   --info-500:    #3B82F6; --info-50:    #EFF6FF; --info-700:    #1D4ED8;
 
   /* Accent palette */
@@ -173,30 +166,40 @@
   --accent-amber:   #F59E0B; --accent-amber-soft:   #FFFBEB;
   --accent-indigo:  #6366F1; --accent-indigo-soft:  #EEF2FF;
   --accent-emerald: #10B981; --accent-emerald-soft: #ECFDF5;
+  /* Text weights for the two accents the flow builder labels with: the 500s
+     are fills and too light to read at eyebrow size. */
+  --accent-indigo-ink: #3730A3;
+  --accent-teal-ink:   #0F766E;
 
   /* Flow-builder node groups (issue #10). Semantic, not brand: they name the
      palette drawers apps/flows/schema/nodes.py registers, and every value
      references a Layer-1 token so editing only the top block still recolours
-     the canvas. A group added later needs one pair here and one modifier
-     class below. */
+     the canvas. A group added later needs one fill/soft/ink trio here and
+     one modifier class in styles.css. */
   --flow-group-content: var(--brand-500);
   --flow-group-content-soft: var(--primary-soft);
+  --flow-group-content-ink: var(--brand-700);
   --flow-group-logic:   var(--accent-indigo);
   --flow-group-logic-soft: var(--accent-indigo-soft);
+  --flow-group-logic-ink: var(--accent-indigo-ink);
   --flow-group-actions: var(--accent-teal);
   --flow-group-actions-soft: var(--accent-teal-soft);
+  --flow-group-actions-ink: var(--accent-teal-ink);
   --flow-group-other:   var(--neutral-400);
   --flow-group-other-soft: var(--surface-2);
+  --flow-group-other-ink: var(--text-tertiary);
 
-  /* Shadows */
-  --shadow-xs:  0 1px 2px rgba(23,20,18,0.05);
-  --shadow-sm:  0 1px 3px rgba(23,20,18,0.08), 0 1px 2px rgba(23,20,18,0.04);
-  --shadow-md:  0 4px 6px rgba(23,20,18,0.06), 0 2px 4px rgba(23,20,18,0.04);
-  --shadow-lg:  0 10px 15px rgba(23,20,18,0.08), 0 4px 6px rgba(23,20,18,0.04);
-  --shadow-xl:  0 20px 25px rgba(23,20,18,0.08), 0 8px 10px rgba(23,20,18,0.04);
-  --shadow-primary: 0 4px 14px rgba(var(--brand-500-rgb), 0.28);
+  /* Shadows. One ink for every elevation, mixed down per layer: a theme
+     (or a dark mode) changes the shadow colour in one place. */
+  --shadow-color: var(--neutral-950);
+  --shadow-xs:  0 1px 2px color-mix(in srgb, var(--shadow-color) 5%, transparent);
+  --shadow-sm:  0 1px 3px color-mix(in srgb, var(--shadow-color) 8%, transparent), 0 1px 2px color-mix(in srgb, var(--shadow-color) 4%, transparent);
+  --shadow-md:  0 4px 6px color-mix(in srgb, var(--shadow-color) 6%, transparent), 0 2px 4px color-mix(in srgb, var(--shadow-color) 4%, transparent);
+  --shadow-lg:  0 10px 15px color-mix(in srgb, var(--shadow-color) 8%, transparent), 0 4px 6px color-mix(in srgb, var(--shadow-color) 4%, transparent);
+  --shadow-xl:  0 20px 25px color-mix(in srgb, var(--shadow-color) 8%, transparent), 0 8px 10px color-mix(in srgb, var(--shadow-color) 4%, transparent);
+  --shadow-primary: 0 4px 14px color-mix(in srgb, var(--brand-500) 28%, transparent);
   /* The toast host floats over content and needs more lift than --shadow-xl. */
-  --shadow-toast: 0 12px 30px rgba(23, 20, 18, 0.32);
+  --shadow-toast: 0 12px 30px color-mix(in srgb, var(--shadow-color) 32%, transparent);
 
   /* Radii */
   --radius-sm:   0.25rem;

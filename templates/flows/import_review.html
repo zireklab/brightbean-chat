@@ -67,7 +67,7 @@ from visiting a stranger's address.
     {% comment %} Outbound calls the importer did not choose {% endcomment %}
     {% if plan.outbound_requests %}
     <section class="rounded-xl border p-4 mb-4"
-             style="border-color: var(--warning-500); background: rgba(var(--warning-500-rgb), 0.08);">
+             style="border-color: var(--warning-500); background: color-mix(in srgb, var(--warning-500) 8%, transparent);">
         <h2 class="text-sm font-semibold mb-1" style="color: var(--text-primary);">{% translate "This flow calls out to the internet" %}</h2>
         <p class="text-xs mb-2" style="color: var(--text-secondary);">
             {% translate "Whoever wrote this template chose these addresses. Read them before you publish the flow." %}

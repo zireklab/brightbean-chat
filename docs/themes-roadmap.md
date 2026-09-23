@@ -7,27 +7,29 @@ The goal is a real, swappable theme system: an operator or a user picks a
 a **mode** (light / dark / system). *System* is not a third palette: it picks
 light or dark **of the chosen theme**, following the OS.
 
-The codebase is closer to this than most. What exists today:
+The codebase is closer to this than most. The inventory below is the state
+**before Phase 0**; what Phase 0 changed is listed under its heading.
 
 | Surface | State |
 |---|---|
 | Stylesheet | One Tailwind 4 bundle, `theme/static_src/src/styles.css` (~5000 lines) → `theme/static/css/dist/styles.css`, one `<link>` in `templates/base.html` |
-| Tokens | Three layers in one `:root` block (`styles.css:36-283`): brand → semantic → component. The file's own header says "to rebrand, change only the brand tokens" |
+| Tokens | Three layers in one `:root` block, now `theme/static_src/src/tokens.css`: brand → semantic → component. The file's own header says "to rebrand, change only the brand tokens" |
 | Templates (154) | **0** Tailwind palette utilities (`bg-gray-500` …), **0** `dark:` variants; colour arrives through `var(--…)` — 363 refs in inline `style`, 1062 in the CSS |
 | Flow builder (React) | Tokens only (`var(--surface-2)`, `var(--flow-group-*)` …), no hex in `frontend/builder/src` |
 | Charts | `templates/analytics/flow_detail.html:105` reads tokens with `getComputedStyle` — theme-aware at load |
 | Preference precedent | `User.language` (`apps/accounts/models.py:69`), blank = "no preference", edited on `templates/accounts/preferences.html` |
 | CSP | `style-src 'self' 'unsafe-inline'`; `base.html` already emits a nonced `<style>` |
 
-What stands between that and a theme system, inventoried:
+What stood between that and a theme system (the first three items and the
+last were closed by Phase 0):
 
 - **Undefined tokens, broken today:** `--danger-500` / `--danger-500-rgb`
   (`templates/flows/import_upload.html:27`, `templates/flows/template_gallery.html:44`)
-  and `--border-inner` (`styles.css:2814`, `2930`, `2992`). The browser drops
+  and `--border-inner` (three rules in `styles.css`). The browser drops
   the declaration silently.
 - **Literal colours outside the token block:** `color: white` / `#fff`
-  (`styles.css:973`, `1324`, `2661`, `2774`, `3018`, `3107`), `--flow-ink:
-  #3730A3` / `#0F766E` (`styles.css:3162-3163`). Inside it but not
+  (six rules in `styles.css`), `--flow-ink: #3730A3` / `#0F766E`. Inside it
+  but not
   mode-able: `--surface-0: #FFFFFF`, `--text-inverse`, `--primary-tint-border`,
   `--color-illustration-card`, shadows hard-coding `rgba(23,20,18,…)`, and the
   `--chevron-neutral*` data-URIs with the stroke baked in.
@@ -85,11 +87,14 @@ What stands between that and a theme system, inventoried:
   Layer 1); a theme file only supplies Layer 1 values (and may override a
   Layer 2 mapping). The default theme also matches `:root`, so a page without
   `data-theme` still renders.
-- Alpha washes move from `rgba(var(--x-rgb), a)` to
-  `color-mix(in srgb, var(--x) a%, transparent)` — `color-mix` is already used
-  at `styles.css:3612`. That is what lets a `light-dark()` colour carry alpha.
-- Shadows compose from `--shadow-color`; chevrons become `mask-image` +
-  `background-color: currentColor`, so the SVG no longer holds a colour.
+- Alpha washes are `color-mix(in srgb, var(--x) a%, transparent)` (done in
+  Phase 0). That is what lets a `light-dark()` colour carry alpha.
+- Shadows compose from `--shadow-color` (done in Phase 0).
+- Select chevrons (`--chevron-neutral*`) stay data-URIs in `tokens.css` for
+  now: `mask-image` cannot be used on a `<select>` (it masks the whole
+  control), and `light-dark()` only switches colours, not `url()`s. Phase 2
+  solves them, most likely with a wrapper pseudo-element masked by the SVG
+  and painted `currentColor`.
 - Python side: `apps/common/themes.py` holds the registry (slug, lazy label,
   supported modes), the single source for model choices, the form and tests.
   A context processor resolves `THEME` and `COLOR_SCHEME`; `base.html` prints
@@ -110,24 +115,26 @@ Phase 0 hygiene ──► Phase 1 mechanism ──► Phase 2 dark ──► Pha
                                                    └──► Phase 4 selection levels ─► Phase 5 third-party themes
 ```
 
-### Phase 0 — hygiene (no visible change)
+### Phase 0 — hygiene ✅ done
 
-- Define or replace `--danger-*` (→ `--error-*`) and `--border-inner`
-  (→ `--divider`).
-- Move the literal colours listed in Context into tokens: `white`/`#fff` →
-  `--text-inverse`, `--flow-ink` values → Layer-1 tokens, shadows →
-  `--shadow-color`, chevrons → `mask-image`.
-- Migrate the 30 `rgba(var(--*-rgb))` uses to `color-mix`; delete the
-  triplets.
-- Split the `:root` block out of `styles.css` into `tokens.css`.
-- **Guard** (`tests/test_theme_tokens.py`): no hex / `rgb()` / named colour in
-  `styles.css` or templates outside `tokens.css` and `themes/`; every
-  `var(--x)` used in CSS, templates and `frontend/builder/src` is defined
-  (allow-list for runtime-set ones like `--chip-ink`).
-- Keep `TestTailwindSourceCoverage` (`apps/common/tests/test_shell.py`) and
-  the Dockerfile frontend-stage `COPY` in step with the new files.
+- `--danger-*` → `--error-*`, `--border-inner` → `--divider`. These two were
+  the only *visible* changes: the declarations had been silently dropped.
+- Literal colours → tokens: `white`/`#fff` → `--text-on-fill` (text on a
+  saturated fill, white in every mode; `--text-inverse` is kept for inverted
+  neutral surfaces, which flip in dark mode); `--flow-ink` →
+  `--flow-group-*-ink`; shadows → `--shadow-color`.
+- All 30 `rgba(var(--*-rgb))` uses → `color-mix`; the 12 triplet tokens are
+  gone; `--scrim` replaces `--scrim-rgb`.
+- `theme/static_src/src/tokens.css` holds every value; `styles.css` imports it.
+- **Guard:** `tests/test_theme_tokens.py` — no colour literal in `styles.css`,
+  template `style` attributes/blocks (email exempt) or builder source; every
+  `var(--x)` resolves to a definition.
+- Deferred to Phase 2: select chevrons (see Architecture).
 
-Done when: guard green, CSS diff is visually a no-op. Size: ~1 day.
+Note: Lightning CSS (inside the Tailwind build) emits an opaque, pre-`color-mix`
+fallback before each `color-mix` rule. Tailwind 4's own browser floor (Safari
+16.4, Chrome 111, Firefox 128) always has `color-mix`, so the fallback never
+applies in a supported browser.
 
 ### Phase 1 — the mechanism (still one theme, light only)
 
@@ -149,8 +156,13 @@ page (extend `TestContentSecurityPolicy`-style shell sweep). Size: ~1 day.
 - Rewrite Layer-1/2 colour tokens as `light-dark()`; add `dark` to the
   registry entry.
 - Builder: map `--xy-*` onto our tokens after `builder.css`.
-- Charts: re-read tokens on
-  `matchMedia('(prefers-color-scheme: dark)').change` and re-render.
+- Charts: `templates/analytics/flow_detail.html` reads tokens with
+  `getPropertyValue`, which returns a custom property's *unresolved* value, so
+  once tokens hold `light-dark(…)` Chart.js would receive that string. Resolve
+  through a probe element (`probe.style.color = 'var(--x)'` →
+  `getComputedStyle(probe).color`), and re-render on
+  `matchMedia('(prefers-color-scheme: dark)').change`.
+- Select chevrons: see Architecture.
 - Visual pass over 154 templates, auth pages, the builder canvas, error pages.
   This is the expensive part; do it app by app, like the i18n rollout.
 
