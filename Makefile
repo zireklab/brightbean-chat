@@ -12,6 +12,7 @@ setup: ## Initial project setup (copy env, install deps, build CSS, migrate)
 	@test -f .env || cp .env.example .env
 	pip install -r requirements-dev.txt
 	$(MAKE) frontend
+	$(MAKE) i18n-compile
 	python manage.py migrate
 	@echo ""
 	@echo "Setup complete. Run 'python manage.py createsuperuser' to create an admin account."
@@ -79,10 +80,15 @@ i18n-compile: ## Compile .po files to .mo for runtime use
 # one-file run lands entirely on one worker anyway, so parallelism there buys
 # nothing and costs a test-database build per idle worker. Drop the -n to debug
 # a suspected cross-worker race.
-test: ## Run tests (parallel; drop -n to debug a cross-worker race)
+#
+# i18n-compile first: .mo is gitignored, so a fresh checkout has none, and
+# Django reads .mo at runtime — falling back to English with no error when a
+# catalog is missing, silent everywhere except a test that asserts translated
+# text (Copilot review, PR #1).
+test: i18n-compile ## Run tests (parallel; drop -n to debug a cross-worker race)
 	pytest -n auto
 
-test-cov: ## Run tests with coverage
+test-cov: i18n-compile ## Run tests with coverage
 # COVERAGE_CORE=sysmon: coverage on CPython 3.12's sys.monitoring rather than the
 # trace callback. Same numbers, and it cuts the instrumentation cost of the full
 # suite from ~81% to ~10%. Matches the CI invocation.

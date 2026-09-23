@@ -29,7 +29,7 @@ def _isolate_cache(request: Any) -> Any:
 
 
 @pytest.fixture(autouse=True)
-def _reset_active_language(request: Any) -> Any:
+def _reset_active_language() -> Any:
     """End every test with no language activated.
 
     ``LanguagePreferenceMiddleware`` activates a signed-in user's language for
@@ -46,14 +46,23 @@ def _reset_active_language(request: Any) -> Any:
     whatever was active before it on exit, request or no request. Only a test
     that reaches translation activation some other way — signing in as a user
     with a stored language and making a request being the one path this app
-    has — needs the guard, hence gating on ``db`` the same way
-    ``_isolate_cache`` does.
+    has — needs the guard.
+
+    Unconditional, unlike ``_isolate_cache``: deactivating a language touches
+    no database, so there is nothing here that a non-``django_db`` test could
+    fail on. An earlier version gated this on ``"db" in request.fixturenames``
+    the same way ``_isolate_cache`` does, which was wrong in a way
+    ``_isolate_cache`` isn't — pytest-django's ``django_db`` *marker* grants
+    database access without ever adding the string ``"db"`` to
+    ``fixturenames`` (only requesting the ``db``/``transactional_db`` fixture
+    by name does that), so a marker-only test — ``test_language_middleware.py``
+    requests just ``client`` — skipped the reset it most needed (Copilot
+    review, PR #1).
     """
     yield
-    if "db" in request.fixturenames:
-        from django.utils import translation
+    from django.utils import translation
 
-        translation.deactivate_all()
+    translation.deactivate_all()
 
 
 @pytest.fixture
