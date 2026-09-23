@@ -201,6 +201,15 @@ jobs:
         # error somewhere unrelated. This turns that into one clean diff.
         run: python manage.py makemigrations --check --dry-run
 
+      - name: Compile translation catalogs
+        # locale/*/LC_MESSAGES/django.mo is gitignored (a build artefact, same
+        # posture as theme/static/css/dist), so a fresh checkout has none.
+        # Django reads .mo at runtime, not .po, and falls back to English with
+        # no error when a catalog is missing — silent everywhere except the
+        # tests that assert actual Russian/Kyrgyz text, which is how this gap
+        # was found (Copilot review, PR #1).
+        run: django-admin compilemessages
+
       - name: pytest
         # --dist loadfile comes from addopts in pyproject.toml (see the comment
         # there for why the grouping is load*file*); -n is supplied here and in

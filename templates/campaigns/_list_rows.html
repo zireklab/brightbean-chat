@@ -1,16 +1,16 @@
-{% load humanize %}{% comment %}
+{% load humanize i18n %}{% comment %}
 The sequence table. Rendered both inside list.html and on its own for every HTMX
 refresh — one renderer, so a filtered view and a post-mutation refresh can never
 disagree about what a row looks like.
 {% endcomment %}
 {% if not sequences %}
 <div class="rounded-xl border p-8 text-center" style="border-color: var(--border); background: var(--surface-1);">
-    <p class="text-sm font-medium" style="color: var(--text-primary);">No sequences here yet</p>
+    <p class="text-sm font-medium" style="color: var(--text-primary);">{% translate "No sequences here yet" %}</p>
     <p class="text-sm mt-1" style="color: var(--text-secondary);">
         {% if query or status %}
-            Nothing matches these filters.
+            {% translate "Nothing matches these filters." %}
         {% else %}
-            Create one above, add a step, then subscribe contacts from a flow, a rule or the contact list.
+            {% translate "Create one above, add a step, then subscribe contacts from a flow, a rule or the contact list." %}
         {% endif %}
     </p>
 </div>
@@ -24,31 +24,31 @@ disagree about what a row looks like.
                    class="text-sm font-medium truncate btn-text-hover-primary" style="color: var(--text-primary);">{{ sequence.name }}</a>
                 {% if sequence.status == "active" %}
                 <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium"
-                      style="background: var(--success-50); color: var(--success-700);">Active</span>
+                      style="background: var(--success-50); color: var(--success-700);">{% translate "Active" %}</span>
                 {% elif sequence.status == "archived" %}
                 <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium"
-                      style="background: var(--surface-2); color: var(--text-tertiary);">Archived</span>
+                      style="background: var(--surface-2); color: var(--text-tertiary);">{% translate "Archived" %}</span>
                 {% else %}
                 <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium"
-                      style="background: var(--primary-soft); color: var(--primary);">Draft</span>
+                      style="background: var(--primary-soft); color: var(--primary);">{% translate "Draft" %}</span>
                 {% endif %}
             </div>
             <p class="text-xs mt-0.5" style="color: var(--text-tertiary);">
-                {{ sequence.step_count }} step{{ sequence.step_count|pluralize }} ·
-                {{ sequence.subscriber_count }} subscriber{{ sequence.subscriber_count|pluralize }} ·
-                updated {{ sequence.updated_at|naturaltime }}
+                {% blocktranslate count count=sequence.step_count %}{{ count }} step{% plural %}{{ count }} steps{% endblocktranslate %} ·
+                {% blocktranslate count count=sequence.subscriber_count %}{{ count }} subscriber{% plural %}{{ count }} subscribers{% endblocktranslate %} ·
+                {% blocktranslate with when=sequence.updated_at|naturaltime %}updated {{ when }}{% endblocktranslate %}
             </p>
         </div>
 
         <div class="flex items-center gap-2">
             <a href="{% url 'campaigns:detail' workspace_id=request.workspace.id sequence_id=sequence.id %}"
-               class="btn-outline btn-inline">{% if can_edit %}Edit{% else %}View{% endif %}</a>
+               class="btn-outline btn-inline">{% if can_edit %}{% translate "Edit" %}{% else %}{% translate "View" %}{% endif %}</a>
             {% if can_edit %}
-            <button type="button" class="btn-outline btn-inline" @click="renaming = !renaming">Rename</button>
+            <button type="button" class="btn-outline btn-inline" @click="renaming = !renaming">{% translate "Rename" %}</button>
             <button type="button" class="btn-outline btn-inline btn-danger-soft"
                     hx-post="{% url 'campaigns:delete' workspace_id=request.workspace.id sequence_id=sequence.id %}"
                     hx-swap="none"
-                    hx-confirm="Delete “{{ sequence.name }}”? Everyone's progress through it goes with it.">Delete</button>
+                    hx-confirm="{% blocktranslate with name=sequence.name %}Delete “{{ name }}”? Everyone's progress through it goes with it.{% endblocktranslate %}">{% translate "Delete" %}</button>
             {% endif %}
         </div>
 
@@ -64,9 +64,9 @@ disagree about what a row looks like.
               @htmx:after-request="renaming = false">
             {% csrf_token %}
             <input type="text" name="name" value="{{ sequence.name }}" maxlength="200" required
-                   class="form-input-styled" style="width: 14rem;" aria-label="Sequence name">
-            <button type="submit" class="btn-brand btn-inline">Save</button>
-            <button type="button" class="btn-outline btn-inline" @click="renaming = false">Cancel</button>
+                   class="form-input-styled" style="width: 14rem;" aria-label="{% translate 'Sequence name' %}">
+            <button type="submit" class="btn-brand btn-inline">{% translate "Save" %}</button>
+            <button type="button" class="btn-outline btn-inline" @click="renaming = false">{% translate "Cancel" %}</button>
         </form>
         {% endif %}
     </div>

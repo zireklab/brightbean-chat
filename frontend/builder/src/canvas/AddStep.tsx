@@ -18,9 +18,10 @@
  */
 import { useReactFlow } from "@xyflow/react";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { FALLBACK_GROUP, GROUPS, NODE_TYPES, groupOf } from "../schema/artifact";
-import { GROUP_PHRASE } from "../schema/plain";
+import { GROUP_PHRASE, nodeTypeDescription, nodeTypeLabel } from "../schema/plain";
 import { useBuilder, useBuilderStore } from "../store/context";
 
 /** Where a new step goes: to the right of everything, vertically centred on it. */
@@ -35,6 +36,7 @@ function nextPosition(positions: readonly { x: number; y: number }[]) {
 }
 
 export function AddStep() {
+  const { t } = useTranslation();
   const store = useBuilderStore();
   const canEdit = useBuilder((state) => state.env.canEdit);
   const [open, setOpen] = useState(false);
@@ -95,7 +97,7 @@ export function AddStep() {
   return (
     <div className="fb-addstep" ref={wrapper}>
       {open ? (
-        <div className="fb-addstep-menu" role="menu" aria-label="Kinds of step">
+        <div className="fb-addstep-menu" role="menu" aria-label={t("addStep.menuLabel")}>
           {drawers.map((drawer) => (
             <div key={drawer.key}>
               <p className="fb-addstep-group">{drawer.phrase}</p>
@@ -116,9 +118,11 @@ export function AddStep() {
                 >
                   <span className="fb-addstep-swatch" aria-hidden="true" />
                   <span className="min-w-0">
-                    <span className="block truncate">{spec.label}</span>
+                    <span className="block truncate">{nodeTypeLabel(spec, spec.type)}</span>
                     {spec.description ? (
-                      <span className="fb-addstep-hint block truncate">{spec.description}</span>
+                      <span className="fb-addstep-hint block truncate">
+                        {nodeTypeDescription(spec, spec.type)}
+                      </span>
                     ) : null}
                   </span>
                 </button>
@@ -135,7 +139,7 @@ export function AddStep() {
         aria-expanded={open}
         onClick={() => setOpen((was) => !was)}
       >
-        <span aria-hidden="true">+</span> Add a step
+        <span aria-hidden="true">+</span> {t("addStep.button")}
       </button>
     </div>
   );

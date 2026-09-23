@@ -19,6 +19,8 @@ from django.db.models import Count
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET, require_POST
 
@@ -50,7 +52,7 @@ __all__ = [
 require_workspace_member = require_workspace_role(WorkspaceRole.VIEWER)
 
 #: What the "no folder" group is called on screen.
-UNFILED_LABEL = "Unfiled"
+UNFILED_LABEL = _("Unfiled")
 
 #: The query-string value that selects it. Deliberately *not* the label: folder
 #: names are free user text, so filtering on "Unfiled" made a folder actually
@@ -195,10 +197,10 @@ def _list_context(request: WorkspaceRequest) -> dict[str, Any]:
         "status_chips": [
             {"value": value, "label": label, "count": status_counts.get(str(value), 0)}
             for value, label in (
-                ("", "All"),
-                (FlowStatus.ACTIVE, "Live"),
-                (FlowStatus.DRAFT, "Draft"),
-                (FlowStatus.ARCHIVED, "Archived"),
+                ("", gettext("All")),
+                (FlowStatus.ACTIVE, gettext("Live")),
+                (FlowStatus.DRAFT, gettext("Draft")),
+                (FlowStatus.ARCHIVED, gettext("Archived")),
             )
         ],
         "query": request.GET.get("q", ""),
@@ -289,7 +291,9 @@ def _name_from(request: WorkspaceRequest, fallback: str = "") -> str:
 def flow_create(request: WorkspaceRequest, workspace_id: str) -> HttpResponse:
     name = _name_from(request)
     if not name:
-        return toast_response(tone="error", title="Name required", body="Give the flow a name to create it.")
+        return toast_response(
+            tone="error", title=gettext("Name required"), body=gettext("Give the flow a name to create it.")
+        )
     folder = (request.POST.get("folder") or "").strip()[:_MAX_NAME]
     # The one caller that asks for a starter graph. Everything else that creates
     # a flow — the importer, the broadcast composer — writes its own version 1
@@ -303,8 +307,8 @@ def flow_create(request: WorkspaceRequest, workspace_id: str) -> HttpResponse:
     )
     return toast_response(
         tone="success",
-        title="Flow created",
-        body=f"{flow.name} starts with a first message — open it to edit.",
+        title=gettext("Flow created"),
+        body=gettext("%(name)s starts with a first message — open it to edit.") % {"name": flow.name},
         events={"flowsChanged": True},
     )
 
@@ -316,11 +320,11 @@ def flow_rename(request: WorkspaceRequest, workspace_id: str, flow_id: str) -> H
     flow = get_scoped_object_or_404(Flow, request.workspace, pk=flow_id)
     name = _name_from(request)
     if not name:
-        return toast_response(tone="error", title="Name required", body="A flow needs a name.")
+        return toast_response(tone="error", title=gettext("Name required"), body=gettext("A flow needs a name."))
     services.rename_flow(flow, name)
     if "folder" in request.POST:
         services.set_folder(flow, (request.POST.get("folder") or "").strip()[:_MAX_NAME])
-    return toast_response(tone="success", title="Flow renamed", events={"flowsChanged": True})
+    return toast_response(tone="success", title=gettext("Flow renamed"), events={"flowsChanged": True})
 
 
 @login_required
@@ -331,8 +335,8 @@ def flow_duplicate(request: WorkspaceRequest, workspace_id: str, flow_id: str) -
     copy = services.duplicate_flow(flow, user=request.user)
     return toast_response(
         tone="success",
-        title="Flow duplicated",
-        body=f"{copy.name} was created as a draft.",
+        title=gettext("Flow duplicated"),
+        body=gettext("%(name)s was created as a draft.") % {"name": copy.name},
         events={"flowsChanged": True},
     )
 
@@ -345,8 +349,8 @@ def flow_archive(request: WorkspaceRequest, workspace_id: str, flow_id: str) -> 
     services.archive_flow(flow)
     return toast_response(
         tone="info",
-        title="Flow archived",
-        body="Find it again with the Archived status filter.",
+        title=gettext("Flow archived"),
+        body=gettext("Find it again with the Archived status filter."),
         events={"flowsChanged": True},
     )
 
@@ -357,4 +361,4 @@ def flow_archive(request: WorkspaceRequest, workspace_id: str, flow_id: str) -> 
 def flow_restore(request: WorkspaceRequest, workspace_id: str, flow_id: str) -> HttpResponse:
     flow = get_scoped_object_or_404(Flow, request.workspace, pk=flow_id)
     services.restore_flow(flow)
-    return toast_response(tone="success", title="Flow restored", events={"flowsChanged": True})
+    return toast_response(tone="success", title=gettext("Flow restored"), events={"flowsChanged": True})

@@ -16,6 +16,12 @@ export interface BuilderEnv {
   mediaPickerUrl: string;
   /** SPEC §16's preview-link endpoint. */
   previewUrl: string;
+  /**
+   * Django's `LANGUAGE_CODE` for this request. Not `required()`: an older
+   * cached page missing the attribute should fall back to English rather
+   * than take the whole builder down with `MissingEnvError`.
+   */
+  locale: string;
 }
 
 export class MissingEnvError extends Error {}
@@ -42,5 +48,6 @@ export function readEnv(mount: HTMLElement): BuilderEnv {
     schemaUrl: required(mount, "schemaUrl"),
     mediaPickerUrl: required(mount, "mediaPickerUrl"),
     previewUrl: required(mount, "previewUrl"),
+    locale: mount.dataset["locale"] || "en",
   };
 }

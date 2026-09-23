@@ -13,7 +13,10 @@
  * message. It is also the safe reading: nothing in a config is ever evaluated,
  * only displayed.
  */
+import i18n from "../i18n";
 import { nodeSpec } from "../schema/artifact";
+import { variantLabel } from "../inspector/copy";
+import { nodeTypeLabel } from "../schema/plain";
 import { useBuilder } from "../store/context";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -42,20 +45,20 @@ export function Preview() {
   const config = useBuilder((state) => (nodeId ? state.config[nodeId] : undefined));
 
   return (
-    <aside className="fb-preview" aria-label="Preview">
-      <p className="fb-section-label">Preview</p>
+    <aside className="fb-preview" aria-label={i18n.t("preview.label")}>
+      <p className="fb-section-label">{i18n.t("preview.sectionLabel")}</p>
       <div className="fb-phone">
         <div className="fb-phone-screen">
           {nodeId && nodeType ? (
             <Bubbles type={nodeType} config={config} />
           ) : (
-            <p className="fb-phone-empty">Pick a step to see it the way they will.</p>
+            <p className="fb-phone-empty">{i18n.t("preview.pickAStep")}</p>
           )}
         </div>
       </div>
       <p className="fb-preview-note">
-        Placeholders like <code>{"{{ first_name }}"}</code> are filled in when the message is actually
-        sent.
+        {i18n.t("preview.placeholderNotePrefix")} <code>{"{{ first_name }}"}</code>{" "}
+        {i18n.t("preview.placeholderNoteSuffix")}
       </p>
     </aside>
   );
@@ -71,8 +74,8 @@ function Bubbles({ type, config }: { type: string; config: unknown }) {
     if (prompt) {
       return <Bubble text={prompt} />;
     }
-    const label = nodeSpec(type)?.label ?? type;
-    return <p className="fb-phone-empty">{label} does not send anything, so there is nothing to show.</p>;
+    const label = nodeTypeLabel(nodeSpec(type), type);
+    return <p className="fb-phone-empty">{i18n.t("preview.doesNotSend", { label })}</p>;
   }
 
   return (
@@ -87,7 +90,7 @@ function Bubbles({ type, config }: { type: string; config: unknown }) {
         }
         return (
           <div key={index} className="fb-phone-attachment">
-            {kind ? `${kind.charAt(0).toUpperCase()}${kind.slice(1)}` : "Attachment"}
+            {kind ? variantLabel(kind) : i18n.t("preview.attachment")}
           </div>
         );
       })}
@@ -99,7 +102,7 @@ function Bubble({ text: body, buttons = [] }: { text: string; buttons?: string[]
   return (
     <div className="fb-phone-turn">
       <div className="fb-phone-bubble">
-        {body || <span className="fb-phone-placeholder">No message yet</span>}
+        {body || <span className="fb-phone-placeholder">{i18n.t("preview.noMessageYet")}</span>}
       </div>
       {buttons.length > 0 ? (
         <div className="fb-phone-buttons">

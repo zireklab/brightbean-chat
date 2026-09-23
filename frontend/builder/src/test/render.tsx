@@ -18,6 +18,7 @@ export const TEST_ENV: BuilderEnv = {
   schemaUrl: "/w/ws/api/flows/schema/",
   mediaPickerUrl: "/w/ws/media/picker/",
   previewUrl: "/w/ws/settings/channels/telegram/preview/flow-1/",
+  locale: "en",
 };
 
 export function makeStore(detail: FlowDetail | null = makeDetail(), env: Partial<BuilderEnv> = {}): BuilderStore {

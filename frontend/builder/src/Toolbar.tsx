@@ -20,6 +20,7 @@
  * be a second copy of a fact the user is already looking at.
  */
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { ApiError } from "./api/client";
 import { TestOnChannel } from "./TestOnChannel";
@@ -31,6 +32,7 @@ import type { Autosave } from "./persistence/autosave";
 import { useBuilder, useBuilderStore } from "./store/context";
 
 export function Toolbar({ autosave }: { autosave: Autosave | null }) {
+  const { t } = useTranslation();
   const store = useBuilderStore();
   const save = useBuilder((state) => state.save);
   const canEdit = useBuilder((state) => state.env.canEdit);
@@ -54,7 +56,7 @@ export function Toolbar({ autosave }: { autosave: Autosave | null }) {
       // success, which is worse than doing nothing.
       if (autosave && !(await autosave.flush())) {
         store.getState().setSave({
-          message: "Not set live: your latest changes could not be saved. Fix the problems below and try again.",
+          message: t("toolbar.flushFailed"),
         });
         return;
       }
@@ -77,8 +79,8 @@ export function Toolbar({ autosave }: { autosave: Autosave | null }) {
       // looking when they press a button. Say it once, out loud.
       showToast({
         tone: "success",
-        title: "Flow published",
-        body: `Version ${result.version.version} is live.`,
+        title: t("toolbar.publishedTitle"),
+        body: t("toolbar.publishedBody", { version: result.version.version }),
       });
     } catch (error) {
       if (error instanceof ApiError && error.status === 422) {
@@ -86,7 +88,7 @@ export function Toolbar({ autosave }: { autosave: Autosave | null }) {
         if (payload?.validation) {
           store.getState().applyValidation(payload.validation, store.getState().revision);
         }
-        store.getState().setSave({ message: "Not set live: fix the problems below and try again." });
+        store.getState().setSave({ message: t("toolbar.publishRejected") });
       } else if (error instanceof ApiError) {
         store.getState().setSave({ message: error.message });
       }
@@ -100,10 +102,10 @@ export function Toolbar({ autosave }: { autosave: Autosave | null }) {
       {canEdit ? (
         <>
           <button type="button" className="btn-link text-xs" disabled={!canUndo} onClick={() => store.getState().undo()}>
-            Undo
+            {t("toolbar.undo")}
           </button>
           <button type="button" className="btn-link text-xs" disabled={!canRedo} onClick={() => store.getState().redo()}>
-            Redo
+            {t("toolbar.redo")}
           </button>
         </>
       ) : null}
@@ -114,10 +116,10 @@ export function Toolbar({ autosave }: { autosave: Autosave | null }) {
         aria-pressed={statsVisible}
         onClick={() => store.getState().toggleStats()}
       >
-        {statsVisible ? "Hide stats" : "Show stats"}
+        {statsVisible ? t("toolbar.hideStats") : t("toolbar.showStats")}
       </button>
 
-      {statsFailed ? <span className="fb-badge fb-badge-warning">Stats unavailable</span> : null}
+      {statsFailed ? <span className="fb-badge fb-badge-warning">{t("toolbar.statsUnavailable")}</span> : null}
 
       {/*
         Editors only. Testing runs the *draft* against a real chat and sends
@@ -128,8 +130,10 @@ export function Toolbar({ autosave }: { autosave: Autosave | null }) {
       {canEdit ? <TestOnChannel /> : null}
 
       <span className="ml-auto flex items-center gap-2 text-xs" style={{ color: "var(--text-tertiary)" }}>
-        {errorCount > 0 ? <span className="fb-badge fb-badge-error">{errorCount} to fix</span> : null}
-        {warningCount > 0 ? <span className="fb-badge fb-badge-warning">{warningCount} to check</span> : null}
+        {errorCount > 0 ? <span className="fb-badge fb-badge-error">{t("toolbar.toFix", { count: errorCount })}</span> : null}
+        {warningCount > 0 ? (
+          <span className="fb-badge fb-badge-warning">{t("toolbar.toCheck", { count: warningCount })}</span>
+        ) : null}
         {/*
           A published flow with no trigger never runs, and the canvas gives no
           hint of that — so it is the one thing worth saying about triggers from
@@ -138,11 +142,9 @@ export function Toolbar({ autosave }: { autosave: Autosave | null }) {
         */}
         {loaded ? (
           triggerCount > 0 ? (
-            <span className="fb-badge">
-              {triggerCount} trigger{triggerCount === 1 ? "" : "s"}
-            </span>
+            <span className="fb-badge">{t("toolbar.triggerCount", { count: triggerCount })}</span>
           ) : (
-            <span className="fb-badge fb-badge-warning">No triggers</span>
+            <span className="fb-badge fb-badge-warning">{t("toolbar.noTriggers")}</span>
           )
         ) : null}
         {view.liveChip ? <span className="fb-badge fb-badge-success">{view.liveChip}</span> : null}
@@ -157,7 +159,7 @@ export function Toolbar({ autosave }: { autosave: Autosave | null }) {
             title={view.publishHint ?? undefined}
             onClick={() => void publish()}
           >
-            {publishing ? "Setting live…" : view.publishLabel}
+            {publishing ? t("toolbar.settingLive") : view.publishLabel}
           </button>
         ) : null}
       </span>

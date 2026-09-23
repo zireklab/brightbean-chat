@@ -61,6 +61,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
+    # The UI's display language. Blank means "no preference" — fall back to
+    # the session/cookie/Accept-Language LocaleMiddleware would otherwise use.
+    # No `choices=`, deliberately: settings.LANGUAGES is validated in
+    # apps.accounts.views.account_preferences instead, the same shape as
+    # Workspace.timezone, so adding a language never needs a migration.
+    language = models.CharField(max_length=10, blank=True, default="")
+
     # Which workspace to land in. Deliberately a bare UUID and **not** a foreign
     # key: deleting a workspace must not cascade into user rows, and a stale
     # value is revalidated against a live membership on every use

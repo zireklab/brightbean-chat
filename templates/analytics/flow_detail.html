@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static i18n %}
 {% comment %}
 One flow's stats page (SPEC §18: "Flow detail page renders totals and per-node
 overlay in the builder" — the overlay is the builder's; this is the page).
@@ -21,14 +21,14 @@ this issue), so nothing here reaches a CDN.
     <div>
         <h1 class="page-title">{{ flow.name }}</h1>
         <p class="text-sm" style="color: var(--text-secondary);">
-            Counters for the last {{ days }} days.
+            {% blocktranslate count count=days %}Counters for the last {{ count }} day.{% plural %}Counters for the last {{ count }} days.{% endblocktranslate %}
             <span class="status-pill status-pill-{{ flow.status }}">{{ flow.get_status_display }}</span>
         </p>
     </div>
     <div class="flex items-center gap-2">
         {% include "analytics/_range.html" %}
-        <a class="btn-outline btn-inline" href="{% url 'analytics:overview' workspace_id=request.workspace.id %}?days={{ days }}">All analytics</a>
-        <a class="btn-outline btn-inline" href="{% url 'flows:edit' workspace_id=request.workspace.id flow_id=flow.id %}">Open in builder</a>
+        <a class="btn-outline btn-inline" href="{% url 'analytics:overview' workspace_id=request.workspace.id %}?days={{ days }}">{% translate "All analytics" %}</a>
+        <a class="btn-outline btn-inline" href="{% url 'flows:edit' workspace_id=request.workspace.id flow_id=flow.id %}">{% translate "Open in builder" %}</a>
     </div>
 </div>
 {% endblock %}
@@ -38,29 +38,29 @@ this issue), so nothing here reaches a CDN.
 
 <div class="an-panel">
     <div class="an-panel-head">
-        <span class="an-panel-title">Trend</span>
-        <span class="an-hint">One point per UTC day. Preview runs are not counted.</span>
+        <span class="an-panel-title">{% translate "Trend" %}</span>
+        <span class="an-hint">{% translate "One point per UTC day. Preview runs are not counted." %}</span>
     </div>
-    <div class="an-chart"><canvas id="flow-trend" role="img" aria-label="Daily sends, deliveries, failures and clicks"></canvas></div>
+    <div class="an-chart"><canvas id="flow-trend" role="img" aria-label="{% translate 'Daily sends, deliveries, failures and clicks' %}"></canvas></div>
 </div>
 
 <div class="an-panel">
     <div class="an-panel-head">
-        <span class="an-panel-title">Steps</span>
-        <span class="an-hint">A step you deleted keeps its numbers. Those messages still went out.</span>
+        <span class="an-panel-title">{% translate "Steps" %}</span>
+        <span class="an-hint">{% translate "A step you deleted keeps its numbers. Those messages still went out." %}</span>
     </div>
     {% if node_rows %}
     <div style="overflow-x: auto;">
         <table class="an-table">
             <thead>
                 <tr>
-                    <th scope="col">Step</th>
-                    <th scope="col" class="an-num">Sent</th>
-                    <th scope="col" class="an-num">Delivered</th>
-                    <th scope="col" class="an-num">Failed</th>
-                    <th scope="col" class="an-num">Clicked</th>
+                    <th scope="col">{% translate "Step" %}</th>
+                    <th scope="col" class="an-num">{% translate "Sent" %}</th>
+                    <th scope="col" class="an-num">{% translate "Delivered" %}</th>
+                    <th scope="col" class="an-num">{% translate "Failed" %}</th>
+                    <th scope="col" class="an-num">{% translate "Clicked" %}</th>
                     {# Clicks per send, not a click-through rate — it can exceed 100%. #}
-                    <th scope="col" class="an-num">Clicks/send</th>
+                    <th scope="col" class="an-num">{% translate "Clicks/send" %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -81,7 +81,7 @@ this issue), so nothing here reaches a CDN.
         </table>
     </div>
     {% else %}
-    <p class="an-hint">This flow has not sent anything in this range.</p>
+    <p class="an-hint">{% translate "This flow has not sent anything in this range." %}</p>
     {% endif %}
 </div>
 
@@ -90,6 +90,10 @@ this issue), so nothing here reaches a CDN.
 
 {% block extra_js %}
 <script src="{% static 'js/vendor/chart.umd.min.js' %}"></script>
+{% translate "Sent" as chart_label_sent %}
+{% translate "Delivered" as chart_label_delivered %}
+{% translate "Failed" as chart_label_failed %}
+{% translate "Clicked" as chart_label_clicked %}
 <script nonce="{{ request.csp_nonce }}">
   (function () {
     var payload = JSON.parse(document.getElementById("flow-trend-data").textContent);
@@ -101,10 +105,10 @@ this issue), so nothing here reaches a CDN.
     var style = getComputedStyle(document.documentElement);
     var token = function (name, fallback) { return (style.getPropertyValue(name) || fallback).trim(); };
     var lines = [
-      { key: "sent", label: "Sent", color: token("--primary", "#F97316") },
-      { key: "delivered", label: "Delivered", color: token("--success-700", "#5F6B27") },
-      { key: "failed", label: "Failed", color: token("--error-700", "#B91C1C") },
-      { key: "clicked", label: "Clicked", color: token("--text-secondary", "#57534E") }
+      { key: "sent", label: "{{ chart_label_sent|escapejs }}", color: token("--primary", "#F97316") },
+      { key: "delivered", label: "{{ chart_label_delivered|escapejs }}", color: token("--success-700", "#5F6B27") },
+      { key: "failed", label: "{{ chart_label_failed|escapejs }}", color: token("--error-700", "#B91C1C") },
+      { key: "clicked", label: "{{ chart_label_clicked|escapejs }}", color: token("--text-secondary", "#57534E") }
     ];
     new Chart(canvas, {
       type: "line",

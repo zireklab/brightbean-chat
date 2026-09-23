@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% comment %}
 The sequence editor: status, ordered steps and the subscriber panel.
 
@@ -8,19 +9,24 @@ subscriber list somebody is scrolling, and subscribing a contact changes the
 per-step counts, which is why subscriber mutations fire both events.
 {% endcomment %}
 
-{% block title %}{{ sequence.name }} · Sequences · BrightBean Chat{% endblock %}
+{% block title %}{{ sequence.name }} · {% translate "Sequences" %} · BrightBean Chat{% endblock %}
+
+{% comment %}
+Same reasoning as campaigns/list.html: without this the Sequences tab strip
+that led here vanishes the moment a sequence is opened.
+{% endcomment %}
+{% block sub_nav %}{% include "partials/_sub_nav.html" with groups=flow_tab_groups %}{% endblock %}
 
 {% block page_header %}
 <div class="flex flex-wrap items-start justify-between gap-3 mb-6">
     <div class="min-w-0">
         <p class="text-xs" style="color: var(--text-tertiary);">
             <a href="{% url 'campaigns:list' workspace_id=request.workspace.id %}"
-               class="btn-text-hover-primary">Sequences</a>
+               class="btn-text-hover-primary">{% translate "Sequences" %}</a>
         </p>
         <h1 class="page-title truncate">{{ sequence.name }}</h1>
         <p class="text-sm" style="color: var(--text-secondary);">
-            Steps run in order. Each waits its delay from the moment the previous step actually ran,
-            then opens inside its send window.
+            {% translate "Steps run in order. Each waits its delay from the moment the previous step actually ran, then opens inside its send window." %}
         </p>
     </div>
     {% if can_edit %}
@@ -28,13 +34,13 @@ per-step counts, which is why subscriber mutations fire both events.
           hx-post="{% url 'campaigns:status' workspace_id=request.workspace.id sequence_id=sequence.id %}"
           hx-swap="none">
         {% csrf_token %}
-        <label for="sequence-status" class="sr-only">Status</label>
+        <label for="sequence-status" class="sr-only">{% translate "Status" %}</label>
         <select id="sequence-status" name="status" class="form-input-styled" style="width: 11rem;">
             {% for value, label in status_options %}
             <option value="{{ value }}" {% if sequence.status == value %}selected{% endif %}>{{ label }}</option>
             {% endfor %}
         </select>
-        <button type="submit" class="btn-outline btn-inline">Save status</button>
+        <button type="submit" class="btn-outline btn-inline">{% translate "Save status" %}</button>
     </form>
     {% endif %}
 </div>
@@ -61,7 +67,7 @@ design system owns component properties, utilities own layout.
          hx-trigger="load, sequenceSubscribersChanged from:body"
          hx-target="this"
          hx-swap="innerHTML">
-        <p class="text-sm" style="color: var(--text-tertiary);">Loading subscribers…</p>
+        <p class="text-sm" style="color: var(--text-tertiary);">{% translate "Loading subscribers…" %}</p>
     </div>
 </div>
 {% endblock %}

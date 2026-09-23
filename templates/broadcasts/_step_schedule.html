@@ -1,4 +1,4 @@
-{% comment %}
+{% load i18n %}{% comment %}
 Step 4 — when (SPEC §13.1: "schedule now/later, flatpickr, workspace timezone").
 
 The picker writes a naive local value and the server interprets it in
@@ -20,17 +20,17 @@ opinion that could disagree.
       hx-swap="innerHTML">
     {% csrf_token %}
     <div class="bc-panel-head">
-        <span class="bc-panel-title">When should it go out?</span>
-        <span class="bc-hint">Times are in {{ request.workspace.effective_timezone }}.</span>
+        <span class="bc-panel-title">{% translate "When should it go out?" %}</span>
+        <span class="bc-hint">{% blocktranslate with tz=request.workspace.effective_timezone %}Times are in {{ tz }}.{% endblocktranslate %}</span>
     </div>
 
     <div class="bc-row">
-        <label><input type="radio" name="when" value="now" x-model="when"> Send now</label>
-        <label><input type="radio" name="when" value="later" x-model="when"> Schedule for later</label>
+        <label><input type="radio" name="when" value="now" x-model="when"> {% translate "Send now" %}</label>
+        <label><input type="radio" name="when" value="later" x-model="when"> {% translate "Schedule for later" %}</label>
     </div>
 
     <div class="bc-row mt-2" x-show="when === 'later'">
-        <label for="scheduled-at" class="sr-only">Send at</label>
+        <label for="scheduled-at" class="sr-only">{% translate "Send at" %}</label>
         <input id="scheduled-at" type="text" name="scheduled_at" class="form-datetime" style="width: 16rem;"
                placeholder="YYYY-MM-DD HH:MM"
                x-init="$nextTick(() => {
@@ -40,10 +40,10 @@ opinion that could disagree.
     </div>
 
     <p class="bc-hint mt-3">
-        A scheduled broadcast can be cancelled up to the moment it starts, and while it is sending.
+        {% translate "A scheduled broadcast can be cancelled up to the moment it starts, and while it is sending." %}
     </p>
 
     <div class="bc-actions">
-        <button type="submit" class="btn-brand btn-inline">Send</button>
+        <button type="submit" class="btn-brand btn-inline">{% translate "Send" %}</button>
     </div>
 </form>
