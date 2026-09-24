@@ -202,7 +202,7 @@ def ui_select(
 
 @register.simple_tag(takes_context=True)
 def theme_attrs(context: template.Context) -> SafeString:
-    """``data-theme`` and ``color-scheme`` for ``<html>``.
+    """``data-theme`` and ``data-color-mode`` for ``<html>``.
 
     A tag and not a context processor because it has to work on the 500 page,
     which ``django.views.defaults.server_error`` renders with a bare
@@ -210,10 +210,15 @@ def theme_attrs(context: template.Context) -> SafeString:
     signed-in user this falls back to the instance defaults, so every root
     template gets its attributes the same way (tests/test_theme_tokens.py
     checks that each one calls this).
+
+    Data attributes only, never ``style``: base.html's ``{% block html_style %}``
+    lets a page put its own attributes on ``<html>``, and a second ``style``
+    there would be silently dropped by the browser. tokens.css maps the mode to
+    ``color-scheme``.
     """
     user = getattr(context.get("request"), "user", None)
     if user is not None and user.is_authenticated:
-        theme, scheme = resolve(user.theme, user.color_mode)
+        theme, mode = resolve(user.theme, user.color_mode)
     else:
-        theme, scheme = resolve("", "")
-    return format_html('data-theme="{}" style="color-scheme: {}"', theme.slug, scheme)
+        theme, mode = resolve("", "")
+    return format_html('data-theme="{}" data-color-mode="{}"', theme.slug, mode)

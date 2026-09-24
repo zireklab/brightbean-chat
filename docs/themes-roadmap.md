@@ -45,7 +45,8 @@ last were closed by Phase 0):
 
 ## Principles
 
-1. **Two axes, two mechanisms.** Theme is a selector; mode is `color-scheme`.
+1. **Two axes, two mechanisms.** Theme is a selector; mode is `color-scheme`
+   (set from `data-color-mode`).
    Neither knows how the other was chosen.
 2. **Tokens are the only source of colour.** Component CSS, templates and the
    React island reference semantic tokens; only theme files hold values.
@@ -61,7 +62,14 @@ last were closed by Phase 0):
 ## Architecture
 
 ```html
-<html data-theme="brightbean" style="color-scheme: light dark">
+<html data-theme="brightbean" data-color-mode="system">
+```
+
+```css
+/* tokens.css: the mode axis, one rule per mode */
+[data-color-mode="light"]  { color-scheme: light; }
+[data-color-mode="dark"]   { color-scheme: dark; }
+[data-color-mode="system"] { color-scheme: light dark; }
 ```
 
 ```css
@@ -77,7 +85,7 @@ last were closed by Phase 0):
 }
 ```
 
-| Mode chosen | `color-scheme` on `<html>` | Result |
+| `data-color-mode` | `color-scheme` on `<html>` | Result |
 |---|---|---|
 | light | `light` | left branch of every `light-dark()` |
 | dark | `dark` | right branch |
@@ -101,13 +109,17 @@ last were closed by Phase 0):
   (`apps/common/templatetags/common_extras.py`) prints both attributes on
   `<html>`. It is a tag, not a context processor, because the 500 page is
   rendered with a bare `Context()` where no processor runs; with no signed-in
-  user it prints `settings.THEME_DEFAULT` / `COLOR_MODE_DEFAULT`.
+  user it prints `settings.THEME_DEFAULT` / `COLOR_MODE_DEFAULT`. It prints
+  data attributes only, never `style`: `base.html`'s `{% block html_style %}`
+  lets a page add its own attributes to `<html>`, and a second `style` there
+  would be silently dropped.
 - A theme declares **palettes** (`light`, `dark`), not modes. *System* is
   derived: it exists exactly when both palettes do. So a theme offers one mode
   or all three, and a mode select on screen always contains the stored value.
-- `resolve()` never raises, since it also runs on the error pages; a bad
-  default or a malformed registry entry is reported by the `common.E007`
-  system check instead.
+- `resolve()` never raises, since it also runs on the error pages. A bad
+  default is reported by the `common.E007` system check; a malformed theme
+  cannot exist (`Theme.__post_init__` rejects it at import), and the registry
+  is keyed by each theme's own slug.
 
 Browser floor: `light-dark()` and `color-mix()` are Baseline 2024 (Chrome 123,
 Safari 17.5, Firefox 120). A custom property accepts any value, so an older
@@ -152,9 +164,9 @@ applies in a supported browser.
 ### Phase 1 — the mechanism ✅ done (still one theme, light only)
 
 - `apps/common/themes.py` registry + `resolve()`; `settings.THEME_DEFAULT`,
-  `settings.COLOR_MODE_DEFAULT`, checked at startup (`common.E007`: a
-  malformed palette list, an unknown theme or mode, or a mode the default
-  theme has no tokens for).
+  `settings.COLOR_MODE_DEFAULT`, checked at startup (`common.E007`: an
+  unknown theme or mode, or a mode the default theme has no tokens for).
+  A malformed palette list fails at import.
 - `User.theme`, `User.color_mode` (blank = default, no `choices=`), migration
   `accounts.0004`. A stored mode the theme cannot render is kept and clamped
   at render time, so *system* switches on by itself once dark exists.
@@ -168,7 +180,8 @@ applies in a supported browser.
   that (all modes, clamped server-side, or an Alpine-dependent select).
 - Guards: `tests/test_theme_tokens.py` requires `{% theme_attrs %}` on every
   `<html>` root; `test_shell.py::TestTheThemeReachesEveryRoot` checks the
-  rendered attributes on shell, login, 404 and bare-context error pages.
+  rendered attributes on shell, login, 404 and bare-context error pages;
+  `test_themes.py` requires one `[data-color-mode]` rule per registered mode.
 
 ### Phase 2 — dark mode for BrightBean
 

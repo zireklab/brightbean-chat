@@ -6,6 +6,15 @@
    To rebrand: change ONLY the brand token values below.
    ═══════════════════════════════════════════════════════════════ */
 
+/* The colour-mode axis (docs/themes-roadmap.md). {% theme_attrs %} prints
+   data-color-mode on <html>; this turns it into the color-scheme that native
+   controls, and from Phase 2 every light-dark() token, resolve against. One
+   rule per mode in apps.common.themes.COLOR_MODES; test_themes.py checks the
+   two lists match. */
+[data-color-mode="light"]  { color-scheme: light; }
+[data-color-mode="dark"]   { color-scheme: dark; }
+[data-color-mode="system"] { color-scheme: light dark; }
+
 :root {
   /* Brand Tokens - BrightBean Orange */
   --brand-50:  #FFF7ED;

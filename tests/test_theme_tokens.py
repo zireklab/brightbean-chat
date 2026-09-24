@@ -18,7 +18,7 @@ Three guards:
 * **Every ``var(--x)`` is defined somewhere.** An undefined custom property is
   not an error in CSS; the declaration just stops applying.
 * **Every ``<html>`` root calls ``{% theme_attrs %}``**, which prints the
-  ``data-theme`` and ``color-scheme`` the tokens resolve against.
+  ``data-theme`` and ``data-color-mode`` the tokens resolve against.
 
 # ponytail: regex over source text, not a CSS parser. Declarations are matched
 # as ``prop: value`` up to ``;``/``}``, which is what this repo's CSS looks like;
@@ -202,7 +202,7 @@ class TestEveryTokenIsDefined:
 
 class TestEveryRootCarriesTheTheme:
     def test_every_html_root_calls_theme_attrs(self):
-        """``data-theme`` and ``color-scheme`` are what the tokens resolve against,
+        """``data-theme`` and ``data-color-mode`` are what the tokens resolve against,
         so a root template without them is a page no theme or mode reaches.
         Email is exempt for the same reason as above."""
         roots, offenders = [], []

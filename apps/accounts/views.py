@@ -108,9 +108,9 @@ def account_preferences(request: RBACRequest) -> HttpResponse:
     # only a light palette (Phase 1 of docs/themes-roadmap.md) neither is, and
     # the page stays the language picker it was; the mode select appears by
     # itself once the theme's registry entry lists a second mode.
-    theme, _scheme = themes.resolve(request.user.theme, request.user.color_mode)
+    theme, _mode = themes.resolve(request.user.theme, request.user.color_mode)
     context: dict[str, Any] = {
         "theme_choices": [(t.slug, t.label) for t in themes.THEMES.values()] if len(themes.THEMES) > 1 else [],
-        "mode_choices": [(m, themes.COLOR_MODES[m].label) for m in theme.modes] if len(theme.modes) > 1 else [],
+        "mode_choices": [(m, themes.COLOR_MODES[m]) for m in theme.modes] if len(theme.modes) > 1 else [],
     }
     return render(request, "accounts/preferences.html", context)

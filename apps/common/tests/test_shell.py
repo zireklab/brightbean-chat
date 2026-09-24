@@ -112,7 +112,7 @@ class TestContentSecurityPolicy:
                 assert src.startswith("/static/"), src
 
 
-HTML_ROOT = '<html lang="{lang}" data-theme="brightbean" style="color-scheme: light">'
+HTML_ROOT = '<html lang="{lang}" data-theme="brightbean" data-color-mode="light"'
 
 
 @pytest.mark.django_db
@@ -1242,7 +1242,7 @@ class TestErrorPages:
         html = get_template(name).render({})
 
         assert "BrightBean Chat" in html
-        assert 'data-theme="brightbean" style="color-scheme: light"' in html
+        assert 'data-theme="brightbean" data-color-mode="light"' in html
 
     @pytest.mark.parametrize(
         ("name", "heading"),

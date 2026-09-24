@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-24 06:51+0600\n"
+"POT-Creation-Date: 2026-09-24 12:33+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ru\n"
@@ -1631,15 +1631,15 @@ msgstr "Шаблоны"
 msgid "Open"
 msgstr "Открыть"
 
-#: apps/common/themes.py:32
+#: apps/common/themes.py:26
 msgid "Light"
 msgstr "Светлый"
 
-#: apps/common/themes.py:33
+#: apps/common/themes.py:27
 msgid "Dark"
 msgstr "Тёмный"
 
-#: apps/common/themes.py:34
+#: apps/common/themes.py:28
 msgid "Match my system"
 msgstr "Как в системе"
 
