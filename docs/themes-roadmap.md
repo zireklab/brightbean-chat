@@ -125,9 +125,10 @@ Browser floor: `light-dark()` and `color-mix()` are Baseline 2024 (Chrome 123,
 Safari 17.5, Firefox 120). A custom property accepts any value, so an older
 browser keeps `light-dark(…)` and the *using* property becomes invalid at
 computed-value time (transparent text, no background). A plain `:root`
-fallback would not help, because the theme rule overrides it. Until the
-support floor is agreed, the fix is an `@supports not (color: light-dark(#000,
-#fff))` block that restates the light values.
+fallback would not help, because the theme rule overrides it. **Decided
+2026-09-24: the floor is Baseline 2024**, used directly — no `@supports`
+fallback. An older browser gets invalid colour on themed elements rather than
+a second value set to maintain.
 
 ## Roadmap
 
@@ -185,22 +186,73 @@ applies in a supported browser.
 
 ### Phase 2 — dark mode for BrightBean
 
-- Rewrite Layer-1/2 colour tokens as `light-dark()`; add `dark` to the
-  registry entry.
-- Builder: map `--xy-*` onto our tokens after `builder.css`.
-- Charts: `templates/analytics/flow_detail.html` reads tokens with
-  `getPropertyValue`, which returns a custom property's *unresolved* value, so
-  once tokens hold `light-dark(…)` Chart.js would receive that string. Resolve
+Split into five PRs, each its own branch off a fresh `main`
+(`claude/themes-phase-2a` … `2e`). The registry stays `("light",)` through
+2a–2d, so users see nothing change before 2e.
+
+**2a — contrast guard.**
+- `tests/test_theme_contrast.py`: WCAG 2.x AA over an explicit list of
+  (foreground token, background token, role) pairs — role distinguishes
+  text-on-surface from text-on-fill, since a token like `--primary` plays
+  both. This same list is the contract 2c's palette solver optimises
+  against; keep it in one place, not duplicated between guard and script.
+- Resolves `var()` chains from `tokens.css`, including `light-dark(a, b)`
+  once 2c introduces it — split branches with a paren-balanced parser, not
+  a naive `split(",")` (a branch value like
+  `color-mix(in srgb, var(--x) 6%, transparent)` has its own commas).
+- Confirms the browser floor in Architecture as decided, not conditional
+  (see above).
+
+**2b — plumbing, light only.**
+- Chart: `flow_detail.html` currently reads tokens once via
+  `getPropertyValue` (the *unresolved* string) with no live update. Resolve
   through a probe element (`probe.style.color = 'var(--x)'` →
   `getComputedStyle(probe).color`), and re-render on
   `matchMedia('(prefers-color-scheme: dark)').change`.
-- Select chevrons: see Architecture.
-- Visual pass over 154 templates, auth pages, the builder canvas, error pages.
-  This is the expensive part; do it app by app, like the i18n rollout.
+- Select chevrons: `--chevron-neutral*` become a wrapper `::after`
+  pseudo-element, `mask-image`d by the SVG and painted `currentColor`, so
+  they track whatever text token 2c derives instead of a hand-picked dark
+  stroke colour. `<select>` doesn't carry pseudo-elements at a Baseline 2024
+  floor, so this touches markup, not just CSS: **17 templates** hold a
+  native `<select class="bb-select">` or `<select class="bb-filter-select">`
+  that need the wrapper. Share one include/snippet for the wrapper so the
+  per-template diff stays small. Delete `--chevron-neutral*` once done.
+- `#flow-builder` → `--xy-*`: **already mapped** (`styles.css:2310-2373`,
+  every value already a Layer-2 token) — nothing to change here. Add the
+  guard test only: assert the mapping block still exists and every value is
+  a `var()` reference, so a future edit can't silently drop it.
 
-Done when: every shell page is legible in dark at WCAG AA for text tokens
-(automate contrast of `--text-*` on `--surface-*` pairs in the guard).
-Size: 2–4 days, mostly review.
+**2c — dark palette.**
+- `scripts/derive_dark_palette.py`: no stdlib OKLCH conversion exists
+  (`colorsys` only covers HSV/HLS/YIQ) — implement the sRGB↔linear↔XYZ↔OKLab
+  matrices directly (Björn Ottosson's published constants), no dependency.
+  - Neutrals invert lightness (`L' = 1 − L`, with a small lift so the
+    darkest surface isn't pure black), keeping hue and chroma.
+  - Accents and status colours keep their hue; lightness is solved against
+    the same (foreground, background, role) pairs 2a's guard checks — not
+    an independent notion of "meets AA contrast".
+- Commit the generated `light-dark()` values to a new
+  `theme/static_src/src/themes/brightbean.css` (per Architecture: `tokens.css`
+  stays names/wiring only; a theme file holds the values). `--platform-*`
+  brand literals stay as they are.
+- The contrast guard (2a) now has real dark branches to check.
+
+**2d — visual pass, app by app**, like the i18n rollout: shell/auth/errors,
+inbox, contacts, flows+builder, broadcasts/campaigns, analytics, settings.
+Flip the registry locally only, put light/dark screenshots in each PR.
+
+**2e — switch on.**
+- Add `("light", "dark")` to the registry; the mode select then appears by
+  itself (`.modes` already derives *system* once both palettes exist — no
+  registry code changes needed beyond the tuple).
+- Rename the "Language" nav row to "Preferences".
+- Check the raster logos on a dark background; add a dark variant only if
+  needed.
+- Update ru/ky translations and mark Phase 2 ✅ here.
+
+Done when: every shell page is legible in dark at WCAG AA for text tokens,
+enforced by 2a/2c's guard rather than manual review alone.
+Size: 2–4 days, mostly 2d review.
 
 ### Phase 3 — a second theme
 
