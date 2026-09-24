@@ -126,9 +126,11 @@ Phase 0 hygiene ──► Phase 1 mechanism ──► Phase 2 dark ──► Pha
 - All 30 `rgba(var(--*-rgb))` uses → `color-mix`; the 12 triplet tokens are
   gone; `--scrim` replaces `--scrim-rgb`.
 - `theme/static_src/src/tokens.css` holds every value; `styles.css` imports it.
-- **Guard:** `tests/test_theme_tokens.py` — no colour literal in `styles.css`,
-  template `style` attributes/blocks (email exempt) or builder source; every
-  `var(--x)` resolves to a definition.
+- **Guard:** `tests/test_theme_tokens.py` — no colour literal (hex, `%23`
+  hex in data-URIs, colour functions, all 148 named colours in any case) in
+  `styles.css`, template `style` attributes and `<style>`/`<script>` blocks
+  (email exempt) or builder source; every `var(--x)` resolves to a definition.
+  The chart's hex fallbacks in `analytics/flow_detail.html` are gone.
 - Deferred to Phase 2: select chevrons (see Architecture).
 
 Note: Lightning CSS (inside the Tailwind build) emits an opaque, pre-`color-mix`
@@ -187,7 +189,7 @@ override a workspace brand theme; is mode ever enforced above the user.
 Revives `Workspace.primary_color`: a nonced `<style>` sets
 `--brand-500`, and the ramp (50…900) is derived with
 `color-mix(in oklch, var(--brand-500) n%, white|black)`. Contrast of the
-derived `--primary` against `--text-inverse` must be checked at save time.
+derived `--primary` against `--text-on-fill` must be checked at save time.
 Size: ~1–2 days after the decision.
 
 ### Phase 5 — third-party themes (decision point)

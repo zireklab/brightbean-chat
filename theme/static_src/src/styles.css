@@ -2363,11 +2363,13 @@ span.flatpickr-weekday {
   --xy-selection-border: 1px dashed var(--primary);
   --xy-attribution-background-color: transparent;
 
-  /* The group accent every .fb-node reads. Overridden per group below;
-     defaulted here so a node type in a drawer with no modifier class
-     still draws a visible accent rather than none. */
+  /* The group accent and eyebrow ink every .fb-node reads. Overridden per
+     group below; defaulted here so a node type in a drawer with no modifier
+     class still draws a visible accent, and its .fb-node-kind a real colour,
+     rather than none. */
   --flow-accent: var(--flow-group-other);
   --flow-accent-soft: var(--flow-group-other-soft);
+  --flow-ink: var(--flow-group-other-ink);
 }
 
 /* The mount div itself. It holds the whole island, so it is a flex
@@ -2621,9 +2623,13 @@ span.flatpickr-weekday {
    width, padding, radius and border, which said "not a step" when what it
    needed to say is "the first thing that happens". Sharing the step card's
    chrome also means it cannot drift from it. */
+/* The "When…" eyebrow keeps the node's own text colour. Before the canvas
+   default above existed, --flow-ink was undefined here and the eyebrow fell
+   back to inheriting it; this says so on purpose instead of by accident. */
 .fb-node-trigger {
   --flow-accent: var(--brand-green-500);
   --flow-accent-soft: var(--brand-green-50);
+  --flow-ink: var(--text-primary);
   cursor: pointer;
 }
 
