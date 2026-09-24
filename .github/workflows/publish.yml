@@ -22,11 +22,22 @@ permissions:
   contents: read
   packages: write
 
-# Two merges in quick succession must not race each other to the `main` tag.
-# Serialises workflow_run-triggered runs; does not by itself guarantee they
-# execute in commit order (see "Confirm this commit is still the tip" below).
+# One global group, not scoped to github.ref: a workflow_run-triggered publish
+# (ref refs/heads/main) and a v*-tag-triggered publish (ref refs/tags/vX.Y.Z)
+# would otherwise sit in different groups and could build/push the same
+# sha-<short> tag at the same time. `queue: max` (default is "single") keeps
+# every triggered run pending instead of GitHub Actions' default: a newer
+# pending run cancels an older one outright, which would silently drop a
+# commit's image if three or more merges land within one build's runtime.
+# queue: max is incompatible with cancel-in-progress: true, which is why that
+# stays false. Confirmed against GitHub's current concurrency docs.
+#
+# The queue does not by itself guarantee execution follows commit order
+# (GitHub orders by when each run started waiting, not by commit time) — that
+# is what "Confirm this commit is still the tip of main" below is for.
 concurrency:
-  group: publish-${{ github.ref }}
+  group: publish
+  queue: max
   cancel-in-progress: false
 
 jobs:
@@ -59,13 +70,13 @@ jobs:
 
       - name: Confirm this commit is still the tip of main
         id: freshness
-        # workflow_run's completion order is not guaranteed to match commit
-        # order: if two merges land close together and the older one's CI
-        # happens to finish (and so trigger this job) after the newer one's,
-        # an unconditional `main` move would regress it to the older image.
-        # Only gates the `main` tag below — sha-<short> still publishes
-        # unconditionally, since a historical commit still deserves its own
-        # immutable tag.
+        # The concurrency queue orders runs by wait time, not commit time, so
+        # it does not by itself guarantee this. If two merges land close
+        # together and the older one's CI happens to finish (and so trigger
+        # this job) after the newer one's, an unconditional `main` move would
+        # regress it to the older image. Only gates the `main` tag below —
+        # sha-<short> still publishes unconditionally, since a historical
+        # commit still deserves its own immutable tag.
         if: github.event_name == 'workflow_run'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -92,7 +103,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Skip if this commit is already published
+      - name: Skip the build if this commit is already published
         id: exists
         # sha-<short> is documented as immutable, so treat "the tag already
         # exists" as done, not as work to redo: a rerun, a manual dispatch, or
@@ -112,7 +123,10 @@ jobs:
 
       - name: Image metadata
         id: meta
-        if: steps.exists.outputs.found != 'true'
+        # Always computed, even when the build below is skipped: the tag list
+        # is what "Alias the existing image" replays onto an already-built
+        # sha-<short> (e.g. a v* tag pushed after the merge already published
+        # it — that run must still create the vX.Y.Z tag).
         uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
         with:
           images: ghcr.io/${{ github.repository }}
@@ -145,3 +159,20 @@ jobs:
             type=gha
             type=gha,scope=publish
           cache-to: type=gha,scope=publish
+
+      - name: Alias the existing image under this event's other tags
+        if: steps.exists.outputs.found == 'true'
+        # Reaching here means sha-<short> already exists but nothing rebuilt,
+        # so `main`/`vX.Y.Z` above still need to point at it — otherwise a v*
+        # tag pushed after the merge already published its commit would never
+        # get its version tag, and a workflow_run that lands after a tag push
+        # already built the commit would never move `main`. imagetools copies
+        # the existing multi-arch manifest under each additional tag without a
+        # rebuild, so every tag for one commit stays byte-identical.
+        env:
+          SHA_TAG: ghcr.io/${{ github.repository }}:sha-${{ steps.rev.outputs.short }}
+        run: |
+          while IFS= read -r t; do
+            [ -n "$t" ] && [ "$t" != "$SHA_TAG" ] || continue
+            docker buildx imagetools create --tag "$t" "$SHA_TAG"
+          done <<< "${{ steps.meta.outputs.tags }}"
