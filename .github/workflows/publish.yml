@@ -23,6 +23,8 @@ permissions:
   packages: write
 
 # Two merges in quick succession must not race each other to the `main` tag.
+# Serialises workflow_run-triggered runs; does not by itself guarantee they
+# execute in commit order (see "Confirm this commit is still the tip" below).
 concurrency:
   group: publish-${{ github.ref }}
   cancel-in-progress: false
@@ -55,6 +57,27 @@ jobs:
           ref: ${{ steps.rev.outputs.sha }}
           persist-credentials: false
 
+      - name: Confirm this commit is still the tip of main
+        id: freshness
+        # workflow_run's completion order is not guaranteed to match commit
+        # order: if two merges land close together and the older one's CI
+        # happens to finish (and so trigger this job) after the newer one's,
+        # an unconditional `main` move would regress it to the older image.
+        # Only gates the `main` tag below — sha-<short> still publishes
+        # unconditionally, since a historical commit still deserves its own
+        # immutable tag.
+        if: github.event_name == 'workflow_run'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          current=$(gh api "repos/${{ github.repository }}/commits/main" --jq .sha)
+          if [ "$current" = "${{ steps.rev.outputs.sha }}" ]; then
+            echo "is_head=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::main has moved to $current since this run started; not moving the main tag"
+            echo "is_head=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Set up QEMU
         # arm64 alongside amd64: the Zirek dev host is an arm64 Mac.
         uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
@@ -69,19 +92,45 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Skip if this commit is already published
+        id: exists
+        # sha-<short> is documented as immutable, so treat "the tag already
+        # exists" as done, not as work to redo: a rerun, a manual dispatch, or
+        # a v* tag pushed after the merge already built it would otherwise
+        # silently overwrite it. That overwrite is not even guaranteed to
+        # reproduce the same image for the same commit — the Dockerfile's
+        # `apt-get install gettext` resolves to whatever build apt currently
+        # serves. imagetools (not `docker manifest`) because the pushed tag is
+        # a multi-arch manifest list.
+        run: |
+          if docker buildx imagetools inspect "ghcr.io/${{ github.repository }}:sha-${{ steps.rev.outputs.short }}" >/dev/null 2>&1; then
+            echo "::notice::sha-${{ steps.rev.outputs.short }} is already published; skipping the build"
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Image metadata
         id: meta
+        if: steps.exists.outputs.found != 'true'
         uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
         with:
           images: ghcr.io/${{ github.repository }}
+          # metadata-action's default flavor (latest=auto) adds an undocumented
+          # fourth tag — `latest` — the first time a v* tag builds, which is
+          # exactly the moving tag AGENTS.md §7 says not to use for a
+          # production-critical service without an explicit reason.
+          flavor: |
+            latest=false
           # type=raw rather than type=sha: the latter reads github.sha, which
           # is the wrong commit under workflow_run (see "Resolve" above).
           tags: |
             type=raw,value=sha-${{ steps.rev.outputs.short }}
-            type=raw,value=main,enable=${{ github.event_name == 'workflow_run' }}
+            type=raw,value=main,enable=${{ github.event_name == 'workflow_run' && steps.freshness.outputs.is_head == 'true' }}
             type=semver,pattern=v{{version}}
 
       - name: Build and push
+        if: steps.exists.outputs.found != 'true'
         uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
         with:
           context: .
