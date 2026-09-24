@@ -45,7 +45,8 @@ last were closed by Phase 0):
 
 ## Principles
 
-1. **Two axes, two mechanisms.** Theme is a selector; mode is `color-scheme`.
+1. **Two axes, two mechanisms.** Theme is a selector; mode is `color-scheme`
+   (set from `data-color-mode`).
    Neither knows how the other was chosen.
 2. **Tokens are the only source of colour.** Component CSS, templates and the
    React island reference semantic tokens; only theme files hold values.
@@ -61,7 +62,14 @@ last were closed by Phase 0):
 ## Architecture
 
 ```html
-<html data-theme="brightbean" style="color-scheme: light dark">
+<html data-theme="brightbean" data-color-mode="system">
+```
+
+```css
+/* tokens.css: the mode axis, one rule per mode */
+[data-color-mode="light"]  { color-scheme: light; }
+[data-color-mode="dark"]   { color-scheme: dark; }
+[data-color-mode="system"] { color-scheme: light dark; }
 ```
 
 ```css
@@ -77,7 +85,7 @@ last were closed by Phase 0):
 }
 ```
 
-| Mode chosen | `color-scheme` on `<html>` | Result |
+| `data-color-mode` | `color-scheme` on `<html>` | Result |
 |---|---|---|
 | light | `light` | left branch of every `light-dark()` |
 | dark | `dark` | right branch |
@@ -95,10 +103,23 @@ last were closed by Phase 0):
   control), and `light-dark()` only switches colours, not `url()`s. Phase 2
   solves them, most likely with a wrapper pseudo-element masked by the SVG
   and painted `currentColor`.
-- Python side: `apps/common/themes.py` holds the registry (slug, lazy label,
-  supported modes), the single source for model choices, the form and tests.
-  A context processor resolves `THEME` and `COLOR_SCHEME`; `base.html` prints
-  them.
+- Python side: `apps/common/themes.py` holds the registry (slug, label,
+  palettes) and `resolve()`, the single source for the preferences
+  view, the template tag, the system check and the tests. `{% theme_attrs %}`
+  (`apps/common/templatetags/common_extras.py`) prints both attributes on
+  `<html>`. It is a tag, not a context processor, because the 500 page is
+  rendered with a bare `Context()` where no processor runs; with no signed-in
+  user it prints `settings.THEME_DEFAULT` / `COLOR_MODE_DEFAULT`. It prints
+  data attributes only, never `style`: `base.html`'s `{% block html_style %}`
+  lets a page add its own attributes to `<html>`, and a second `style` there
+  would be silently dropped.
+- A theme declares **palettes** (`light`, `dark`), not modes. *System* is
+  derived: it exists exactly when both palettes do. So a theme offers one mode
+  or all three, and a mode select on screen always contains the stored value.
+- `resolve()` never raises, since it also runs on the error pages. A bad
+  default is reported by the `common.E007` system check; a malformed theme
+  cannot exist (`Theme.__post_init__` rejects it at import), and the registry
+  is keyed by each theme's own slug.
 
 Browser floor: `light-dark()` and `color-mix()` are Baseline 2024 (Chrome 123,
 Safari 17.5, Firefox 120). A custom property accepts any value, so an older
@@ -113,6 +134,8 @@ support floor is agreed, the fix is an `@supports not (color: light-dark(#000,
 ```
 Phase 0 hygiene ──► Phase 1 mechanism ──► Phase 2 dark ──► Phase 3 second theme
                                                    └──► Phase 4 selection levels ─► Phase 5 third-party themes
+
+Phase 6 Twenty compatibility study (independent; research only)
 ```
 
 ### Phase 0 — hygiene ✅ done
@@ -138,20 +161,27 @@ fallback before each `color-mix` rule. Tailwind 4's own browser floor (Safari
 16.4, Chrome 111, Firefox 128) always has `color-mix`, so the fallback never
 applies in a supported browser.
 
-### Phase 1 — the mechanism (still one theme, light only)
+### Phase 1 — the mechanism ✅ done (still one theme, light only)
 
-- `apps/common/themes.py` registry; `settings.THEME_DEFAULT`,
-  `settings.COLOR_MODE_DEFAULT`.
-- `User.theme`, `User.color_mode` (blank = default), one migration, same shape
-  as `language`.
-- `apps/common/context_processors.theme_context` → `THEME`, `COLOR_SCHEME`;
-  anonymous pages get the instance defaults.
-- `base.html`: `data-theme` + `color-scheme` on `<html>`.
-- Preferences: two selects beside Language; the dark and system options are
-  hidden while the theme's registry entry lists only `light`.
-
-Done when: preference round-trips, `<html>` attributes render on every shell
-page (extend `TestContentSecurityPolicy`-style shell sweep). Size: ~1 day.
+- `apps/common/themes.py` registry + `resolve()`; `settings.THEME_DEFAULT`,
+  `settings.COLOR_MODE_DEFAULT`, checked at startup (`common.E007`: an
+  unknown theme or mode, or a mode the default theme has no tokens for).
+  A malformed palette list fails at import.
+- `User.theme`, `User.color_mode` (blank = default, no `choices=`), migration
+  `accounts.0004`. A stored mode the theme cannot render is kept and clamped
+  at render time, so *system* switches on by itself once dark exists.
+- `{% theme_attrs %}` on both `<html>` roots: `base.html` and
+  `layouts/error.html` (see Architecture for why a tag).
+- Preferences: theme and mode selects are drawn only when they offer a real
+  choice, so in Phase 1 the page is unchanged. The view writes a field only
+  when its key was posted; otherwise a language save would reset the theme.
+  The mode select lists the *currently saved* theme's modes, so switching to a
+  theme with a dark palette and picking dark takes two saves; Phase 3 fixes
+  that (all modes, clamped server-side, or an Alpine-dependent select).
+- Guards: `tests/test_theme_tokens.py` requires `{% theme_attrs %}` on every
+  `<html>` root; `test_shell.py::TestTheThemeReachesEveryRoot` checks the
+  rendered attributes on shell, login, 404 and bare-context error pages;
+  `test_themes.py` requires one `[data-color-mode]` rule per registered mode.
 
 ### Phase 2 — dark mode for BrightBean
 
@@ -199,6 +229,24 @@ registered through `settings.THEMES`, validated by the Phase 3 contract test
 at startup (system check). Plus `docs/themes.md` — "how to author a theme".
 Only worth building if self-hosters ask for it.
 
+### Phase 6 — visual compatibility with Twenty CRM (study)
+
+BrightBean Chat and Twenty CRM ship together as customer-facing frontends
+(Zirek). The question for this phase: can they look like parts of one brand?
+Research only: no code here, and no work on a Twenty theme, which would be a
+separate project of a different scale.
+
+- Compare the two design systems axis by axis: token architecture, neutrals,
+  accent, status colours, fonts, radii, spacing scale and density, shadows,
+  icons, the shape of key components (button, input, badge, table, modal),
+  and light/dark.
+- For each axis, record one outcome: already matches / can be aligned by
+  tokens on our side / diverges.
+- Deliverable: the compatibility table and a short verdict (yes / partly /
+  no) naming exactly what stands in the way.
+
+Size: ~1 day.
+
 ### Out of scope
 
 - **Email templates** (`templates/notifications/email/*`, `templates/members/email/*`):
@@ -218,6 +266,7 @@ Phase 5 runs the contract as a Django system check.
    `[data-theme=…]` rules.
 2. `pytest tests/test_theme_tokens.py apps/common apps/accounts`.
 3. `make server`: switch theme and mode in Preferences; `<html>` attributes
-   change; *system* follows the OS toggle without reload.
+   change; *system* follows the OS toggle without reload. (From Phase 2: in
+   Phase 1 the selects are hidden, so only the attributes can be checked.)
 4. Open the flow builder and analytics charts in every theme × mode.
 5. Build the container image and repeat 3 against it.

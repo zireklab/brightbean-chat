@@ -1,6 +1,6 @@
-{% load static i18n %}<!DOCTYPE html>
+{% load static i18n common_extras %}<!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}
-<html lang="{{ LANGUAGE_CODE }}">
+<html lang="{{ LANGUAGE_CODE }}" {% theme_attrs %}>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,7 +22,8 @@ So: no `request`, no inline script, no context processor output. Only
 which needs none either: it reads django.utils.translation's active
 language directly, the same one LocaleMiddleware already set for this
 request, rather than the context processor's LANGUAGE_CODE variable this
-page never receives.
+page never receives. {% theme_attrs %} is a tag for the same reason: with no
+request it prints the instance default.
 {% endcomment %}
 <body class="auth-bg min-h-screen flex items-center justify-center py-12 px-4" style="font-family: var(--font-body);">
     <div class="auth-card text-center">

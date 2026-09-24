@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-23 21:23+0600\n"
+"POT-Creation-Date: 2026-09-24 12:33+0600\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ky\n"
@@ -1608,6 +1608,18 @@ msgstr "Шаблондор"
 #: templates/inbox/_sidebar.html:17 templates/organizations/workspaces.html:61
 msgid "Open"
 msgstr "Ачуу"
+
+#: apps/common/themes.py:26
+msgid "Light"
+msgstr "Жарык"
+
+#: apps/common/themes.py:27
+msgid "Dark"
+msgstr "Караңгы"
+
+#: apps/common/themes.py:28
+msgid "Match my system"
+msgstr "Системадагыдай"
 
 #: apps/common/validators.py:36
 msgid "Color must be a 6-digit hex value like #3B82F6."
@@ -4881,7 +4893,20 @@ msgstr ""
 "Бул сиз көргөн нерсени гана өзгөртөт. Командаңыздагы ар бир адам өз тилин "
 "тандай алат."
 
-#: templates/accounts/preferences.html:37 templates/accounts/settings.html:40
+#: templates/accounts/preferences.html:44
+msgid "Theme"
+msgstr "Тема"
+
+#: templates/accounts/preferences.html:47
+#: templates/accounts/preferences.html:58
+msgid "Default"
+msgstr "Демейки"
+
+#: templates/accounts/preferences.html:55
+msgid "Mode"
+msgstr "Режим"
+
+#: templates/accounts/preferences.html:66 templates/accounts/settings.html:40
 #: templates/analytics/settings.html:59
 #: templates/organizations/settings.html:42
 #: templates/workspaces/settings.html:89
@@ -9748,7 +9773,7 @@ msgstr ""
 "Триггерлер биринчи дал келгенде токтойт. Эрежелер токтобойт: дал келген "
 "<strong>ар бир</strong> эреже төмөндөгү тартипте колдонулат."
 
-#: templates/layouts/error.html:32
+#: templates/layouts/error.html:33
 msgid "Back to BrightBean Chat"
 msgstr "BrightBean Chat'ка кайтуу"
 

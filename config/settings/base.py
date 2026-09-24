@@ -586,6 +586,13 @@ LANGUAGES = [
 ]
 LOCALE_PATHS = [BASE_DIR / "locale"]
 
+# What <html> renders for anyone without a stored preference: anonymous pages,
+# the bare-Context 500 page, and users who left Preferences on "Default". Slugs
+# from apps.common.themes; apps.common.checks rejects a theme that is not
+# registered or a mode it has no tokens for.
+THEME_DEFAULT = "brightbean"
+COLOR_MODE_DEFAULT = "light"
+
 # Static files
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
