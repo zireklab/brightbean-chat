@@ -11,7 +11,8 @@ defined, so the browser dropped the declaration without a word.
 Three guards:
 
 * **No colour literals outside tokens.css** — in component CSS, in template
-  ``style`` attributes and ``<style>`` blocks, and in the flow-builder source.
+  ``style`` attributes, ``<style>`` and ``<script>`` blocks, and in the
+  flow-builder source.
   Email templates are exempt: mail clients do not support custom properties, so
   an email carries its colours inline by necessity.
 * **Every ``var(--x)`` is defined somewhere.** An undefined custom property is
@@ -43,7 +44,34 @@ FOREIGN_PREFIXES = ("--tw-", "--xy-")
 
 _COMMENT = re.compile(r"/\*.*?\*/", re.DOTALL)
 _DECLARATION = re.compile(r"(--[\w-]+|[a-z-]+)\s*:\s*([^;{}]+)")
-_NAMED = r"(?:white|black|red|green|blue|gray|grey|orange|yellow|purple|pink)"
+#: All 148 CSS named colours (CSS Color 4). Not ``transparent`` or ``currentColor``:
+#: those carry no palette value, and ``transparent`` is what every ``color-mix()`` wash
+#: mixes into.
+# A word list reads better than 148 one-per-line literals.
+NAMED_COLOURS = frozenset(
+    """
+    aliceblue antiquewhite aqua aquamarine azure beige bisque black blanchedalmond blue
+    blueviolet brown burlywood cadetblue chartreuse chocolate coral cornflowerblue
+    cornsilk crimson cyan darkblue darkcyan darkgoldenrod darkgray darkgreen darkgrey
+    darkkhaki darkmagenta darkolivegreen darkorange darkorchid darkred darksalmon
+    darkseagreen darkslateblue darkslategray darkslategrey darkturquoise darkviolet
+    deeppink deepskyblue dimgray dimgrey dodgerblue firebrick floralwhite forestgreen
+    fuchsia gainsboro ghostwhite gold goldenrod gray green greenyellow grey honeydew
+    hotpink indianred indigo ivory khaki lavender lavenderblush lawngreen lemonchiffon
+    lightblue lightcoral lightcyan lightgoldenrodyellow lightgray lightgreen lightgrey
+    lightpink lightsalmon lightseagreen lightskyblue lightslategray lightslategrey
+    lightsteelblue lightyellow lime limegreen linen magenta maroon mediumaquamarine
+    mediumblue mediumorchid mediumpurple mediumseagreen mediumslateblue
+    mediumspringgreen mediumturquoise mediumvioletred midnightblue mintcream mistyrose
+    moccasin navajowhite navy oldlace olive olivedrab orange orangered orchid
+    palegoldenrod palegreen paleturquoise palevioletred papayawhip peachpuff peru pink
+    plum powderblue purple rebeccapurple red rosybrown royalblue saddlebrown salmon
+    sandybrown seagreen seashell sienna silver skyblue slateblue slategray slategrey
+    snow springgreen steelblue tan teal thistle tomato turquoise violet wheat white
+    whitesmoke yellow yellowgreen
+    """.split()  # noqa: SIM905
+)
+_NAMED = "(?:" + "|".join(sorted(NAMED_COLOURS, key=len, reverse=True)) + ")"
 #: ``%23`` is ``#`` inside a url-encoded data-URI (an inline SVG's ``stroke='%23fff'``).
 #: CSS keywords and function names are case-insensitive, hence ``re.I``.
 _COLOUR = re.compile(
@@ -52,8 +80,9 @@ _COLOUR = re.compile(
     rf"|(?<![-\w]){_NAMED}(?![-\w])",
     re.I,
 )
-_STYLE_ATTR = re.compile(r'style="([^"]*)"')
-_STYLE_BLOCK = re.compile(r"<style[^>]*>(.*?)</style>", re.DOTALL)
+_STYLE_ATTR = re.compile(r"""\bstyle=(?P<q>["'])(?P<body>.*?)(?P=q)""", re.DOTALL)
+_STYLE_BLOCK = re.compile(r"<style[^>]*>(?P<body>.*?)</style>", re.DOTALL)
+_SCRIPT_BLOCK = re.compile(r"<script[^>]*>(?P<body>.*?)</script>", re.DOTALL)
 _TEMPLATE_COMMENT = re.compile(r"{%\s*comment\s*%}.*?{%\s*endcomment\s*%}|{#.*?#}", re.DOTALL)
 #: A name followed by ``{{`` is assembled by the template (``var(--platform-{{ key }}, …)``)
 #: and cannot be checked statically; the lookahead skips it without backtracking into a
@@ -113,12 +142,25 @@ class TestNoColourLiterals:
             text = _blank_comments(path.read_text(), _TEMPLATE_COMMENT)
             for pattern in (_STYLE_ATTR, _STYLE_BLOCK):
                 for match in pattern.finditer(text):
-                    body = _blank_comments(match.group(1), _COMMENT)
-                    base = _line(text, match.start(1)) - 1
+                    body = _blank_comments(match.group("body"), _COMMENT)
+                    base = _line(text, match.start("body")) - 1
                     for n, decl in _colour_literals_in_css(body, base):
                         offenders.append(f"{path.relative_to(ROOT)}:{n}: {decl}")
 
         assert not offenders, _format(offenders, "use var(--token) in the template, not a literal colour")
+
+    def test_template_scripts_have_no_colour_literals(self):
+        """A script that styles something (a chart, say) reads tokens too; a hex
+        fallback beside a token read is a second copy of the palette."""
+        offenders = []
+        for path in _templates():
+            text = _blank_comments(path.read_text(), _TEMPLATE_COMMENT)
+            for block in _SCRIPT_BLOCK.finditer(text):
+                for match in _JS_COLOUR.finditer(block.group("body")):
+                    line = _line(text, block.start("body") + match.start())
+                    offenders.append(f"{path.relative_to(ROOT)}:{line}: {match.group(0)}")
+
+        assert not offenders, _format(offenders, "read the colour with getComputedStyle, not a literal")
 
     def test_the_builder_has_no_colour_literals(self):
         offenders = []

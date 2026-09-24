@@ -100,15 +100,17 @@ this issue), so nothing here reaches a CDN.
     var canvas = document.getElementById("flow-trend");
     if (!canvas || typeof Chart === "undefined") { return; }
     // Read the theme's own tokens rather than hard-coding hexes: the palette is
-    // defined once in theme/static_src/src/styles.css and a chart that ignored
+    // defined once in theme/static_src/src/tokens.css and a chart that ignored
     // it would be the one element on the page that does not follow the theme.
+    // No hex fallbacks: tests/test_theme_tokens.py proves every name below is
+    // defined, and a fallback would only be a second copy of the palette to drift.
     var style = getComputedStyle(document.documentElement);
-    var token = function (name, fallback) { return (style.getPropertyValue(name) || fallback).trim(); };
+    var token = function (name) { return style.getPropertyValue(name).trim(); };
     var lines = [
-      { key: "sent", label: "{{ chart_label_sent|escapejs }}", color: token("--primary", "#F97316") },
-      { key: "delivered", label: "{{ chart_label_delivered|escapejs }}", color: token("--success-700", "#5F6B27") },
-      { key: "failed", label: "{{ chart_label_failed|escapejs }}", color: token("--error-700", "#B91C1C") },
-      { key: "clicked", label: "{{ chart_label_clicked|escapejs }}", color: token("--text-secondary", "#57534E") }
+      { key: "sent", label: "{{ chart_label_sent|escapejs }}", color: token("--primary") },
+      { key: "delivered", label: "{{ chart_label_delivered|escapejs }}", color: token("--success-700") },
+      { key: "failed", label: "{{ chart_label_failed|escapejs }}", color: token("--error-700") },
+      { key: "clicked", label: "{{ chart_label_clicked|escapejs }}", color: token("--text-secondary") }
     ];
     new Chart(canvas, {
       type: "line",
