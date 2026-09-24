@@ -68,6 +68,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     # Workspace.timezone, so adding a language never needs a migration.
     language = models.CharField(max_length=10, blank=True, default="")
 
+    # Theme and colour mode (docs/themes-roadmap.md). Same shape as `language`:
+    # blank is "use settings.THEME_DEFAULT / COLOR_MODE_DEFAULT", and there is no
+    # `choices=` because apps.common.themes is validated in account_preferences,
+    # so registering a theme never needs a migration. A stored mode the theme
+    # cannot render is kept, not rewritten: apps.common.themes.resolve clamps
+    # it at render time.
+    theme = models.CharField(max_length=32, blank=True, default="")
+    color_mode = models.CharField(max_length=10, blank=True, default="")
+
     # Which workspace to land in. Deliberately a bare UUID and **not** a foreign
     # key: deleting a workspace must not cascade into user rows, and a stale
     # value is revalidated against a live membership on every use

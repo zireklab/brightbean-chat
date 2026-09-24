@@ -33,6 +33,34 @@ settings_preferences stub; see apps.common.context_processors.SETTINGS_NAV's
             {% translate "Changes what you see. Your teammates can each pick their own." %}
         </p>
 
+        {% comment %}
+        Theme and mode. The view hands over an empty list while a select would
+        offer no real choice, so these stay out of the page until then
+        (apps.accounts.views.account_preferences).
+        {% endcomment %}
+        {% if theme_choices %}
+        <label class="block text-[13px] font-semibold mb-1.5" for="account-theme" style="color: var(--text-primary);">
+            {% translate "Theme" %}
+        </label>
+        <select id="account-theme" class="form-input-styled w-full mb-5" name="theme">
+            <option value="" {% if not request.user.theme %}selected{% endif %}>{% translate "Default" %}</option>
+            {% for slug, label in theme_choices %}
+            <option value="{{ slug }}" {% if slug == request.user.theme %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+        {% if mode_choices %}
+        <label class="block text-[13px] font-semibold mb-1.5" for="account-color-mode" style="color: var(--text-primary);">
+            {% translate "Mode" %}
+        </label>
+        <select id="account-color-mode" class="form-input-styled w-full mb-5" name="color_mode">
+            <option value="" {% if not request.user.color_mode %}selected{% endif %}>{% translate "Default" %}</option>
+            {% for mode, label in mode_choices %}
+            <option value="{{ mode }}" {% if mode == request.user.color_mode %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+
         <div class="flex items-center gap-2">
             <button type="submit" class="btn-pill-primary">{% translate "Save changes" %}</button>
         </div>
