@@ -203,11 +203,13 @@ Split into five PRs, each its own branch off a fresh `main`
   (see above).
 - **Found, left out on purpose:** `--text-on-fill` on `--primary` is
   2.80:1 and on `--error-500` is 3.76:1; `--border-strong` (the form-control
-  hairline) on `--surface-0` is 1.26:1 — all below their WCAG threshold
+  hairline) on `--surface-0` is 1.26:1; `--text-tertiary` on `--surface-page`
+  is 4.44:1 and on `--surface-2` is 4.40:1 — all below their WCAG threshold
   already, on the *current, shipping light palette*. Pre-existing, unrelated
   to dark mode, not in `PAIRS`; needs its own design pass if it's worth
-  fixing (would mean darkening `--brand-500`/`--error-500` or the
-  form-control border, a branding call, not a guard-writing one).
+  fixing (would mean darkening `--brand-500`/`--error-500`, the form-control
+  border, or `--text-tertiary` itself — a branding call, not a
+  guard-writing one).
 
 **2b — plumbing, light only.**
 - Chart: `flow_detail.html` currently reads tokens once via
