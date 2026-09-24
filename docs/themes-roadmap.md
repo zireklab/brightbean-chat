@@ -190,18 +190,24 @@ Split into five PRs, each its own branch off a fresh `main`
 (`claude/themes-phase-2a` … `2e`). The registry stays `("light",)` through
 2a–2d, so users see nothing change before 2e.
 
-**2a — contrast guard.**
-- `tests/test_theme_contrast.py`: WCAG 2.x AA over an explicit list of
-  (foreground token, background token, role) pairs — role distinguishes
-  text-on-surface from text-on-fill, since a token like `--primary` plays
-  both. This same list is the contract 2c's palette solver optimises
-  against; keep it in one place, not duplicated between guard and script.
+**2a — contrast guard ✅ done**
+- `tests/test_theme_contrast.py`: WCAG 2.x AA over an explicit `PAIRS` list
+  of `--text-*` on `--surface-*` tokens — exactly what "Done when" below
+  names. This is the contract 2c's palette solver reads too; keep it in one
+  place, not duplicated between guard and script.
 - Resolves `var()` chains from `tokens.css`, including `light-dark(a, b)`
   once 2c introduces it — split branches with a paren-balanced parser, not
   a naive `split(",")` (a branch value like
   `color-mix(in srgb, var(--x) 6%, transparent)` has its own commas).
 - Confirms the browser floor in Architecture as decided, not conditional
   (see above).
+- **Found, left out on purpose:** `--text-on-fill` on `--primary` is
+  2.80:1 and on `--error-500` is 3.76:1; `--border-strong` (the form-control
+  hairline) on `--surface-0` is 1.26:1 — all below their WCAG threshold
+  already, on the *current, shipping light palette*. Pre-existing, unrelated
+  to dark mode, not in `PAIRS`; needs its own design pass if it's worth
+  fixing (would mean darkening `--brand-500`/`--error-500` or the
+  form-control border, a branding call, not a guard-writing one).
 
 **2b — plumbing, light only.**
 - Chart: `flow_detail.html` currently reads tokens once via
