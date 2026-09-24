@@ -130,7 +130,11 @@ def validate_instance(
     if types is not None:
         expected = types if isinstance(types, list) else [types]
         if not any(_type_matches(str(t), value) for t in expected):
-            add(CODE_INVALID_VALUE, gettext("Expected %(types)s.") % {"types": " or ".join(str(t) for t in expected)}, path)
+            add(
+                CODE_INVALID_VALUE,
+                gettext("Expected %(types)s.") % {"types": " or ".join(str(t) for t in expected)},
+                path,
+            )
             # Every further keyword assumes the type held; stop here so one
             # wrong type does not produce a cascade of unrelated complaints.
             return issues
@@ -190,9 +194,13 @@ def _check_number(schema: dict[str, Any], value: float, path: str, node_id: str 
     minimum = schema.get("minimum")
     maximum = schema.get("maximum")
     if isinstance(minimum, int | float) and value < minimum:
-        issues.append(_issue(CODE_INVALID_VALUE, gettext("Must be at least %(minimum)s.") % {"minimum": minimum}, path, node_id))
+        issues.append(
+            _issue(CODE_INVALID_VALUE, gettext("Must be at least %(minimum)s.") % {"minimum": minimum}, path, node_id)
+        )
     if isinstance(maximum, int | float) and value > maximum:
-        issues.append(_issue(CODE_INVALID_VALUE, gettext("Must be at most %(maximum)s.") % {"maximum": maximum}, path, node_id))
+        issues.append(
+            _issue(CODE_INVALID_VALUE, gettext("Must be at most %(maximum)s.") % {"maximum": maximum}, path, node_id)
+        )
     return issues
 
 
@@ -203,7 +211,9 @@ def _check_array(
     minimum = schema.get("minItems")
     maximum = schema.get("maxItems")
     if isinstance(minimum, int) and len(value) < minimum:
-        issues.append(_issue(CODE_INVALID_VALUE, gettext("Add at least %(minimum)s more.") % {"minimum": minimum}, path, node_id))
+        issues.append(
+            _issue(CODE_INVALID_VALUE, gettext("Add at least %(minimum)s more.") % {"minimum": minimum}, path, node_id)
+        )
     if isinstance(maximum, int) and len(value) > maximum:
         issues.append(_issue(CODE_INVALID_VALUE, gettext("%(maximum)s at most.") % {"maximum": maximum}, path, node_id))
     items = schema.get("items")

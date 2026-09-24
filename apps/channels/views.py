@@ -32,8 +32,8 @@ from django.db.models import Max
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.utils.timesince import timesince
 from django.utils.functional import Promise
+from django.utils.timesince import timesince
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_GET, require_POST

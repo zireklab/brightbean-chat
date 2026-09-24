@@ -71,7 +71,7 @@ i18n-extract: ## Pull new/changed strings into locale/*/LC_MESSAGES/django.po
 	django-admin makemessages -l ru -l ky --ignore=node_modules --ignore=static/js/vendor --ignore=frontend
 
 i18n-compile: ## Compile .po files to .mo for runtime use
-	django-admin compilemessages
+	python manage.py compilemessages
 
 # Code quality
 
