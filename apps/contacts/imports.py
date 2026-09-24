@@ -66,8 +66,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.db import transaction
-from django.utils import timezone
-from django.utils import translation
+from django.utils import timezone, translation
 from django.utils.translation import gettext
 
 from apps.contacts.errors import ContactsError

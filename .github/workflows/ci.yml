@@ -208,7 +208,14 @@ jobs:
         # no error when a catalog is missing — silent everywhere except the
         # tests that assert actual Russian/Kyrgyz text, which is how this gap
         # was found (Copilot review, PR #1).
-        run: django-admin compilemessages
+        #
+        # msgfmt is not on the runner image, and `django-admin` does not put the
+        # checkout on sys.path, so it cannot import config.settings.test —
+        # manage.py does, the same way the Dockerfile runs it.
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends gettext
+          python manage.py compilemessages
 
       - name: pytest
         # --dist loadfile comes from addopts in pyproject.toml (see the comment

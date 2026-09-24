@@ -330,7 +330,9 @@ def instagram_posts(request: WorkspaceRequest, workspace_id: str) -> HttpRespons
         context["posts"] = instagram.recent_media(connection)
     except APIError:
         logger.info("Instagram post picker: /me/media was refused for connection %s.", connection.pk)
-        context["reason"] = gettext("Instagram would not list this account's posts. Reconnect the channel and try again.")
+        context["reason"] = gettext(
+            "Instagram would not list this account's posts. Reconnect the channel and try again."
+        )
     except Exception:
         logger.exception("Instagram post picker failed for connection %s.", connection.pk)
         context["reason"] = gettext("Instagram's posts could not be loaded just now.")
