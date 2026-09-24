@@ -10,8 +10,10 @@ from collections.abc import Iterable
 from typing import Any
 
 from django import template
-from django.utils.html import escape
+from django.utils.html import escape, format_html
 from django.utils.safestring import SafeString, mark_safe
+
+from apps.common.themes import resolve
 
 register = template.Library()
 
@@ -196,3 +198,22 @@ def ui_select(
         "placeholder": placeholder,
         "icon": icon,
     }
+
+
+@register.simple_tag(takes_context=True)
+def theme_attrs(context: template.Context) -> SafeString:
+    """``data-theme`` and ``color-scheme`` for ``<html>``.
+
+    A tag and not a context processor because it has to work on the 500 page,
+    which ``django.views.defaults.server_error`` renders with a bare
+    ``Context()``: no processors run there and there is no ``request``. With no
+    signed-in user this falls back to the instance defaults, so every root
+    template gets its attributes the same way (tests/test_theme_tokens.py
+    checks that each one calls this).
+    """
+    user = getattr(context.get("request"), "user", None)
+    if user is not None and user.is_authenticated:
+        theme, scheme = resolve(user.theme, user.color_mode)
+    else:
+        theme, scheme = resolve("", "")
+    return format_html('data-theme="{}" style="color-scheme: {}"', theme.slug, scheme)

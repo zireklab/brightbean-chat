@@ -95,10 +95,19 @@ last were closed by Phase 0):
   control), and `light-dark()` only switches colours, not `url()`s. Phase 2
   solves them, most likely with a wrapper pseudo-element masked by the SVG
   and painted `currentColor`.
-- Python side: `apps/common/themes.py` holds the registry (slug, lazy label,
-  supported modes), the single source for model choices, the form and tests.
-  A context processor resolves `THEME` and `COLOR_SCHEME`; `base.html` prints
-  them.
+- Python side: `apps/common/themes.py` holds the registry (slug, label,
+  palettes) and `resolve()`, the single source for the preferences
+  view, the template tag, the system check and the tests. `{% theme_attrs %}`
+  (`apps/common/templatetags/common_extras.py`) prints both attributes on
+  `<html>`. It is a tag, not a context processor, because the 500 page is
+  rendered with a bare `Context()` where no processor runs; with no signed-in
+  user it prints `settings.THEME_DEFAULT` / `COLOR_MODE_DEFAULT`.
+- A theme declares **palettes** (`light`, `dark`), not modes. *System* is
+  derived: it exists exactly when both palettes do. So a theme offers one mode
+  or all three, and a mode select on screen always contains the stored value.
+- `resolve()` never raises, since it also runs on the error pages; a bad
+  default or a malformed registry entry is reported by the `common.E007`
+  system check instead.
 
 Browser floor: `light-dark()` and `color-mix()` are Baseline 2024 (Chrome 123,
 Safari 17.5, Firefox 120). A custom property accepts any value, so an older
@@ -136,20 +145,26 @@ fallback before each `color-mix` rule. Tailwind 4's own browser floor (Safari
 16.4, Chrome 111, Firefox 128) always has `color-mix`, so the fallback never
 applies in a supported browser.
 
-### Phase 1 — the mechanism (still one theme, light only)
+### Phase 1 — the mechanism ✅ done (still one theme, light only)
 
-- `apps/common/themes.py` registry; `settings.THEME_DEFAULT`,
-  `settings.COLOR_MODE_DEFAULT`.
-- `User.theme`, `User.color_mode` (blank = default), one migration, same shape
-  as `language`.
-- `apps/common/context_processors.theme_context` → `THEME`, `COLOR_SCHEME`;
-  anonymous pages get the instance defaults.
-- `base.html`: `data-theme` + `color-scheme` on `<html>`.
-- Preferences: two selects beside Language; the dark and system options are
-  hidden while the theme's registry entry lists only `light`.
-
-Done when: preference round-trips, `<html>` attributes render on every shell
-page (extend `TestContentSecurityPolicy`-style shell sweep). Size: ~1 day.
+- `apps/common/themes.py` registry + `resolve()`; `settings.THEME_DEFAULT`,
+  `settings.COLOR_MODE_DEFAULT`, checked at startup (`common.E007`: a
+  malformed palette list, an unknown theme or mode, or a mode the default
+  theme has no tokens for).
+- `User.theme`, `User.color_mode` (blank = default, no `choices=`), migration
+  `accounts.0004`. A stored mode the theme cannot render is kept and clamped
+  at render time, so *system* switches on by itself once dark exists.
+- `{% theme_attrs %}` on both `<html>` roots: `base.html` and
+  `layouts/error.html` (see Architecture for why a tag).
+- Preferences: theme and mode selects are drawn only when they offer a real
+  choice, so in Phase 1 the page is unchanged. The view writes a field only
+  when its key was posted; otherwise a language save would reset the theme.
+  The mode select lists the *currently saved* theme's modes, so switching to a
+  theme with a dark palette and picking dark takes two saves; Phase 3 fixes
+  that (all modes, clamped server-side, or an Alpine-dependent select).
+- Guards: `tests/test_theme_tokens.py` requires `{% theme_attrs %}` on every
+  `<html>` root; `test_shell.py::TestTheThemeReachesEveryRoot` checks the
+  rendered attributes on shell, login, 404 and bare-context error pages.
 
 ### Phase 2 — dark mode for BrightBean
 
@@ -216,6 +231,7 @@ Phase 5 runs the contract as a Django system check.
    `[data-theme=…]` rules.
 2. `pytest tests/test_theme_tokens.py apps/common apps/accounts`.
 3. `make server`: switch theme and mode in Preferences; `<html>` attributes
-   change; *system* follows the OS toggle without reload.
+   change; *system* follows the OS toggle without reload. (From Phase 2: in
+   Phase 1 the selects are hidden, so only the attributes can be checked.)
 4. Open the flow builder and analytics charts in every theme × mode.
 5. Build the container image and repeat 3 against it.

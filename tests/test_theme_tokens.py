@@ -8,7 +8,7 @@ comment in styles.css, and the codebase had drifted from it — six literal
 whites, two hard-coded inks, and three tokens that were referenced but never
 defined, so the browser dropped the declaration without a word.
 
-Two guards:
+Three guards:
 
 * **No colour literals outside tokens.css** — in component CSS, in template
   ``style`` attributes and ``<style>`` blocks, and in the flow-builder source.
@@ -16,6 +16,8 @@ Two guards:
   an email carries its colours inline by necessity.
 * **Every ``var(--x)`` is defined somewhere.** An undefined custom property is
   not an error in CSS; the declaration just stops applying.
+* **Every ``<html>`` root calls ``{% theme_attrs %}``**, which prints the
+  ``data-theme`` and ``color-scheme`` the tokens resolve against.
 
 # ponytail: regex over source text, not a CSS parser. Declarations are matched
 # as ``prop: value`` up to ``;``/``}``, which is what this repo's CSS looks like;
@@ -83,9 +85,7 @@ def _templates() -> list[Path]:
 
 
 def _builder_sources() -> list[Path]:
-    return sorted(
-        p for p in BUILDER.rglob("*") if p.suffix in {".ts", ".tsx"} and ".test." not in p.name
-    )
+    return sorted(p for p in BUILDER.rglob("*") if p.suffix in {".ts", ".tsx"} and ".test." not in p.name)
 
 
 def _format(offenders: list[str], advice: str) -> str:
@@ -102,8 +102,9 @@ class TestNoColourLiterals:
         offenders = [f"styles.css:{n}: {decl}" for n, decl in _colour_literals_in_css(css)]
 
         assert not offenders, _format(
-            offenders, "read a token instead (text on a coloured fill is --text-inverse); "
-            "if the colour is new, add it to tokens.css"
+            offenders,
+            "read a token instead (text on a coloured fill is --text-inverse); "
+            "if the colour is new, add it to tokens.css",
         )
 
     def test_template_styles_have_no_colour_literals(self):
@@ -151,6 +152,24 @@ class TestEveryTokenIsDefined:
                 offenders.append(f"{path.relative_to(ROOT)}:{_line(text, match.start())}: {name}")
 
         assert not offenders, _format(
-            offenders, "an undefined custom property silently drops the whole declaration; "
-            "point it at an existing token or define it in tokens.css"
+            offenders,
+            "an undefined custom property silently drops the whole declaration; "
+            "point it at an existing token or define it in tokens.css",
         )
+
+
+class TestEveryRootCarriesTheTheme:
+    def test_every_html_root_calls_theme_attrs(self):
+        """``data-theme`` and ``color-scheme`` are what the tokens resolve against,
+        so a root template without them is a page no theme or mode reaches.
+        Email is exempt for the same reason as above."""
+        roots, offenders = [], []
+        for path in _templates():
+            text = _blank_comments(path.read_text(), _TEMPLATE_COMMENT)
+            for match in re.finditer(r"<html\b[^>]*>", text):
+                roots.append(path)
+                if "{% theme_attrs %}" not in match.group(0):
+                    offenders.append(f"{path.relative_to(ROOT)}:{_line(text, match.start())}: {match.group(0)}")
+
+        assert roots, "found no <html> root at all; the scan is broken"
+        assert not offenders, _format(offenders, "add {% theme_attrs %} to the <html> tag (load common_extras)")
