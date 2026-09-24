@@ -148,6 +148,18 @@ jobs:
           # production-critical service without an explicit reason.
           flavor: |
             latest=false
+          # Default context (workflow) derives org.opencontainers.image.revision
+          # from the GitHub Actions context SHA (github.sha), not from the
+          # checked-out commit — the same github.sha the "Resolve" step above
+          # already works around because it is the wrong commit under
+          # workflow_run. Left alone, the label embedded in the image would
+          # name a different commit than the one actually built. Confirmed
+          # against metadata-action's own docs (context: git is the only other
+          # option, and it's documented as what overrides ref/sha — implying
+          # workflow context does not); labels: is the documented way to
+          # override one auto-generated label without losing the rest.
+          labels: |
+            org.opencontainers.image.revision=${{ steps.rev.outputs.sha }}
           # type=raw rather than type=sha: the latter reads github.sha, which
           # is the wrong commit under workflow_run (see "Resolve" above).
           tags: |
