@@ -39,7 +39,7 @@ media_library/_asset_detail.html states.
     {% endcomment %}
     {% if spec.unavailable %}
     <p class="text-xs mb-3 rounded-lg p-2.5"
-       style="color: var(--text-secondary); background: rgba(var(--warning-500-rgb), 0.1);">{{ spec.unavailable }}</p>
+       style="color: var(--text-secondary); background: color-mix(in srgb, var(--warning-500) 10%, transparent);">{{ spec.unavailable }}</p>
     {% endif %}
 
     {% if spec.bindable %}

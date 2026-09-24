@@ -1,0 +1,223 @@
+# CSS themes — roadmap
+
+## Context
+
+The goal is a real, swappable theme system: an operator or a user picks a
+**theme** (palette, fonts, radii — "BrightBean", "Slate", …) and, independently,
+a **mode** (light / dark / system). *System* is not a third palette: it picks
+light or dark **of the chosen theme**, following the OS.
+
+The codebase is closer to this than most. The inventory below is the state
+**before Phase 0**; what Phase 0 changed is listed under its heading.
+
+| Surface | State |
+|---|---|
+| Stylesheet | One Tailwind 4 bundle, `theme/static_src/src/styles.css` (~5000 lines) → `theme/static/css/dist/styles.css`, one `<link>` in `templates/base.html` |
+| Tokens | Three layers in one `:root` block, now `theme/static_src/src/tokens.css`: brand → semantic → component. The file's own header says "to rebrand, change only the brand tokens" |
+| Templates (154) | **0** Tailwind palette utilities (`bg-gray-500` …), **0** `dark:` variants; colour arrives through `var(--…)` — 363 refs in inline `style`, 1062 in the CSS |
+| Flow builder (React) | Tokens only (`var(--surface-2)`, `var(--flow-group-*)` …), no hex in `frontend/builder/src` |
+| Charts | `templates/analytics/flow_detail.html:105` reads tokens with `getComputedStyle` — theme-aware at load |
+| Preference precedent | `User.language` (`apps/accounts/models.py:69`), blank = "no preference", edited on `templates/accounts/preferences.html` |
+| CSP | `style-src 'self' 'unsafe-inline'`; `base.html` already emits a nonced `<style>` |
+
+What stood between that and a theme system (the first three items and the
+last were closed by Phase 0):
+
+- **Undefined tokens, broken today:** `--danger-500` / `--danger-500-rgb`
+  (`templates/flows/import_upload.html:27`, `templates/flows/template_gallery.html:44`)
+  and `--border-inner` (three rules in `styles.css`). The browser drops
+  the declaration silently.
+- **Literal colours outside the token block:** `color: white` / `#fff`
+  (six rules in `styles.css`), `--flow-ink: #3730A3` / `#0F766E`. Inside it
+  but not
+  mode-able: `--surface-0: #FFFFFF`, `--text-inverse`, `--primary-tint-border`,
+  `--color-illustration-card`, shadows hard-coding `rgba(23,20,18,…)`, and the
+  `--chevron-neutral*` data-URIs with the stroke baked in.
+- **RGB triplets:** `rgba(var(--x-rgb), a)` — 24 uses in the CSS, 6 in
+  templates. A triplet cannot follow a mode (see Principles).
+- **No `color-scheme`:** native controls, scrollbars and date pickers stay light.
+- **xyflow defaults:** `apps/flows/static/flows/builder/builder.css` ships
+  light `--xy-*` hex values.
+- **Dead white-label fields:** `Workspace.primary_color` / `secondary_color`
+  (`apps/workspaces/models.py:35-36`) are validated and saved, and never applied.
+- **Enforcement by comment only:** "no literal colour outside Layer 1" is a
+  convention in `styles.css`, not a test.
+
+## Principles
+
+1. **Two axes, two mechanisms.** Theme is a selector; mode is `color-scheme`.
+   Neither knows how the other was chosen.
+2. **Tokens are the only source of colour.** Component CSS, templates and the
+   React island reference semantic tokens; only theme files hold values.
+3. **One bundle.** Built-in themes are `@import`ed into `styles.css`. No
+   per-theme build, no extra request, no CSP change.
+4. **Mode needs no JavaScript.** *System* is `color-scheme: light dark`; the
+   browser resolves it before first paint. No anti-flash script, no
+   duplicated `@media (prefers-color-scheme)` blocks.
+5. **Every phase is mergeable on its own** and leaves the product working.
+6. **Guards, not conventions.** Each rule that matters gets a test that fails
+   with a message naming the fix.
+
+## Architecture
+
+```html
+<html data-theme="brightbean" style="color-scheme: light dark">
+```
+
+```css
+/* theme/static_src/src/themes/brightbean.css */
+[data-theme="brightbean"] {
+  /* colour: both branches, resolved by the inherited color-scheme */
+  --surface-0:    light-dark(#FFFFFF, #1C1917);
+  --text-primary: light-dark(#1C1917, #F5F5F4);
+  --shadow-color: light-dark(rgb(23 20 18 / 8%), rgb(0 0 0 / 40%));
+  /* non-colour: theme-only, no mode */
+  --brand-font-display: Georgia, 'Times New Roman', serif;
+  --radius-2xl: 1rem;
+}
+```
+
+| Mode chosen | `color-scheme` on `<html>` | Result |
+|---|---|---|
+| light | `light` | left branch of every `light-dark()` |
+| dark | `dark` | right branch |
+| system | `light dark` | the OS preference, live |
+
+- `tokens.css` keeps the token **names** and semantic wiring (Layer 2 →
+  Layer 1); a theme file only supplies Layer 1 values (and may override a
+  Layer 2 mapping). The default theme also matches `:root`, so a page without
+  `data-theme` still renders.
+- Alpha washes are `color-mix(in srgb, var(--x) a%, transparent)` (done in
+  Phase 0). That is what lets a `light-dark()` colour carry alpha.
+- Shadows compose from `--shadow-color` (done in Phase 0).
+- Select chevrons (`--chevron-neutral*`) stay data-URIs in `tokens.css` for
+  now: `mask-image` cannot be used on a `<select>` (it masks the whole
+  control), and `light-dark()` only switches colours, not `url()`s. Phase 2
+  solves them, most likely with a wrapper pseudo-element masked by the SVG
+  and painted `currentColor`.
+- Python side: `apps/common/themes.py` holds the registry (slug, lazy label,
+  supported modes), the single source for model choices, the form and tests.
+  A context processor resolves `THEME` and `COLOR_SCHEME`; `base.html` prints
+  them.
+
+Browser floor: `light-dark()` and `color-mix()` are Baseline 2024 (Chrome 123,
+Safari 17.5, Firefox 120). A custom property accepts any value, so an older
+browser keeps `light-dark(…)` and the *using* property becomes invalid at
+computed-value time (transparent text, no background). A plain `:root`
+fallback would not help, because the theme rule overrides it. Until the
+support floor is agreed, the fix is an `@supports not (color: light-dark(#000,
+#fff))` block that restates the light values.
+
+## Roadmap
+
+```
+Phase 0 hygiene ──► Phase 1 mechanism ──► Phase 2 dark ──► Phase 3 second theme
+                                                   └──► Phase 4 selection levels ─► Phase 5 third-party themes
+```
+
+### Phase 0 — hygiene ✅ done
+
+- `--danger-*` → `--error-*`, `--border-inner` → `--divider`. These two were
+  the only *visible* changes: the declarations had been silently dropped.
+- Literal colours → tokens: `white`/`#fff` → `--text-on-fill` (text on a
+  saturated fill, white in every mode; `--text-inverse` is kept for inverted
+  neutral surfaces, which flip in dark mode); `--flow-ink` →
+  `--flow-group-*-ink`; shadows → `--shadow-color`.
+- All 30 `rgba(var(--*-rgb))` uses → `color-mix`; the 12 triplet tokens are
+  gone; `--scrim` replaces `--scrim-rgb`.
+- `theme/static_src/src/tokens.css` holds every value; `styles.css` imports it.
+- **Guard:** `tests/test_theme_tokens.py` — no colour literal (hex, `%23`
+  hex in data-URIs, colour functions, all 148 named colours in any case) in
+  `styles.css`, template `style` attributes and `<style>`/`<script>` blocks
+  (email exempt) or builder source; every `var(--x)` resolves to a definition.
+  The chart's hex fallbacks in `analytics/flow_detail.html` are gone.
+- Deferred to Phase 2: select chevrons (see Architecture).
+
+Note: Lightning CSS (inside the Tailwind build) emits an opaque, pre-`color-mix`
+fallback before each `color-mix` rule. Tailwind 4's own browser floor (Safari
+16.4, Chrome 111, Firefox 128) always has `color-mix`, so the fallback never
+applies in a supported browser.
+
+### Phase 1 — the mechanism (still one theme, light only)
+
+- `apps/common/themes.py` registry; `settings.THEME_DEFAULT`,
+  `settings.COLOR_MODE_DEFAULT`.
+- `User.theme`, `User.color_mode` (blank = default), one migration, same shape
+  as `language`.
+- `apps/common/context_processors.theme_context` → `THEME`, `COLOR_SCHEME`;
+  anonymous pages get the instance defaults.
+- `base.html`: `data-theme` + `color-scheme` on `<html>`.
+- Preferences: two selects beside Language; the dark and system options are
+  hidden while the theme's registry entry lists only `light`.
+
+Done when: preference round-trips, `<html>` attributes render on every shell
+page (extend `TestContentSecurityPolicy`-style shell sweep). Size: ~1 day.
+
+### Phase 2 — dark mode for BrightBean
+
+- Rewrite Layer-1/2 colour tokens as `light-dark()`; add `dark` to the
+  registry entry.
+- Builder: map `--xy-*` onto our tokens after `builder.css`.
+- Charts: `templates/analytics/flow_detail.html` reads tokens with
+  `getPropertyValue`, which returns a custom property's *unresolved* value, so
+  once tokens hold `light-dark(…)` Chart.js would receive that string. Resolve
+  through a probe element (`probe.style.color = 'var(--x)'` →
+  `getComputedStyle(probe).color`), and re-render on
+  `matchMedia('(prefers-color-scheme: dark)').change`.
+- Select chevrons: see Architecture.
+- Visual pass over 154 templates, auth pages, the builder canvas, error pages.
+  This is the expensive part; do it app by app, like the i18n rollout.
+
+Done when: every shell page is legible in dark at WCAG AA for text tokens
+(automate contrast of `--text-*` on `--surface-*` pairs in the guard).
+Size: 2–4 days, mostly review.
+
+### Phase 3 — a second theme
+
+- One more `themes/<slug>.css` (e.g. a cool neutral "Slate").
+- **Contract test:** a theme overrides only existing token names; every
+  colour token has two `light-dark` branches if the theme declares dark;
+  registry and file set match.
+
+Done when: switching theme changes palette and fonts with no template edits.
+This phase is the proof the system is swappable. Size: ~1 day.
+
+### Phase 4 — who picks the theme (decision point)
+
+Cascade: instance default → workspace → user. Open questions: may a user
+override a workspace brand theme; is mode ever enforced above the user.
+Revives `Workspace.primary_color`: a nonced `<style>` sets
+`--brand-500`, and the ramp (50…900) is derived with
+`color-mix(in oklch, var(--brand-500) n%, white|black)`. Contrast of the
+derived `--primary` against `--text-on-fill` must be checked at save time.
+Size: ~1–2 days after the decision.
+
+### Phase 5 — third-party themes (decision point)
+
+A theme outside the repo: a static CSS file loaded after the bundle,
+registered through `settings.THEMES`, validated by the Phase 3 contract test
+at startup (system check). Plus `docs/themes.md` — "how to author a theme".
+Only worth building if self-hosters ask for it.
+
+### Out of scope
+
+- **Email templates** (`templates/notifications/email/*`, `templates/members/email/*`):
+  mail clients don't support custom properties; email stays light with inline
+  hex.
+- **Django admin:** has its own dark mode.
+
+## Cross-cutting: the regression guard
+
+The Phase 0 guard is the backbone. Every later phase tightens it rather than
+adding a new one: Phase 2 adds the contrast check, Phase 3 the theme contract,
+Phase 5 runs the contract as a Django system check.
+
+## Verification (every phase)
+
+1. `npm run build:css` succeeds; the dist contains the expected
+   `[data-theme=…]` rules.
+2. `pytest tests/test_theme_tokens.py apps/common apps/accounts`.
+3. `make server`: switch theme and mode in Preferences; `<html>` attributes
+   change; *system* follows the OS toggle without reload.
+4. Open the flow builder and analytics charts in every theme × mode.
+5. Build the container image and repeat 3 against it.
