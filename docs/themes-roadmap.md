@@ -122,6 +122,8 @@ support floor is agreed, the fix is an `@supports not (color: light-dark(#000,
 ```
 Phase 0 hygiene ──► Phase 1 mechanism ──► Phase 2 dark ──► Phase 3 second theme
                                                    └──► Phase 4 selection levels ─► Phase 5 third-party themes
+
+Phase 6 Twenty compatibility study (independent; research only)
 ```
 
 ### Phase 0 — hygiene ✅ done
@@ -211,6 +213,24 @@ A theme outside the repo: a static CSS file loaded after the bundle,
 registered through `settings.THEMES`, validated by the Phase 3 contract test
 at startup (system check). Plus `docs/themes.md` — "how to author a theme".
 Only worth building if self-hosters ask for it.
+
+### Phase 6 — visual compatibility with Twenty CRM (study)
+
+BrightBean Chat and Twenty CRM ship together as customer-facing frontends
+(Zirek). The question for this phase: can they look like parts of one brand?
+Research only: no code here, and no work on a Twenty theme, which would be a
+separate project of a different scale.
+
+- Compare the two design systems axis by axis: token architecture, neutrals,
+  accent, status colours, fonts, radii, spacing scale and density, shadows,
+  icons, the shape of key components (button, input, badge, table, modal),
+  and light/dark.
+- For each axis, record one outcome: already matches / can be aligned by
+  tokens on our side / diverges.
+- Deliverable: the compatibility table and a short verdict (yes / partly /
+  no) naming exactly what stands in the way.
+
+Size: ~1 day.
 
 ### Out of scope
 
