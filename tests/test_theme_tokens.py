@@ -74,13 +74,17 @@ NAMED_COLOURS = frozenset(
 _NAMED = "(?:" + "|".join(sorted(NAMED_COLOURS, key=len, reverse=True)) + ")"
 #: ``%23`` is ``#`` inside a url-encoded data-URI (an inline SVG's ``stroke='%23fff'``).
 #: CSS keywords and function names are case-insensitive, hence ``re.I``.
+#: Every CSS colour function. ``color()`` is the wide-gamut one (``color(display-p3 1 0 0)``);
+#: ``color-mix()`` is not in the list, it only mixes tokens.
+_FUNCTIONS = r"(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)"
 _COLOUR = re.compile(
     r"(?:#|%23)[0-9a-f]{3,8}\b"
-    r"|\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch)\(\s*[\d.]"
+    rf"|\b{_FUNCTIONS}\(\s*[\w.]"
     rf"|(?<![-\w]){_NAMED}(?![-\w])",
     re.I,
 )
-_STYLE_ATTR = re.compile(r"""\bstyle=(?P<q>["'])(?P<body>.*?)(?P=q)""", re.DOTALL)
+#: HTML attribute names are case-insensitive and may have whitespace around ``=``.
+_STYLE_ATTR = re.compile(r"""\bstyle\s*=\s*(?P<q>["'])(?P<body>.*?)(?P=q)""", re.DOTALL | re.I)
 _STYLE_BLOCK = re.compile(r"<style[^>]*>(?P<body>.*?)</style>", re.DOTALL)
 _SCRIPT_BLOCK = re.compile(r"<script[^>]*>(?P<body>.*?)</script>", re.DOTALL)
 _TEMPLATE_COMMENT = re.compile(r"{%\s*comment\s*%}.*?{%\s*endcomment\s*%}|{#.*?#}", re.DOTALL)
@@ -89,7 +93,9 @@ _TEMPLATE_COMMENT = re.compile(r"{%\s*comment\s*%}.*?{%\s*endcomment\s*%}|{#.*?#
 #: shorter, bogus name.
 _VAR_REF = re.compile(r"var\(\s*(--[\w-]+)(?![\w-]|\{\{)|token\(\s*\"(--[\w-]+)\"")
 _VAR_DEF = re.compile(r"(--[\w-]+)\s*:")
-_JS_COLOUR = re.compile(rf"""["'`](?:#[0-9a-f]{{3,8}}|rgba?\([^"'`]*|{_NAMED})["'`]""", re.I)
+#: A string literal whose whole value is a colour: the same hex, functions and names as
+#: :data:`_COLOUR`.
+_JS_COLOUR = re.compile(rf"""["'`](?:#[0-9a-f]{{3,8}}|{_FUNCTIONS}\([^"'`]*|{_NAMED})["'`]""", re.I)
 
 
 def _line(text: str, offset: int) -> int:
@@ -132,7 +138,7 @@ class TestNoColourLiterals:
 
         assert not offenders, _format(
             offenders,
-            "read a token instead (text on a coloured fill is --text-inverse); "
+            "read a token instead (text on a coloured fill is --text-on-fill); "
             "if the colour is new, add it to tokens.css",
         )
 
