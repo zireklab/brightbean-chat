@@ -113,12 +113,24 @@ jobs:
         # `apt-get install gettext` resolves to whatever build apt currently
         # serves. imagetools (not `docker manifest`) because the pushed tag is
         # a multi-arch manifest list.
+        #
+        # A nonzero exit is not by itself "absent": auth failures, a GHCR
+        # outage, rate limiting and timeouts all exit nonzero too, and
+        # treating those the same as "absent" would proceed to rebuild and
+        # could overwrite a real tag once the registry recovers mid-build.
+        # Only a confirmed "not found" — verified against a real 404 and
+        # against a real network failure, whose messages do not overlap —
+        # means safe to proceed; anything else fails the job instead of
+        # guessing.
         run: |
-          if docker buildx imagetools inspect "ghcr.io/${{ github.repository }}:sha-${{ steps.rev.outputs.short }}" >/dev/null 2>&1; then
+          if out=$(docker buildx imagetools inspect "ghcr.io/${{ github.repository }}:sha-${{ steps.rev.outputs.short }}" 2>&1); then
             echo "::notice::sha-${{ steps.rev.outputs.short }} is already published; skipping the build"
             echo "found=true" >> "$GITHUB_OUTPUT"
-          else
+          elif grep -q "not found" <<< "$out"; then
             echo "found=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::could not confirm sha-${{ steps.rev.outputs.short }} is unpublished: $out"
+            exit 1
           fi
 
       - name: Image metadata
