@@ -741,3 +741,51 @@ jobs:
           echo "${COUNT} commit(s) in range."
 
           gitleaks detect --source . --redact --verbose --no-banner --log-opts="${RANGE}"
+
+  ocr-review:
+    name: Code review (OpenCodeReview)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # Only meaningful against a base to diff — nothing to review on a bare push.
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Install OpenCodeReview
+        run: npm install -g @alibaba-group/open-code-review
+
+      - name: Configure OpenCodeReview
+        # gpt-4.1: the model that actually completed a review in testing
+        # (gpt-5.6-luna 400s regardless of name; gpt-5.5 works but is ~4x slower).
+        env:
+          OCR_API_KEY: ${{ secrets.OCR_OPENAI_API_KEY }}
+        run: |
+          ocr config set provider openai
+          ocr config set providers.openai.model gpt-4.1
+          ocr config set providers.openai.api_key "$OCR_API_KEY"
+
+      - name: Run review
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: ocr review --audience agent --from "$BASE_SHA" --to "$HEAD_SHA" > ocr-review.md
+
+      - name: Post review as PR comment
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          [ -s ocr-review.md ] || echo "_(OpenCodeReview produced no output)_" > ocr-review.md
+          gh pr comment "${{ github.event.pull_request.number }}" --body-file ocr-review.md
