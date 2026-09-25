@@ -778,4 +778,9 @@ jobs:
           llm_auth_token: ${{ secrets.OCR_OPENAI_API_KEY }}
           llm_model: gpt-4.1
           llm_use_anthropic: "false"
+          # The action's default extra_body disables Anthropic "thinking" —
+          # a field OpenAI's Chat Completions API doesn't recognize and
+          # rejects with a hard 400. We're on the openai protocol, so there's
+          # nothing to disable; send an empty body instead.
+          llm_extra_body: "{}"
           github_token: ${{ steps.app-token.outputs.token }}
