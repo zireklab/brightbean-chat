@@ -757,6 +757,17 @@ jobs:
       contents: read
       pull-requests: write
     steps:
+      # A GitHub App token instead of a personal PAT: comments post under the
+      # app's own bot identity (e.g. "OpenCodeReview Bot"), scoped to exactly
+      # Pull requests: read & write + Contents: read + Metadata: read, and
+      # revocable independently of any one person's account.
+      - name: Mint app token
+        id: app-token
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v3.2.0
+        with:
+          app-id: ${{ secrets.OCR_APP_ID }}
+          private-key: ${{ secrets.OCR_APP_PRIVATE_KEY }}
+
       # The action does its own checkout, Node setup, install, config and
       # posting (inline comments via the PR Review API, with a sticky-summary
       # fallback) — see alibaba/open-code-review's docs/integrations/ci.md.
@@ -767,7 +778,4 @@ jobs:
           llm_auth_token: ${{ secrets.OCR_OPENAI_API_KEY }}
           llm_model: gpt-4.1
           llm_use_anthropic: "false"
-          # Posts as this token's own account instead of github-actions[bot].
-          # Needs a fine-grained PAT scoped to this repo only, with
-          # Pull requests: read & write and Contents: read.
-          github_token: ${{ secrets.OCR_GITHUB_PAT }}
+          github_token: ${{ steps.app-token.outputs.token }}
