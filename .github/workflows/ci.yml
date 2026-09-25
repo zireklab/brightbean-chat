@@ -741,3 +741,46 @@ jobs:
           echo "${COUNT} commit(s) in range."
 
           gitleaks detect --source . --redact --verbose --no-banner --log-opts="${RANGE}"
+
+  ocr-review:
+    name: Code review (OpenCodeReview)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # `pull_request`, not `_target`: GitHub withholds repo secrets from
+    # `pull_request` runs on a fork PR regardless of the approval gate below,
+    # so a stranger's PR can never see OCR_OPENAI_API_KEY or OCR_GITHUB_PAT —
+    # it just reviews nothing. The upstream action defaults to
+    # `pull_request_target` for exactly the opposite reason (secrets on forks
+    # too); we trade that reach away on a public repo on purpose.
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      # A GitHub App token instead of a personal PAT: comments post under the
+      # app's own bot identity (e.g. "OpenCodeReview Bot"), scoped to exactly
+      # Pull requests: read & write + Contents: read + Metadata: read, and
+      # revocable independently of any one person's account.
+      - name: Mint app token
+        id: app-token
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v3.2.0
+        with:
+          app-id: ${{ secrets.OCR_APP_ID }}
+          private-key: ${{ secrets.OCR_APP_PRIVATE_KEY }}
+
+      # The action does its own checkout, Node setup, install, config and
+      # posting (inline comments via the PR Review API, with a sticky-summary
+      # fallback) — see alibaba/open-code-review's docs/integrations/ci.md.
+      - name: Run OpenCodeReview
+        uses: alibaba/open-code-review@bccbc15f785269400735d5255540c231e6c02b6d # v1.12.9
+        with:
+          llm_url: https://api.openai.com/v1/chat/completions
+          llm_auth_token: ${{ secrets.OCR_OPENAI_API_KEY }}
+          llm_model: gpt-4.1
+          llm_use_anthropic: "false"
+          # The action's default extra_body disables Anthropic "thinking" —
+          # a field OpenAI's Chat Completions API doesn't recognize and
+          # rejects with a hard 400. We're on the openai protocol, so there's
+          # nothing to disable; send an empty body instead.
+          llm_extra_body: "{}"
+          github_token: ${{ steps.app-token.outputs.token }}
