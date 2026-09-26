@@ -28,8 +28,11 @@ import pytest
 from tests.test_theme_tokens import _COMMENT, _VAR_DEF, TOKENS, _blank_comments
 
 #: role -> minimum contrast ratio (WCAG 2.x AA). "text" is normal-size text
-#: (1.4.3); "non-text" is a UI component / graphical object boundary (1.4.11).
-_MIN_RATIO = {"text": 4.5, "non-text": 3.0}
+#: (1.4.3). Only role PAIRS ever uses today — add "non-text": 3.0 (UI
+#: component / graphical object boundary, 1.4.11) back when a pair actually
+#: needs it, not before: an entry with no PAIRS row exercising it is a
+#: reviewer trap, not documentation (found in review of PR #7).
+_MIN_RATIO = {"text": 4.5}
 
 #: (foreground token, background token, role). Scoped to exactly what Phase
 #: 2's "Done when" names — ``--text-*`` on ``--surface-*`` — not every token
@@ -188,6 +191,36 @@ class TestContrastMath:
         tokens = {"--text": "var(--neutral-900)", "--neutral-900": "light-dark(#1C1917, #F5F5F4)"}
         assert _resolve("--text", tokens, branch=0) == "#1C1917"
         assert _resolve("--text", tokens, branch=1) == "#F5F5F4"
+
+
+#: The known-failing pairs from the PAIRS comment above, pinned to their
+#: current ratio. This repo has GitHub issues disabled, so there's no
+#: tracking-issue link to lean on as the forcing function (found in review
+#: of PR #7) — a plain ``pytest.approx`` pin is the substitute: it fails
+#: either way a token changes, not just when it gets worse, so nobody can
+#: quietly drift these further or quietly fix them without updating this
+#: test and docs/themes-roadmap.md's Phase 2a note together.
+_KNOWN_LIGHT_MODE_GAP_RATIOS: list[tuple[str, str, float]] = [
+    ("--text-on-fill", "--primary", 2.80),
+    ("--text-on-fill", "--error-500", 3.76),
+    ("--border-strong", "--surface-0", 1.26),
+    ("--text-tertiary", "--surface-page", 4.44),
+    ("--text-tertiary", "--surface-2", 4.40),
+]
+
+
+class TestKnownLightModeGaps:
+    @pytest.mark.parametrize(("fg", "bg", "expected_ratio"), _KNOWN_LIGHT_MODE_GAP_RATIOS)
+    def test_ratio_is_pinned(self, fg, bg, expected_ratio):
+        tokens = _parse_tokens()
+        ratio = _contrast_ratio(_resolve(fg, tokens, branch=0), _resolve(bg, tokens, branch=0))
+        assert ratio == pytest.approx(expected_ratio, abs=0.01), (
+            f"{fg} on {bg} moved from the pinned {expected_ratio}:1 to {ratio:.2f}:1 — a real "
+            "change either way, not a flake. If it now clears 4.5:1 (or 3.0:1 for --border-strong), "
+            "wire it into PAIRS/_PROSE_TEXT properly and delete it from here instead of just "
+            "updating the number; if it's still failing, update the pin and check that "
+            "docs/themes-roadmap.md's Phase 2a note still matches these ratios."
+        )
 
 
 class TestTextSurfaceContrast:
