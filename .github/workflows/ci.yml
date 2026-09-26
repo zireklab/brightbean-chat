@@ -20,8 +20,12 @@ permissions:
   contents: read
 
 # Cancel in-progress runs when a new commit is pushed to the same branch/PR.
+# pr_number is appended (empty string for every trigger except a targeted
+# ocr-review re-run) so two manual re-runs for different PRs, both dispatched
+# against the same ref, don't cancel each other — OpenCodeReview's own review
+# of the PR that added pr_number caught this sharing the plain ref-only group.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.pr_number }}
   cancel-in-progress: true
 
 jobs:
@@ -29,6 +33,12 @@ jobs:
     name: Lint (ruff)
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    # A workflow_dispatch that names pr_number means "just re-run the code
+    # review" (see ocr-review below) — skip the full suite rather than
+    # silently running it too, which is what actually happened before this
+    # condition existed (OpenCodeReview found it reviewing the PR that added
+    # pr_number in the first place). Every other trigger is unaffected.
+    if: github.event_name != 'workflow_dispatch' || inputs.pr_number == ''
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -58,6 +68,8 @@ jobs:
     name: Type check (mypy)
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    # See lint's comment on this condition.
+    if: github.event_name != 'workflow_dispatch' || inputs.pr_number == ''
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -107,6 +119,8 @@ jobs:
     name: Test (pytest)
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # See lint's comment on this condition.
+    if: github.event_name != 'workflow_dispatch' || inputs.pr_number == ''
     services:
       postgres:
         # Pulled via AWS's public mirror of Docker Hub official images to avoid
@@ -241,6 +255,8 @@ jobs:
     name: Dependency audit + frontend build
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    # See lint's comment on this condition.
+    if: github.event_name != 'workflow_dispatch' || inputs.pr_number == ''
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -420,6 +436,9 @@ jobs:
     # A failing lint/typecheck/test check still blocks the PR on its own, so the
     # gate bought no safety — only latency. Starting at t=0 alongside `test`
     # takes CI wall clock from ~4m10s to ~2m20s.
+    #
+    # See lint's comment for the if: below, a different axis of gating.
+    if: github.event_name != 'workflow_dispatch' || inputs.pr_number == ''
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -666,6 +685,8 @@ jobs:
     name: Secret scan (gitleaks)
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    # See lint's comment on this condition.
+    if: github.event_name != 'workflow_dispatch' || inputs.pr_number == ''
     # We invoke the gitleaks binary directly rather than using
     # gitleaks/gitleaks-action, because that action now requires a paid
     # license for GitHub organizations. The binary itself remains free
@@ -771,6 +792,25 @@ jobs:
       contents: read
       pull-requests: write
     steps:
+      # workflow_dispatch is started by a trusted collaborator, but GitHub
+      # does not withhold secrets from it based on what pr_number names the
+      # way it does for the automatic pull_request trigger above — this run
+      # would carry OCR_OPENAI_API_KEY and the App's private key regardless
+      # of whether that PR happens to be from a fork. OpenCodeReview's own
+      # review of the PR that added pr_number caught this: refuse before
+      # minting a token or spending an LLM call on unreviewed fork content.
+      - name: Refuse a fork PR on manual re-run
+        if: github.event_name == 'workflow_dispatch' && inputs.pr_number != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          is_fork="$(gh pr view "${{ inputs.pr_number }}" --repo "${{ github.repository }}" --json isCrossRepository --jq '.isCrossRepository')"
+          if [ "${is_fork}" != "false" ]; then
+            echo "::error::PR #${{ inputs.pr_number }} is from a fork; a workflow_dispatch run always carries repo secrets regardless of pr_number, unlike the automatic pull_request trigger above. Refusing to review it this way."
+            exit 1
+          fi
+          echo "PR #${{ inputs.pr_number }} is not a fork PR — proceeding."
+
       # A GitHub App token instead of a personal PAT: comments post under the
       # app's own bot identity (e.g. "OpenCodeReview Bot"), scoped to exactly
       # Pull requests: read & write + Contents: read + Metadata: read, and
