@@ -7,6 +7,13 @@ on:
     branches: [main]
   # Lets the full suite be exercised on a feature branch before a PR exists.
   workflow_dispatch:
+    inputs:
+      # Unrelated to the full-suite use case above; only the ocr-review job
+      # reads this, to re-run just the code review without pushing an empty
+      # commit. Left blank, a dispatch behaves exactly as it did before.
+      pr_number:
+        description: "PR number to re-run the code review on (leave blank for a normal full-suite dispatch)"
+        required: false
 
 # Principle of least privilege: default to read-only for every job.
 permissions:
@@ -752,7 +759,14 @@ jobs:
     # it just reviews nothing. The upstream action defaults to
     # `pull_request_target` for exactly the opposite reason (secrets on forks
     # too); we trade that reach away on a public repo on purpose.
-    if: github.event_name == 'pull_request'
+    #
+    # Restricted to `opened`, not every push: each run is real OpenAI spend
+    # plus CI minutes, and re-reviewing on every `synchronize` adds up fast
+    # over a PR's life. Re-run on demand instead, via workflow_dispatch's
+    # pr_number input below — harmless to pass unconditionally on a normal
+    # pull_request run, where it's empty and the action falls back to the
+    # event payload as if omitted.
+    if: ${{ (github.event_name == 'pull_request' && github.event.action == 'opened') || (github.event_name == 'workflow_dispatch' && inputs.pr_number != '') }}
     permissions:
       contents: read
       pull-requests: write
@@ -763,7 +777,13 @@ jobs:
       # revocable independently of any one person's account.
       - name: Mint app token
         id: app-token
-        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v3.2.0
+        # v3.2.0, for real this time: the previous pin here (fee1f7d6...)
+        # carried this same "# v3.2.0" comment but the tags API says that
+        # commit is v2.2.2 — which happens to still work with app-id below
+        # (v2.2.2's only input), but is a full version behind what the
+        # comment claims and would break the moment anyone added client-id
+        # trusting the label.
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
           app-id: ${{ secrets.OCR_APP_ID }}
           private-key: ${{ secrets.OCR_APP_PRIVATE_KEY }}
@@ -774,13 +794,34 @@ jobs:
       - name: Run OpenCodeReview
         uses: alibaba/open-code-review@bccbc15f785269400735d5255540c231e6c02b6d # v1.12.9
         with:
-          llm_url: https://api.openai.com/v1/chat/completions
+          # /v1/responses, not /v1/chat/completions: gpt-5.6-luna rejects
+          # `tools` together with any `reasoning_effort` on chat/completions
+          # ("Function tools with reasoning_effort are not supported for
+          # gpt-5.6-luna in /v1/chat/completions. To use function tools, use
+          # /v1/responses or set reasoning_effort to 'none'.") — and this
+          # action's review flow always sends tools, so every run hit it
+          # regardless of reasoning_effort's value. Confirmed with a direct
+          # API call outside the action (see the ocr-ci-code-review memory).
+          llm_url: https://api.openai.com/v1/responses
+          # Ignored once llm_protocol is explicit (per its own description),
+          # so left out rather than kept as a stale, misleading "false".
+          llm_protocol: openai-responses
           llm_auth_token: ${{ secrets.OCR_OPENAI_API_KEY }}
-          llm_model: gpt-4.1
-          llm_use_anthropic: "false"
-          # The action's default extra_body disables Anthropic "thinking" —
-          # a field OpenAI's Chat Completions API doesn't recognize and
-          # rejects with a hard 400. We're on the openai protocol, so there's
-          # nothing to disable; send an empty body instead.
-          llm_extra_body: "{}"
+          # Codename in a repo variable, not hardcoded: switching models
+          # later is `gh variable set OCR_LLM_MODEL -R zireklab/brightbean-chat
+          # -b <model>`, not a file edit.
+          llm_model: ${{ vars.OCR_LLM_MODEL }}
+          # NOT llm_reasoning_effort: that input merges a *flat*
+          # reasoning_effort key — the chat/completions shape. /v1/responses
+          # rejects that flat key ("this parameter has moved to
+          # 'reasoning.effort'") and wants it nested instead; extra_body is a
+          # raw passthrough, so the correctly-nested field goes there. This
+          # also still has to override the action's default
+          # `{"thinking": {"type": "disabled"}}` — /v1/responses 400s on that
+          # too ("Unknown parameter: 'thinking'"), same as chat/completions
+          # did with the plain "{}" this replaces.
+          llm_extra_body: '{"reasoning": {"effort": "max"}}'
+          # Only the pull_request event carries this in its own payload;
+          # workflow_dispatch does not, so it has to come from the input.
+          pr_number: ${{ inputs.pr_number }}
           github_token: ${{ steps.app-token.outputs.token }}
