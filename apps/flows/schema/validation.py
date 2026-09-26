@@ -499,7 +499,9 @@ def _send_message_warnings(
         if not supported:
             yield _warn(
                 "capability_unsupported",
-                gettext("%(platform)s does not support %(label)s. They will be added to the end of the message as text instead.")
+                gettext(
+                    "%(platform)s does not support %(label)s. They will be added to the end of the message as text instead."
+                )
                 % {"platform": platform, "label": label},
                 node,
                 f"config.{key}",

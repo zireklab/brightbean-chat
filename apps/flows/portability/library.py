@@ -193,7 +193,9 @@ TEMPLATE_COPY: dict[str, TemplateCopy] = {
     "follow-up-an-unanswered-enquiry": TemplateCopy(
         category=_("Convert"),
         title=_("Follow up an enquiry that went quiet"),
-        summary=_("Chases an enquiry that went quiet twice, spaced out, then tags it so you can see who never replied."),
+        summary=_(
+            "Chases an enquiry that went quiet twice, spaced out, then tags it so you can see who never replied."
+        ),
     ),
     "hand-over-to-a-person": TemplateCopy(
         category=_("Engage"),
