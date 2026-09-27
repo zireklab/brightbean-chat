@@ -804,7 +804,20 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && inputs.pr_number != ''
         env:
           GH_TOKEN: ${{ github.token }}
+          # A workflow_dispatch input is text a collaborator typed, not a
+          # trusted literal — embedding ${{ inputs.pr_number }} straight into
+          # this script (as an earlier version of this step did) means its
+          # value is spliced into the shell source before bash ever sees it:
+          # quotes or a command substitution in it would run as this job's
+          # own commands, with GH_TOKEN and, a step later, the App/OpenAI
+          # secrets in scope (found in review of PR #9's own commit adding
+          # this). Passed through env and read as a shell variable instead,
+          # plus a numeric check, so it's always data, never script.
+          PR_NUMBER: ${{ inputs.pr_number }}
         run: |
+          case "${PR_NUMBER}" in
+            (''|*[!0-9]*) echo "::error::pr_number must be numeric, got '${PR_NUMBER}'"; exit 1 ;;
+          esac
           # head_sha/base_ref too, while we're already asking the API for
           # this PR: on a pull_request run the action reads both straight off
           # the event payload, but workflow_dispatch carries no such payload,
@@ -815,15 +828,15 @@ jobs:
           # falls back to an empty HEAD_SHA too, and it silently reports
           # "no items were selected" after 0 files and ~60ms — a real review
           # never runs, and the job still exits success. Pass them explicitly.
-          pr_json="$(gh pr view "${{ inputs.pr_number }}" --repo "${{ github.repository }}" --json isCrossRepository,headRefOid,baseRefName)"
+          pr_json="$(gh pr view "${PR_NUMBER}" --repo "${GITHUB_REPOSITORY}" --json isCrossRepository,headRefOid,baseRefName)"
           is_fork="$(jq -r '.isCrossRepository' <<< "${pr_json}")"
           if [ "${is_fork}" != "false" ]; then
-            echo "::error::PR #${{ inputs.pr_number }} is from a fork; a workflow_dispatch run always carries repo secrets regardless of pr_number, unlike the automatic pull_request trigger above. Refusing to review it this way."
+            echo "::error::PR #${PR_NUMBER} is from a fork; a workflow_dispatch run always carries repo secrets regardless of pr_number, unlike the automatic pull_request trigger above. Refusing to review it this way."
             exit 1
           fi
           echo "head_sha=$(jq -r '.headRefOid' <<< "${pr_json}")" >> "$GITHUB_OUTPUT"
           echo "base_ref=$(jq -r '.baseRefName' <<< "${pr_json}")" >> "$GITHUB_OUTPUT"
-          echo "PR #${{ inputs.pr_number }} is not a fork PR — proceeding."
+          echo "PR #${PR_NUMBER} is not a fork PR — proceeding."
 
       # A GitHub App token instead of a personal PAT: comments post under the
       # app's own bot identity (e.g. "OpenCodeReview Bot"), scoped to exactly
