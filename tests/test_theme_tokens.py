@@ -33,6 +33,10 @@ from django.conf import settings
 
 ROOT = Path(settings.BASE_DIR)
 CSS_DIR = ROOT / "theme" / "static_src" / "src"
+#: Shared with tests/test_theme_contrast.py: TOKENS, _COMMENT, _VAR_DEF and
+#: _blank_comments below are imported there rather than reimplemented (found
+#: in review of PR #7 — nothing here said so before). Renaming or changing
+#: what any of them do is a cross-file break, not just a local one.
 TOKENS = CSS_DIR / "tokens.css"
 STYLES = CSS_DIR / "styles.css"
 TEMPLATES = ROOT / "templates"
