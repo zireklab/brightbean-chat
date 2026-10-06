@@ -43,7 +43,7 @@ import django  # noqa: E402
 
 django.setup()
 
-from tests.test_theme_contrast import PAIRS, _contrast_ratio, _parse_tokens  # noqa: E402
+from tests.test_theme_contrast import _CONTENT_SURFACES, PAIRS, _contrast_ratio, _parse_tokens  # noqa: E402
 
 THEME_CSS = ROOT / "theme" / "static_src" / "src" / "themes" / "brightbean.css"
 
@@ -136,8 +136,18 @@ def oklch_to_hex(lightness: float, chroma: float, hue_deg: float) -> str:
 #: someone else's colour, not ours to invert; --text-on-fill sits on a
 #: saturated fill that already supplies its own contrast regardless of mode
 #: (that's the whole point of the token, per tokens.css's own comment).
+#:
+#: --neutral-950 and --scrim are exempt for a different reason: they're not
+#: lightness-coded *content*, they're a function — a shadow's dark cast
+#: (--shadow-color: var(--neutral-950)) and a dimming overlay
+#: (.sidebar-backdrop's 30% scrim). Inverting them flipped a shadow into a
+#: pale glow and a "dim the page behind this modal" overlay into one that
+#: brightens it — the opposite of what each is for in every mode (found by
+#: ai-zirek[bot], PR #12 review). Leaving them out of the generated file
+#: means tokens.css's own plain literal keeps applying unchanged, same as
+#: --text-on-fill already does.
 _EXEMPT_PREFIXES = ("--platform-",)
-_EXEMPT_NAMES = frozenset({"--text-on-fill"})
+_EXEMPT_NAMES = frozenset({"--text-on-fill", "--neutral-950", "--scrim"})
 
 #: "A small lift so the darkest surface isn't pure black" (roadmap, Phase 2
 #: Architecture note) — applied to *every* token's inversion, not just the
@@ -151,8 +161,21 @@ _EXEMPT_NAMES = frozenset({"--text-on-fill"})
 #: Phase 2d.
 FLOOR_L = 0.15
 
-#: WCAG 2.x AA, matching tests/test_theme_contrast.py's own "text" role.
-MIN_CONTRAST = 4.5
+#: WCAG 2.x AA, matching tests/test_theme_contrast.py's own _MIN_RATIO.
+MIN_CONTRAST = {"text": 4.5, "non-text": 3.0}
+
+#: --surface-0/--surface-page/--surface-1(=neutral-50)/--surface-2
+#: (=neutral-100) — test_theme_contrast._CONTENT_SURFACES. Deliberately
+#: near-identical in light mode (surface-1/2 are a few percent duller than
+#: surface-0, just enough to read as a sunken inset). Flooring each one
+#: independently collapsed all four to the exact same dark hex: their
+#: original chroma is tiny (they're all near-white), so once each hit
+#: FLOOR_L on its own, the residual hue difference rounds away to nothing
+#: (ai-zirek[bot], PR #12 review). Keeping their light-mode rank — surface-0
+#: stays the brightest of the four, surface-2 the dullest — and staggering
+#: by a fixed step off the floor is what a hand-drawn 4-step elevation ramp
+#: would do; that's what independent per-token flooring can't give it.
+_SURFACE_ELEVATION_STEP = 0.02
 
 _HEX_LITERAL = re.compile(r"^#[0-9a-fA-F]{6}$")
 _VAR_CALL = re.compile(r"var\(\s*(--[\w-]+)\s*\)")
@@ -172,32 +195,48 @@ def _naive_dark(hex_colour: str) -> tuple[float, float, float]:
     return max(1 - lightness, FLOOR_L), c, h
 
 
-def _solve_lightness(l_start: float, c: float, h: float, bg_hexes: list[str]) -> float:
-    """Bisect ``L`` toward white until the colour clears MIN_CONTRAST against
+def _solve_lightness(l_start: float, c: float, h: float, bg_hexes: list[str], min_contrast: float) -> float:
+    """Bisect ``L`` toward white until the colour clears ``min_contrast`` against
     every one of ``bg_hexes`` — the concrete shape of "lightness is solved
     against the same pairs 2a's guard checks." Only ever moves lighter: these
-    are dark-mode text tokens sitting on dark-mode surfaces, so the fix for
-    "not enough contrast" is "lighter text," never "darker.\""""
+    are dark-mode foreground tokens sitting on dark-mode surfaces, so the fix
+    for "not enough contrast" is "lighter," never "darker.\""""
 
     def worst_ratio(lightness: float) -> float:
         fg_hex = oklch_to_hex(lightness, c, h)
         return min(_contrast_ratio(fg_hex, bg) for bg in bg_hexes)
 
-    if worst_ratio(l_start) >= MIN_CONTRAST:
+    if worst_ratio(l_start) >= min_contrast:
         return l_start
-    if worst_ratio(1.0) < MIN_CONTRAST:
+    if worst_ratio(1.0) < min_contrast:
         raise ValueError(
-            f"can't reach {MIN_CONTRAST}:1 even at L=1 ({oklch_to_hex(1.0, c, h)}) "
+            f"can't reach {min_contrast}:1 even at L=1 ({oklch_to_hex(1.0, c, h)}) "
             f"against {bg_hexes} — the floor or a background needs a human look, not more bisecting"
         )
     lo, hi = l_start, 1.0
     for _ in range(40):
         mid = (lo + hi) / 2
-        if worst_ratio(mid) >= MIN_CONTRAST:
+        if worst_ratio(mid) >= min_contrast:
             hi = mid
         else:
             lo = mid
     return hi
+
+
+def _stagger_surface_elevation(
+    literal_names: list[str],
+    oklch_by_name: dict[str, tuple[float, float, float]],
+    dark_hex_by_name: dict[str, str],
+) -> None:
+    """Give each surface-elevation literal its own dark ``L``, spaced by
+    ``_SURFACE_ELEVATION_STEP``, in the same brightest-to-dullest order they
+    have in light mode — instead of each independently collapsing to the
+    same FLOOR_L."""
+    ordered = sorted(literal_names, key=lambda n: oklch_by_name[n][0], reverse=True)
+    for rank, name in enumerate(ordered):
+        _, c, h = oklch_by_name[name]
+        step_l = FLOOR_L + (len(ordered) - 1 - rank) * _SURFACE_ELEVATION_STEP
+        dark_hex_by_name[name] = oklch_to_hex(step_l, c, h)
 
 
 def derive() -> dict[str, tuple[str, str]]:
@@ -216,22 +255,33 @@ def derive() -> dict[str, tuple[str, str]]:
         l_dark, c, h = _naive_dark(value)
         dark_hex_by_name[name] = oklch_to_hex(l_dark, c, h)
 
-    # Solve pass: every PAIRS "text" row's foreground, traced back to the
-    # literal token actually holding a value, gets re-derived against the
-    # (now-known) dark backgrounds it has to sit on in PAIRS — instead of
-    # whatever bare inversion happened to produce.
-    backgrounds_by_literal: dict[str, list[str]] = {}
+    # Surface-elevation tokens get their own distinct dark steps before the
+    # solve pass below, since that pass reads *their* dark values as the
+    # backgrounds everything else is checked against.
+    surface_literals = [
+        literal
+        for literal in (_trace_to_literal(name, raw_tokens) for name in _CONTENT_SURFACES)
+        if literal in oklch_by_name
+    ]
+    _stagger_surface_elevation(surface_literals, oklch_by_name, dark_hex_by_name)
+
+    # Solve pass: every PAIRS row's foreground, traced back to the literal
+    # token actually holding a value, gets re-derived against the (now-known)
+    # dark backgrounds it has to sit on in PAIRS, at its role's threshold —
+    # instead of whatever bare inversion happened to produce.
+    backgrounds_by_literal: dict[str, tuple[str, list[str]]] = {}
     for fg, bg, role in PAIRS:
-        if role != "text":
-            continue
         fg_literal = _trace_to_literal(fg, raw_tokens)
         bg_literal = _trace_to_literal(bg, raw_tokens)
         if fg_literal in oklch_by_name and bg_literal in dark_hex_by_name:
-            backgrounds_by_literal.setdefault(fg_literal, []).append(dark_hex_by_name[bg_literal])
+            entry = backgrounds_by_literal.setdefault(fg_literal, (role, []))
+            if entry[0] != role:
+                raise ValueError(f"{fg_literal} appears in PAIRS under two different roles")
+            entry[1].append(dark_hex_by_name[bg_literal])
 
-    for name, bg_hexes in backgrounds_by_literal.items():
+    for name, (role, bg_hexes) in backgrounds_by_literal.items():
         lightness, c, h = oklch_by_name[name]
-        solved_l = _solve_lightness(max(1 - lightness, FLOOR_L), c, h, bg_hexes)
+        solved_l = _solve_lightness(max(1 - lightness, FLOOR_L), c, h, bg_hexes, MIN_CONTRAST[role])
         dark_hex_by_name[name] = oklch_to_hex(solved_l, c, h)
 
     return {name: (light_hex_by_name[name], dark_hex_by_name[name]) for name in light_hex_by_name}
