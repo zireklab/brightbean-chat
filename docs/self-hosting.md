@@ -669,7 +669,7 @@ deployment actually decides:
 | `EMAIL_HOST` and friends | SMTP for the deployment's own account email: password reset, address verification, invitations and notifications. STARTTLS only, so port 587. Not used by the email channel, which has its own credentials per connection. |
 | `STORAGE_BACKEND` / `S3_*` | `local` (a shared volume) or `s3` (S3, R2, B2, MinIO). `local` requires the web and worker processes to share a filesystem, which is true of the compose stack and of no PaaS — see [Storage](#storage-when-web-and-worker-are-separate). |
 | `SENTRY_DSN` | Optional error reporting; empty disables it. |
-| `RAUTHY_OIDC_ISSUER` / `_CLIENT_ID` / `_CLIENT_SECRET` | Sign-in through a Rauthy identity provider over OIDC (PKCE). All three or none. Register the client with redirect URI `<APP_URL>/accounts/oidc/rauthy/login/callback/`. An identity already linked signs in; a new one is created only to accept an invitation sent to the same, provider-verified address, and never gets an organization of its own. The issuer's origin is added to the CSP `form-action` list. |
+| `OIDC_ISSUER` / `_CLIENT_ID` / `_CLIENT_SECRET` | Single sign-on through any OpenID Connect provider (PKCE); `OIDC_NAME` is the button label. All three or none. Register the client with redirect URI `<APP_URL>/accounts/oidc/sso/login/callback/`. An identity already linked signs in; a new one is created only to accept an invitation sent to the same, provider-verified address, and never gets an organization of its own. The issuer's origin is added to the CSP `form-action` list. |
 
 ---
 

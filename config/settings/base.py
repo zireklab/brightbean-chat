@@ -315,18 +315,18 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "/accounts/login/"
 GOOGLE_AUTH_CLIENT_ID = env("GOOGLE_AUTH_CLIENT_ID", default="")
 GOOGLE_AUTH_CLIENT_SECRET = env("GOOGLE_AUTH_CLIENT_SECRET", default="")
 
-# Rauthy (the Zirek identity provider) over OIDC. Configured like Google: from
+# Single sign-on through any OpenID Connect provider. Configured like Google: from
 # env, with all three set or the provider is simply absent. The issuer is the
 # operator's, never user input — allauth fetches its discovery document
 # server-side.
-RAUTHY_OIDC_ISSUER = env("RAUTHY_OIDC_ISSUER", default="").strip()
-RAUTHY_OIDC_CLIENT_ID = env("RAUTHY_OIDC_CLIENT_ID", default="")
-RAUTHY_OIDC_CLIENT_SECRET = env("RAUTHY_OIDC_CLIENT_SECRET", default="")
-RAUTHY_OIDC_NAME = env("RAUTHY_OIDC_NAME", default="Zirek")
+OIDC_ISSUER = env("OIDC_ISSUER", default="").strip()
+OIDC_CLIENT_ID = env("OIDC_CLIENT_ID", default="")
+OIDC_CLIENT_SECRET = env("OIDC_CLIENT_SECRET", default="")
+OIDC_NAME = env("OIDC_NAME", default="Single sign-on")
 #: allauth's ``provider_id`` — also ``SocialAccount.provider`` for every
-#: identity linked through Rauthy. Renaming it orphans those links.
-RAUTHY_PROVIDER_ID = "rauthy"
-RAUTHY_CONFIGURED = bool(RAUTHY_OIDC_ISSUER and RAUTHY_OIDC_CLIENT_ID and RAUTHY_OIDC_CLIENT_SECRET)
+#: identity linked through it. Renaming it orphans those links.
+OIDC_PROVIDER_ID = "sso"
+OIDC_CONFIGURED = bool(OIDC_ISSUER and OIDC_CLIENT_ID and OIDC_CLIENT_SECRET)
 
 SOCIALACCOUNT_PROVIDERS = {
     "openid_connect": {
@@ -335,14 +335,14 @@ SOCIALACCOUNT_PROVIDERS = {
         "APPS": (
             [
                 {
-                    "provider_id": RAUTHY_PROVIDER_ID,
-                    "name": RAUTHY_OIDC_NAME,
-                    "client_id": RAUTHY_OIDC_CLIENT_ID,
-                    "secret": RAUTHY_OIDC_CLIENT_SECRET,
-                    "settings": {"server_url": RAUTHY_OIDC_ISSUER},
+                    "provider_id": OIDC_PROVIDER_ID,
+                    "name": OIDC_NAME,
+                    "client_id": OIDC_CLIENT_ID,
+                    "secret": OIDC_CLIENT_SECRET,
+                    "settings": {"server_url": OIDC_ISSUER},
                 }
             ]
-            if RAUTHY_CONFIGURED
+            if OIDC_CONFIGURED
             else []
         ),
     },
@@ -906,12 +906,12 @@ if STORAGE_BACKEND.lower() == "s3":
         CSP_POLICY["DIRECTIVES"]["media-src"].append(_storage_origin)
         CSP_POLICY["DIRECTIVES"]["img-src"].append(_storage_origin)
 
-# Rauthy's origin is per deployment, so it cannot be a literal in OAUTH_FORM_ACTION
+# The provider's origin is per deployment, so it cannot be a literal in OAUTH_FORM_ACTION
 # like Google's. Same reason, same directive: the login button POSTs here and the
 # answer is a redirect to the issuer.
-_rauthy_origin = csp_origin(RAUTHY_OIDC_ISSUER) if RAUTHY_CONFIGURED else None
-if _rauthy_origin:
-    CSP_POLICY["DIRECTIVES"]["form-action"].append(_rauthy_origin)
+_oidc_origin = csp_origin(OIDC_ISSUER) if OIDC_CONFIGURED else None
+if _oidc_origin:
+    CSP_POLICY["DIRECTIVES"]["form-action"].append(_oidc_origin)
 
 # ---------------------------------------------------------------------------
 # Logging (SECURITY-BASELINE §5)

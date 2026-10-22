@@ -11944,8 +11944,9 @@ msgid "An invitation is required to sign up."
 msgstr "Для регистрации нужно приглашение."
 
 #: apps/accounts/adapters.py
-msgid "An account with this address already exists. Sign in with your password, accept the invitation, then connect Zirek under your connected accounts."
-msgstr "Аккаунт с этим адресом уже существует. Войдите по паролю, примите приглашение, затем подключите Zirek в разделе подключённых аккаунтов."
+#, python-format
+msgid "An account with this address already exists. Sign in with your password, accept the invitation, then connect %(name)s under your connected accounts."
+msgstr "Аккаунт с этим адресом уже существует. Войдите по паролю, примите приглашение, затем подключите %(name)s в разделе подключённых аккаунтов."
 
 #: apps/accounts/adapters.py
 msgid "This account was just created. Try signing in again."

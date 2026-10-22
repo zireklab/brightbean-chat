@@ -108,8 +108,8 @@ def pending_invitation(request: Any) -> Any:
     return None if invitation is None or invitation.is_expired else invitation
 
 
-def is_rauthy(sociallogin: Any) -> bool:
-    """Whether this social login came through the Rauthy provider."""
+def is_sso(sociallogin: Any) -> bool:
+    """Whether this social login came through the single sign-on provider."""
     from django.conf import settings
 
-    return sociallogin.account.provider == settings.RAUTHY_PROVIDER_ID
+    return sociallogin.account.provider == settings.OIDC_PROVIDER_ID

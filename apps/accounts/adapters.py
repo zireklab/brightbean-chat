@@ -7,6 +7,7 @@ from typing import Any
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.core.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError, transaction
@@ -14,7 +15,7 @@ from django.http import HttpRequest
 from django.shortcuts import render
 from django.utils.translation import gettext
 
-from apps.accounts.services import is_rauthy, pending_invitation
+from apps.accounts.services import is_sso, pending_invitation
 from apps.members.services import MembershipError, accept_invitation
 from apps.members.signals_keys import PENDING_INVITE_SESSION_KEY
 
@@ -109,12 +110,12 @@ def _signup_closed(request: HttpRequest, reason: str) -> ImmediateHttpResponse:
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
     """Map a provider profile onto this project's single ``name`` field, and
-    decide who may be created through Rauthy.
+    decide who may be created through single sign-on.
 
     Ported from Studio's adapter minus its ``OAuthConnection`` bookkeeping —
     that model duplicates allauth's own ``SocialAccount`` table.
 
-    Rauthy is shared by every Zirek tenant, so signing in there says who someone
+    An OIDC provider may serve many tenants, so signing in there says who someone
     is and nothing about which organization is theirs. An identity already
     linked (a ``SocialAccount`` row) signs in without passing through here. A new
     one is created only to honour an invitation, to the address it was sent to —
@@ -127,21 +128,22 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         allauth would otherwise send the visitor to a signup form whose email
         field is "already taken" — a dead end that names no way out. Linking is
         deliberately not automatic (see the note beside SOCIALACCOUNT_ADAPTER in
-        settings), so the way out is to sign in locally and connect Rauthy.
+        settings), so the way out is to sign in locally and connect SSO.
         """
-        if is_rauthy(sociallogin) and not sociallogin.is_existing:
+        if is_sso(sociallogin) and not sociallogin.is_existing:
             addresses = [a.email for a in sociallogin.email_addresses if a.verified]
             if addresses and get_user_model().objects.filter(email__iexact=addresses[0]).exists():
                 raise _signup_closed(
                     request,
                     gettext(
                         "An account with this address already exists. Sign in with your password, "
-                        "accept the invitation, then connect Zirek under your connected accounts."
-                    ),
+                        "accept the invitation, then connect %(name)s under your connected accounts."
+                    )
+                    % {"name": settings.OIDC_NAME},
                 )
 
     def is_open_for_signup(self, request: HttpRequest, sociallogin: Any) -> bool:
-        if not is_rauthy(sociallogin):
+        if not is_sso(sociallogin):
             return super().is_open_for_signup(request, sociallogin)
         invitation = pending_invitation(request)
         if invitation is None:
@@ -150,7 +152,7 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         return any(a.verified and a.email.strip().lower() == invited for a in sociallogin.email_addresses)
 
     def save_user(self, request: HttpRequest, sociallogin: Any, form: Any = None) -> Any:
-        if not is_rauthy(sociallogin):
+        if not is_sso(sociallogin):
             return super().save_user(request, sociallogin, form)
         # The user and the membership are one transaction. ``ensure_provisioned``
         # gives a fresh organization to anyone signed in without one, so a user
@@ -171,7 +173,7 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
             raise _signup_closed(request, str(exc)) from exc
         except IntegrityError as exc:
             # Two callbacks for one identity raced; the other one won.
-            logger.warning("Rauthy signup lost a uniqueness race")
+            logger.warning("SSO signup lost a uniqueness race")
             raise _signup_closed(request, gettext("This account was just created. Try signing in again.")) from exc
         request.session.pop(PENDING_INVITE_SESSION_KEY, None)
         return user

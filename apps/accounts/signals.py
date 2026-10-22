@@ -18,7 +18,7 @@ from typing import Any
 from allauth.account.signals import user_signed_up
 from django.dispatch import receiver
 
-from apps.accounts.services import is_rauthy, provision_organization_and_workspace
+from apps.accounts.services import is_sso, provision_organization_and_workspace
 from apps.members.signals_keys import PENDING_INVITE_SESSION_KEY
 
 logger = logging.getLogger(__name__)
@@ -35,16 +35,16 @@ def provision_on_signup(sender: Any, request: Any, user: Any, **kwargs: Any) -> 
     from apps.members.services import MembershipError, accept_invitation
 
     sociallogin = kwargs.get("sociallogin")
-    if sociallogin is not None and is_rauthy(sociallogin):
+    if sociallogin is not None and is_sso(sociallogin):
         # SocialAccountAdapter.save_user already joined the inviting organization,
         # in the same transaction as the user. Falling through would, on any
-        # miss, hand a Rauthy user an organization of their own. If that ever
+        # miss, hand an SSO user an organization of their own. If that ever
         # stops being true, say so loudly: ensure_provisioned would otherwise
         # fix it up silently on the first page view.
         from apps.members.models import OrgMembership
 
         if not OrgMembership.objects.filter(user=user).exists():
-            logger.error("Rauthy sign-up for user %s finished without an organization membership", user.pk)
+            logger.error("SSO sign-up for user %s finished without an organization membership", user.pk)
         return
 
     token = request.session.pop(PENDING_INVITE_SESSION_KEY, None) if request is not None else None
