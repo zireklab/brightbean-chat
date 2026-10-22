@@ -20,9 +20,6 @@ def auth_providers(request: HttpRequest) -> dict[str, Any]:
     redirect. Templates gate on this instead. The same goes for Rauthy: with
     only it configured, ``get_providers`` still yields Google.
     """
-    return {
-        "rauthy_configured": bool(getattr(settings, "RAUTHY_CONFIGURED", False)),
-        "google_configured": bool(
-            getattr(settings, "GOOGLE_AUTH_CLIENT_ID", "") and getattr(settings, "GOOGLE_AUTH_CLIENT_SECRET", "")
-        ),
-    }
+    google = bool(getattr(settings, "GOOGLE_AUTH_CLIENT_ID", "") and getattr(settings, "GOOGLE_AUTH_CLIENT_SECRET", ""))
+    ids = [pid for pid, on in (("google", google), (settings.RAUTHY_PROVIDER_ID, settings.RAUTHY_CONFIGURED)) if on]
+    return {"google_configured": google, "sso_provider_ids": ids}

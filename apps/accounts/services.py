@@ -106,3 +106,10 @@ def pending_invitation(request: Any) -> Any:
     token = request.session.get(PENDING_INVITE_SESSION_KEY) if request is not None else None
     invitation = Invitation.objects.for_token(token).filter(accepted_at__isnull=True).first() if token else None
     return None if invitation is None or invitation.is_expired else invitation
+
+
+def is_rauthy(sociallogin: Any) -> bool:
+    """Whether this social login came through the Rauthy provider."""
+    from django.conf import settings
+
+    return sociallogin.account.provider == settings.RAUTHY_PROVIDER_ID

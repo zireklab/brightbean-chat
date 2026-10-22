@@ -11704,3 +11704,11 @@ msgstr "Кирүүгө кайтуу"
 #: apps/accounts/adapters.py
 msgid "An invitation is required to sign up."
 msgstr "Катталуу үчүн чакыруу керек."
+
+#: apps/accounts/adapters.py
+msgid "An account with this address already exists. Sign in with your password, accept the invitation, then connect Zirek under your connected accounts."
+msgstr "Бул даректеги аккаунт мурунтан бар. Сырсөз менен кирип, чакырууну кабыл алып, андан кийин туташкан аккаунттар бөлүмүнөн Zirek'ти туташтырыңыз."
+
+#: apps/accounts/adapters.py
+msgid "This account was just created. Try signing in again."
+msgstr "Бул аккаунт жаңы эле түзүлдү. Кайра кирип көрүңүз."

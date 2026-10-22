@@ -7,14 +7,14 @@ from typing import Any
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.core.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
-from django.conf import settings
 from django.contrib import messages
-from django.db import transaction
+from django.contrib.auth import get_user_model
+from django.db import IntegrityError, transaction
 from django.http import HttpRequest
 from django.shortcuts import render
 from django.utils.translation import gettext
 
-from apps.accounts.services import pending_invitation
+from apps.accounts.services import is_rauthy, pending_invitation
 from apps.members.services import MembershipError, accept_invitation
 from apps.members.signals_keys import PENDING_INVITE_SESSION_KEY
 
@@ -103,8 +103,8 @@ class AccountAdapter(DefaultAccountAdapter):
             logger.exception("Failed to send account email (%s). Check the SMTP settings.", template_prefix)
 
 
-def is_rauthy(sociallogin: Any) -> bool:
-    return sociallogin.account.provider == settings.RAUTHY_PROVIDER_ID
+def _signup_closed(request: HttpRequest, reason: str) -> ImmediateHttpResponse:
+    return ImmediateHttpResponse(render(request, "account/signup_closed.html", {"reason": reason}, status=403))
 
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
@@ -120,6 +120,25 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
     one is created only to honour an invitation, to the address it was sent to —
     never with an organization of its own, which Google sign-ups get.
     """
+
+    def pre_social_login(self, request: HttpRequest, sociallogin: Any) -> None:
+        """Say why, when the invited address already belongs to a local account.
+
+        allauth would otherwise send the visitor to a signup form whose email
+        field is "already taken" — a dead end that names no way out. Linking is
+        deliberately not automatic (see the note beside SOCIALACCOUNT_ADAPTER in
+        settings), so the way out is to sign in locally and connect Rauthy.
+        """
+        if is_rauthy(sociallogin) and not sociallogin.is_existing:
+            addresses = [a.email for a in sociallogin.email_addresses if a.verified]
+            if addresses and get_user_model().objects.filter(email__iexact=addresses[0]).exists():
+                raise _signup_closed(
+                    request,
+                    gettext(
+                        "An account with this address already exists. Sign in with your password, "
+                        "accept the invitation, then connect Zirek under your connected accounts."
+                    ),
+                )
 
     def is_open_for_signup(self, request: HttpRequest, sociallogin: Any) -> bool:
         if not is_rauthy(sociallogin):
@@ -143,13 +162,17 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
                 raise MembershipError(gettext("An invitation is required to sign up."))
             with transaction.atomic():
                 user = super().save_user(request, sociallogin, form)
-                # The email must match here as well as in is_open_for_signup: the
-                # signup form shown on an address clash lets the visitor edit it.
+                # Backstop for the signup form, which lets the visitor edit the
+                # address: allauth currently puts the provider-verified one back
+                # as primary (setup_user_email), so this passes — but the match,
+                # not that detail of allauth, is what keeps the invitation theirs.
                 accept_invitation(invitation, user, require_email_match=True)
         except MembershipError as exc:
-            raise ImmediateHttpResponse(
-                render(request, "account/signup_closed.html", {"reason": str(exc)}, status=403)
-            ) from exc
+            raise _signup_closed(request, str(exc)) from exc
+        except IntegrityError as exc:
+            # Two callbacks for one identity raced; the other one won.
+            logger.warning("Rauthy signup lost a uniqueness race")
+            raise _signup_closed(request, gettext("This account was just created. Try signing in again.")) from exc
         request.session.pop(PENDING_INVITE_SESSION_KEY, None)
         return user
 
