@@ -18,6 +18,7 @@ from typing import Any
 from allauth.account.signals import user_signed_up
 from django.dispatch import receiver
 
+from apps.accounts.adapters import is_rauthy
 from apps.accounts.services import provision_organization_and_workspace
 from apps.members.signals_keys import PENDING_INVITE_SESSION_KEY
 
@@ -33,6 +34,13 @@ def provision_on_signup(sender: Any, request: Any, user: Any, **kwargs: Any) -> 
     """
     from apps.members.models import Invitation
     from apps.members.services import MembershipError, accept_invitation
+
+    sociallogin = kwargs.get("sociallogin")
+    if sociallogin is not None and is_rauthy(sociallogin):
+        # SocialAccountAdapter.save_user already joined the inviting organization,
+        # in the same transaction as the user. Falling through would, on any
+        # miss, hand a Rauthy user an organization of their own.
+        return
 
     token = request.session.pop(PENDING_INVITE_SESSION_KEY, None) if request is not None else None
     if token:

@@ -11922,3 +11922,23 @@ msgstr "Выбрать дополнительный цвет"
 
 #~ msgid "Preferences"
 #~ msgstr "Настройки"
+
+#: templates/account/signup_closed.html
+msgid "Sign up is closed"
+msgstr "Регистрация закрыта"
+
+#: templates/account/signup_closed.html
+msgid "You can't create an account this way."
+msgstr "Так создать аккаунт нельзя."
+
+#: templates/account/signup_closed.html
+msgid "Ask the owner of your organization for an invitation, then open the link in the email and sign in from there."
+msgstr "Попросите владельца вашей организации прислать приглашение, затем откройте ссылку из письма и войдите оттуда."
+
+#: templates/account/signup_closed.html
+msgid "Back to sign in"
+msgstr "Назад ко входу"
+
+#: apps/accounts/adapters.py
+msgid "An invitation is required to sign up."
+msgstr "Для регистрации нужно приглашение."

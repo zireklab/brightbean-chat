@@ -5,9 +5,18 @@ import smtplib
 from typing import Any
 
 from allauth.account.adapter import DefaultAccountAdapter
+from allauth.core.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from django.conf import settings
 from django.contrib import messages
+from django.db import transaction
 from django.http import HttpRequest
+from django.shortcuts import render
+from django.utils.translation import gettext
+
+from apps.accounts.services import pending_invitation
+from apps.members.services import MembershipError, accept_invitation
+from apps.members.signals_keys import PENDING_INVITE_SESSION_KEY
 
 logger = logging.getLogger(__name__)
 
@@ -94,16 +103,59 @@ class AccountAdapter(DefaultAccountAdapter):
             logger.exception("Failed to send account email (%s). Check the SMTP settings.", template_prefix)
 
 
+def is_rauthy(sociallogin: Any) -> bool:
+    return sociallogin.account.provider == settings.RAUTHY_PROVIDER_ID
+
+
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
-    """Map a Google profile onto this project's single ``name`` field.
+    """Map a provider profile onto this project's single ``name`` field, and
+    decide who may be created through Rauthy.
 
     Ported from Studio's adapter minus its ``OAuthConnection`` bookkeeping —
     that model duplicates allauth's own ``SocialAccount`` table.
+
+    Rauthy is shared by every Zirek tenant, so signing in there says who someone
+    is and nothing about which organization is theirs. An identity already
+    linked (a ``SocialAccount`` row) signs in without passing through here. A new
+    one is created only to honour an invitation, to the address it was sent to —
+    never with an organization of its own, which Google sign-ups get.
     """
+
+    def is_open_for_signup(self, request: HttpRequest, sociallogin: Any) -> bool:
+        if not is_rauthy(sociallogin):
+            return super().is_open_for_signup(request, sociallogin)
+        invitation = pending_invitation(request)
+        if invitation is None:
+            return False
+        invited = invitation.email.strip().lower()
+        return any(a.verified and a.email.strip().lower() == invited for a in sociallogin.email_addresses)
+
+    def save_user(self, request: HttpRequest, sociallogin: Any, form: Any = None) -> Any:
+        if not is_rauthy(sociallogin):
+            return super().save_user(request, sociallogin, form)
+        # The user and the membership are one transaction. ``ensure_provisioned``
+        # gives a fresh organization to anyone signed in without one, so a user
+        # left behind by a refused invitation would get exactly what this
+        # provider exists to withhold.
+        invitation = pending_invitation(request)
+        try:
+            if invitation is None:
+                raise MembershipError(gettext("An invitation is required to sign up."))
+            with transaction.atomic():
+                user = super().save_user(request, sociallogin, form)
+                # The email must match here as well as in is_open_for_signup: the
+                # signup form shown on an address clash lets the visitor edit it.
+                accept_invitation(invitation, user, require_email_match=True)
+        except MembershipError as exc:
+            raise ImmediateHttpResponse(
+                render(request, "account/signup_closed.html", {"reason": str(exc)}, status=403)
+            ) from exc
+        request.session.pop(PENDING_INVITE_SESSION_KEY, None)
+        return user
 
     def populate_user(self, request: Any, sociallogin: Any, data: dict[str, Any]) -> Any:
         user = super().populate_user(request, sociallogin, data)
-        full_name = f"{data.get('first_name', '')} {data.get('last_name', '')}".strip()
+        full_name = f"{data.get('first_name', '')} {data.get('last_name', '')}".strip() or (data.get("name") or "")
         if full_name and not user.name:
             user.name = full_name
         return user

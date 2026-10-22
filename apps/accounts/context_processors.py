@@ -12,15 +12,17 @@ from django.http import HttpRequest
 
 
 def auth_providers(request: HttpRequest) -> dict[str, Any]:
-    """Whether Google SSO is actually usable.
+    """Which SSO providers are actually usable.
 
     allauth registers the provider whenever the app is in INSTALLED_APPS, so
     ``{% get_providers %}`` yields a Google button on a deployment that never
     set the credentials — and clicking it fails somewhere inside the OAuth
-    redirect. Templates gate on this instead.
+    redirect. Templates gate on this instead. The same goes for Rauthy: with
+    only it configured, ``get_providers`` still yields Google.
     """
     return {
+        "rauthy_configured": bool(getattr(settings, "RAUTHY_CONFIGURED", False)),
         "google_configured": bool(
             getattr(settings, "GOOGLE_AUTH_CLIENT_ID", "") and getattr(settings, "GOOGLE_AUTH_CLIENT_SECRET", "")
-        )
+        ),
     }

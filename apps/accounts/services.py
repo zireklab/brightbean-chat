@@ -92,3 +92,17 @@ def ensure_provisioned(user: Any) -> None:
         return
     logger.info("Provisioning a default organization for user %s on first visit", user.pk)
     provision_organization_and_workspace(user)
+
+
+def pending_invitation(request: Any) -> Any:
+    """The unaccepted, unexpired invitation whose token the session holds, or None.
+
+    Read-only: the token stays in the session until the signup that uses it
+    succeeds, so a refusal does not cost the visitor their invitation.
+    """
+    from apps.members.models import Invitation
+    from apps.members.signals_keys import PENDING_INVITE_SESSION_KEY
+
+    token = request.session.get(PENDING_INVITE_SESSION_KEY) if request is not None else None
+    invitation = Invitation.objects.for_token(token).filter(accepted_at__isnull=True).first() if token else None
+    return None if invitation is None or invitation.is_expired else invitation

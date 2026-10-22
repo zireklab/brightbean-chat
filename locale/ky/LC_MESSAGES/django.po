@@ -11684,3 +11684,23 @@ msgstr "Кошумча түстү тандоо"
 
 #~ msgid "Preferences"
 #~ msgstr "Жеке ырастоолор"
+
+#: templates/account/signup_closed.html
+msgid "Sign up is closed"
+msgstr "Катталуу жабык"
+
+#: templates/account/signup_closed.html
+msgid "You can't create an account this way."
+msgstr "Аккаунтту мындай жол менен түзүүгө болбойт."
+
+#: templates/account/signup_closed.html
+msgid "Ask the owner of your organization for an invitation, then open the link in the email and sign in from there."
+msgstr "Уюмуңуздун ээсинен чакыруу сурап, андан кийин катта турган шилтемени ачып, ошол жерден кириңиз."
+
+#: templates/account/signup_closed.html
+msgid "Back to sign in"
+msgstr "Кирүүгө кайтуу"
+
+#: apps/accounts/adapters.py
+msgid "An invitation is required to sign up."
+msgstr "Катталуу үчүн чакыруу керек."

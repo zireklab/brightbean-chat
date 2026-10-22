@@ -14,14 +14,16 @@
     </div>
   {% endif %}
 
-  {% if google_configured %}
+  {% if google_configured or rauthy_configured %}
     {% get_providers as socialaccount_providers %}
     {% for provider in socialaccount_providers %}
+      {% if provider.sub_id == "google" and google_configured or provider.sub_id == "rauthy" and rauthy_configured %}
       {% provider_login_url provider process="login" as provider_url %}
       <form method="post" action="{{ provider_url }}">
         {% csrf_token %}
         <button type="submit" class="btn-social">{% blocktranslate with provider_name=provider.name %}Continue with {{ provider_name }}{% endblocktranslate %}</button>
       </form>
+      {% endif %}
     {% endfor %}
     <div class="divider-text my-5">{% translate "or" %}</div>
   {% endif %}

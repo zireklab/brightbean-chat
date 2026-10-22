@@ -131,6 +131,7 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.openid_connect",
 ]
 
 # The first six are the tenancy, auth and credential substrate (issue #31);
@@ -314,7 +315,37 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "/accounts/login/"
 GOOGLE_AUTH_CLIENT_ID = env("GOOGLE_AUTH_CLIENT_ID", default="")
 GOOGLE_AUTH_CLIENT_SECRET = env("GOOGLE_AUTH_CLIENT_SECRET", default="")
 
+# Rauthy (the Zirek identity provider) over OIDC. Configured like Google: from
+# env, with all three set or the provider is simply absent. The issuer is the
+# operator's, never user input — allauth fetches its discovery document
+# server-side.
+RAUTHY_OIDC_ISSUER = env("RAUTHY_OIDC_ISSUER", default="").strip()
+RAUTHY_OIDC_CLIENT_ID = env("RAUTHY_OIDC_CLIENT_ID", default="")
+RAUTHY_OIDC_CLIENT_SECRET = env("RAUTHY_OIDC_CLIENT_SECRET", default="")
+RAUTHY_OIDC_NAME = env("RAUTHY_OIDC_NAME", default="Zirek")
+#: allauth's ``provider_id`` — also ``SocialAccount.provider`` for every
+#: identity linked through Rauthy. Renaming it orphans those links.
+RAUTHY_PROVIDER_ID = "rauthy"
+RAUTHY_CONFIGURED = bool(RAUTHY_OIDC_ISSUER and RAUTHY_OIDC_CLIENT_ID and RAUTHY_OIDC_CLIENT_SECRET)
+
 SOCIALACCOUNT_PROVIDERS = {
+    "openid_connect": {
+        "OAUTH_PKCE_ENABLED": True,
+        "SCOPE": ["openid", "email", "profile"],
+        "APPS": (
+            [
+                {
+                    "provider_id": RAUTHY_PROVIDER_ID,
+                    "name": RAUTHY_OIDC_NAME,
+                    "client_id": RAUTHY_OIDC_CLIENT_ID,
+                    "secret": RAUTHY_OIDC_CLIENT_SECRET,
+                    "settings": {"server_url": RAUTHY_OIDC_ISSUER},
+                }
+            ]
+            if RAUTHY_CONFIGURED
+            else []
+        ),
+    },
     "google": {
         "APP": {"client_id": GOOGLE_AUTH_CLIENT_ID, "secret": GOOGLE_AUTH_CLIENT_SECRET},
         "SCOPE": ["profile", "email"],
@@ -874,6 +905,13 @@ if STORAGE_BACKEND.lower() == "s3":
     if _storage_origin:
         CSP_POLICY["DIRECTIVES"]["media-src"].append(_storage_origin)
         CSP_POLICY["DIRECTIVES"]["img-src"].append(_storage_origin)
+
+# Rauthy's origin is per deployment, so it cannot be a literal in OAUTH_FORM_ACTION
+# like Google's. Same reason, same directive: the login button POSTs here and the
+# answer is a redirect to the issuer.
+_rauthy_origin = csp_origin(RAUTHY_OIDC_ISSUER) if RAUTHY_CONFIGURED else None
+if _rauthy_origin:
+    CSP_POLICY["DIRECTIVES"]["form-action"].append(_rauthy_origin)
 
 # ---------------------------------------------------------------------------
 # Logging (SECURITY-BASELINE §5)
