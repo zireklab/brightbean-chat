@@ -113,3 +113,12 @@ def is_sso(sociallogin: Any) -> bool:
     from django.conf import settings
 
     return sociallogin.account.provider == settings.OIDC_PROVIDER_ID
+
+
+def is_invite_only(sociallogin: Any) -> bool:
+    """Whether this login falls under ``OIDC_SIGNUP=invite``: new identities are
+    created only to honour an invitation. Google, and SSO in ``open`` mode, are
+    not."""
+    from django.conf import settings
+
+    return is_sso(sociallogin) and settings.OIDC_SIGNUP == "invite"

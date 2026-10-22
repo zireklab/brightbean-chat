@@ -15,7 +15,7 @@ from django.http import HttpRequest
 from django.shortcuts import render
 from django.utils.translation import gettext
 
-from apps.accounts.services import is_sso, pending_invitation
+from apps.accounts.services import is_invite_only, is_sso, pending_invitation
 from apps.members.services import MembershipError, accept_invitation
 from apps.members.signals_keys import PENDING_INVITE_SESSION_KEY
 
@@ -116,10 +116,11 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
     that model duplicates allauth's own ``SocialAccount`` table.
 
     An OIDC provider may serve many tenants, so signing in there says who someone
-    is and nothing about which organization is theirs. An identity already
-    linked (a ``SocialAccount`` row) signs in without passing through here. A new
-    one is created only to honour an invitation, to the address it was sent to —
-    never with an organization of its own, which Google sign-ups get.
+    is and nothing about which organization is theirs. With the default
+    ``OIDC_SIGNUP=invite``, an identity already linked (a ``SocialAccount`` row)
+    signs in without passing through here, and a new one is created only to
+    honour an invitation, to the address it was sent to — never with an
+    organization of its own, which Google sign-ups get. ``open`` restores that.
     """
 
     def pre_social_login(self, request: HttpRequest, sociallogin: Any) -> None:
@@ -130,7 +131,12 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         deliberately not automatic (see the note beside SOCIALACCOUNT_ADAPTER in
         settings), so the way out is to sign in locally and connect SSO.
         """
-        if is_sso(sociallogin) and not sociallogin.is_existing:
+        if not is_sso(sociallogin):
+            return
+        if settings.OIDC_TRUST_EMAIL:
+            for address in sociallogin.email_addresses:
+                address.verified = True
+        if is_invite_only(sociallogin) and not sociallogin.is_existing:
             addresses = [a.email for a in sociallogin.email_addresses if a.verified]
             if addresses and get_user_model().objects.filter(email__iexact=addresses[0]).exists():
                 raise _signup_closed(
@@ -143,7 +149,7 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
                 )
 
     def is_open_for_signup(self, request: HttpRequest, sociallogin: Any) -> bool:
-        if not is_sso(sociallogin):
+        if not is_invite_only(sociallogin):
             return super().is_open_for_signup(request, sociallogin)
         invitation = pending_invitation(request)
         if invitation is None:
@@ -152,7 +158,7 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         return any(a.verified and a.email.strip().lower() == invited for a in sociallogin.email_addresses)
 
     def save_user(self, request: HttpRequest, sociallogin: Any, form: Any = None) -> Any:
-        if not is_sso(sociallogin):
+        if not is_invite_only(sociallogin):
             return super().save_user(request, sociallogin, form)
         # The user and the membership are one transaction. ``ensure_provisioned``
         # gives a fresh organization to anyone signed in without one, so a user

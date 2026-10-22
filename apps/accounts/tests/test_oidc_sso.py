@@ -301,6 +301,56 @@ class TestTheSignalFailsLoudly:
         assert not OrgMembership.objects.filter(user=user).exists(), "the receiver must not provision one"
 
 
+@pytest.mark.django_db
+class TestOtherProviders:
+    """The code must not depend on which OpenID Connect provider is configured."""
+
+    def test_a_provider_that_never_sends_email_verified_can_be_trusted_by_the_operator(
+        self, client: Client, sso: None, tenancy: Any, settings: Any
+    ) -> None:
+        settings.OIDC_TRUST_EMAIL = True
+        hold(client, invite(tenancy))
+
+        sign_in(client, email_verified=None)
+
+        assert OrgMembership.objects.get(user__email="joiner@example.test").organization == tenancy.organization
+
+    def test_trusting_the_email_does_not_waive_the_invitation(
+        self, client: Client, sso: None, tenancy: Any, settings: Any
+    ) -> None:
+        settings.OIDC_TRUST_EMAIL = True
+
+        response = sign_in(client, email_verified=None)
+
+        assert b"Sign up is closed" in response.content
+        assert not SocialAccount.objects.exists()
+
+    def test_open_signup_gives_a_new_identity_an_organization_of_its_own(
+        self, client: Client, sso: None, tenancy: Any, settings: Any
+    ) -> None:
+        settings.OIDC_SIGNUP = "open"
+        before = orgs()
+
+        response = sign_in(client)
+
+        assert response.status_code == 302
+        assert SocialAccount.objects.get(provider="sso").uid == "sub-1"
+        assert OrgMembership.objects.filter(user__email="joiner@example.test").count() == 1
+        assert orgs() == before + 1
+
+    def test_open_signup_still_honours_an_invitation(
+        self, client: Client, sso: None, tenancy: Any, settings: Any
+    ) -> None:
+        settings.OIDC_SIGNUP = "open"
+        hold(client, invite(tenancy))
+        before = orgs()
+
+        sign_in(client)
+
+        assert OrgMembership.objects.get(user__email="joiner@example.test").organization == tenancy.organization
+        assert orgs() == before
+
+
 class TestTheConfiguration:
     def test_disabled_without_all_three_values(self, settings: Any) -> None:
         assert settings.OIDC_CONFIGURED is False

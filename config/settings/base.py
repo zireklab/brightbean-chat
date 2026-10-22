@@ -323,6 +323,22 @@ OIDC_ISSUER = env("OIDC_ISSUER", default="").strip()
 OIDC_CLIENT_ID = env("OIDC_CLIENT_ID", default="")
 OIDC_CLIENT_SECRET = env("OIDC_CLIENT_SECRET", default="")
 OIDC_NAME = env("OIDC_NAME", default="Single sign-on")
+#: Who a first-time identity may become. ``invite``: only someone holding an
+#: invitation to the address the provider vouches for, and into that
+#: organization alone. ``open``: anyone, with an organization of their own — the
+#: same as Google sign-in.
+OIDC_SIGNUP = env("OIDC_SIGNUP", default="invite").strip().lower()
+#: Providers that never send ``email_verified`` (Microsoft Entra, for one) would
+#: otherwise be refused outright. Setting this asserts that the provider only
+#: issues addresses it has verified; do not set it for one that lets users type
+#: their own.
+OIDC_TRUST_EMAIL = env.bool("OIDC_TRUST_EMAIL", default=False)
+#: Left empty, allauth picks from the provider's discovery document.
+OIDC_TOKEN_AUTH_METHOD = env("OIDC_TOKEN_AUTH_METHOD", default="").strip()
+if OIDC_SIGNUP not in ("invite", "open"):
+    raise ImproperlyConfigured(f"OIDC_SIGNUP must be 'invite' or 'open', not {OIDC_SIGNUP!r}")
+if OIDC_TOKEN_AUTH_METHOD not in ("", "client_secret_basic", "client_secret_post"):
+    raise ImproperlyConfigured("OIDC_TOKEN_AUTH_METHOD must be 'client_secret_basic' or 'client_secret_post'")
 #: allauth's ``provider_id`` — also ``SocialAccount.provider`` for every
 #: identity linked through it. Renaming it orphans those links.
 OIDC_PROVIDER_ID = "sso"
@@ -339,7 +355,10 @@ SOCIALACCOUNT_PROVIDERS = {
                     "name": OIDC_NAME,
                     "client_id": OIDC_CLIENT_ID,
                     "secret": OIDC_CLIENT_SECRET,
-                    "settings": {"server_url": OIDC_ISSUER},
+                    "settings": {
+                        "server_url": OIDC_ISSUER,
+                        **({"token_auth_method": OIDC_TOKEN_AUTH_METHOD} if OIDC_TOKEN_AUTH_METHOD else {}),
+                    },
                 }
             ]
             if OIDC_CONFIGURED

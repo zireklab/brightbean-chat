@@ -18,7 +18,7 @@ from typing import Any
 from allauth.account.signals import user_signed_up
 from django.dispatch import receiver
 
-from apps.accounts.services import is_sso, provision_organization_and_workspace
+from apps.accounts.services import is_invite_only, provision_organization_and_workspace
 from apps.members.signals_keys import PENDING_INVITE_SESSION_KEY
 
 logger = logging.getLogger(__name__)
@@ -35,7 +35,7 @@ def provision_on_signup(sender: Any, request: Any, user: Any, **kwargs: Any) -> 
     from apps.members.services import MembershipError, accept_invitation
 
     sociallogin = kwargs.get("sociallogin")
-    if sociallogin is not None and is_sso(sociallogin):
+    if sociallogin is not None and is_invite_only(sociallogin):
         # SocialAccountAdapter.save_user already joined the inviting organization,
         # in the same transaction as the user. Falling through would, on any
         # miss, hand an SSO user an organization of their own. If that ever
