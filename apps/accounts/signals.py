@@ -15,13 +15,26 @@ expensive than the query ``AuthenticationMiddleware`` already ran to produce
 import logging
 from typing import Any
 
-from allauth.account.signals import user_signed_up
+from allauth.account.signals import user_logged_in, user_signed_up
 from django.dispatch import receiver
 
-from apps.accounts.services import is_invite_only, provision_organization_and_workspace
+from apps.accounts.services import is_invite_only, is_sso, provision_organization_and_workspace
 from apps.members.signals_keys import PENDING_INVITE_SESSION_KEY
 
 logger = logging.getLogger(__name__)
+
+
+@receiver(user_logged_in)
+def link_sso_identity(sender: Any, request: Any, user: Any, **kwargs: Any) -> None:
+    """Pin the provider's ``sub`` to a local account that was signed in by email.
+
+    allauth's per-provider ``email_authentication`` signs the person in but leaves
+    the identity unlinked, so every later login would depend on the address still
+    belonging to them. Linking makes the first match the last.
+    """
+    sociallogin = kwargs.get("sociallogin")
+    if sociallogin is not None and is_sso(sociallogin) and sociallogin.account.pk is None:
+        sociallogin.connect(request, user)
 
 
 @receiver(user_signed_up)

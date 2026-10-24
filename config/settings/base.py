@@ -333,6 +333,14 @@ OIDC_SIGNUP = env("OIDC_SIGNUP", default="invite").strip().lower()
 #: issues addresses it has verified; do not set it for one that lets users type
 #: their own.
 OIDC_TRUST_EMAIL = env.bool("OIDC_TRUST_EMAIL", default=False)
+#: Sign an existing local account in when the provider vouches for its address,
+#: and link the identity so later logins no longer depend on the address. This is
+#: allauth's per-provider ``email_authentication``, not the global
+#: SOCIALACCOUNT_EMAIL_AUTHENTICATION that the note further down refuses: it
+#: covers this provider only, and allauth wipes the password of a local account
+#: whose address was never verified, which is what makes it safe to read "same
+#: address" as "same person". Needs a provider that verifies addresses.
+OIDC_LINK_BY_EMAIL = env.bool("OIDC_LINK_BY_EMAIL", default=True)
 #: Left empty, allauth picks from the provider's discovery document.
 OIDC_TOKEN_AUTH_METHOD = env("OIDC_TOKEN_AUTH_METHOD", default="").strip()
 if OIDC_SIGNUP not in ("invite", "open"):
@@ -357,6 +365,7 @@ SOCIALACCOUNT_PROVIDERS = {
                     "secret": OIDC_CLIENT_SECRET,
                     "settings": {
                         "server_url": OIDC_ISSUER,
+                        "email_authentication": OIDC_LINK_BY_EMAIL,
                         **({"token_auth_method": OIDC_TOKEN_AUTH_METHOD} if OIDC_TOKEN_AUTH_METHOD else {}),
                     },
                 }

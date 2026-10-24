@@ -53,7 +53,7 @@ def sso(settings: Any) -> None:
             "name": "Zirek",
             "client_id": "bb",
             "secret": "s3cret",  # noqa: S105 - a fake credential
-            "settings": {"server_url": ISSUER},
+            "settings": {"server_url": ISSUER, "email_authentication": True},
         }
     ]
     settings.SOCIALACCOUNT_PROVIDERS = providers
@@ -212,13 +212,45 @@ class TestKnownIdentities:
         assert response.status_code == 302
         assert client.session["_auth_user_id"] == str(user.pk)
 
-    def test_a_local_account_with_the_same_address_is_told_the_way_out_and_not_taken_over(
+    def test_a_local_account_with_the_same_address_signs_in_and_is_linked(
         self, client: Client, sso: None, tenancy: Any
     ) -> None:
+        local = tenancy.owner
+
+        response = sign_in(client, email=local.email)
+
+        assert response.status_code == 302
+        assert client.session["_auth_user_id"] == str(local.pk)
+        assert SocialAccount.objects.get(provider="sso", uid="sub-1").user == local
+
+    def test_the_second_sign_in_no_longer_depends_on_the_address(self, client: Client, sso: None, tenancy: Any) -> None:
+        local = tenancy.owner
+        sign_in(client, email=local.email)
+        client.logout()
+
+        sign_in(client, email="moved@example.test")
+
+        assert client.session["_auth_user_id"] == str(local.pk)
+
+    def test_an_unverified_local_account_loses_its_password(self, client: Client, sso: None, tenancy: Any) -> None:
+        """Pre-registering someone else's address must not leave you a key to the
+        account they are about to be signed into."""
+        local = tenancy.owner
+        assert local.has_usable_password()
+
+        sign_in(client, email=local.email)
+
+        local.refresh_from_db()
+        assert not local.has_usable_password()
+
+    def test_without_link_by_email_the_visitor_is_told_the_way_out(
+        self, client: Client, sso: None, tenancy: Any, settings: Any
+    ) -> None:
         """No auto-connect: ACCOUNT_EMAIL_VERIFICATION is optional, so a local
-        account can hold an address its owner never proved. The visitor is told
-        to sign in and connect, rather than dropped into a form that says the
-        address is taken."""
+        account can hold an address its owner never proved."""
+        providers = copy.deepcopy(settings.SOCIALACCOUNT_PROVIDERS)
+        providers["openid_connect"]["APPS"][0]["settings"]["email_authentication"] = False
+        settings.SOCIALACCOUNT_PROVIDERS = providers
         local = create_user("joiner@example.test")
         hold(client, invite(tenancy))
 
