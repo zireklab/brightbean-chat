@@ -669,6 +669,12 @@ deployment actually decides:
 | `EMAIL_HOST` and friends | SMTP for the deployment's own account email: password reset, address verification, invitations and notifications. STARTTLS only, so port 587. Not used by the email channel, which has its own credentials per connection. |
 | `STORAGE_BACKEND` / `S3_*` | `local` (a shared volume) or `s3` (S3, R2, B2, MinIO). `local` requires the web and worker processes to share a filesystem, which is true of the compose stack and of no PaaS — see [Storage](#storage-when-web-and-worker-are-separate). |
 | `SENTRY_DSN` | Optional error reporting; empty disables it. |
+| `OIDC_ISSUER` / `_CLIENT_ID` / `_CLIENT_SECRET` | Single sign-on through any OpenID Connect provider (PKCE). All three or none. Register the client with redirect URI `<APP_URL>/accounts/oidc/sso/login/callback/`. The issuer's origin is added to the CSP `form-action` list. |
+| `OIDC_NAME` | The button label ("Continue with …"). Default "Single sign-on". |
+| `OIDC_SIGNUP` | `invite` (default): an identity already linked signs in, and a new one is created only to accept an invitation sent to the same provider-verified address, never with an organization of its own. `open`: every new identity gets its own organization, as Google sign-in does. |
+| `OIDC_LINK_BY_EMAIL` | Default on: a person with a local account signs in with SSO when the provider vouches for the same address, and the identity is linked. A local account whose address was never verified has its password removed on that first sign-in (allauth's protection against pre-registering someone else's address); reset it by email if you still want one. |
+| `OIDC_TRUST_EMAIL` | Treat the provider's email as verified when it sends no `email_verified` claim (Microsoft Entra, for one). Only for a provider that does not let users type their own address. |
+| `OIDC_TOKEN_AUTH_METHOD` | `client_secret_basic` or `client_secret_post`. Empty follows the provider's discovery document. |
 
 ---
 

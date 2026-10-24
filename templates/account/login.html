@@ -15,9 +15,10 @@
   GET-initiated login is CSRF-forgeable. Studio's shared provider element
   renders an <a> and has exactly that inconsistency.
   {% endcomment %}
-  {% if google_configured %}
+  {% if sso_provider_ids %}
     {% get_providers as socialaccount_providers %}
     {% for provider in socialaccount_providers %}
+      {% if provider.sub_id in sso_provider_ids %}
       {% provider_login_url provider process="login" as provider_url %}
       <form method="post" action="{{ provider_url }}">
         {% csrf_token %}
@@ -26,6 +27,7 @@
         {% endif %}
         <button type="submit" class="btn-social">{% blocktranslate with provider_name=provider.name %}Continue with {{ provider_name }}{% endblocktranslate %}</button>
       </form>
+      {% endif %}
     {% endfor %}
     <div class="divider-text my-5">{% translate "or" %}</div>
   {% endif %}
