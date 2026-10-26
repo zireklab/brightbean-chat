@@ -92,3 +92,33 @@ def ensure_provisioned(user: Any) -> None:
         return
     logger.info("Provisioning a default organization for user %s on first visit", user.pk)
     provision_organization_and_workspace(user)
+
+
+def pending_invitation(request: Any) -> Any:
+    """The unaccepted, unexpired invitation whose token the session holds, or None.
+
+    Read-only: the token stays in the session until the signup that uses it
+    succeeds, so a refusal does not cost the visitor their invitation.
+    """
+    from apps.members.models import Invitation
+    from apps.members.signals_keys import PENDING_INVITE_SESSION_KEY
+
+    token = request.session.get(PENDING_INVITE_SESSION_KEY) if request is not None else None
+    invitation = Invitation.objects.for_token(token).filter(accepted_at__isnull=True).first() if token else None
+    return None if invitation is None or invitation.is_expired else invitation
+
+
+def is_sso(sociallogin: Any) -> bool:
+    """Whether this social login came through the single sign-on provider."""
+    from django.conf import settings
+
+    return sociallogin.account.provider == settings.OIDC_PROVIDER_ID
+
+
+def is_invite_only(sociallogin: Any) -> bool:
+    """Whether this login falls under ``OIDC_SIGNUP=invite``: new identities are
+    created only to honour an invitation. Google, and SSO in ``open`` mode, are
+    not."""
+    from django.conf import settings
+
+    return is_sso(sociallogin) and settings.OIDC_SIGNUP == "invite"

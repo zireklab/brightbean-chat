@@ -57,7 +57,8 @@ django-allauth[socialaccount]==65.19.7   # 65.x API: ACCOUNT_LOGIN_METHODS / ACC
                                           # pinned here, so pip was free to resolve the vulnerable 3.3.1 under
                                           # the old <4 ceiling. 65.19.7's own security fix (Tumblr identifiers)
                                           # and 65.19.6's (Bitbucket/Pinterest identifiers) don't apply: only
-                                          # the google provider is installed (config/settings/base.py).
+                                          # the google and openid_connect providers are installed
+                                          # (config/settings/base.py).
 bcrypt==5.0.0             # BCryptSHA256PasswordHasher's runtime dep; Django does not declare it
 
 # QR codes for ref-URL triggers (issue #11, SPEC §21 phase 2). Pure Python with
