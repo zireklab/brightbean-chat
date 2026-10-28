@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-21 14:08+0000\n"
+"POT-Creation-Date: 2026-10-28 15:19+0000\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ru\n"
@@ -18,6 +18,23 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: apps/accounts/adapters.py:145
+#, python-format
+msgid ""
+"An account with this address already exists. Sign in with your password, "
+"accept the invitation, then connect %(name)s under your connected accounts."
+msgstr ""
+"Аккаунт с этим адресом уже существует. Войдите по паролю, примите "
+"приглашение, затем подключите %(name)s в разделе подключённых аккаунтов."
+
+#: apps/accounts/adapters.py:170
+msgid "An invitation is required to sign up."
+msgstr "Для регистрации нужно приглашение."
+
+#: apps/accounts/adapters.py:183
+msgid "This account was just created. Try signing in again."
+msgstr "Этот аккаунт только что создан. Попробуйте войти ещё раз."
 
 #: apps/analytics/views.py:216
 msgid "Email tracking settings saved."
@@ -83,27 +100,27 @@ msgstr "Ошибка"
 msgid "Blocked"
 msgstr "Заблокировано"
 
-#: apps/api/services.py:72
+#: apps/api/services.py:73
 msgid "Only an organization owner or admin can issue API keys."
 msgstr ""
 "Выпускать API-ключи может только владелец или администратор организации."
 
-#: apps/api/services.py:76
+#: apps/api/services.py:77
 msgid ""
 "You need the manage_api_keys permission in that workspace to issue a key for "
 "it."
 msgstr "Для выпуска ключа в этом пространстве нужно право manage_api_keys."
 
-#: apps/api/services.py:82
+#: apps/api/services.py:83
 msgid "A key needs at least one scope."
 msgstr "Ключу нужна хотя бы одна область доступа."
 
-#: apps/api/services.py:85
+#: apps/api/services.py:86
 #, python-format
 msgid "Unknown scope: %(scopes)s."
 msgstr "Неизвестная область доступа: %(scopes)s."
 
-#: apps/api/services.py:92
+#: apps/api/services.py:93
 #, python-format
 msgid ""
 "You cannot grant the %(scope)s scope: it includes %(missing)s, which you do "
@@ -111,15 +128,19 @@ msgid ""
 msgstr ""
 "Нельзя выдать область %(scope)s: она включает %(missing)s, чего у вас нет."
 
-#: apps/api/services.py:124
+#: apps/api/services.py:120
 msgid "Give the key a name so you can recognise it later."
 msgstr "Дайте ключу имя, чтобы потом его узнать."
 
-#: apps/api/services.py:126
+#: apps/api/services.py:122
 msgid "The name is too long (100 characters maximum)."
 msgstr "Имя слишком длинное (максимум 100 символов)."
 
-#: apps/api/services.py:148
+#: apps/api/services.py:136
+msgid "A key needs an issuer."
+msgstr "Ключу нужен выпускающий."
+
+#: apps/api/services.py:173
 #, python-format
 msgid ""
 "This workspace already has %(limit)s active keys. Revoke one before issuing "
@@ -128,36 +149,36 @@ msgstr ""
 "В этом пространстве уже %(limit)s активных ключей. Отзовите один, прежде чем "
 "выпускать новый."
 
-#: apps/api/services.py:189
+#: apps/api/services.py:214
 #, python-format
 msgid "Unknown event: %(events)s."
 msgstr "Неизвестное событие: %(events)s."
 
-#: apps/api/services.py:191
+#: apps/api/services.py:216
 msgid "Choose at least one event to send."
 msgstr "Выберите хотя бы одно событие для отправки."
 
-#: apps/api/services.py:207
+#: apps/api/services.py:232
 msgid "Enter the URL deliveries should be sent to."
 msgstr "Укажите URL, на который отправлять доставки."
 
-#: apps/api/services.py:209
+#: apps/api/services.py:234
 msgid "That URL is too long (500 characters maximum)."
 msgstr "Этот URL слишком длинный (максимум 500 символов)."
 
-#: apps/api/services.py:212
+#: apps/api/services.py:237
 msgid "The URL must start with http:// or https://."
 msgstr "URL должен начинаться с http:// или https://."
 
-#: apps/api/services.py:216
+#: apps/api/services.py:241
 msgid "The URL must not carry a username or password."
 msgstr "URL не должен содержать имя пользователя или пароль."
 
-#: apps/api/services.py:218 apps/api/services.py:222
+#: apps/api/services.py:243 apps/api/services.py:247
 msgid "That does not look like a valid URL."
 msgstr "Это не похоже на корректный URL."
 
-#: apps/api/services.py:249
+#: apps/api/services.py:274
 #, python-format
 msgid "This workspace already has %(limit)s endpoints."
 msgstr "В этом пространстве уже %(limit)s конечных точек."
@@ -414,7 +435,7 @@ msgid "Sending"
 msgstr "Отправляется"
 
 #: apps/broadcasts/models.py:73 apps/broadcasts/models.py:93
-#: apps/inbox/views.py:985 templates/analytics/_counter_cards.html:21
+#: apps/inbox/views.py:997 templates/analytics/_counter_cards.html:21
 #: templates/analytics/flow_detail.html:58
 #: templates/analytics/flow_detail.html:93 templates/analytics/overview.html:54
 #: templates/analytics/overview.html:93 templates/broadcasts/_counters.html:56
@@ -446,69 +467,73 @@ msgstr "Рассылка «{broadcast_name}» завершена"
 msgid "{sent} sent, {failed} failed, {skipped} skipped."
 msgstr "Отправлено: {sent}, ошибок: {failed}, пропущено: {skipped}."
 
-#: apps/broadcasts/services.py:156 apps/broadcasts/services.py:177
+#: apps/broadcasts/services.py:157 apps/broadcasts/services.py:178
 msgid "This channel does not allow broadcasts."
 msgstr "Этот канал не поддерживает рассылки."
 
-#: apps/broadcasts/services.py:202
+#: apps/broadcasts/services.py:203
 msgid "Add at least one rule, or pick a saved segment."
 msgstr "Добавьте хотя бы одно правило или выберите сохранённый сегмент."
 
-#: apps/broadcasts/services.py:250
+#: apps/broadcasts/services.py:251
 #, python-format
 msgid "Broadcast: %(name)s"
 msgstr "Рассылка: %(name)s"
 
-#: apps/broadcasts/services.py:269
+#: apps/broadcasts/services.py:270
 msgid "That message cannot be sent as written."
 msgstr "Это сообщение нельзя отправить в таком виде."
 
-#: apps/broadcasts/services.py:288
+#: apps/broadcasts/services.py:289
 msgid "That template is not approved for use on this channel."
 msgstr "Этот шаблон не одобрен для использования на этом канале."
 
-#: apps/broadcasts/services.py:307
+#: apps/broadcasts/services.py:308
 #, python-format
 msgid "This template needs a value for %(slots)s."
 msgstr "Этому шаблону нужно значение для %(slots)s."
 
-#: apps/broadcasts/services.py:332
+#: apps/broadcasts/services.py:333
 msgid "That message tag is not one this channel accepts."
 msgstr "Этот тег сообщения не принимается этим каналом."
 
-#: apps/broadcasts/services.py:362
+#: apps/broadcasts/services.py:363
 msgid " (copy)"
 msgstr " (копия)"
 
-#: apps/broadcasts/services.py:430
+#: apps/broadcasts/services.py:431
 msgid "Cancel this broadcast before deleting it."
 msgstr "Отмените эту рассылку перед удалением."
 
-#: apps/broadcasts/services.py:467
+#: apps/broadcasts/services.py:468
 msgid "Only a draft can be scheduled."
 msgstr "Запланировать можно только черновик."
 
-#: apps/broadcasts/services.py:469
+#: apps/broadcasts/services.py:470
 msgid "Add a message before sending."
 msgstr "Добавьте сообщение перед отправкой."
 
-#: apps/broadcasts/services.py:472
+#: apps/broadcasts/services.py:473
 msgid "Choose who this broadcast goes to."
 msgstr "Выберите, кому пойдёт эта рассылка."
 
-#: apps/broadcasts/services.py:483
+#: apps/broadcasts/services.py:485
 msgid "Nobody matches this audience."
 msgstr "Никто не подходит под эту аудиторию."
 
-#: apps/broadcasts/services.py:492
+#: apps/broadcasts/services.py:494
 msgid "Nobody in this audience can be messaged on this channel right now."
 msgstr "Никому из этой аудитории сейчас нельзя написать на этом канале."
 
-#: apps/broadcasts/services.py:506
+#: apps/broadcasts/services.py:508
 msgid "This broadcast is already on its way."
 msgstr "Эта рассылка уже отправляется."
 
 #: apps/broadcasts/services.py:546
+msgid "This channel can no longer be used for broadcasts. Choose another one."
+msgstr ""
+
+#: apps/broadcasts/services.py:567
 msgid ""
 "That template is no longer approved on this channel. Pick another one before "
 "sending."
@@ -516,7 +541,7 @@ msgstr ""
 "Этот шаблон больше не одобрен на этом канале. Выберите другой перед "
 "отправкой."
 
-#: apps/broadcasts/services.py:563
+#: apps/broadcasts/services.py:584
 #, python-format
 msgid ""
 "%(count)s of these contacts are outside the messaging window, so this send "
@@ -525,7 +550,7 @@ msgstr ""
 "%(count)s из этих контактов вне окна для сообщений, поэтому для этой "
 "отправки нужен непромо-тег сообщения."
 
-#: apps/broadcasts/services.py:571
+#: apps/broadcasts/services.py:592
 #, python-format
 msgid ""
 "%(count)s of these contacts are outside the messaging window, so this send "
@@ -534,15 +559,15 @@ msgstr ""
 "%(count)s из этих контактов вне окна для сообщений, поэтому для этой "
 "отправки нужен одобренный шаблон."
 
-#: apps/broadcasts/services.py:609
+#: apps/broadcasts/services.py:630
 msgid "This broadcast has already been sent or scheduled."
 msgstr "Эта рассылка уже отправлена или запланирована."
 
-#: apps/broadcasts/services.py:639
+#: apps/broadcasts/services.py:660
 msgid "Only a scheduled or sending broadcast can be cancelled."
 msgstr "Отменить можно только запланированную или отправляющуюся рассылку."
 
-#: apps/broadcasts/services.py:1028
+#: apps/broadcasts/services.py:1049
 #, python-format
 msgid ""
 "This broadcast reaches %(eligible)s people and your plan has room for "
@@ -910,7 +935,7 @@ msgid "Could not move the step"
 msgstr "Не удалось переместить шаг"
 
 #: apps/campaigns/views.py:331 apps/flows/views_triggers.py:299
-#: apps/inbox/views.py:1842
+#: apps/inbox/views.py:1854
 msgid "Order updated"
 msgstr "Порядок обновлён"
 
@@ -1821,7 +1846,7 @@ msgstr "Пропустить строку"
 msgid "Running"
 msgstr "Выполняется"
 
-#: apps/contacts/models.py:570 apps/inbox/views.py:591
+#: apps/contacts/models.py:570 apps/inbox/views.py:603
 #: templates/api/key_created.html:26 templates/api/webhook_secret.html:22
 #: templates/channels/secret.html:57 templates/inbox/_conversation_rows.html:81
 msgid "Done"
@@ -1918,7 +1943,7 @@ msgstr "Сначала выберите тег"
 msgid "Already tagged"
 msgstr "Уже помечен"
 
-#: apps/contacts/views.py:709 apps/inbox/views.py:1208
+#: apps/contacts/views.py:709 apps/inbox/views.py:1220
 msgid "Tag added"
 msgstr "Тег добавлен"
 
@@ -1926,7 +1951,7 @@ msgstr "Тег добавлен"
 msgid "That tag was not on this contact"
 msgstr "Этого тега не было на этом контакте"
 
-#: apps/contacts/views.py:723 apps/inbox/views.py:1206
+#: apps/contacts/views.py:723 apps/inbox/views.py:1218
 msgid "Tag removed"
 msgstr "Тег удалён"
 
@@ -1954,7 +1979,7 @@ msgstr "Сценарий запущен"
 msgid "Nothing was running"
 msgstr "Ничего не выполнялось"
 
-#: apps/contacts/views.py:836 apps/inbox/views.py:1181
+#: apps/contacts/views.py:836 apps/inbox/views.py:1193
 msgid "Automation stopped"
 msgstr "Автоматизация остановлена"
 
@@ -4001,7 +4026,7 @@ msgstr "Отметить как выполненное"
 msgid "(deleted)"
 msgstr "(удалено)"
 
-#: apps/inbox/rendering.py:704 apps/inbox/views.py:921
+#: apps/inbox/rendering.py:704 apps/inbox/views.py:933
 #, python-format
 msgid "%(list)s or %(last)s"
 msgstr "%(list)s или %(last)s"
@@ -4075,7 +4100,7 @@ msgstr "Неизвестное действие %(kind)r."
 msgid "That label no longer exists."
 msgstr "Этой метки больше не существует."
 
-#: apps/inbox/rules.py:300 apps/inbox/views.py:1108
+#: apps/inbox/rules.py:300 apps/inbox/views.py:1120
 msgid "That person is not a member of this workspace."
 msgstr "Этот человек не является участником этого пространства."
 
@@ -4145,121 +4170,121 @@ msgstr "Это напоминание недействительно."
 msgid "That reply has already been sent or cancelled."
 msgstr "Этот ответ уже отправлен или отменён."
 
-#: apps/inbox/views.py:248
+#: apps/inbox/views.py:249
 msgid "Assigned to me"
 msgstr "Назначено мне"
 
-#: apps/inbox/views.py:249 apps/inbox/views.py:589 apps/inbox/views.py:1098
+#: apps/inbox/views.py:250 apps/inbox/views.py:601 apps/inbox/views.py:1110
 #: templates/inbox/_thread_header.html:60
 msgid "Unassigned"
 msgstr "Не назначено"
 
-#: apps/inbox/views.py:588 apps/notifications/views.py:140
+#: apps/inbox/views.py:600 apps/notifications/views.py:140
 #: templates/media_library/library.html:116
 msgid "All"
 msgstr "Все"
 
-#: apps/inbox/views.py:590
+#: apps/inbox/views.py:602
 msgid "Mine"
 msgstr "Мои"
 
-#: apps/inbox/views.py:870
+#: apps/inbox/views.py:882
 msgid "Nothing to send"
 msgstr "Нечего отправлять"
 
-#: apps/inbox/views.py:885 templates/broadcasts/_rows.html:70
+#: apps/inbox/views.py:897 templates/broadcasts/_rows.html:70
 #: templates/inbox/_deferred.html:54
 msgid "Not sent"
 msgstr "Не отправлено"
 
-#: apps/inbox/views.py:886
+#: apps/inbox/views.py:898
 msgid "Note added"
 msgstr "Заметка добавлена"
 
-#: apps/inbox/views.py:886
+#: apps/inbox/views.py:898
 msgid "Reply sent"
 msgstr "Ответ отправлен"
 
-#: apps/inbox/views.py:894
+#: apps/inbox/views.py:906
 #, python-format
 msgid "%(platform)s cannot carry %(items)s, so that was left off."
 msgstr ""
 "%(platform)s не может передавать %(items)s, поэтому это было пропущено."
 
-#: apps/inbox/views.py:909
+#: apps/inbox/views.py:921
 msgid "an image"
 msgstr "изображение"
 
-#: apps/inbox/views.py:910
+#: apps/inbox/views.py:922
 msgid "an audio file"
 msgstr "аудиофайл"
 
-#: apps/inbox/views.py:911
+#: apps/inbox/views.py:923
 msgid "a video"
 msgstr "видео"
 
-#: apps/inbox/views.py:912
+#: apps/inbox/views.py:924
 msgid "a file"
 msgstr "файл"
 
-#: apps/inbox/views.py:983
+#: apps/inbox/views.py:995
 msgid "Still not sent"
 msgstr "Всё ещё не отправлено"
 
-#: apps/inbox/views.py:1107
+#: apps/inbox/views.py:1119
 msgid "Cannot assign"
 msgstr "Невозможно назначить"
 
-#: apps/inbox/views.py:1113
+#: apps/inbox/views.py:1125
 #, python-format
 msgid "Assigned to %(name)s"
 msgstr "Назначено: %(name)s"
 
-#: apps/inbox/views.py:1127
+#: apps/inbox/views.py:1139
 msgid "Marked done"
 msgstr "Отмечено как выполненное"
 
-#: apps/inbox/views.py:1137
+#: apps/inbox/views.py:1149
 msgid "Reopened"
 msgstr "Снова открыт"
 
-#: apps/inbox/views.py:1139
+#: apps/inbox/views.py:1151
 msgid "Unknown state"
 msgstr "Неизвестное состояние"
 
-#: apps/inbox/views.py:1139
+#: apps/inbox/views.py:1151
 msgid "A conversation is either open or done."
 msgstr "Диалог может быть либо открытым, либо завершённым."
 
-#: apps/inbox/views.py:1156
+#: apps/inbox/views.py:1168
 msgid "Automation resumed"
 msgstr "Автоматизация возобновлена"
 
-#: apps/inbox/views.py:1158
+#: apps/inbox/views.py:1170
 msgid "Automation paused"
 msgstr "Автоматизация приостановлена"
 
-#: apps/inbox/views.py:1180
+#: apps/inbox/views.py:1192
 msgid "Nothing running"
 msgstr "Ничего не запущено"
 
-#: apps/inbox/views.py:1202
+#: apps/inbox/views.py:1214
 msgid "No tag selected"
 msgstr "Тег не выбран"
 
-#: apps/inbox/views.py:1232
+#: apps/inbox/views.py:1244
 msgid "Not labelled"
 msgstr "Метка не добавлена"
 
-#: apps/inbox/views.py:1233
+#: apps/inbox/views.py:1245
 msgid "Labelled"
 msgstr "Помечено"
 
-#: apps/inbox/views.py:1244
+#: apps/inbox/views.py:1256
 msgid "Label removed"
 msgstr "Метка удалена"
 
-#: apps/inbox/views.py:1280
+#: apps/inbox/views.py:1292
 #, python-format
 msgid "Label removed from %(count)s conversation"
 msgid_plural "Label removed from %(count)s conversations"
@@ -4268,7 +4293,7 @@ msgstr[1] "Метка удалена из %(count)s диалогов"
 msgstr[2] "Метка удалена из %(count)s диалогов"
 msgstr[3] "Метка удалена из %(count)s диалогов"
 
-#: apps/inbox/views.py:1282
+#: apps/inbox/views.py:1294
 #, python-format
 msgid "Label added to %(count)s conversation"
 msgid_plural "Label added to %(count)s conversations"
@@ -4277,105 +4302,105 @@ msgstr[1] "Метка добавлена в %(count)s диалога"
 msgstr[2] "Метка добавлена в %(count)s диалогов"
 msgstr[3] "Метка добавлена в %(count)s диалогов"
 
-#: apps/inbox/views.py:1304 apps/inbox/views.py:1324
+#: apps/inbox/views.py:1316 apps/inbox/views.py:1336
 msgid "No reminder set"
 msgstr "Напоминание не установлено"
 
-#: apps/inbox/views.py:1304 apps/inbox/views.py:1355
+#: apps/inbox/views.py:1316 apps/inbox/views.py:1367
 msgid "Pick a date and time."
 msgstr "Выберите дату и время."
 
-#: apps/inbox/views.py:1325
+#: apps/inbox/views.py:1337
 msgid "Reminder set"
 msgstr "Напоминание установлено"
 
-#: apps/inbox/views.py:1337 apps/inbox/views.py:1406
+#: apps/inbox/views.py:1349 apps/inbox/views.py:1418
 msgid "Already gone"
 msgstr "Уже отменено"
 
-#: apps/inbox/views.py:1338
+#: apps/inbox/views.py:1350
 msgid "Reminder cancelled"
 msgstr "Напоминание отменено"
 
-#: apps/inbox/views.py:1355 apps/inbox/views.py:1359 apps/inbox/views.py:1369
+#: apps/inbox/views.py:1367 apps/inbox/views.py:1371 apps/inbox/views.py:1381
 msgid "Not scheduled"
 msgstr "Не запланировано"
 
-#: apps/inbox/views.py:1370
+#: apps/inbox/views.py:1382
 msgid "Reply scheduled"
 msgstr "Ответ запланирован"
 
-#: apps/inbox/views.py:1387 apps/inbox/views.py:1391
+#: apps/inbox/views.py:1399 apps/inbox/views.py:1403
 msgid "Not changed"
 msgstr "Не изменено"
 
-#: apps/inbox/views.py:1392
+#: apps/inbox/views.py:1404
 msgid "Scheduled reply updated"
 msgstr "Запланированный ответ обновлён"
 
-#: apps/inbox/views.py:1407
+#: apps/inbox/views.py:1419
 msgid "Scheduled reply cancelled"
 msgstr "Запланированный ответ отменён"
 
-#: apps/inbox/views.py:1497
+#: apps/inbox/views.py:1509
 msgid "That message is too long."
 msgstr "Это сообщение слишком длинное."
 
-#: apps/inbox/views.py:1506
+#: apps/inbox/views.py:1518
 #, python-format
 msgid "%(platform)s cannot carry that attachment."
 msgstr "%(platform)s не может передавать это вложение."
 
-#: apps/inbox/views.py:1509
+#: apps/inbox/views.py:1521
 msgid "Write something first."
 msgstr "Сначала напишите что-нибудь."
 
-#: apps/inbox/views.py:1538
+#: apps/inbox/views.py:1550
 msgid "One of those attachments is no longer in the library."
 msgstr "Одного из этих вложений больше нет в библиотеке."
 
-#: apps/inbox/views.py:1620
+#: apps/inbox/views.py:1632
 msgid "Not created"
 msgstr "Не создано"
 
-#: apps/inbox/views.py:1621
+#: apps/inbox/views.py:1633
 msgid "Label created"
 msgstr "Метка создана"
 
-#: apps/inbox/views.py:1632 apps/inbox/views.py:1766 apps/inbox/views.py:1771
-#: apps/inbox/views.py:1792
+#: apps/inbox/views.py:1644 apps/inbox/views.py:1778 apps/inbox/views.py:1783
+#: apps/inbox/views.py:1804
 msgid "Not saved"
 msgstr "Не сохранено"
 
-#: apps/inbox/views.py:1633
+#: apps/inbox/views.py:1645
 msgid "Label saved"
 msgstr "Метка сохранена"
 
-#: apps/inbox/views.py:1650
+#: apps/inbox/views.py:1662
 msgid "Label deleted"
 msgstr "Метка удалена"
 
-#: apps/inbox/views.py:1766
+#: apps/inbox/views.py:1778
 msgid "A rule needs a name."
 msgstr "Правилу нужно имя."
 
-#: apps/inbox/views.py:1794 apps/inbox/views.py:1797
+#: apps/inbox/views.py:1806 apps/inbox/views.py:1809
 msgid "Rule saved"
 msgstr "Правило сохранено"
 
-#: apps/inbox/views.py:1811
+#: apps/inbox/views.py:1823
 msgid "Not enabled"
 msgstr "Не включено"
 
-#: apps/inbox/views.py:1814
+#: apps/inbox/views.py:1826
 msgid "Rule enabled"
 msgstr "Правило включено"
 
-#: apps/inbox/views.py:1818
+#: apps/inbox/views.py:1830
 msgid "Rule disabled"
 msgstr "Правило отключено"
 
-#: apps/inbox/views.py:1827
+#: apps/inbox/views.py:1839
 msgid "Rule deleted"
 msgstr "Правило удалено"
 
@@ -4615,11 +4640,8 @@ msgstr ""
 msgid "Cannot invite someone as an organization owner."
 msgstr "Нельзя пригласить кого-то как владельца организации."
 
-#: apps/members/services.py
-msgid "Cannot add someone as an organization owner."
-msgstr "Нельзя добавить кого-то как владельца организации."
-
-#: apps/members/services.py:225 apps/members/services.py:482
+#: apps/members/services.py:225 apps/members/services.py:378
+#: apps/members/services.py:526
 #, python-format
 msgid "Unknown org role: %(role)r."
 msgstr "Неизвестная роль в организации: %(role)r."
@@ -4648,7 +4670,7 @@ msgstr "Срок действия приглашения истёк."
 msgid "This invitation was sent to a different email address."
 msgstr "Это приглашение было отправлено на другой email-адрес."
 
-#: apps/members/services.py:313
+#: apps/members/services.py:332
 #, python-format
 msgid ""
 "This account already belongs to %(org_name)s. BrightBean Chat supports one "
@@ -4659,48 +4681,52 @@ msgstr ""
 "поддерживает только одну организацию на аккаунт — сначала покиньте ту или "
 "примите это приглашение с другого аккаунта."
 
-#: apps/members/services.py:377
+#: apps/members/services.py:376
+msgid "Cannot add someone as an organization owner."
+msgstr "Нельзя добавить кого-то как владельца организации."
+
+#: apps/members/services.py:421
 msgid "Cannot resend an already accepted invitation."
 msgstr "Нельзя повторно отправить уже принятое приглашение."
 
-#: apps/members/services.py:388
+#: apps/members/services.py:432
 msgid "Cannot revoke an already accepted invitation."
 msgstr "Нельзя отозвать уже принятое приглашение."
 
-#: apps/members/services.py:420
+#: apps/members/services.py:464
 #, python-format
 msgid "You have been invited to %(org_name)s on BrightBean Chat"
 msgstr "Вас пригласили в %(org_name)s в BrightBean Chat"
 
-#: apps/members/services.py:443
+#: apps/members/services.py:487
 msgid "You cannot remove yourself from the organization."
 msgstr "Вы не можете удалить себя из организации."
 
-#: apps/members/services.py:455
+#: apps/members/services.py:499
 msgid "Cannot remove the last organization owner."
 msgstr "Нельзя удалить последнего владельца организации."
 
-#: apps/members/services.py:457
+#: apps/members/services.py:501
 msgid "remove"
 msgstr "удалить"
 
-#: apps/members/services.py:478
+#: apps/members/services.py:522
 msgid "Cannot promote to owner. Transfer ownership instead."
 msgstr "Нельзя повысить до владельца. Вместо этого передайте право владения."
 
-#: apps/members/services.py:486
+#: apps/members/services.py:530
 msgid "change"
 msgstr "изменить"
 
-#: apps/members/services.py:488
+#: apps/members/services.py:532
 msgid "Only organization owners can promote someone to admin."
 msgstr "Только владельцы организации могут назначать администраторов."
 
-#: apps/members/services.py:493
+#: apps/members/services.py:537
 msgid "Cannot change the role of the last organization owner."
 msgstr "Нельзя изменить роль последнего владельца организации."
 
-#: apps/members/services.py:534
+#: apps/members/services.py:578
 msgid ""
 "You cannot modify a workspace membership whose role is higher than your own."
 msgstr "Вы не можете изменить членство в пространстве с ролью выше вашей."
@@ -4947,37 +4973,37 @@ msgstr "Непрочитано"
 msgid "Read"
 msgstr "Прочитано"
 
-#: apps/organizations/views.py:53
-msgid "An organization needs a name."
-msgstr "Организации нужно имя."
-
-#: apps/organizations/views.py:62 apps/workspaces/views.py:368
-msgid "That is not a timezone we recognise."
-msgstr "Такой часовой пояс не распознан."
-
-#: apps/organizations/views.py:67
-msgid "Organization settings saved."
-msgstr "Настройки организации сохранены."
-
-#: apps/organizations/views.py:131 apps/workspaces/views.py:346
+#: apps/organizations/services.py:32 apps/workspaces/views.py:346
 msgid "A workspace needs a name."
 msgstr "Пространству нужно имя."
 
-#: apps/organizations/views.py:134
+#: apps/organizations/services.py:37 apps/organizations/services.py:46
 msgid "A workspace with that name already exists."
 msgstr "Пространство с таким именем уже существует."
 
-#: apps/organizations/views.py:149
+#: apps/organizations/views.py:54
+msgid "An organization needs a name."
+msgstr "Организации нужно имя."
+
+#: apps/organizations/views.py:63 apps/workspaces/views.py:368
+msgid "That is not a timezone we recognise."
+msgstr "Такой часовой пояс не распознан."
+
+#: apps/organizations/views.py:68
+msgid "Organization settings saved."
+msgstr "Настройки организации сохранены."
+
+#: apps/organizations/views.py:135
 #, python-format
 msgid "Created %(name)s."
 msgstr "%(name)s создано."
 
-#: apps/organizations/views.py:182 apps/organizations/views.py:190
+#: apps/organizations/views.py:168 apps/organizations/views.py:176
 #, python-format
 msgid "Restored %(name)s."
 msgstr "%(name)s восстановлено."
 
-#: apps/organizations/views.py:188
+#: apps/organizations/views.py:174
 #, python-format
 msgid "Archived %(name)s."
 msgstr "%(name)s архивировано."
@@ -5109,7 +5135,7 @@ msgid "Something went wrong on our end. Please try again."
 msgstr "На нашей стороне что-то пошло не так. Попробуйте снова."
 
 #: templates/account/login.html:4 templates/account/login.html:8
-#: templates/account/login.html:38
+#: templates/account/login.html:40
 #: templates/members/_accept_invite_body.html:13
 #: templates/members/_invite_expired_body.html:8
 msgid "Sign in"
@@ -5119,17 +5145,17 @@ msgstr "Войти"
 msgid "Welcome back to BrightBean Chat."
 msgstr "С возвращением в BrightBean Chat."
 
-#: templates/account/login.html:28 templates/account/signup.html:23
+#: templates/account/login.html:29 templates/account/signup.html:24
 #, python-format
 msgid "Continue with %(provider_name)s"
 msgstr "Продолжить через %(provider_name)s"
 
-#: templates/account/login.html:31 templates/account/signup.html:26
+#: templates/account/login.html:33 templates/account/signup.html:28
 #: templates/channels/sms_connect.html:71
 msgid "or"
 msgstr "или"
 
-#: templates/account/login.html:43
+#: templates/account/login.html:45
 #, fuzzy, python-format
 #| msgid ""
 #| "No account yet? <a href=\"%(signup_url)s\" style=\"color: var(--primary);"
@@ -5152,11 +5178,11 @@ msgstr ""
 "Вас пригласили присоединиться к организации. Регистрация здесь добавит вас в "
 "неё."
 
-#: templates/account/signup.html:53
+#: templates/account/signup.html:55
 msgid "Create account"
 msgstr "Создать аккаунт"
 
-#: templates/account/signup.html:58
+#: templates/account/signup.html:60
 #, fuzzy, python-format
 #| msgid ""
 #| "Already have an account? <a href=\"%(login_url)s\" style=\"color: var(--"
@@ -5168,6 +5194,27 @@ msgid ""
 msgstr ""
 "Уже есть аккаунт? <a href=\"%(login_url)s\" style=\"color: var(--primary);"
 "\">Войти</a>."
+
+#: templates/account/signup_closed.html:4
+#: templates/account/signup_closed.html:8
+msgid "Sign up is closed"
+msgstr "Регистрация закрыта"
+
+#: templates/account/signup_closed.html:9
+msgid "You can't create an account this way."
+msgstr "Так создать аккаунт нельзя."
+
+#: templates/account/signup_closed.html:13
+msgid ""
+"Ask the owner of your organization for an invitation, then open the link in "
+"the email and sign in from there."
+msgstr ""
+"Попросите владельца вашей организации прислать приглашение, затем откройте "
+"ссылку из письма и войдите оттуда."
+
+#: templates/account/signup_closed.html:15
+msgid "Back to sign in"
+msgstr "Назад ко входу"
 
 #: templates/accounts/preferences.html:15
 msgid "How BrightBean Chat looks and speaks to you."
@@ -11926,36 +11973,3 @@ msgstr "Выбрать дополнительный цвет"
 
 #~ msgid "Preferences"
 #~ msgstr "Настройки"
-
-#: templates/account/signup_closed.html
-msgid "Sign up is closed"
-msgstr "Регистрация закрыта"
-
-#: templates/account/signup_closed.html
-msgid "You can't create an account this way."
-msgstr "Так создать аккаунт нельзя."
-
-#: templates/account/signup_closed.html
-msgid "Ask the owner of your organization for an invitation, then open the link in the email and sign in from there."
-msgstr "Попросите владельца вашей организации прислать приглашение, затем откройте ссылку из письма и войдите оттуда."
-
-#: templates/account/signup_closed.html
-msgid "Back to sign in"
-msgstr "Назад ко входу"
-
-#: apps/accounts/adapters.py
-msgid "An invitation is required to sign up."
-msgstr "Для регистрации нужно приглашение."
-
-#: apps/accounts/adapters.py
-#, python-format
-msgid "An account with this address already exists. Sign in with your password, accept the invitation, then connect %(name)s under your connected accounts."
-msgstr "Аккаунт с этим адресом уже существует. Войдите по паролю, примите приглашение, затем подключите %(name)s в разделе подключённых аккаунтов."
-
-#: apps/accounts/adapters.py
-msgid "This account was just created. Try signing in again."
-msgstr "Этот аккаунт только что создан. Попробуйте войти ещё раз."
-
-#: apps/api/services.py
-msgid "A key needs an issuer."
-msgstr "Ключу нужен выпускающий."
