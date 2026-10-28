@@ -147,3 +147,29 @@ def is_invite_only(sociallogin: Any) -> bool:
     from django.conf import settings
 
     return is_sso(sociallogin) and settings.OIDC_SIGNUP == "invite"
+
+
+def get_or_create_user(email: str, name: str = "") -> tuple[Any, bool]:
+    """The account for ``email`` and whether this call created it.
+
+    Addresses are matched case-insensitively and stored lower-case: the column is
+    unique but case-sensitive, so ``Ada@x.test`` and ``ada@x.test`` would
+    otherwise be two people. A created account has an unusable password and
+    signs in through SSO, a password reset or an invitation.
+    """
+    from django.core.validators import validate_email
+    from django.db import IntegrityError
+
+    from apps.accounts.models import User
+
+    email = (email or "").strip().lower()
+    validate_email(email)
+    user = User.objects.filter(email__iexact=email).first()
+    if user is not None:
+        return user, False
+    try:
+        with transaction.atomic():
+            return User.objects.create_user(email=email, name=(name or "").strip()[:255]), True
+    except IntegrityError:
+        # A concurrent request created it between our read and our insert.
+        return User.objects.get(email__iexact=email), False

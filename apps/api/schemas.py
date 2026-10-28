@@ -31,6 +31,8 @@ from ninja import Schema
 from pydantic import ConfigDict
 
 __all__ = [
+    "ApiKeyIssue",
+    "ApiKeyIssued",
     "ContactCreate",
     "ContactOut",
     "ContactUpdate",
@@ -42,10 +44,16 @@ __all__ = [
     "FlowStartOut",
     "MessageOut",
     "MessageSend",
+    "OrganizationCreate",
+    "OrganizationOut",
     "Page",
     "StrictSchema",
     "TagAdd",
     "TagOut",
+    "UserAdd",
+    "UserAdded",
+    "WorkspaceCreate",
+    "WorkspaceOut",
 ]
 
 
@@ -268,3 +276,65 @@ class MessageOut(Schema):
     source: str
     error: str = ""
     created_at: dt.datetime
+
+
+# --- Platform API (``/api/platform/v1/``) -------------------------------------
+
+
+class OrganizationCreate(StrictSchema):
+    name: str
+    external_id: str | None = None
+    owner_email: str
+    owner_name: str = ""
+    workspace_name: str = ""
+
+
+class WorkspaceOut(Schema):
+    id: UUID
+    name: str
+    is_archived: bool
+
+
+class OrganizationOut(Schema):
+    id: UUID
+    name: str
+    external_id: str | None
+    workspaces: list[WorkspaceOut]
+    member_count: int
+
+
+class WorkspaceCreate(StrictSchema):
+    name: str
+
+
+class WorkspaceAssignmentIn(StrictSchema):
+    workspace_id: UUID
+    role: str
+
+
+class UserAdd(StrictSchema):
+    email: str
+    name: str = ""
+    org_role: str = "member"
+    workspaces: list[WorkspaceAssignmentIn] = []
+
+
+class UserAdded(Schema):
+    id: UUID
+    email: str
+    name: str
+    org_role: str
+    user_created: bool
+
+
+class ApiKeyIssue(StrictSchema):
+    name: str
+    scopes: list[str]
+
+
+class ApiKeyIssued(Schema):
+    id: UUID
+    name: str
+    scopes: list[str]
+    lookup_prefix: str
+    token: str

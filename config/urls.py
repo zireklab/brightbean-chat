@@ -210,6 +210,11 @@ urlpatterns = [
     # apps/api/auth.py. Note apps.flows already owns w/<uuid>/api/flows/ — that
     # is the session-authenticated builder API and does not collide with this.
     path("api/v1/", include("apps.api.urls")),
+    # The platform API (provisioning for the system that runs this installation).
+    # Same reasoning as above: bearer-only, no session, no workspace kwarg. Its
+    # path kwargs are org_id / ws_id / key_id, never workspace_id, which is
+    # RBACMiddleware's resolution contract.
+    path("api/platform/v1/", include("apps.api.urls_platform")),
     path("", account_views.root, name="index"),
 ]
 
