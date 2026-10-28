@@ -4615,6 +4615,10 @@ msgstr ""
 msgid "Cannot invite someone as an organization owner."
 msgstr "Нельзя пригласить кого-то как владельца организации."
 
+#: apps/members/services.py
+msgid "Cannot add someone as an organization owner."
+msgstr "Нельзя добавить кого-то как владельца организации."
+
 #: apps/members/services.py:225 apps/members/services.py:482
 #, python-format
 msgid "Unknown org role: %(role)r."

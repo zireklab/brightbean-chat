@@ -20,7 +20,8 @@ from apps.common.windows import is_valid_timezone, timezone_choices
 from apps.members.decorators import require_org_role
 from apps.members.models import WorkspaceMembership
 from apps.members.requests import OrgRequest
-from apps.members.roles import OrgRole, WorkspaceRole
+from apps.members.roles import OrgRole
+from apps.organizations import services
 from apps.workspaces.models import Workspace
 
 
@@ -126,27 +127,12 @@ def billing_view(request: OrgRequest) -> HttpResponse:
 @require_org_role("admin")
 @require_POST
 def create_workspace(request: OrgRequest) -> HttpResponse:
-    name = (request.POST.get("name") or "").strip()[:100]
-    if not name:
-        messages.error(request, gettext("A workspace needs a name."))
-        return redirect(reverse("organizations:workspaces"))
-    if Workspace.objects.for_org(request.org.pk).filter(name=name).exists():
-        messages.error(request, gettext("A workspace with that name already exists."))
-        return redirect(reverse("organizations:workspaces"))
-    # The count and the insert are one critical section. See
-    # apps/billing/entitlements.organization_locked: a lock released when the
-    # check returns serialises nothing.
-    with organization_locked(request.org):
-        refusal = _plan_refusal(request.org)
-        if refusal is not None:
-            messages.error(request, refusal)
-            return redirect(reverse("organizations:workspaces"))
-
-        workspace = Workspace.objects.create(organization=request.org, name=name)
-        # The creator becomes its admin, or nobody can configure the thing they
-        # just made.
-        WorkspaceMembership.objects.create(user=request.user, workspace=workspace, workspace_role=WorkspaceRole.ADMIN)
-    messages.success(request, gettext("Created %(name)s.") % {"name": workspace.name})
+    try:
+        workspace = services.create_workspace(request.org, request.POST.get("name") or "", creator=request.user)
+    except services.WorkspaceError as exc:
+        messages.error(request, str(exc))
+    else:
+        messages.success(request, gettext("Created %(name)s.") % {"name": workspace.name})
     return redirect(reverse("organizations:workspaces"))
 
 

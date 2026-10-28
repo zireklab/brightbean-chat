@@ -4503,6 +4503,10 @@ msgstr "Бул дарекке чакыруу мурунтан эле жөнөт�
 msgid "Cannot invite someone as an organization owner."
 msgstr "Кимдир бирөөнү уюм ээси катары чакырууга болбойт."
 
+#: apps/members/services.py
+msgid "Cannot add someone as an organization owner."
+msgstr "Кимдир бирөөнү уюм ээси катары кошууга болбойт."
+
 #: apps/members/services.py:225 apps/members/services.py:482
 #, python-format
 msgid "Unknown org role: %(role)r."

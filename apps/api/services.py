@@ -41,7 +41,7 @@ from apps.api.auth import SCOPE_PERMISSIONS, permissions_for_scopes
 from apps.api.events import SUBSCRIBABLE_EVENTS
 from apps.api.models import ApiKey, ApiScope, OutboundWebhook
 from apps.members.models import OrgMembership, WorkspaceMembership
-from apps.members.roles import ORG_ROLE_LEVEL, OrgRole
+from apps.members.roles import ORG_ROLE_LEVEL, PERMISSION_KEYS, OrgRole
 
 __all__ = [
     "ApiKeysError",
@@ -116,6 +116,10 @@ def _check_plan_allows_api(workspace: Any) -> None:
 def issue_api_key(*, workspace: Any, issuer: Any, name: str, scopes: Any) -> ApiKey:
     """Mint a key. The returned object carries ``raw_token`` — show it once.
 
+    ``issuer=None`` is the installation-level path (the platform API): nobody's
+    memberships are consulted and any known scope may be granted. Name, scope,
+    plan and per-workspace-cap checks are the same either way.
+
     Nothing persists the plaintext, and nothing can recover it: an operator who
     loses it issues a new key and revokes this one.
     """
@@ -125,9 +129,12 @@ def issue_api_key(*, workspace: Any, issuer: Any, name: str, scopes: Any) -> Api
     if len(cleaned_name) > 100:
         raise ApiKeysError(gettext("The name is too long (100 characters maximum)."))
 
-    _issuer_may_manage(issuer, workspace)
-    membership = WorkspaceMembership.objects.get(user=issuer, workspace=workspace)
-    validated = _validated_scopes(scopes, membership.effective_permissions)
+    if issuer is None:
+        validated = _validated_scopes(scopes, {key: True for key in PERMISSION_KEYS})
+    else:
+        _issuer_may_manage(issuer, workspace)
+        membership = WorkspaceMembership.objects.get(user=issuer, workspace=workspace)
+        validated = _validated_scopes(scopes, membership.effective_permissions)
 
     # The plan check and the insert are one critical section; see
     # apps/billing/entitlements.organization_locked on why the write has to be

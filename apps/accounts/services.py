@@ -34,8 +34,17 @@ DEFAULT_WORKSPACE_NAME = "My Workspace"
 
 
 @transaction.atomic
-def provision_organization_and_workspace(user: Any) -> Any:
+def provision_organization_and_workspace(
+    user: Any,
+    *,
+    org_name: str = DEFAULT_ORG_NAME,
+    workspace_name: str = DEFAULT_WORKSPACE_NAME,
+    external_id: str | None = None,
+) -> Any:
     """Give ``user`` an organization, a workspace and owner/admin roles.
+
+    The names and ``external_id`` are for callers that provision on someone's
+    behalf (the platform API); self-service signup takes the defaults.
 
     Idempotent: a user who already belongs to an organization is left alone, so
     every caller can be unconditional.
@@ -61,7 +70,7 @@ def provision_organization_and_workspace(user: Any) -> Any:
     if existing:
         return existing.organization
 
-    org = Organization.objects.create(name=DEFAULT_ORG_NAME, default_timezone="UTC")
+    org = Organization.objects.create(name=org_name, default_timezone="UTC", external_id=external_id)
     OrgMembership.objects.create(
         user=user,
         organization=org,
@@ -70,8 +79,8 @@ def provision_organization_and_workspace(user: Any) -> Any:
     )
     workspace = Workspace.objects.create(
         organization=org,
-        name=DEFAULT_WORKSPACE_NAME,
-        description="Your default workspace. Rename it anytime.",
+        name=workspace_name,
+        description="Your default workspace. Rename it anytime." if workspace_name == DEFAULT_WORKSPACE_NAME else "",
     )
     WorkspaceMembership.objects.create(user=user, workspace=workspace, workspace_role=WorkspaceRole.ADMIN)
 

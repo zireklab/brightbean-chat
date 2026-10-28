@@ -26,6 +26,9 @@ class Organization(BaseModel):
     name = models.CharField(max_length=100)
     logo_url = models.URLField(blank=True, default="")
     default_timezone = models.CharField(max_length=63, default="UTC")
+    #: The caller's own id for this tenant (set by the platform API), so a retried
+    #: provisioning request finds the organization instead of creating a second.
+    external_id = models.CharField(max_length=128, null=True, blank=True, unique=True)
 
     # Deletion workflow: a request starts a grace period, a sweep (or an
     # immediate confirm) calls hard_delete. ``deleted_at`` is the tombstone for
