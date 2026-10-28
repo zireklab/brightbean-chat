@@ -1,8 +1,12 @@
 """The service-layer writes the platform API reuses: workspaces, direct members, system-issued keys."""
 
-import pytest
+import threading
 
-from apps.accounts.services import provision_organization_and_workspace
+import pytest
+from django.db import connection, transaction
+
+from apps.accounts.models import User
+from apps.accounts.services import ExternalIdInUseError, provision_organization_and_workspace
 from apps.api.services import ApiKeysError, issue_api_key, issue_api_key_as_system
 from apps.members.models import OrgMembership, WorkspaceMembership
 from apps.members.roles import OrgRole, WorkspaceRole
@@ -135,6 +139,16 @@ class TestAcceptingStillRefusesASecondOrganization:
 
 @pytest.mark.django_db
 class TestProvisionOnBehalf:
+    def test_a_taken_external_id_is_a_domain_error_and_creates_nothing(self):
+        provision_organization_and_workspace(create_user("a@example.test"), external_id="t-1")
+        second = create_user("b@example.test")
+
+        with pytest.raises(ExternalIdInUseError):
+            provision_organization_and_workspace(second, external_id="t-1")
+
+        assert not OrgMembership.objects.filter(user=second).exists()
+        assert Organization.objects.count() == 1
+
     def test_a_blank_external_id_is_stored_as_null(self):
         first = provision_organization_and_workspace(create_user("a@example.test"), external_id="")
         second = provision_organization_and_workspace(create_user("b@example.test"), external_id="")
@@ -170,3 +184,40 @@ class TestSystemIssuedKey:
         """A caller that lost track of the user must not mint an unrestricted key."""
         with pytest.raises(ApiKeysError):
             issue_api_key(workspace=tenancy.workspace, issuer=None, name="x", scopes=["read"])
+
+
+@pytest.mark.django_db(transaction=True)
+class TestOneOrganizationPerAccountIsSerialised:
+    """The rule is a read followed by an insert, and the uniqueness constraint is
+    on (user, organization) — so it only holds if both happen under the user's
+    row lock. Deterministic rather than a race: hold the lock, start the writer,
+    and check it waits.
+
+    The held lock is ``FOR NO KEY UPDATE`` on purpose. A plain ``FOR UPDATE``
+    also blocks the membership INSERT's own ``FOR KEY SHARE`` on the user, so the
+    writer would wait with or without the fix and the test would prove nothing.
+    This one conflicts only with the explicit ``FOR UPDATE`` the code takes."""
+
+    def test_attaching_a_member_waits_for_that_users_row(self, tenancy):
+        user = create_user("raced@example.test")
+        outcome: dict[str, object] = {}
+
+        def writer() -> None:
+            try:
+                add_member_directly(tenancy.organization, user, OrgRole.MEMBER, [])
+                outcome["done"] = True
+            except Exception as exc:  # pragma: no cover - reported by the assertion below
+                outcome["error"] = exc
+            finally:
+                connection.close()
+
+        with transaction.atomic():
+            User.objects.select_for_update(no_key=True).get(pk=user.pk)
+            thread = threading.Thread(target=writer)
+            thread.start()
+            thread.join(timeout=1.0)
+            assert thread.is_alive(), "the writer did not wait for the user's row lock"
+        thread.join(timeout=10)
+
+        assert outcome == {"done": True}
+        assert OrgMembership.objects.filter(user=user).count() == 1

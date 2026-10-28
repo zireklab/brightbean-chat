@@ -25,9 +25,14 @@ creates exactly a user, so no test needs a teardown helper.
 import logging
 from typing import Any
 
-from django.db import transaction
+from django.db import IntegrityError, transaction
 
 logger = logging.getLogger(__name__)
+
+
+class ExternalIdInUseError(ValueError):
+    """Another organization already carries this ``external_id``."""
+
 
 DEFAULT_ORG_NAME = "My Organization"
 DEFAULT_WORKSPACE_NAME = "My Workspace"
@@ -72,7 +77,16 @@ def provision_organization_and_workspace(
     if existing:
         return existing.organization
 
-    org = Organization.objects.create(name=org_name, default_timezone="UTC", external_id=external_id or None)
+    external_id = external_id or None
+    try:
+        with transaction.atomic():
+            org = Organization.objects.create(name=org_name, default_timezone="UTC", external_id=external_id)
+    except IntegrityError as exc:
+        if external_id is None:
+            raise
+        # A domain answer instead of a bare constraint error: the caller can tell
+        # "that id is taken" (and look the organization up) from a real failure.
+        raise ExternalIdInUseError(external_id) from exc
     OrgMembership.objects.create(
         user=user,
         organization=org,

@@ -30,6 +30,7 @@ from datetime import timedelta
 from typing import Any
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.mail import EmailMultiAlternatives
 from django.db import transaction
 from django.template.loader import render_to_string
@@ -325,6 +326,13 @@ def _attach_member(org: Any, user: Any, org_role: str, assignments: Any) -> None
     # last_workspace_id pointing at different organizations — every page
     # rendering one org's members while the workspace switcher shows another's.
     # Refusing is the only coherent answer until multi-org lands.
+    #
+    # The check and the insert below are one critical section per *user*: the
+    # uniqueness constraint is on (user, organization), so without this row lock
+    # two requests adding the same person to two different organizations can both
+    # read "no other membership" and both insert. The organization locks callers
+    # hold do not help — they are two different rows.
+    get_user_model().objects.select_for_update().filter(pk=user.pk).first()
     other = OrgMembership.objects.filter(user=user).exclude(organization=org).first()
     if other is not None:
         raise MembershipError(

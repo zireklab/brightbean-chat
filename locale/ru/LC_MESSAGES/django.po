@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 15:19+0000\n"
+"POT-Creation-Date: 2026-10-28 16:00+0000\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ru\n"
@@ -4585,92 +4585,92 @@ msgstr "Агент"
 msgid "Viewer"
 msgstr "Наблюдатель"
 
-#: apps/members/services.py:143
+#: apps/members/services.py:144
 #, python-format
 msgid "You cannot %(verb)s a member whose role is higher than your own."
 msgstr "Вы не можете %(verb)s участника с ролью выше вашей."
 
-#: apps/members/services.py:145
+#: apps/members/services.py:146
 #, python-format
 msgid "Only organization owners can %(verb)s an organization admin."
 msgstr ""
 "Только владельцы организации могут %(verb)s администратора организации."
 
-#: apps/members/services.py:158
+#: apps/members/services.py:159
 msgid "That workspace does not belong to your organization."
 msgstr "Это пространство не принадлежит вашей организации."
 
-#: apps/members/services.py:160
+#: apps/members/services.py:161
 #, python-format
 msgid "Unknown workspace role: %(role)r."
 msgstr "Неизвестная роль в пространстве: %(role)r."
 
-#: apps/members/services.py:169
+#: apps/members/services.py:170
 msgid "You cannot manage members in that workspace."
 msgstr "Вы не можете управлять участниками в этом пространстве."
 
-#: apps/members/services.py:171
+#: apps/members/services.py:172
 msgid ""
 "You cannot grant a workspace role higher than your own in that workspace."
 msgstr "Вы не можете выдать в этом пространстве роль выше вашей."
 
-#: apps/members/services.py:187
+#: apps/members/services.py:188
 msgid ""
 "Cannot remove the last admin of a workspace. Promote someone else first."
 msgstr ""
 "Нельзя удалить последнего администратора пространства. Сначала назначьте "
 "другого."
 
-#: apps/members/services.py:207
+#: apps/members/services.py:208
 msgid "An email address is required."
 msgstr "Нужен email-адрес."
 
-#: apps/members/services.py:214
+#: apps/members/services.py:215
 msgid "This person is already a member of your organization."
 msgstr "Этот человек уже состоит в вашей организации."
 
-#: apps/members/services.py:218
+#: apps/members/services.py:219
 msgid ""
 "An invitation is already pending for this address. You can resend it instead."
 msgstr ""
 "Приглашение для этого адреса уже отправлено. Вы можете отправить его "
 "повторно."
 
-#: apps/members/services.py:221
+#: apps/members/services.py:222
 msgid "Cannot invite someone as an organization owner."
 msgstr "Нельзя пригласить кого-то как владельца организации."
 
-#: apps/members/services.py:225 apps/members/services.py:378
-#: apps/members/services.py:526
+#: apps/members/services.py:226 apps/members/services.py:386
+#: apps/members/services.py:534
 #, python-format
 msgid "Unknown org role: %(role)r."
 msgstr "Неизвестная роль в организации: %(role)r."
 
-#: apps/members/services.py:230
+#: apps/members/services.py:231
 msgid "Only organization owners can invite someone as an admin."
 msgstr "Только владельцы организации могут приглашать администраторов."
 
-#: apps/members/services.py:238
+#: apps/members/services.py:239
 msgid "Choose at least one workspace to invite this person into."
 msgstr "Выберите хотя бы одно пространство, чтобы пригласить этого человека."
 
-#: apps/members/services.py:288
+#: apps/members/services.py:289
 msgid "This invitation is no longer available."
 msgstr "Это приглашение больше недоступно."
 
-#: apps/members/services.py:292
+#: apps/members/services.py:293
 msgid "This invitation has already been accepted."
 msgstr "Это приглашение уже принято."
 
-#: apps/members/services.py:294
+#: apps/members/services.py:295
 msgid "This invitation has expired."
 msgstr "Срок действия приглашения истёк."
 
-#: apps/members/services.py:296
+#: apps/members/services.py:297
 msgid "This invitation was sent to a different email address."
 msgstr "Это приглашение было отправлено на другой email-адрес."
 
-#: apps/members/services.py:332
+#: apps/members/services.py:340
 #, python-format
 msgid ""
 "This account already belongs to %(org_name)s. BrightBean Chat supports one "
@@ -4681,52 +4681,52 @@ msgstr ""
 "поддерживает только одну организацию на аккаунт — сначала покиньте ту или "
 "примите это приглашение с другого аккаунта."
 
-#: apps/members/services.py:376
+#: apps/members/services.py:384
 msgid "Cannot add someone as an organization owner."
 msgstr "Нельзя добавить кого-то как владельца организации."
 
-#: apps/members/services.py:421
+#: apps/members/services.py:429
 msgid "Cannot resend an already accepted invitation."
 msgstr "Нельзя повторно отправить уже принятое приглашение."
 
-#: apps/members/services.py:432
+#: apps/members/services.py:440
 msgid "Cannot revoke an already accepted invitation."
 msgstr "Нельзя отозвать уже принятое приглашение."
 
-#: apps/members/services.py:464
+#: apps/members/services.py:472
 #, python-format
 msgid "You have been invited to %(org_name)s on BrightBean Chat"
 msgstr "Вас пригласили в %(org_name)s в BrightBean Chat"
 
-#: apps/members/services.py:487
+#: apps/members/services.py:495
 msgid "You cannot remove yourself from the organization."
 msgstr "Вы не можете удалить себя из организации."
 
-#: apps/members/services.py:499
+#: apps/members/services.py:507
 msgid "Cannot remove the last organization owner."
 msgstr "Нельзя удалить последнего владельца организации."
 
-#: apps/members/services.py:501
+#: apps/members/services.py:509
 msgid "remove"
 msgstr "удалить"
 
-#: apps/members/services.py:522
+#: apps/members/services.py:530
 msgid "Cannot promote to owner. Transfer ownership instead."
 msgstr "Нельзя повысить до владельца. Вместо этого передайте право владения."
 
-#: apps/members/services.py:530
+#: apps/members/services.py:538
 msgid "change"
 msgstr "изменить"
 
-#: apps/members/services.py:532
+#: apps/members/services.py:540
 msgid "Only organization owners can promote someone to admin."
 msgstr "Только владельцы организации могут назначать администраторов."
 
-#: apps/members/services.py:537
+#: apps/members/services.py:545
 msgid "Cannot change the role of the last organization owner."
 msgstr "Нельзя изменить роль последнего владельца организации."
 
-#: apps/members/services.py:578
+#: apps/members/services.py:586
 msgid ""
 "You cannot modify a workspace membership whose role is higher than your own."
 msgstr "Вы не можете изменить членство в пространстве с ролью выше вашей."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 15:19+0000\n"
+"POT-Creation-Date: 2026-10-28 16:00+0000\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ky\n"
@@ -4476,89 +4476,89 @@ msgstr "Агент"
 msgid "Viewer"
 msgstr "Көрүүчү"
 
-#: apps/members/services.py:143
+#: apps/members/services.py:144
 #, python-format
 msgid "You cannot %(verb)s a member whose role is higher than your own."
 msgstr "Ролу өзүңүздүкүнөн жогору мүчөнү %(verb)s албайсыз."
 
-#: apps/members/services.py:145
+#: apps/members/services.py:146
 #, python-format
 msgid "Only organization owners can %(verb)s an organization admin."
 msgstr "Уюм администраторун %(verb)s түзүн уюмдун ээлери гана иштете алат."
 
-#: apps/members/services.py:158
+#: apps/members/services.py:159
 msgid "That workspace does not belong to your organization."
 msgstr "Бул иш жайы сиздин уюмуңузга таандык эмес."
 
-#: apps/members/services.py:160
+#: apps/members/services.py:161
 #, python-format
 msgid "Unknown workspace role: %(role)r."
 msgstr "Иш жайына белгисиз роль: %(role)r."
 
-#: apps/members/services.py:169
+#: apps/members/services.py:170
 msgid "You cannot manage members in that workspace."
 msgstr "Бул иш жайында мүчөлөрдү башкара албайсыз."
 
-#: apps/members/services.py:171
+#: apps/members/services.py:172
 msgid ""
 "You cannot grant a workspace role higher than your own in that workspace."
 msgstr "Бул иш жайында өзүңүздүн ролуңуздан жогору роль бере албайсыз."
 
-#: apps/members/services.py:187
+#: apps/members/services.py:188
 msgid ""
 "Cannot remove the last admin of a workspace. Promote someone else first."
 msgstr ""
 "Иш жайынын акыркы администраторун өчүрүүгө болбойт. Адегенде башкасын "
 "дайындаңыз."
 
-#: apps/members/services.py:207
+#: apps/members/services.py:208
 msgid "An email address is required."
 msgstr "Email дареги керек."
 
-#: apps/members/services.py:214
+#: apps/members/services.py:215
 msgid "This person is already a member of your organization."
 msgstr "Бул адам мурунтан эле уюмуңуздун мүчөсү."
 
-#: apps/members/services.py:218
+#: apps/members/services.py:219
 msgid ""
 "An invitation is already pending for this address. You can resend it instead."
 msgstr "Бул дарекке чакыруу мурунтан эле жөнөтүлгөн. Аны кайра жөнөтө аласыз."
 
-#: apps/members/services.py:221
+#: apps/members/services.py:222
 msgid "Cannot invite someone as an organization owner."
 msgstr "Кимдир бирөөнү уюм ээси катары чакырууга болбойт."
 
-#: apps/members/services.py:225 apps/members/services.py:378
-#: apps/members/services.py:526
+#: apps/members/services.py:226 apps/members/services.py:386
+#: apps/members/services.py:534
 #, python-format
 msgid "Unknown org role: %(role)r."
 msgstr "Уюмда белгисиз роль: %(role)r."
 
-#: apps/members/services.py:230
+#: apps/members/services.py:231
 msgid "Only organization owners can invite someone as an admin."
 msgstr "Администратор катары чакырууну уюм ээлери гана иштете алат."
 
-#: apps/members/services.py:238
+#: apps/members/services.py:239
 msgid "Choose at least one workspace to invite this person into."
 msgstr "Бул адамды чакыруу үчүн кеминде бир иш жайын тандаңыз."
 
-#: apps/members/services.py:288
+#: apps/members/services.py:289
 msgid "This invitation is no longer available."
 msgstr "Бул чакыруу мындан ары жеткиликсиз."
 
-#: apps/members/services.py:292
+#: apps/members/services.py:293
 msgid "This invitation has already been accepted."
 msgstr "Бул чакыруу мурунтан эле кабыл алынган."
 
-#: apps/members/services.py:294
+#: apps/members/services.py:295
 msgid "This invitation has expired."
 msgstr "Чакыруунун мөөнөтү бүттү."
 
-#: apps/members/services.py:296
+#: apps/members/services.py:297
 msgid "This invitation was sent to a different email address."
 msgstr "Бул чакыруу башка email дарегине жөнөтүлгөн."
 
-#: apps/members/services.py:332
+#: apps/members/services.py:340
 #, python-format
 msgid ""
 "This account already belongs to %(org_name)s. BrightBean Chat supports one "
@@ -4569,52 +4569,52 @@ msgstr ""
 "аккаунтка бир уюмду гана колдойт — адегенде андан чыгыңыз же бул чакырууну "
 "башка аккаунттан кабыл алыңыз."
 
-#: apps/members/services.py:376
+#: apps/members/services.py:384
 msgid "Cannot add someone as an organization owner."
 msgstr "Кимдир бирөөнү уюм ээси катары кошууга болбойт."
 
-#: apps/members/services.py:421
+#: apps/members/services.py:429
 msgid "Cannot resend an already accepted invitation."
 msgstr "Мурунтан эле кабыл алынган чакырууну кайра жөнөтүүгө болбойт."
 
-#: apps/members/services.py:432
+#: apps/members/services.py:440
 msgid "Cannot revoke an already accepted invitation."
 msgstr "Мурунтан эле кабыл алынган чакырууну жокко чыгарууга болбойт."
 
-#: apps/members/services.py:464
+#: apps/members/services.py:472
 #, python-format
 msgid "You have been invited to %(org_name)s on BrightBean Chat"
 msgstr "Сиз BrightBean Chat'та %(org_name)s уюмуна чакырылдыңыз"
 
-#: apps/members/services.py:487
+#: apps/members/services.py:495
 msgid "You cannot remove yourself from the organization."
 msgstr "Өзүңүздү уюмдан чыгара албайсыз."
 
-#: apps/members/services.py:499
+#: apps/members/services.py:507
 msgid "Cannot remove the last organization owner."
 msgstr "Уюмдун акыркы ээсин өчүрүүгө болбойт."
 
-#: apps/members/services.py:501
+#: apps/members/services.py:509
 msgid "remove"
 msgstr "чыгаруу"
 
-#: apps/members/services.py:522
+#: apps/members/services.py:530
 msgid "Cannot promote to owner. Transfer ownership instead."
 msgstr "Ээликке чейин көтөрүүгө болбойт. Анын ордуна ээликти өткөрүп бериңиз."
 
-#: apps/members/services.py:530
+#: apps/members/services.py:538
 msgid "change"
 msgstr "өзгөртүү"
 
-#: apps/members/services.py:532
+#: apps/members/services.py:540
 msgid "Only organization owners can promote someone to admin."
 msgstr "Администратор кылып көтөрүүнү уюм ээлери гана иштете алат."
 
-#: apps/members/services.py:537
+#: apps/members/services.py:545
 msgid "Cannot change the role of the last organization owner."
 msgstr "Уюмдун акыркы ээсинин ролун өзгөртүүгө болбойт."
 
-#: apps/members/services.py:578
+#: apps/members/services.py:586
 msgid ""
 "You cannot modify a workspace membership whose role is higher than your own."
 msgstr "Ролу өзүңүздүкүнөн жогору иш жайын мүчөлүгүн өзгөртө албайсыз."
