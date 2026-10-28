@@ -3,10 +3,10 @@
 import pytest
 
 from apps.accounts.services import provision_organization_and_workspace
-from apps.api.services import ApiKeysError, issue_api_key
+from apps.api.services import ApiKeysError, issue_api_key, issue_api_key_as_system
 from apps.members.models import OrgMembership, WorkspaceMembership
 from apps.members.roles import OrgRole, WorkspaceRole
-from apps.members.services import MembershipError, add_member_directly
+from apps.members.services import MembershipError, accept_invitation, add_member_directly, create_invitation
 from apps.organizations.models import Organization
 from apps.organizations.services import WorkspaceError, create_workspace
 from apps.workspaces.models import Workspace
@@ -49,12 +49,14 @@ class TestAddMemberDirectly:
     def test_it_writes_both_memberships_with_no_invitation(self, tenancy):
         user = create_user("direct@example.test")
 
-        add_member_directly(
+        _, created = add_member_directly(
             tenancy.organization,
             user,
             OrgRole.MEMBER,
             [{"workspace_id": str(tenancy.workspace.pk), "role": WorkspaceRole.EDITOR}],
         )
+
+        assert created is True
 
         assert OrgMembership.objects.get(user=user).org_role == OrgRole.MEMBER
         assert WorkspaceMembership.objects.get(user=user).workspace_role == WorkspaceRole.EDITOR
@@ -64,8 +66,9 @@ class TestAddMemberDirectly:
     def test_it_is_idempotent_and_leaves_an_existing_member_alone(self, tenancy):
         user = tenancy.user_for(WorkspaceRole.EDITOR)
 
-        membership = add_member_directly(tenancy.organization, user, OrgRole.ADMIN, [])
+        membership, created = add_member_directly(tenancy.organization, user, OrgRole.ADMIN, [])
 
+        assert created is False
         assert membership.org_role == OrgRole.MEMBER
 
     def test_nobody_is_added_as_an_owner(self, tenancy):
@@ -85,9 +88,59 @@ class TestAddMemberDirectly:
         with pytest.raises(MembershipError, match="already belongs"):
             add_member_directly(tenancy.organization, other_tenancy.owner, OrgRole.MEMBER, [])
 
+    def test_a_refusal_leaves_no_membership_behind(self, tenancy, other_tenancy):
+        user = create_user("half@example.test")
+
+        with pytest.raises(MembershipError):
+            add_member_directly(
+                tenancy.organization,
+                user,
+                OrgRole.MEMBER,
+                [{"workspace_id": str(other_tenancy.workspace.pk), "role": WorkspaceRole.VIEWER}],
+            )
+
+        assert not OrgMembership.objects.filter(user=user).exists()
+
+    def test_an_archived_workspace_is_a_refusal_not_a_dropped_assignment(self, tenancy):
+        Workspace.objects.filter(pk=tenancy.workspace.pk).update(is_archived=True)
+
+        with pytest.raises(MembershipError):
+            add_member_directly(
+                tenancy.organization,
+                create_user("arch@example.test"),
+                OrgRole.MEMBER,
+                [{"workspace_id": str(tenancy.workspace.pk), "role": WorkspaceRole.VIEWER}],
+            )
+
+
+@pytest.mark.django_db
+class TestAcceptingStillRefusesASecondOrganization:
+    """The one-organization-per-account rule moved into a helper shared with
+    ``add_member_directly``; this pins that accepting an invitation still hits it."""
+
+    def test_accepting_into_a_second_organization_is_refused(self, tenancy, other_tenancy):
+        invitation = create_invitation(
+            org=tenancy.organization,
+            email=other_tenancy.owner.email,
+            org_role=OrgRole.MEMBER,
+            workspace_assignments=[{"workspace_id": str(tenancy.workspace.pk), "role": WorkspaceRole.VIEWER}],
+            invited_by=tenancy.owner,
+        )
+
+        with pytest.raises(MembershipError, match="already belongs"):
+            accept_invitation(invitation, other_tenancy.owner)
+
+        assert OrgMembership.objects.filter(user=other_tenancy.owner).count() == 1
+
 
 @pytest.mark.django_db
 class TestProvisionOnBehalf:
+    def test_a_blank_external_id_is_stored_as_null(self):
+        first = provision_organization_and_workspace(create_user("a@example.test"), external_id="")
+        second = provision_organization_and_workspace(create_user("b@example.test"), external_id="")
+
+        assert first.external_id is None and second.external_id is None
+
     def test_names_and_external_id_are_used(self):
         user = create_user("owner@example.test")
 
@@ -101,7 +154,7 @@ class TestProvisionOnBehalf:
 @pytest.mark.django_db
 class TestSystemIssuedKey:
     def test_no_issuer_is_needed_and_the_key_carries_no_creator(self, tenancy):
-        key = issue_api_key(workspace=tenancy.workspace, issuer=None, name="zirek", scopes=["read", "write", "erase"])
+        key = issue_api_key_as_system(workspace=tenancy.workspace, name="zirek", scopes=["read", "write", "erase"])
 
         assert key.raw_token.startswith("bb_")
         assert key.created_by is None
@@ -109,6 +162,11 @@ class TestSystemIssuedKey:
 
     def test_scope_and_name_validation_still_apply(self, tenancy):
         with pytest.raises(ApiKeysError):
-            issue_api_key(workspace=tenancy.workspace, issuer=None, name="x", scopes=["root"])
+            issue_api_key_as_system(workspace=tenancy.workspace, name="x", scopes=["root"])
         with pytest.raises(ApiKeysError):
-            issue_api_key(workspace=tenancy.workspace, issuer=None, name=" ", scopes=["read"])
+            issue_api_key_as_system(workspace=tenancy.workspace, name=" ", scopes=["read"])
+
+    def test_the_member_path_fails_closed_on_a_missing_issuer(self, tenancy):
+        """A caller that lost track of the user must not mint an unrestricted key."""
+        with pytest.raises(ApiKeysError):
+            issue_api_key(workspace=tenancy.workspace, issuer=None, name="x", scopes=["read"])

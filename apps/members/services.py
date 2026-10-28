@@ -360,30 +360,34 @@ def _attach_member(org: Any, user: Any, org_role: str, assignments: Any) -> None
         user.save(update_fields=["last_workspace_id"])
 
 
-def add_member_directly(org: Any, user: Any, org_role: str, workspace_assignments: Any) -> OrgMembership:
+def add_member_directly(org: Any, user: Any, org_role: str, workspace_assignments: Any) -> tuple[OrgMembership, bool]:
     """Make ``user`` a member of ``org`` now, with no invitation to accept.
 
     For callers acting with installation-level authority (the platform API), so
     there is no inviter whose level to check. Everything else invitations enforce
     still applies: no owners, a known role, workspaces of this organization, one
-    organization per account, and a free seat. Idempotent for an existing member
-    of ``org``: their role and workspaces are left alone.
+    organization per account, and a free seat.
+
+    Returns ``(membership, created)``. For an existing member of ``org`` nothing
+    is changed and ``created`` is ``False``: the requested role and workspaces
+    were **not** applied, which is why the flag is returned.
     """
     if org_role == OrgRole.OWNER:
         raise MembershipError(gettext("Cannot add someone as an organization owner."))
     if ORG_ROLE_LEVEL.get(org_role, 0) == 0:
         raise MembershipError(gettext("Unknown org role: %(role)r.") % {"role": org_role})
-    assignments = _normalise_assignments(org, workspace_assignments)
-
     from apps.billing.entitlements import organization_locked
 
     with organization_locked(org), transaction.atomic():
         existing = OrgMembership.objects.filter(organization=org, user=user).first()
         if existing is not None:
-            return existing
+            return existing, False
+        # Validated here, under the lock, so a workspace archived a moment ago
+        # is a refusal rather than a membership with the assignment dropped.
+        assignments = _normalise_assignments(org, workspace_assignments)
         _check_plan_allows_seat(org)
         _attach_member(org, user, org_role, [(a.workspace_id, a.role) for a in assignments])
-    return OrgMembership.objects.get(organization=org, user=user)
+        return OrgMembership.objects.get(organization=org, user=user), True
 
 
 def _check_plan_allows_seat(org: Any, *, excluding_invitation: Any = None) -> None:

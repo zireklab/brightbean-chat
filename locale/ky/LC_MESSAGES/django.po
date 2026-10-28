@@ -11717,3 +11717,7 @@ msgstr "Бул даректеги аккаунт мурунтан бар. Сыр
 #: apps/accounts/adapters.py
 msgid "This account was just created. Try signing in again."
 msgstr "Бул аккаунт жаңы эле түзүлдү. Кайра кирип көрүңүз."
+
+#: apps/api/services.py
+msgid "A key needs an issuer."
+msgstr "Ачкычка чыгаруучу керек."

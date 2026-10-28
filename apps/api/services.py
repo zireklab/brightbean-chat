@@ -47,6 +47,7 @@ __all__ = [
     "ApiKeysError",
     "create_webhook",
     "issue_api_key",
+    "issue_api_key_as_system",
     "revoke_api_key",
     "update_webhook",
 ]
@@ -113,29 +114,46 @@ def _check_plan_allows_api(workspace: Any) -> None:
         raise ApiKeysError(str(exc)) from exc
 
 
-def issue_api_key(*, workspace: Any, issuer: Any, name: str, scopes: Any) -> ApiKey:
-    """Mint a key. The returned object carries ``raw_token`` — show it once.
+def _clean_key_name(name: str) -> str:
+    cleaned = (name or "").strip()
+    if not cleaned:
+        raise ApiKeysError(gettext("Give the key a name so you can recognise it later."))
+    if len(cleaned) > 100:
+        raise ApiKeysError(gettext("The name is too long (100 characters maximum)."))
+    return cleaned
 
-    ``issuer=None`` is the installation-level path (the platform API): nobody's
-    memberships are consulted and any known scope may be granted. Name, scope,
-    plan and per-workspace-cap checks are the same either way.
+
+def issue_api_key(*, workspace: Any, issuer: Any, name: str, scopes: Any) -> ApiKey:
+    """Mint a key on behalf of a member. The returned object carries ``raw_token`` — show it once.
 
     Nothing persists the plaintext, and nothing can recover it: an operator who
     loses it issues a new key and revokes this one.
     """
-    cleaned_name = (name or "").strip()
-    if not cleaned_name:
-        raise ApiKeysError(gettext("Give the key a name so you can recognise it later."))
-    if len(cleaned_name) > 100:
-        raise ApiKeysError(gettext("The name is too long (100 characters maximum)."))
-
     if issuer is None:
-        validated = _validated_scopes(scopes, {key: True for key in PERMISSION_KEYS})
-    else:
-        _issuer_may_manage(issuer, workspace)
-        membership = WorkspaceMembership.objects.get(user=issuer, workspace=workspace)
-        validated = _validated_scopes(scopes, membership.effective_permissions)
+        # Failing closed: a caller that lost track of the user must not mint an
+        # unrestricted key by accident. Installation-level issuance has its own
+        # entry point below.
+        raise ApiKeysError(gettext("A key needs an issuer."))
+    cleaned_name = _clean_key_name(name)
+    _issuer_may_manage(issuer, workspace)
+    membership = WorkspaceMembership.objects.get(user=issuer, workspace=workspace)
+    validated = _validated_scopes(scopes, membership.effective_permissions)
+    return _issue_locked(workspace=workspace, issuer=issuer, cleaned_name=cleaned_name, validated=validated)
 
+
+def issue_api_key_as_system(*, workspace: Any, name: str, scopes: Any) -> ApiKey:
+    """Mint a key with installation-level authority (the platform API).
+
+    Nobody's memberships are consulted and any known scope may be granted, so
+    this is only for callers that have already authenticated a platform key.
+    Name, scope, plan and per-workspace-cap checks are the same as for a member.
+    """
+    cleaned_name = _clean_key_name(name)
+    validated = _validated_scopes(scopes, {key: True for key in PERMISSION_KEYS})
+    return _issue_locked(workspace=workspace, issuer=None, cleaned_name=cleaned_name, validated=validated)
+
+
+def _issue_locked(*, workspace: Any, issuer: Any, cleaned_name: str, validated: Any) -> ApiKey:
     # The plan check and the insert are one critical section; see
     # apps/billing/entitlements.organization_locked on why the write has to be
     # inside the block rather than after it.

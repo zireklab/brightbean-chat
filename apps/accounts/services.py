@@ -31,6 +31,7 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_ORG_NAME = "My Organization"
 DEFAULT_WORKSPACE_NAME = "My Workspace"
+DEFAULT_WORKSPACE_DESCRIPTION = "Your default workspace. Rename it anytime."
 
 
 @transaction.atomic
@@ -40,6 +41,7 @@ def provision_organization_and_workspace(
     org_name: str = DEFAULT_ORG_NAME,
     workspace_name: str = DEFAULT_WORKSPACE_NAME,
     external_id: str | None = None,
+    workspace_description: str = DEFAULT_WORKSPACE_DESCRIPTION,
 ) -> Any:
     """Give ``user`` an organization, a workspace and owner/admin roles.
 
@@ -70,7 +72,7 @@ def provision_organization_and_workspace(
     if existing:
         return existing.organization
 
-    org = Organization.objects.create(name=org_name, default_timezone="UTC", external_id=external_id)
+    org = Organization.objects.create(name=org_name, default_timezone="UTC", external_id=external_id or None)
     OrgMembership.objects.create(
         user=user,
         organization=org,
@@ -80,7 +82,7 @@ def provision_organization_and_workspace(
     workspace = Workspace.objects.create(
         organization=org,
         name=workspace_name,
-        description="Your default workspace. Rename it anytime." if workspace_name == DEFAULT_WORKSPACE_NAME else "",
+        description=workspace_description,
     )
     WorkspaceMembership.objects.create(user=user, workspace=workspace, workspace_role=WorkspaceRole.ADMIN)
 

@@ -2,6 +2,7 @@
 
 from typing import Any
 
+from django.db import IntegrityError, transaction
 from django.utils.translation import gettext
 
 from apps.billing.entitlements import PlanLimitError, check_can_add_workspace, organization_locked
@@ -29,14 +30,20 @@ def create_workspace(org: Any, name: str, *, creator: Any = None) -> Workspace:
     name = (name or "").strip()[:MAX_WORKSPACE_NAME]
     if not name:
         raise WorkspaceError(gettext("A workspace needs a name."))
-    if Workspace.objects.for_org(org.pk).filter(name=name).exists():
-        raise WorkspaceError(gettext("A workspace with that name already exists."), code="duplicate")
     with organization_locked(org):
+        # Inside the lock so two requests cannot both pass the check; the
+        # database constraint is the backstop for a writer that bypasses it.
+        if Workspace.objects.for_org(org.pk).filter(name=name).exists():
+            raise WorkspaceError(gettext("A workspace with that name already exists."), code="duplicate")
         try:
             check_can_add_workspace(org)
         except PlanLimitError as exc:
             raise WorkspaceError(str(exc), code=exc.code) from exc
-        workspace = Workspace.objects.create(organization=org, name=name)
+        try:
+            with transaction.atomic():
+                workspace = Workspace.objects.create(organization=org, name=name)
+        except IntegrityError as exc:
+            raise WorkspaceError(gettext("A workspace with that name already exists."), code="duplicate") from exc
         if creator is not None:
             # Or nobody can configure the thing they just made.
             WorkspaceMembership.objects.create(user=creator, workspace=workspace, workspace_role=WorkspaceRole.ADMIN)

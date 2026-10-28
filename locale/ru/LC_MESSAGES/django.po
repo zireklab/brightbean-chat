@@ -11955,3 +11955,7 @@ msgstr "Аккаунт с этим адресом уже существует. �
 #: apps/accounts/adapters.py
 msgid "This account was just created. Try signing in again."
 msgstr "Этот аккаунт только что создан. Попробуйте войти ещё раз."
+
+#: apps/api/services.py
+msgid "A key needs an issuer."
+msgstr "Ключу нужен выпускающий."
