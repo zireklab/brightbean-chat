@@ -189,6 +189,9 @@ class PlatformApiKey(BaseModel):
     line, never through a page.
     """
 
+    #: Set on the instance ``issue_platform_key`` returns, nowhere else.
+    raw_token: str | None = None
+
     name = models.CharField(max_length=100)
     lookup_prefix = models.CharField(max_length=16, db_index=True)
     token_digest = models.CharField(max_length=64, unique=True)

@@ -337,22 +337,22 @@ def known_scopes() -> list[tuple[str, str | Promise]]:
 
 def issue_platform_key(*, name: str) -> PlatformApiKey:
     """Mint an installation-level key. The result carries ``raw_token`` — show it once."""
-    cleaned = (name or "").strip()
-    if not cleaned or len(cleaned) > 100:
-        raise ApiKeysError(gettext("Give the key a name of 1 to 100 characters."))
     minted = key_tokens.mint(key_tokens.PLATFORM_TOKEN_PREFIX)
     key = PlatformApiKey.objects.create(
-        name=cleaned, lookup_prefix=minted.lookup_prefix, token_digest=minted.token_digest
+        name=_clean_key_name(name), lookup_prefix=minted.lookup_prefix, token_digest=minted.token_digest
     )
-    key.raw_token = minted.plaintext  # type: ignore[attr-defined]
+    key.raw_token = minted.plaintext
     return key
 
 
 def revoke_platform_key(key: PlatformApiKey) -> bool:
-    """Revoke immediately. Idempotent: returns False for a key already revoked."""
-    if key.revoked_at is not None:
-        return False
+    """Revoke immediately. Returns False if the key was already revoked.
+
+    The check is the ``WHERE`` clause, not the in-memory instance, so two
+    operators racing report one revocation and the first timestamp survives.
+    """
     now = timezone.now()
-    key.revoked_at = now
-    PlatformApiKey.objects.filter(pk=key.pk).update(revoked_at=now, updated_at=now)
-    return True
+    revoked = PlatformApiKey.objects.filter(pk=key.pk, revoked_at__isnull=True).update(revoked_at=now, updated_at=now)
+    if revoked:
+        key.revoked_at = now
+    return bool(revoked)

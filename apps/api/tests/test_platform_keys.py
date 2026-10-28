@@ -7,11 +7,12 @@ the authenticator is called directly, which is the unit that decides who gets in
 import logging
 
 import pytest
-from django.core.management import call_command
+from django.core.management import CommandError, call_command
 from django.test import RequestFactory
 
 from apps.api import keys as key_tokens
 from apps.api.auth import ApiKeyAuth, PlatformKeyAuth
+from apps.api.errors import RateLimitedError
 from apps.api.models import PlatformApiKey
 from apps.api.tests.conftest import make_key, make_platform_key
 
@@ -48,6 +49,27 @@ class TestPlatformKeyAuth:
 
         assert PlatformKeyAuth().authenticate(RequestFactory().get("/"), token) is None
 
+    def test_a_successful_request_stamps_last_used(self):
+        key, token = make_platform_key()
+        assert key.last_used_at is None
+
+        PlatformKeyAuth().authenticate(request(), token)
+
+        key.refresh_from_db()
+        assert key.last_used_at is not None
+
+    def test_the_rate_limit_is_its_own_bucket(self, tenancy, settings):
+        """A platform burst must not spend a tenant key's budget, or the reverse."""
+        settings.API_RATE_LIMIT_PER_SECOND = 1
+        _, platform_token = make_platform_key()
+        _, workspace_token = make_key(tenancy.workspace)
+        PlatformKeyAuth().authenticate(request(), platform_token)
+
+        with pytest.raises(RateLimitedError):
+            PlatformKeyAuth().authenticate(request(), platform_token)
+
+        assert ApiKeyAuth().authenticate(request(), workspace_token) is not None
+
     def test_the_prefixes_do_not_parse_as_each_other(self):
         minted = key_tokens.mint(key_tokens.PLATFORM_TOKEN_PREFIX)
 
@@ -74,6 +96,25 @@ class TestCommands:
         call_command("revoke_platform_key", str(key.pk))
 
         assert "Already revoked" in capsys.readouterr().out
+
+    def test_revoking_reports_the_first_revocation_only(self):
+        from apps.api.services import revoke_platform_key
+
+        key, _ = make_platform_key()
+        stale = PlatformApiKey.objects.get(pk=key.pk)
+
+        assert revoke_platform_key(key) is True
+        first = PlatformApiKey.objects.get(pk=key.pk).revoked_at
+        assert revoke_platform_key(stale) is False
+        assert PlatformApiKey.objects.get(pk=key.pk).revoked_at == first
+
+    def test_an_id_that_is_not_a_uuid_is_a_clean_error(self):
+        with pytest.raises(CommandError, match="No such platform key"):
+            call_command("revoke_platform_key", "not-a-uuid")
+
+    def test_a_blank_name_is_refused(self):
+        with pytest.raises(CommandError):
+            call_command("create_platform_key", "--name", "  ")
 
     def test_the_token_is_scrubbed_from_logs(self, caplog):
         _, token = make_platform_key()

@@ -17,4 +17,4 @@ class Command(BaseCommand):
         except ApiKeysError as exc:
             raise CommandError(str(exc)) from exc
         self.stderr.write(f"Created platform key {key.pk} ({key.name}). Store the token now; it is not shown again.")
-        self.stdout.write(key.raw_token)  # type: ignore[attr-defined]
+        self.stdout.write(key.raw_token or "")
