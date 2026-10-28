@@ -39,8 +39,14 @@ curl https://chat.example.com/api/platform/v1/organizations/<id> \
 * **HTTPS only** outside development.
 * **`bbp_` and `bb_` keys are not interchangeable.** A workspace key gets `401`
   here and a platform key gets `401` on `/api/v1/`.
-* Same limits as the workspace API: 10 requests per second per key, bodies up to
-  `API_MAX_BODY_BYTES`, `429` with `Retry-After` when over.
+* Same limits as the workspace API: 10 requests per second per key (a separate
+  bucket from workspace keys; raise `API_RATE_LIMIT_PER_SECOND` if you provision
+  in bursts), bodies up to `API_MAX_BODY_BYTES`, `429` with `Retry-After` when
+  over.
+* **Failed authentications are counted per client address, shared with the
+  workspace API.** A misconfigured tenant integration behind the same address can
+  use up the budget a platform client needs; a revoked key does not count, only
+  unrecognised tokens do.
 
 ## Errors
 
@@ -57,11 +63,15 @@ The same envelope as the workspace API:
 | `invalid_request` | 422 | A field is missing, unknown, malformed, or the service refused it (unknown role or scope, bad email, blank name). |
 | `duplicate` | 409 | A workspace with that name already exists in the organization. |
 | `other_organization` | 409 | The account already belongs to a different organization (one per account). |
+| `external_id_conflict` | 409 | The `external_id` exists but for an organization with a different name. |
+| `deleted` | 409 | The `external_id` belongs to an organization that was deleted; ids are not recycled. |
 | `plan_workspaces`, `plan_seats`, `plan_api` | 409 | The organization's plan does not include another workspace, user or API key. |
 | `key_limit` | 409 | The workspace already has the maximum number of active keys (50). |
 | `rate_limited` | 429 | Over the per-key limit. |
 
-Unknown request fields are rejected (`422`), not ignored.
+Unknown request fields are rejected (`422`), not ignored, and so is input longer
+than the column it lands in (organization and workspace names 100, `external_id`
+128, person names 255, email 254): nothing is silently truncated.
 
 ---
 
@@ -93,7 +103,8 @@ give none.
 
 **Idempotent by `external_id`.** Repeating the request returns the existing
 organization with `200` instead of `201`, and creates nothing — safe to retry
-after a timeout. The owner must not already belong to another organization
+after a timeout. The replay must describe the same tenant: a different `name` is
+`409 external_id_conflict`, and an organization deleted since is `409 deleted`. The owner must not already belong to another organization
 (`409 other_organization`).
 
 ### Read one
@@ -122,7 +133,11 @@ The workspace starts with no members; add people with the next call.
   case-insensitively and stored in lower case.
 * `org_role` is `admin` or `member`; an owner cannot be added this way.
 * Every `workspace_id` must belong to this organization.
-* Adding someone already in the organization returns `200` and changes nothing.
+* Adding someone already in the organization returns `200` and changes nothing:
+  the `org_role` and `workspaces` in the request are **not** applied to an
+  existing member.
+* It is all or nothing. A refused add (no free seat, an unknown role, a
+  workspace of another organization) does not leave the new account behind.
 * A person in a different organization gets `409 other_organization`.
 * The plan's seat limit applies (`409 plan_seats`).
 

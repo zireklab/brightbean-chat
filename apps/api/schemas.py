@@ -28,7 +28,7 @@ from typing import Any
 from uuid import UUID
 
 from ninja import Schema
-from pydantic import ConfigDict
+from pydantic import ConfigDict, Field
 
 __all__ = [
     "ApiKeyIssue",
@@ -281,12 +281,14 @@ class MessageOut(Schema):
 # --- Platform API (``/api/platform/v1/``) -------------------------------------
 
 
+# Limits mirror the columns they end up in. Over-long input is a 422 here
+# rather than being truncated further down and reported back as success.
 class OrganizationCreate(StrictSchema):
-    name: str
-    external_id: str | None = None
-    owner_email: str
-    owner_name: str = ""
-    workspace_name: str = ""
+    name: str = Field(max_length=100)
+    external_id: str | None = Field(default=None, max_length=128)
+    owner_email: str = Field(max_length=254)
+    owner_name: str = Field(default="", max_length=255)
+    workspace_name: str = Field(default="", max_length=100)
 
 
 class WorkspaceOut(Schema):
@@ -304,7 +306,7 @@ class OrganizationOut(Schema):
 
 
 class WorkspaceCreate(StrictSchema):
-    name: str
+    name: str = Field(max_length=100)
 
 
 class WorkspaceAssignmentIn(StrictSchema):
@@ -313,8 +315,8 @@ class WorkspaceAssignmentIn(StrictSchema):
 
 
 class UserAdd(StrictSchema):
-    email: str
-    name: str = ""
+    email: str = Field(max_length=254)
+    name: str = Field(default="", max_length=255)
     org_role: str = "member"
     workspaces: list[WorkspaceAssignmentIn] = []
 
@@ -328,7 +330,7 @@ class UserAdded(Schema):
 
 
 class ApiKeyIssue(StrictSchema):
-    name: str
+    name: str = Field(max_length=100)
     scopes: list[str]
 
 

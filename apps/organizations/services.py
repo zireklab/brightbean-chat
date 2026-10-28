@@ -5,10 +5,17 @@ from typing import Any
 from django.db import IntegrityError, transaction
 from django.utils.translation import gettext
 
-from apps.accounts.services import DEFAULT_WORKSPACE_NAME, get_or_create_user, provision_organization_and_workspace
+from apps.accounts.models import User
+from apps.accounts.services import (
+    DEFAULT_WORKSPACE_DESCRIPTION,
+    DEFAULT_WORKSPACE_NAME,
+    get_or_create_user,
+    provision_organization_and_workspace,
+)
 from apps.billing.entitlements import PlanLimitError, check_can_add_workspace, organization_locked
 from apps.members.models import OrgMembership, WorkspaceMembership
 from apps.members.roles import WorkspaceRole
+from apps.members.services import add_member_directly
 from apps.organizations.models import Organization
 from apps.workspaces.models import Workspace
 
@@ -67,18 +74,23 @@ def create_organization(
 
     Returns ``(organization, created)``. A repeated ``external_id`` finds the
     organization instead of making a second one, which is what makes a retried
-    request safe. The owner is created if they have no account yet, and must not
-    already belong to another organization (one per account).
+    request safe — provided it describes the same tenant: a different name is a
+    ``external_id_conflict``, and an organization deleted since is ``deleted``
+    (its id is not recycled). The owner is created if they have no account yet,
+    and must not already belong to another organization (one per account).
     """
-    name = (name or "").strip()[:100]
+    name = (name or "").strip()
     if not name:
         raise OrganizationError(gettext("An organization needs a name."))
     external_id = (external_id or "").strip() or None
     if external_id and (found := Organization.objects.filter(external_id=external_id).first()):
-        return found, False
+        return _replay(found, name), False
     try:
         with transaction.atomic():
             owner, _ = get_or_create_user(owner_email, owner_name)
+            # The owner's row is the lock: two requests for one owner serialise
+            # here, so the membership check below is not a read-then-write race.
+            User.objects.select_for_update().get(pk=owner.pk)
             if OrgMembership.objects.filter(user=owner).exists():
                 raise OrganizationError(
                     gettext("That account already belongs to an organization."), code="other_organization"
@@ -86,12 +98,41 @@ def create_organization(
             org = provision_organization_and_workspace(
                 owner,
                 org_name=name,
-                workspace_name=(workspace_name or "").strip()[:MAX_WORKSPACE_NAME] or DEFAULT_WORKSPACE_NAME,
+                workspace_name=(workspace_name or "").strip() or DEFAULT_WORKSPACE_NAME,
                 external_id=external_id,
+                workspace_description="" if workspace_name else DEFAULT_WORKSPACE_DESCRIPTION,
             )
+            if org is None:
+                raise OrganizationError(gettext("The owner account no longer exists."))
     except IntegrityError:
         # A concurrent request provisioned the same external_id first.
         if external_id and (found := Organization.objects.filter(external_id=external_id).first()):
-            return found, False
+            return _replay(found, name), False
         raise
     return org, True
+
+
+def _replay(found: Organization, name: str) -> Organization:
+    if found.deleted_at is not None:
+        raise OrganizationError(gettext("An organization with that external id was deleted."), code="deleted")
+    if found.name != name:
+        raise OrganizationError(
+            gettext("That external id belongs to an organization with a different name."),
+            code="external_id_conflict",
+        )
+    return found
+
+
+def add_user(
+    org: Organization, *, email: str, name: str, org_role: str, workspace_assignments: Any
+) -> tuple[Any, Any, bool, bool]:
+    """Create-or-find the account and make it a member of ``org``, all or nothing.
+
+    Returns ``(user, membership, user_created, member_created)``. One transaction,
+    so a refused membership (no free seat, a workspace of another organization,
+    an account already elsewhere) leaves no new account behind.
+    """
+    with transaction.atomic():
+        user, user_created = get_or_create_user(email, name)
+        membership, member_created = add_member_directly(org, user, org_role, workspace_assignments)
+    return user, membership, user_created, member_created

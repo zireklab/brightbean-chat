@@ -149,6 +149,10 @@ def is_invite_only(sociallogin: Any) -> bool:
     return is_sso(sociallogin) and settings.OIDC_SIGNUP == "invite"
 
 
+class InvalidEmailError(ValueError):
+    """The address is not a valid email."""
+
+
 def get_or_create_user(email: str, name: str = "") -> tuple[Any, bool]:
     """The account for ``email`` and whether this call created it.
 
@@ -156,14 +160,22 @@ def get_or_create_user(email: str, name: str = "") -> tuple[Any, bool]:
     unique but case-sensitive, so ``Ada@x.test`` and ``ada@x.test`` would
     otherwise be two people. A created account has an unusable password and
     signs in through SSO, a password reset or an invitation.
+
+    Raises :class:`InvalidEmailError` for a malformed address. Callers that go on
+    to do more should wrap this in their own ``transaction.atomic``, so a later
+    refusal does not leave the new account behind.
     """
+    from django.core.exceptions import ValidationError
     from django.core.validators import validate_email
     from django.db import IntegrityError
 
     from apps.accounts.models import User
 
     email = (email or "").strip().lower()
-    validate_email(email)
+    try:
+        validate_email(email)
+    except ValidationError as exc:
+        raise InvalidEmailError("That is not a valid email address.") from exc
     user = User.objects.filter(email__iexact=email).first()
     if user is not None:
         return user, False
@@ -171,5 +183,9 @@ def get_or_create_user(email: str, name: str = "") -> tuple[Any, bool]:
         with transaction.atomic():
             return User.objects.create_user(email=email, name=(name or "").strip()[:255]), True
     except IntegrityError:
-        # A concurrent request created it between our read and our insert.
-        return User.objects.get(email__iexact=email), False
+        # A concurrent request may have created it between our read and insert.
+        # Any other integrity failure is not ours to hide.
+        user = User.objects.filter(email__iexact=email).first()
+        if user is None:
+            raise
+        return user, False

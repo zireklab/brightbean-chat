@@ -5,6 +5,7 @@ import json
 import pytest
 from django.core.management import call_command
 from django.urls import get_resolver
+from django.utils import timezone
 
 from apps.accounts.models import User
 from apps.api.models import ApiKey
@@ -15,6 +16,18 @@ from apps.workspaces.models import Workspace
 from tests.idor import _walk
 
 BASE = "/api/platform/v1"
+
+
+@pytest.fixture
+def tight_plan(monkeypatch):
+    """A plan with one workspace, one seat and no API access."""
+    from dataclasses import replace
+
+    from apps.billing import entitlements
+    from apps.billing.plans import UNLIMITED
+
+    limits = replace(UNLIMITED, workspaces=1, seats=1, api_access=False)
+    monkeypatch.setattr(entitlements, "limits_for", lambda organization: limits)
 
 
 def post(client, path, body, auth):
@@ -105,6 +118,48 @@ class TestOrganizations:
         assert Organization.objects.filter(external_id="zirek-1").count() == 1
         assert not User.objects.filter(email="x@example.test").exists()
 
+    def test_a_replay_for_a_deleted_organization_is_a_conflict(self, client, org, platform_auth):
+        Organization.objects.filter(pk=org["id"]).update(deleted_at=timezone.now())
+
+        response = post(
+            client,
+            "/organizations",
+            {"name": "Acme", "external_id": "zirek-1", "owner_email": "x@example.test"},
+            platform_auth,
+        )
+
+        assert response.status_code == 409
+        assert response.json()["error"]["code"] == "deleted"
+
+    def test_a_replay_with_a_different_name_is_a_conflict(self, client, org, platform_auth):
+        response = post(
+            client,
+            "/organizations",
+            {"name": "Other", "external_id": "zirek-1", "owner_email": "x@example.test"},
+            platform_auth,
+        )
+
+        assert response.status_code == 409
+        assert response.json()["error"]["code"] == "external_id_conflict"
+
+    def test_the_same_owner_cannot_found_a_second_tenant(self, client, org, platform_auth):
+        response = post(
+            client,
+            "/organizations",
+            {"name": "Second", "external_id": "zirek-2", "owner_email": "boss@example.test"},
+            platform_auth,
+        )
+
+        assert response.status_code == 409
+        assert response.json()["error"]["code"] == "other_organization"
+        assert Organization.objects.count() == 1
+
+    def test_over_long_input_is_refused_not_truncated(self, client, platform_auth):
+        response = post(client, "/organizations", {"name": "x" * 101, "owner_email": "a@example.test"}, platform_auth)
+
+        assert response.status_code == 422
+        assert not Organization.objects.exists()
+
     def test_an_owner_already_in_an_organization_is_a_conflict(self, client, tenancy, platform_auth):
         response = post(client, "/organizations", {"name": "Second", "owner_email": tenancy.owner.email}, platform_auth)
 
@@ -129,12 +184,22 @@ class TestOrganizations:
 
 @pytest.mark.django_db
 class TestWorkspacesAndUsers:
-    def test_a_second_workspace_follows_the_plan_limit(self, client, org, platform_auth):
+    def test_a_second_workspace_is_created(self, client, org, platform_auth):
         response = post(client, f"/organizations/{org['id']}/workspaces", {"name": "Second"}, platform_auth)
 
-        assert response.status_code in (201, 409)
-        if response.status_code == 409:
-            assert response.json()["error"]["code"].startswith("plan_")
+        assert response.status_code == 201
+        assert response.json()["name"] == "Second"
+
+    def test_the_plan_workspace_limit_is_a_conflict(self, client, org, platform_auth, tight_plan):
+        response = post(client, f"/organizations/{org['id']}/workspaces", {"name": "Second"}, platform_auth)
+
+        assert response.status_code == 409
+        assert response.json()["error"]["code"] == "plan_workspaces"
+
+    def test_an_over_long_name_is_refused_not_truncated(self, client, org, platform_auth):
+        response = post(client, f"/organizations/{org['id']}/workspaces", {"name": "x" * 101}, platform_auth)
+
+        assert response.status_code == 422
 
     def test_a_duplicate_workspace_name_is_a_conflict(self, client, org, platform_auth):
         response = post(client, f"/organizations/{org['id']}/workspaces", {"name": "Main"}, platform_auth)
@@ -153,11 +218,47 @@ class TestWorkspacesAndUsers:
 
         response = post(client, f"/organizations/{org['id']}/users", body, platform_auth)
 
-        assert response.status_code in (201, 409)
-        if response.status_code == 201:
-            assert response.json()["user_created"] is True
-            assert response.json()["email"] == "dev@example.test"
-            assert WorkspaceMembership.objects.get(user__email="dev@example.test").workspace_role == "editor"
+        assert response.status_code == 201
+        assert response.json()["user_created"] is True
+        assert response.json()["email"] == "dev@example.test"
+        assert WorkspaceMembership.objects.get(user__email="dev@example.test").workspace_role == "editor"
+
+    @pytest.mark.parametrize(
+        "body",
+        [
+            {"email": "late@example.test", "org_role": "owner"},
+            {"email": "late@example.test", "org_role": "wizard"},
+            {
+                "email": "late@example.test",
+                "org_role": "member",
+                "workspaces": [{"workspace_id": "00000000-0000-0000-0000-000000000000", "role": "viewer"}],
+            },
+        ],
+    )
+    def test_a_refused_add_leaves_no_account_behind(self, client, org, platform_auth, body):
+        response = post(client, f"/organizations/{org['id']}/users", body, platform_auth)
+
+        assert response.status_code == 422
+        assert not User.objects.filter(email="late@example.test").exists()
+
+    def test_no_free_seat_leaves_no_account_behind(self, client, org, platform_auth, tight_plan):
+        response = post(
+            client,
+            f"/organizations/{org['id']}/users",
+            {"email": "late@example.test", "org_role": "member"},
+            platform_auth,
+        )
+
+        assert response.status_code == 409
+        assert response.json()["error"]["code"] == "plan_seats"
+        assert not User.objects.filter(email="late@example.test").exists()
+
+    def test_a_bad_address_is_a_422(self, client, org, platform_auth):
+        response = post(
+            client, f"/organizations/{org['id']}/users", {"email": "nope", "org_role": "member"}, platform_auth
+        )
+
+        assert response.status_code == 422
 
     def test_adding_the_same_person_twice_is_a_200(self, client, org, platform_auth):
         body = {"email": "boss@example.test", "org_role": "admin"}
@@ -202,6 +303,19 @@ class TestApiKeys:
         stored = ApiKey.objects.unscoped().get(pk=issued["id"])
         assert stored.created_by is None
         assert issued["token"] not in {stored.token_digest, stored.lookup_prefix}
+
+    def test_a_plan_without_api_access_is_a_conflict(self, client, org, platform_auth, tight_plan):
+        ws = org["workspaces"][0]["id"]
+
+        response = post(
+            client,
+            f"/organizations/{org['id']}/workspaces/{ws}/api-keys",
+            {"name": "k", "scopes": ["read"]},
+            platform_auth,
+        )
+
+        assert response.status_code == 409
+        assert response.json()["error"]["code"] == "plan_api"
 
     def test_the_per_workspace_cap_is_a_conflict(self, client, org, platform_auth, monkeypatch):
         monkeypatch.setattr("apps.api.services.MAX_KEYS_PER_WORKSPACE", 0)

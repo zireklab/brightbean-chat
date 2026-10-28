@@ -13,11 +13,10 @@ same rule ``test_facade_discipline.py`` holds the other routers to.
 from typing import Any
 from uuid import UUID
 
-from django.core.exceptions import ValidationError as DjangoValidationError
 from django.http import Http404, HttpRequest
 from ninja import Router
 
-from apps.accounts.services import get_or_create_user
+from apps.accounts.services import InvalidEmailError
 from apps.api.errors import ApiError
 from apps.api.models import ApiKey
 from apps.api.schemas import (
@@ -30,18 +29,26 @@ from apps.api.schemas import (
     WorkspaceCreate,
     WorkspaceOut,
 )
-from apps.api.services import ApiKeysError, issue_api_key, revoke_api_key
+from apps.api.services import ApiKeysError, issue_api_key_as_system, revoke_api_key
 from apps.members.models import OrgMembership
-from apps.members.services import MembershipError, add_member_directly
+from apps.members.services import MembershipError
 from apps.organizations.models import Organization
-from apps.organizations.services import OrganizationError, WorkspaceError, create_organization, create_workspace
+from apps.organizations.services import (
+    OrganizationError,
+    WorkspaceError,
+    create_organization,
+    create_workspace,
+)
+from apps.organizations.services import (
+    add_user as add_org_user,
+)
 from apps.workspaces.models import Workspace
 
 router = Router(tags=["platform"])
 
 #: ``code`` values the services raise that mean "this conflicts with existing
 #: state" rather than "this request is malformed".
-_CONFLICTS = frozenset({"duplicate", "other_organization", "key_limit"})
+_CONFLICTS = frozenset({"duplicate", "other_organization", "key_limit", "deleted", "external_id_conflict"})
 
 
 def _refuse(exc: Exception) -> ApiError:
@@ -93,7 +100,7 @@ def create_org(request: HttpRequest, body: OrganizationCreate) -> Any:
             workspace_name=body.workspace_name,
             external_id=body.external_id,
         )
-    except DjangoValidationError as exc:
+    except InvalidEmailError as exc:
         raise ApiError("owner_email is not a valid address.", code="invalid_request", status=422) from exc
     except OrganizationError as exc:
         raise _refuse(exc) from exc
@@ -125,17 +132,15 @@ def add_user(request: HttpRequest, org_id: UUID, body: UserAdd) -> Any:
     """
     org = _org(org_id)
     try:
-        user, user_created = get_or_create_user(body.email, body.name)
-    except DjangoValidationError as exc:
-        raise ApiError("email is not a valid address.", code="invalid_request", status=422) from exc
-    already = OrgMembership.objects.filter(organization=org, user=user).exists()
-    try:
-        membership = add_member_directly(
+        user, membership, user_created, member_created = add_org_user(
             org,
-            user,
-            body.org_role,
-            [{"workspace_id": str(a.workspace_id), "role": a.role} for a in body.workspaces],
+            email=body.email,
+            name=body.name,
+            org_role=body.org_role,
+            workspace_assignments=[{"workspace_id": str(a.workspace_id), "role": a.role} for a in body.workspaces],
         )
+    except InvalidEmailError as exc:
+        raise ApiError("email is not a valid address.", code="invalid_request", status=422) from exc
     except MembershipError as exc:
         raise _refuse(exc) from exc
     payload = {
@@ -145,7 +150,7 @@ def add_user(request: HttpRequest, org_id: UUID, body: UserAdd) -> Any:
         "org_role": membership.org_role,
         "user_created": user_created,
     }
-    return (200 if already else 201), payload
+    return (201 if member_created else 200), payload
 
 
 @router.post(
@@ -157,7 +162,7 @@ def issue_key(request: HttpRequest, org_id: UUID, ws_id: UUID, body: ApiKeyIssue
     """Issue a workspace key (``bb_…``) for ``/api/v1/``. The token appears only in this response."""
     workspace = _workspace(_org(org_id), ws_id)
     try:
-        key = issue_api_key(workspace=workspace, issuer=None, name=body.name, scopes=body.scopes)
+        key = issue_api_key_as_system(workspace=workspace, name=body.name, scopes=body.scopes)
     except ApiKeysError as exc:
         raise _refuse(exc) from exc
     return 201, {
