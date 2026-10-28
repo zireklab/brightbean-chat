@@ -131,6 +131,32 @@ class TestOrganizations:
         assert response.status_code == 409
         assert response.json()["error"]["code"] == "deleted"
 
+    def test_losing_the_race_for_an_external_id_returns_the_winner(self, monkeypatch, db):
+        """Two requests pass the lookup together; the second's insert collides. It
+        must answer with the first's organization, not a 500."""
+        from apps.accounts.services import ExternalIdInUseError
+        from apps.organizations import services
+
+        winner = Organization.objects.create(name="Acme", external_id="raced")
+
+        def lose(*args, **kwargs):
+            raise ExternalIdInUseError("raced")
+
+        monkeypatch.setattr(services, "provision_organization_and_workspace", lose)
+        monkeypatch.setattr(services, "_replay", lambda found, name: found)
+        real_filter = Organization.objects.filter
+        calls = {"n": 0}
+
+        def filter_once_empty(*args, **kwargs):
+            calls["n"] += 1
+            return real_filter(pk=None) if calls["n"] == 1 else real_filter(*args, **kwargs)
+
+        monkeypatch.setattr(Organization.objects, "filter", filter_once_empty)
+
+        org, created = services.create_organization(name="Acme", owner_email="o@example.test", external_id="raced")
+
+        assert org == winner and created is False
+
     def test_a_replay_with_a_different_name_is_a_conflict(self, client, org, platform_auth):
         response = post(
             client,

@@ -9,6 +9,7 @@ from apps.accounts.models import User
 from apps.accounts.services import (
     DEFAULT_WORKSPACE_DESCRIPTION,
     DEFAULT_WORKSPACE_NAME,
+    ExternalIdInUseError,
     get_or_create_user,
     provision_organization_and_workspace,
 )
@@ -104,7 +105,7 @@ def create_organization(
             )
             if org is None:
                 raise OrganizationError(gettext("The owner account no longer exists."))
-    except IntegrityError:
+    except (IntegrityError, ExternalIdInUseError):
         # A concurrent request provisioned the same external_id first.
         if external_id and (found := Organization.objects.filter(external_id=external_id).first()):
             return _replay(found, name), False
