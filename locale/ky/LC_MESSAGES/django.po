@@ -67,24 +67,24 @@ msgstr "Байланыш ирээттен чыгарылды"
 msgid "Broadcast finished"
 msgstr "Жарыя аяктады"
 
-#: apps/api/models.py:80
+#: apps/api/models.py:82
 msgctxt "api scope"
 msgid "Read"
 msgstr "Окуйм"
 
-#: apps/api/models.py:81
+#: apps/api/models.py:83
 msgid "Write"
 msgstr "Жазам"
 
-#: apps/api/models.py:82 templates/contacts/list.html:310
+#: apps/api/models.py:84 templates/contacts/list.html:310
 msgid "Erase"
 msgstr "Өчүрөм"
 
-#: apps/api/models.py:93
+#: apps/api/models.py:95
 msgid "Succeeded"
 msgstr "Ийгилик!"
 
-#: apps/api/models.py:94 apps/broadcasts/models.py:94
+#: apps/api/models.py:96 apps/broadcasts/models.py:94
 #: apps/contacts/models.py:411 apps/contacts/models.py:571
 #: templates/analytics/_counter_cards.html:29
 #: templates/analytics/flow_detail.html:60
@@ -94,30 +94,30 @@ msgstr "Ийгилик!"
 msgid "Failed"
 msgstr "Болбой калды"
 
-#: apps/api/models.py:95
+#: apps/api/models.py:97
 msgid "Blocked"
 msgstr "Блокто"
 
-#: apps/api/services.py:73
+#: apps/api/services.py:80
 msgid "Only an organization owner or admin can issue API keys."
 msgstr "API ачкычтарын уюмдун ээси же администратору гана чыгара алат."
 
-#: apps/api/services.py:77
+#: apps/api/services.py:84
 msgid ""
 "You need the manage_api_keys permission in that workspace to issue a key for "
 "it."
 msgstr "Бул иш жайында ачкыч чыгаруу үчүн manage_api_keys уруксаты керек."
 
-#: apps/api/services.py:83
+#: apps/api/services.py:90
 msgid "A key needs at least one scope."
 msgstr "Ачкычка кеминде бир уруксат керек."
 
-#: apps/api/services.py:86
+#: apps/api/services.py:93
 #, python-format
 msgid "Unknown scope: %(scopes)s."
 msgstr "Белгисиз уруксат: %(scopes)s."
 
-#: apps/api/services.py:93
+#: apps/api/services.py:100
 #, python-format
 msgid ""
 "You cannot grant the %(scope)s scope: it includes %(missing)s, which you do "
@@ -125,19 +125,19 @@ msgid ""
 msgstr ""
 "%(scope)s чөйрөсүн бере албайсыз: анда сизде жок %(missing)s камтылган."
 
-#: apps/api/services.py:120
+#: apps/api/services.py:127
 msgid "Give the key a name so you can recognise it later."
 msgstr "Кийин таанып билүү үчүн ачкычка ат бериңиз."
 
-#: apps/api/services.py:122
+#: apps/api/services.py:129
 msgid "The name is too long (100 characters maximum)."
 msgstr "Аты өтө узун (эң көбү 100 белги)."
 
-#: apps/api/services.py:136
+#: apps/api/services.py:143
 msgid "A key needs an issuer."
 msgstr "Ачкычка чыгаруучу керек."
 
-#: apps/api/services.py:173
+#: apps/api/services.py:180
 #, python-format
 msgid ""
 "This workspace already has %(limit)s active keys. Revoke one before issuing "
@@ -146,36 +146,36 @@ msgstr ""
 "Бул иш жайында азырынча %(limit)s активдүү ачкыч бар. Жаңысын чыгаруудан "
 "мурун бирин жокко чыгарыңыз."
 
-#: apps/api/services.py:214
+#: apps/api/services.py:222
 #, python-format
 msgid "Unknown event: %(events)s."
 msgstr "Белгисиз окуя: %(events)s."
 
-#: apps/api/services.py:216
+#: apps/api/services.py:224
 msgid "Choose at least one event to send."
 msgstr "Жөнөтүү үчүн кеминде бир окуяны тандаңыз."
 
-#: apps/api/services.py:232
+#: apps/api/services.py:240
 msgid "Enter the URL deliveries should be sent to."
 msgstr "Жеткирүүлөр жөнөтүлүүчү URL дарегин көрсөтүңүз."
 
-#: apps/api/services.py:234
+#: apps/api/services.py:242
 msgid "That URL is too long (500 characters maximum)."
 msgstr "Бул URL өтө узун (эң көбү 500 белги)."
 
-#: apps/api/services.py:237
+#: apps/api/services.py:245
 msgid "The URL must start with http:// or https://."
 msgstr "URL http:// же https:// менен башталышы керек."
 
-#: apps/api/services.py:241
+#: apps/api/services.py:249
 msgid "The URL must not carry a username or password."
 msgstr "URL колдонуучунун атын же сырсөзүн камтыбашы керек."
 
-#: apps/api/services.py:243 apps/api/services.py:247
+#: apps/api/services.py:251 apps/api/services.py:255
 msgid "That does not look like a valid URL."
 msgstr "Бул туура URL сыяктуу эмес."
 
-#: apps/api/services.py:274
+#: apps/api/services.py:282
 #, python-format
 msgid "This workspace already has %(limit)s endpoints."
 msgstr "Бул иш жайында азырынча %(limit)s эндпоинт бар."
@@ -4863,17 +4863,33 @@ msgstr "Окулган жок"
 msgid "Read"
 msgstr "Окулду"
 
-#: apps/organizations/services.py:32 apps/workspaces/views.py:346
+#: apps/organizations/services.py:41 apps/workspaces/views.py:346
 msgid "A workspace needs a name."
 msgstr "Иш жайына ат керек."
 
-#: apps/organizations/services.py:37 apps/organizations/services.py:46
+#: apps/organizations/services.py:46 apps/organizations/services.py:55
 msgid "A workspace with that name already exists."
 msgstr "Мындай аттуу иш жайы мурунтан эле бар."
 
-#: apps/organizations/views.py:54
+#: apps/organizations/services.py:84 apps/organizations/views.py:54
 msgid "An organization needs a name."
 msgstr "Уюмга ат керек."
+
+#: apps/organizations/services.py:96
+msgid "That account already belongs to an organization."
+msgstr "Бул каттоо эсеби мурдатан эле уюмга кирген."
+
+#: apps/organizations/services.py:106
+msgid "The owner account no longer exists."
+msgstr "Ээсинин каттоо эсеби мындан ары жок."
+
+#: apps/organizations/services.py:117
+msgid "An organization with that external id was deleted."
+msgstr "Бул тышкы id менен уюм өчүрүлгөн."
+
+#: apps/organizations/services.py:120
+msgid "That external id belongs to an organization with a different name."
+msgstr "Бул тышкы id башка аттагы уюмга таандык."
 
 #: apps/organizations/views.py:63 apps/workspaces/views.py:368
 msgid "That is not a timezone we recognise."

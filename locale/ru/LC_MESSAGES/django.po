@@ -69,24 +69,24 @@ msgstr "Контакт отписан от цепочки"
 msgid "Broadcast finished"
 msgstr "Рассылка завершена"
 
-#: apps/api/models.py:80
+#: apps/api/models.py:82
 msgctxt "api scope"
 msgid "Read"
 msgstr "Чтение"
 
-#: apps/api/models.py:81
+#: apps/api/models.py:83
 msgid "Write"
 msgstr "Запись"
 
-#: apps/api/models.py:82 templates/contacts/list.html:310
+#: apps/api/models.py:84 templates/contacts/list.html:310
 msgid "Erase"
 msgstr "Удаление"
 
-#: apps/api/models.py:93
+#: apps/api/models.py:95
 msgid "Succeeded"
 msgstr "Успешно"
 
-#: apps/api/models.py:94 apps/broadcasts/models.py:94
+#: apps/api/models.py:96 apps/broadcasts/models.py:94
 #: apps/contacts/models.py:411 apps/contacts/models.py:571
 #: templates/analytics/_counter_cards.html:29
 #: templates/analytics/flow_detail.html:60
@@ -96,31 +96,31 @@ msgstr "Успешно"
 msgid "Failed"
 msgstr "Ошибка"
 
-#: apps/api/models.py:95
+#: apps/api/models.py:97
 msgid "Blocked"
 msgstr "Заблокировано"
 
-#: apps/api/services.py:73
+#: apps/api/services.py:80
 msgid "Only an organization owner or admin can issue API keys."
 msgstr ""
 "Выпускать API-ключи может только владелец или администратор организации."
 
-#: apps/api/services.py:77
+#: apps/api/services.py:84
 msgid ""
 "You need the manage_api_keys permission in that workspace to issue a key for "
 "it."
 msgstr "Для выпуска ключа в этом пространстве нужно право manage_api_keys."
 
-#: apps/api/services.py:83
+#: apps/api/services.py:90
 msgid "A key needs at least one scope."
 msgstr "Ключу нужна хотя бы одна область доступа."
 
-#: apps/api/services.py:86
+#: apps/api/services.py:93
 #, python-format
 msgid "Unknown scope: %(scopes)s."
 msgstr "Неизвестная область доступа: %(scopes)s."
 
-#: apps/api/services.py:93
+#: apps/api/services.py:100
 #, python-format
 msgid ""
 "You cannot grant the %(scope)s scope: it includes %(missing)s, which you do "
@@ -128,19 +128,19 @@ msgid ""
 msgstr ""
 "Нельзя выдать область %(scope)s: она включает %(missing)s, чего у вас нет."
 
-#: apps/api/services.py:120
+#: apps/api/services.py:127
 msgid "Give the key a name so you can recognise it later."
 msgstr "Дайте ключу имя, чтобы потом его узнать."
 
-#: apps/api/services.py:122
+#: apps/api/services.py:129
 msgid "The name is too long (100 characters maximum)."
 msgstr "Имя слишком длинное (максимум 100 символов)."
 
-#: apps/api/services.py:136
+#: apps/api/services.py:143
 msgid "A key needs an issuer."
 msgstr "Ключу нужен выпускающий."
 
-#: apps/api/services.py:173
+#: apps/api/services.py:180
 #, python-format
 msgid ""
 "This workspace already has %(limit)s active keys. Revoke one before issuing "
@@ -149,36 +149,36 @@ msgstr ""
 "В этом пространстве уже %(limit)s активных ключей. Отзовите один, прежде чем "
 "выпускать новый."
 
-#: apps/api/services.py:214
+#: apps/api/services.py:222
 #, python-format
 msgid "Unknown event: %(events)s."
 msgstr "Неизвестное событие: %(events)s."
 
-#: apps/api/services.py:216
+#: apps/api/services.py:224
 msgid "Choose at least one event to send."
 msgstr "Выберите хотя бы одно событие для отправки."
 
-#: apps/api/services.py:232
+#: apps/api/services.py:240
 msgid "Enter the URL deliveries should be sent to."
 msgstr "Укажите URL, на который отправлять доставки."
 
-#: apps/api/services.py:234
+#: apps/api/services.py:242
 msgid "That URL is too long (500 characters maximum)."
 msgstr "Этот URL слишком длинный (максимум 500 символов)."
 
-#: apps/api/services.py:237
+#: apps/api/services.py:245
 msgid "The URL must start with http:// or https://."
 msgstr "URL должен начинаться с http:// или https://."
 
-#: apps/api/services.py:241
+#: apps/api/services.py:249
 msgid "The URL must not carry a username or password."
 msgstr "URL не должен содержать имя пользователя или пароль."
 
-#: apps/api/services.py:243 apps/api/services.py:247
+#: apps/api/services.py:251 apps/api/services.py:255
 msgid "That does not look like a valid URL."
 msgstr "Это не похоже на корректный URL."
 
-#: apps/api/services.py:274
+#: apps/api/services.py:282
 #, python-format
 msgid "This workspace already has %(limit)s endpoints."
 msgstr "В этом пространстве уже %(limit)s конечных точек."
@@ -4973,17 +4973,33 @@ msgstr "Непрочитано"
 msgid "Read"
 msgstr "Прочитано"
 
-#: apps/organizations/services.py:32 apps/workspaces/views.py:346
+#: apps/organizations/services.py:41 apps/workspaces/views.py:346
 msgid "A workspace needs a name."
 msgstr "Пространству нужно имя."
 
-#: apps/organizations/services.py:37 apps/organizations/services.py:46
+#: apps/organizations/services.py:46 apps/organizations/services.py:55
 msgid "A workspace with that name already exists."
 msgstr "Пространство с таким именем уже существует."
 
-#: apps/organizations/views.py:54
+#: apps/organizations/services.py:84 apps/organizations/views.py:54
 msgid "An organization needs a name."
 msgstr "Организации нужно имя."
+
+#: apps/organizations/services.py:96
+msgid "That account already belongs to an organization."
+msgstr "Этот аккаунт уже состоит в организации."
+
+#: apps/organizations/services.py:106
+msgid "The owner account no longer exists."
+msgstr "Аккаунт владельца больше не существует."
+
+#: apps/organizations/services.py:117
+msgid "An organization with that external id was deleted."
+msgstr "Организация с этим внешним id была удалена."
+
+#: apps/organizations/services.py:120
+msgid "That external id belongs to an organization with a different name."
+msgstr "Этот внешний id принадлежит организации с другим именем."
 
 #: apps/organizations/views.py:63 apps/workspaces/views.py:368
 msgid "That is not a timezone we recognise."
