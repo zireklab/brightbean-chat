@@ -109,14 +109,14 @@ class TestOrganizations:
         response = post(
             client,
             "/organizations",
-            {"name": "Acme", "external_id": "zirek-1", "owner_email": "x@example.test"},
+            {"name": "Acme", "external_id": "zirek-1", "owner_email": "boss@example.test"},
             platform_auth,
         )
 
         assert response.status_code == 200
         assert response.json()["id"] == org["id"]
         assert Organization.objects.filter(external_id="zirek-1").count() == 1
-        assert not User.objects.filter(email="x@example.test").exists()
+        assert User.objects.filter(email="boss@example.test").count() == 1
 
     def test_a_replay_for_a_deleted_organization_is_a_conflict(self, client, org, platform_auth):
         Organization.objects.filter(pk=org["id"]).update(deleted_at=timezone.now())
@@ -143,7 +143,7 @@ class TestOrganizations:
             raise ExternalIdInUseError("raced")
 
         monkeypatch.setattr(services, "provision_organization_and_workspace", lose)
-        monkeypatch.setattr(services, "_replay", lambda found, name: found)
+        monkeypatch.setattr(services, "_replay", lambda found, name, owner_email: found)
         real_filter = Organization.objects.filter
         calls = {"n": 0}
 
@@ -167,6 +167,42 @@ class TestOrganizations:
 
         assert response.status_code == 409
         assert response.json()["error"]["code"] == "external_id_conflict"
+
+    def test_a_replay_with_a_different_owner_is_a_conflict(self, client, org, platform_auth):
+        response = post(
+            client,
+            "/organizations",
+            {"name": "Acme", "external_id": "zirek-1", "owner_email": "someone-else@example.test"},
+            platform_auth,
+        )
+
+        assert response.status_code == 409
+        assert response.json()["error"]["code"] == "external_id_conflict"
+
+    def test_a_replay_matches_the_owner_case_insensitively(self, client, org, platform_auth):
+        response = post(
+            client,
+            "/organizations",
+            {"name": "Acme", "external_id": "zirek-1", "owner_email": "BOSS@Example.test"},
+            platform_auth,
+        )
+
+        assert response.status_code == 200
+
+    def test_a_lost_race_with_no_winner_is_a_conflict_not_a_500(self, monkeypatch, db):
+        from django.db import IntegrityError
+
+        from apps.organizations import services
+
+        def boom(*args, **kwargs):
+            raise IntegrityError("unrelated")
+
+        monkeypatch.setattr(services, "provision_organization_and_workspace", boom)
+
+        with pytest.raises(services.OrganizationError) as exc:
+            services.create_organization(name="Acme", owner_email="o@example.test", external_id="nobody")
+
+        assert exc.value.code == "conflict"
 
     def test_the_same_owner_cannot_found_a_second_tenant(self, client, org, platform_auth):
         response = post(
@@ -420,6 +456,19 @@ class TestIsolation:
         assert (
             client.get(f"{BASE}/organizations/00000000-0000-0000-0000-000000000000", **platform_auth).status_code == 404
         )
+
+    def test_a_key_in_an_archived_workspace_can_still_be_revoked(self, client, org, platform_auth):
+        ws = org["workspaces"][0]["id"]
+        base = f"{BASE}/organizations/{org['id']}/workspaces/{ws}/api-keys"
+        issued = post(
+            client,
+            f"/organizations/{org['id']}/workspaces/{ws}/api-keys",
+            {"name": "k", "scopes": ["read"]},
+            platform_auth,
+        ).json()
+        Workspace.objects.filter(pk=ws).update(is_archived=True)
+
+        assert client.delete(f"{base}/{issued['id']}", **platform_auth).status_code == 204
 
     def test_an_archived_workspace_gets_no_keys(self, client, org, platform_auth):
         ws = org["workspaces"][0]["id"]

@@ -15,7 +15,7 @@ from apps.accounts.services import (
 )
 from apps.billing.entitlements import PlanLimitError, check_can_add_workspace, organization_locked
 from apps.members.models import OrgMembership, WorkspaceMembership
-from apps.members.roles import WorkspaceRole
+from apps.members.roles import OrgRole, WorkspaceRole
 from apps.members.services import add_member_directly
 from apps.organizations.models import Organization
 from apps.workspaces.models import Workspace
@@ -85,7 +85,7 @@ def create_organization(
         raise OrganizationError(gettext("An organization needs a name."))
     external_id = (external_id or "").strip() or None
     if external_id and (found := Organization.objects.filter(external_id=external_id).first()):
-        return _replay(found, name), False
+        return _replay(found, name, owner_email), False
     try:
         with transaction.atomic():
             owner, _ = get_or_create_user(owner_email, owner_name)
@@ -108,17 +108,22 @@ def create_organization(
     except (IntegrityError, ExternalIdInUseError):
         # A concurrent request provisioned the same external_id first.
         if external_id and (found := Organization.objects.filter(external_id=external_id).first()):
-            return _replay(found, name), False
-        raise
+            return _replay(found, name, owner_email), False
+        raise OrganizationError(
+            gettext("The organization could not be created because of a concurrent change; retry."),
+            code="conflict",
+        ) from None
     return org, True
 
 
-def _replay(found: Organization, name: str) -> Organization:
+def _replay(found: Organization, name: str, owner_email: str) -> Organization:
     if found.deleted_at is not None:
         raise OrganizationError(gettext("An organization with that external id was deleted."), code="deleted")
-    if found.name != name:
+    owner = OrgMembership.objects.filter(organization=found, org_role=OrgRole.OWNER).select_related("user").first()
+    same_owner = owner is None or owner.user.email.lower() == (owner_email or "").strip().lower()
+    if found.name != name or not same_owner:
         raise OrganizationError(
-            gettext("That external id belongs to an organization with a different name."),
+            gettext("That external id belongs to an organization with a different name or owner."),
             code="external_id_conflict",
         )
     return found

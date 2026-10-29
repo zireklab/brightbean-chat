@@ -46,15 +46,14 @@ from apps.workspaces.models import Workspace
 
 router = Router(tags=["platform"])
 
+
 #: ``code`` values the services raise that mean "this conflicts with existing
 #: state" rather than "this request is malformed".
-_CONFLICTS = frozenset({"duplicate", "other_organization", "key_limit", "deleted", "external_id_conflict"})
-
-
 def _refuse(exc: Exception) -> ApiError:
-    code = getattr(exc, "code", "invalid")
-    if code in _CONFLICTS or str(code).startswith("plan_"):
-        return ApiError(str(exc), code=str(code), status=409)
+    """Any coded refusal (duplicate, plan_*, other_organization, …) is a 409; uncoded is a 422."""
+    code = str(getattr(exc, "code", "invalid"))
+    if code != "invalid":
+        return ApiError(str(exc), code=code, status=409)
     return ApiError(str(exc), code="invalid_request", status=422)
 
 
@@ -65,8 +64,9 @@ def _org(org_id: UUID) -> Organization:
     return org
 
 
-def _workspace(org: Organization, ws_id: UUID) -> Workspace:
-    workspace = Workspace.objects.for_org(org.pk).filter(pk=ws_id, is_archived=False).first()
+def _workspace(org: Organization, ws_id: UUID, *, archived_ok: bool = False) -> Workspace:
+    workspaces = Workspace.objects.for_org(org.pk)
+    workspace = (workspaces if archived_ok else workspaces.filter(is_archived=False)).filter(pk=ws_id).first()
     if workspace is None:
         raise Http404("No such workspace.")
     return workspace
@@ -180,7 +180,8 @@ def issue_key(request: HttpRequest, org_id: UUID, ws_id: UUID, body: ApiKeyIssue
     url_name="api_keys_revoke",
 )
 def revoke_key(request: HttpRequest, org_id: UUID, ws_id: UUID, key_id: UUID) -> Any:
-    workspace = _workspace(_org(org_id), ws_id)
+    # Revoking a credential must work whatever state its workspace is in.
+    workspace = _workspace(_org(org_id), ws_id, archived_ok=True)
     key = ApiKey.objects.for_workspace(workspace).filter(pk=key_id).first()
     if key is None:
         raise Http404("No such key.")

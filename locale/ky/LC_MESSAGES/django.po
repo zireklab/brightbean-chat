@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 16:00+0000\n"
+"POT-Creation-Date: 2026-10-29 04:15+0000\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ky\n"
@@ -4883,13 +4883,20 @@ msgstr "Бул каттоо эсеби мурдатан эле уюмга кир
 msgid "The owner account no longer exists."
 msgstr "Ээсинин каттоо эсеби мындан ары жок."
 
-#: apps/organizations/services.py:118
+#: apps/organizations/services.py:113
+msgid ""
+"The organization could not be created because of a concurrent change; retry."
+msgstr ""
+"Уюмду түзүү параллелдүү өзгөрүү себептүү ишке ашкан жок; суроону кайталаңыз."
+
+#: apps/organizations/services.py:121
 msgid "An organization with that external id was deleted."
 msgstr "Бул тышкы id менен уюм өчүрүлгөн."
 
-#: apps/organizations/services.py:121
-msgid "That external id belongs to an organization with a different name."
-msgstr "Бул тышкы id башка аттагы уюмга таандык."
+#: apps/organizations/services.py:128
+msgid ""
+"That external id belongs to an organization with a different name or owner."
+msgstr "Бул тышкы id башка аттагы же башка ээси бар уюмга таандык."
 
 #: apps/organizations/views.py:63 apps/workspaces/views.py:368
 msgid "That is not a timezone we recognise."

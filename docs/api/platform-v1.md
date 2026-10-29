@@ -63,7 +63,8 @@ The same envelope as the workspace API:
 | `invalid_request` | 422 | A field is missing, unknown, malformed, or the service refused it (unknown role or scope, bad email, blank name). |
 | `duplicate` | 409 | A workspace with that name already exists in the organization. |
 | `other_organization` | 409 | The account already belongs to a different organization (one per account). |
-| `external_id_conflict` | 409 | The `external_id` exists but for an organization with a different name. |
+| `external_id_conflict` | 409 | The `external_id` exists but for an organization with a different name or owner. |
+| `conflict` | 409 | A concurrent change blocked the request and no result could be found; retry. |
 | `deleted` | 409 | The `external_id` belongs to an organization that was deleted; ids are not recycled. |
 | `plan_workspaces`, `plan_seats`, `plan_api` | 409 | The organization's plan does not include another workspace, user or API key. |
 | `key_limit` | 409 | The workspace already has the maximum number of active keys (50). |
@@ -103,7 +104,7 @@ give none.
 
 **Idempotent by `external_id`.** Repeating the request returns the existing
 organization with `200` instead of `201`, and creates nothing — safe to retry
-after a timeout. The replay must describe the same tenant: a different `name` is
+after a timeout. The replay must describe the same tenant: a different `name` or `owner_email` is
 `409 external_id_conflict`, and an organization deleted since is `409 deleted`. The owner must not already belong to another organization
 (`409 other_organization`).
 

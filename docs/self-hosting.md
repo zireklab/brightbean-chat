@@ -636,7 +636,8 @@ docker compose exec web python manage.py create_platform_key --name zirek-prod
 ```
 
 The `bbp_…` token is printed once on stdout and cannot be recovered; the id is
-printed on stderr. Store the token as a secret. Revoke with
+printed on stderr. Run the command in a terminal you control, not where stdout is
+captured (CI logs, log shippers), and store the token as a secret. Revoke with
 `python manage.py revoke_platform_key <id>`. The key reaches every organization
 on the installation, so keep it out of workspace tooling and logs.
 
