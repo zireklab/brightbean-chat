@@ -387,6 +387,10 @@ def add_member_directly(org: Any, user: Any, org_role: str, workspace_assignment
     from apps.billing.entitlements import organization_locked
 
     with organization_locked(org), transaction.atomic():
+        # The user's row first: the unlimited plan takes no organization lock, so
+        # without this two calls for one user both see "not a member" and the
+        # second reports created=True for a membership the first made.
+        get_user_model().objects.select_for_update().filter(pk=user.pk).first()
         existing = OrgMembership.objects.filter(organization=org, user=user).first()
         if existing is not None:
             return existing, False

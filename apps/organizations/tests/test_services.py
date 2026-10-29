@@ -227,3 +227,27 @@ class TestOneOrganizationPerAccountIsSerialised:
 
         assert outcome == {"done": True}
         assert OrgMembership.objects.filter(user=user).count() == 1
+
+    def test_a_concurrent_duplicate_reports_the_existing_membership(self, tenancy):
+        user = create_user("twice@example.test")
+        outcome: dict[str, object] = {}
+
+        def writer() -> None:
+            try:
+                outcome["result"] = add_member_directly(tenancy.organization, user, OrgRole.MEMBER, [])
+            except Exception as exc:  # pragma: no cover - reported by the assertion below
+                outcome["error"] = exc
+            finally:
+                connection.close()
+
+        with transaction.atomic():
+            User.objects.select_for_update(no_key=True).get(pk=user.pk)
+            thread = threading.Thread(target=writer)
+            thread.start()
+            thread.join(timeout=1.0)
+            assert thread.is_alive()
+            OrgMembership.objects.create(user=user, organization=tenancy.organization, org_role=OrgRole.MEMBER)
+        thread.join(timeout=10)
+
+        assert "error" not in outcome
+        assert outcome["result"][1] is False  # type: ignore[index]
