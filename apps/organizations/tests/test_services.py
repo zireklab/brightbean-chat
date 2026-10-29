@@ -264,13 +264,15 @@ class TestReviewFollowUps:
         assert workspace.description == DEFAULT_WORKSPACE_DESCRIPTION
 
     def test_revoking_through_a_stale_instance_keeps_the_first_timestamp(self, tenancy):
+        from apps.api.models import ApiKey
         from apps.api.services import revoke_api_key
         from apps.api.tests.conftest import make_key
 
         key, _ = make_key(tenancy.workspace)
-        stale = type(key).objects.get(pk=key.pk)
+        scoped = ApiKey.objects.for_workspace(tenancy.workspace)
+        stale = scoped.get(pk=key.pk)
 
         assert revoke_api_key(key) is True
-        first = type(key).objects.get(pk=key.pk).revoked_at
+        first = scoped.get(pk=key.pk).revoked_at
         assert revoke_api_key(stale) is False
-        assert type(key).objects.get(pk=key.pk).revoked_at == first
+        assert scoped.get(pk=key.pk).revoked_at == first
