@@ -5008,7 +5008,7 @@ msgstr "Организация с этим внешним id была удале
 msgid ""
 "That external id belongs to an organization with a different name or owner."
 msgstr ""
-"Эта внешняя id принадлежит организации с другим названием или владельцем."
+"Этот внешний ID принадлежит организации с другим названием или владельцем."
 
 #: apps/organizations/views.py:63 apps/workspaces/views.py:368
 msgid "That is not a timezone we recognise."
