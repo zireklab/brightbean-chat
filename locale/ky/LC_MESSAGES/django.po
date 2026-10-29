@@ -512,7 +512,7 @@ msgstr "Бул жайылтуу азыр эле жөнөтүлүп жатат."
 
 #: apps/broadcasts/services.py:546
 msgid "This channel can no longer be used for broadcasts. Choose another one."
-msgstr ""
+msgstr "Бул каналды мындан ары жайылтуулар үчүн колдонууга болбойт. Башкасын тандаңыз."
 
 #: apps/broadcasts/services.py:567
 msgid ""

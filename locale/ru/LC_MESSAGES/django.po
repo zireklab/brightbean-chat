@@ -531,7 +531,7 @@ msgstr "Эта рассылка уже отправляется."
 
 #: apps/broadcasts/services.py:546
 msgid "This channel can no longer be used for broadcasts. Choose another one."
-msgstr ""
+msgstr "Этот канал больше нельзя использовать для рассылок. Выберите другой."
 
 #: apps/broadcasts/services.py:567
 msgid ""
