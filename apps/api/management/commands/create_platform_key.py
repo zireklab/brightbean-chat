@@ -6,7 +6,10 @@ from apps.api.services import ApiKeysError, issue_platform_key
 
 
 class Command(BaseCommand):
-    help = "Issue a platform API key (bbp_…). The token is printed once and cannot be recovered."
+    help = (
+        "Issue a platform API key (bbp_…). The token is printed once on stdout and cannot be recovered; "
+        "do not run this where stdout is collected (CI logs, log shippers)."
+    )
 
     def add_arguments(self, parser: Any) -> None:
         parser.add_argument("--name", required=True, help='A label, e.g. "zirek-prod".')
