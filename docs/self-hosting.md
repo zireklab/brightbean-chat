@@ -23,6 +23,7 @@ Production settings require real secrets and disable `DEBUG`.
 - [Storage, when web and worker are separate](#storage-when-web-and-worker-are-separate)
 - [Railway](#railway)
 - [Running without a worker (tick mode)](#running-without-a-worker-tick-mode)
+- [Platform API](#platform-api)
 - [Environment variables](#environment-variables)
 - [Backups](#backups)
 - [Upgrades](#upgrades)
@@ -622,6 +623,28 @@ with volume.
 
 On a host you control, `python manage.py tick` is the same drain as a one-shot
 command (55-second budget, sized for a once-a-minute cron).
+
+---
+
+## Platform API
+
+If another system provisions tenants on this installation (organizations, their
+people, workspaces and workspace keys), give it a platform key:
+
+```bash
+docker compose exec web python manage.py create_platform_key --name zirek-prod
+```
+
+The `bbp_…` token is printed once on stdout and cannot be recovered; the id is
+printed on stderr. Run the command in a terminal you control, not where stdout is
+captured (CI logs, log shippers), and store the token as a secret. Revoke with
+`python manage.py revoke_platform_key <id>`. The key reaches every organization
+on the installation, so keep it out of workspace tooling and logs.
+
+The people it creates have no password and no invitation: they sign in through
+single sign-on, which needs `OIDC_LINK_BY_EMAIL` on (the default) and an
+`APP_URL` the provider's redirect URI matches. Reference:
+[`api/platform-v1.md`](api/platform-v1.md).
 
 ---
 

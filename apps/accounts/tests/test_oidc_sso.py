@@ -263,6 +263,41 @@ class TestKnownIdentities:
 
 
 @pytest.mark.django_db
+class TestPlatformProvisionedAccount:
+    """The platform API creates accounts with no invitation behind them. They
+    must still be able to sign in through SSO, which is the only way in."""
+
+    def _provision(self) -> Any:
+        from apps.organizations.services import create_organization
+
+        org, _ = create_organization(name="Acme", owner_email="Boss@Example.test")
+        return OrgMembership.objects.get(organization=org).user
+
+    def test_it_signs_in_and_is_linked_with_no_invitation(self, client: Client, sso: None) -> None:
+        owner = self._provision()
+
+        response = sign_in(client, email="boss@example.test")
+
+        assert response.status_code == 302
+        assert client.session["_auth_user_id"] == str(owner.pk)
+        assert SocialAccount.objects.get(provider="sso", uid="sub-1").user == owner
+        assert Organization.objects.count() == 1, "signing in must not provision a second organization"
+
+    def test_without_link_by_email_it_is_refused(self, client: Client, sso: None, settings: Any) -> None:
+        """Documented in docs/api/platform-v1.md: platform provisioning needs
+        OIDC_LINK_BY_EMAIL, or the provisioned account cannot be reached."""
+        providers = copy.deepcopy(settings.SOCIALACCOUNT_PROVIDERS)
+        providers["openid_connect"]["APPS"][0]["settings"]["email_authentication"] = False
+        settings.SOCIALACCOUNT_PROVIDERS = providers
+        self._provision()
+
+        response = sign_in(client, email="boss@example.test")
+
+        assert response.status_code == 403
+        assert "_auth_user_id" not in client.session
+
+
+@pytest.mark.django_db
 class TestTheSignupFormPath:
     """allauth's signup form lets the visitor edit the address. Nothing in the
     callback reaches the form once the checks above are in place, so ``save_user``

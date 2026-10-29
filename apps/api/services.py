@@ -39,15 +39,18 @@ from django.utils.translation import gettext
 from apps.api import keys as key_tokens
 from apps.api.auth import SCOPE_PERMISSIONS, permissions_for_scopes
 from apps.api.events import SUBSCRIBABLE_EVENTS
-from apps.api.models import ApiKey, ApiScope, OutboundWebhook
+from apps.api.models import ApiKey, ApiScope, OutboundWebhook, PlatformApiKey
 from apps.members.models import OrgMembership, WorkspaceMembership
-from apps.members.roles import ORG_ROLE_LEVEL, OrgRole
+from apps.members.roles import ORG_ROLE_LEVEL, PERMISSION_KEYS, OrgRole
 
 __all__ = [
     "ApiKeysError",
     "create_webhook",
     "issue_api_key",
+    "issue_api_key_as_system",
+    "issue_platform_key",
     "revoke_api_key",
+    "revoke_platform_key",
     "update_webhook",
 ]
 
@@ -60,8 +63,13 @@ class ApiKeysError(ValueError):
 
     A ``ValueError`` for the same reason ``apps.contacts.errors.ContactsError``
     is one: the caller passed something that is not allowed, and the views turn
-    it into a form error rather than a 500.
+    it into a form error rather than a 500. ``code`` is for the platform API,
+    which maps a limit to a conflict and everything else to a validation error.
     """
+
+    def __init__(self, message: str, *, code: str = "invalid") -> None:
+        super().__init__(message)
+        self.code = code
 
 
 def _issuer_may_manage(user: Any, workspace: Any) -> None:
@@ -110,25 +118,49 @@ def _check_plan_allows_api(workspace: Any) -> None:
     try:
         check_api_access(workspace.organization)
     except PlanLimitError as exc:
-        raise ApiKeysError(str(exc)) from exc
+        raise ApiKeysError(str(exc), code=exc.code) from exc
+
+
+def _clean_key_name(name: str) -> str:
+    cleaned = (name or "").strip()
+    if not cleaned:
+        raise ApiKeysError(gettext("Give the key a name so you can recognise it later."))
+    if len(cleaned) > 100:
+        raise ApiKeysError(gettext("The name is too long (100 characters maximum)."))
+    return cleaned
 
 
 def issue_api_key(*, workspace: Any, issuer: Any, name: str, scopes: Any) -> ApiKey:
-    """Mint a key. The returned object carries ``raw_token`` — show it once.
+    """Mint a key on behalf of a member. The returned object carries ``raw_token`` — show it once.
 
     Nothing persists the plaintext, and nothing can recover it: an operator who
     loses it issues a new key and revokes this one.
     """
-    cleaned_name = (name or "").strip()
-    if not cleaned_name:
-        raise ApiKeysError(gettext("Give the key a name so you can recognise it later."))
-    if len(cleaned_name) > 100:
-        raise ApiKeysError(gettext("The name is too long (100 characters maximum)."))
-
+    if issuer is None:
+        # Failing closed: a caller that lost track of the user must not mint an
+        # unrestricted key by accident. Installation-level issuance has its own
+        # entry point below.
+        raise ApiKeysError(gettext("A key needs an issuer."))
+    cleaned_name = _clean_key_name(name)
     _issuer_may_manage(issuer, workspace)
     membership = WorkspaceMembership.objects.get(user=issuer, workspace=workspace)
     validated = _validated_scopes(scopes, membership.effective_permissions)
+    return _issue_locked(workspace=workspace, issuer=issuer, cleaned_name=cleaned_name, validated=validated)
 
+
+def issue_api_key_as_system(*, workspace: Any, name: str, scopes: Any) -> ApiKey:
+    """Mint a key with installation-level authority (the platform API).
+
+    Nobody's memberships are consulted and any known scope may be granted, so
+    this is only for callers that have already authenticated a platform key.
+    Name, scope, plan and per-workspace-cap checks are the same as for a member.
+    """
+    cleaned_name = _clean_key_name(name)
+    validated = _validated_scopes(scopes, {key: True for key in PERMISSION_KEYS})
+    return _issue_locked(workspace=workspace, issuer=None, cleaned_name=cleaned_name, validated=validated)
+
+
+def _issue_locked(*, workspace: Any, issuer: Any, cleaned_name: str, validated: Any) -> ApiKey:
     # The plan check and the insert are one critical section; see
     # apps/billing/entitlements.organization_locked on why the write has to be
     # inside the block rather than after it.
@@ -146,7 +178,8 @@ def _issue_api_key_locked(*, workspace: Any, issuer: Any, cleaned_name: str, val
     if live >= MAX_KEYS_PER_WORKSPACE:
         raise ApiKeysError(
             gettext("This workspace already has %(limit)s active keys. Revoke one before issuing another.")
-            % {"limit": MAX_KEYS_PER_WORKSPACE}
+            % {"limit": MAX_KEYS_PER_WORKSPACE},
+            code="key_limit",
         )
 
     minted = key_tokens.mint()
@@ -168,12 +201,16 @@ def revoke_api_key(api_key: ApiKey) -> bool:
     Idempotent: revoking an already-revoked key returns False and leaves the
     original timestamp, so the audit trail says when it actually happened.
     """
-    if api_key.revoked_at is not None:
-        return False
     now = timezone.now()
-    api_key.revoked_at = now
-    ApiKey.objects.for_workspace(api_key.workspace_id).filter(pk=api_key.pk).update(revoked_at=now, updated_at=now)
-    return True
+    # The check is the WHERE clause, so two racing revokes keep the first timestamp.
+    revoked = (
+        ApiKey.objects.for_workspace(api_key.workspace_id)
+        .filter(pk=api_key.pk, revoked_at__isnull=True)
+        .update(revoked_at=now, updated_at=now)
+    )
+    if revoked:
+        api_key.revoked_at = now
+    return bool(revoked)
 
 
 def scope_summary(api_key: ApiKey) -> str:
@@ -297,3 +334,29 @@ def known_scopes() -> list[tuple[str, str | Promise]]:
     server then refuses teaches people the product is broken.
     """
     return [(scope.value, scope.label) for scope in ApiScope if scope.value in SCOPE_PERMISSIONS]
+
+
+# --- Platform keys -----------------------------------------------------------
+
+
+def issue_platform_key(*, name: str) -> PlatformApiKey:
+    """Mint an installation-level key. The result carries ``raw_token`` — show it once."""
+    minted = key_tokens.mint(key_tokens.PLATFORM_TOKEN_PREFIX)
+    key = PlatformApiKey.objects.create(
+        name=_clean_key_name(name), lookup_prefix=minted.lookup_prefix, token_digest=minted.token_digest
+    )
+    key.raw_token = minted.plaintext
+    return key
+
+
+def revoke_platform_key(key: PlatformApiKey) -> bool:
+    """Revoke immediately. Returns False if the key was already revoked.
+
+    The check is the ``WHERE`` clause, not the in-memory instance, so two
+    operators racing report one revocation and the first timestamp survives.
+    """
+    now = timezone.now()
+    revoked = PlatformApiKey.objects.filter(pk=key.pk, revoked_at__isnull=True).update(revoked_at=now, updated_at=now)
+    if revoked:
+        key.revoked_at = now
+    return bool(revoked)

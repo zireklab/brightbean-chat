@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-21 14:08+0000\n"
+"POT-Creation-Date: 2026-10-29 04:15+0000\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ky\n"
@@ -16,6 +16,23 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: apps/accounts/adapters.py:145
+#, python-format
+msgid ""
+"An account with this address already exists. Sign in with your password, "
+"accept the invitation, then connect %(name)s under your connected accounts."
+msgstr ""
+"Бул даректеги аккаунт мурунтан бар. Сырсөз менен кирип, чакырууну кабыл "
+"алып, андан кийин туташкан аккаунттар бөлүмүнөн %(name)s туташтырыңыз."
+
+#: apps/accounts/adapters.py:170
+msgid "An invitation is required to sign up."
+msgstr "Катталуу үчүн чакыруу керек."
+
+#: apps/accounts/adapters.py:183
+msgid "This account was just created. Try signing in again."
+msgstr "Бул аккаунт жаңы эле түзүлдү. Кайра кирип көрүңүз."
 
 #: apps/analytics/views.py:216
 msgid "Email tracking settings saved."
@@ -50,24 +67,24 @@ msgstr "Байланыш ирээттен чыгарылды"
 msgid "Broadcast finished"
 msgstr "Жарыя аяктады"
 
-#: apps/api/models.py:80
+#: apps/api/models.py:82
 msgctxt "api scope"
 msgid "Read"
 msgstr "Окуйм"
 
-#: apps/api/models.py:81
+#: apps/api/models.py:83
 msgid "Write"
 msgstr "Жазам"
 
-#: apps/api/models.py:82 templates/contacts/list.html:310
+#: apps/api/models.py:84 templates/contacts/list.html:310
 msgid "Erase"
 msgstr "Өчүрөм"
 
-#: apps/api/models.py:93
+#: apps/api/models.py:95
 msgid "Succeeded"
 msgstr "Ийгилик!"
 
-#: apps/api/models.py:94 apps/broadcasts/models.py:94
+#: apps/api/models.py:96 apps/broadcasts/models.py:94
 #: apps/contacts/models.py:411 apps/contacts/models.py:571
 #: templates/analytics/_counter_cards.html:29
 #: templates/analytics/flow_detail.html:60
@@ -77,30 +94,30 @@ msgstr "Ийгилик!"
 msgid "Failed"
 msgstr "Болбой калды"
 
-#: apps/api/models.py:95
+#: apps/api/models.py:97
 msgid "Blocked"
 msgstr "Блокто"
 
-#: apps/api/services.py:72
+#: apps/api/services.py:80
 msgid "Only an organization owner or admin can issue API keys."
 msgstr "API ачкычтарын уюмдун ээси же администратору гана чыгара алат."
 
-#: apps/api/services.py:76
+#: apps/api/services.py:84
 msgid ""
 "You need the manage_api_keys permission in that workspace to issue a key for "
 "it."
 msgstr "Бул иш жайында ачкыч чыгаруу үчүн manage_api_keys уруксаты керек."
 
-#: apps/api/services.py:82
+#: apps/api/services.py:90
 msgid "A key needs at least one scope."
 msgstr "Ачкычка кеминде бир уруксат керек."
 
-#: apps/api/services.py:85
+#: apps/api/services.py:93
 #, python-format
 msgid "Unknown scope: %(scopes)s."
 msgstr "Белгисиз уруксат: %(scopes)s."
 
-#: apps/api/services.py:92
+#: apps/api/services.py:100
 #, python-format
 msgid ""
 "You cannot grant the %(scope)s scope: it includes %(missing)s, which you do "
@@ -108,15 +125,19 @@ msgid ""
 msgstr ""
 "%(scope)s чөйрөсүн бере албайсыз: анда сизде жок %(missing)s камтылган."
 
-#: apps/api/services.py:124
+#: apps/api/services.py:127
 msgid "Give the key a name so you can recognise it later."
 msgstr "Кийин таанып билүү үчүн ачкычка ат бериңиз."
 
-#: apps/api/services.py:126
+#: apps/api/services.py:129
 msgid "The name is too long (100 characters maximum)."
 msgstr "Аты өтө узун (эң көбү 100 белги)."
 
-#: apps/api/services.py:148
+#: apps/api/services.py:143
+msgid "A key needs an issuer."
+msgstr "Ачкычка чыгаруучу керек."
+
+#: apps/api/services.py:180
 #, python-format
 msgid ""
 "This workspace already has %(limit)s active keys. Revoke one before issuing "
@@ -125,36 +146,36 @@ msgstr ""
 "Бул иш жайында азырынча %(limit)s активдүү ачкыч бар. Жаңысын чыгаруудан "
 "мурун бирин жокко чыгарыңыз."
 
-#: apps/api/services.py:189
+#: apps/api/services.py:222
 #, python-format
 msgid "Unknown event: %(events)s."
 msgstr "Белгисиз окуя: %(events)s."
 
-#: apps/api/services.py:191
+#: apps/api/services.py:224
 msgid "Choose at least one event to send."
 msgstr "Жөнөтүү үчүн кеминде бир окуяны тандаңыз."
 
-#: apps/api/services.py:207
+#: apps/api/services.py:240
 msgid "Enter the URL deliveries should be sent to."
 msgstr "Жеткирүүлөр жөнөтүлүүчү URL дарегин көрсөтүңүз."
 
-#: apps/api/services.py:209
+#: apps/api/services.py:242
 msgid "That URL is too long (500 characters maximum)."
 msgstr "Бул URL өтө узун (эң көбү 500 белги)."
 
-#: apps/api/services.py:212
+#: apps/api/services.py:245
 msgid "The URL must start with http:// or https://."
 msgstr "URL http:// же https:// менен башталышы керек."
 
-#: apps/api/services.py:216
+#: apps/api/services.py:249
 msgid "The URL must not carry a username or password."
 msgstr "URL колдонуучунун атын же сырсөзүн камтыбашы керек."
 
-#: apps/api/services.py:218 apps/api/services.py:222
+#: apps/api/services.py:251 apps/api/services.py:255
 msgid "That does not look like a valid URL."
 msgstr "Бул туура URL сыяктуу эмес."
 
-#: apps/api/services.py:249
+#: apps/api/services.py:282
 #, python-format
 msgid "This workspace already has %(limit)s endpoints."
 msgstr "Бул иш жайында азырынча %(limit)s эндпоинт бар."
@@ -395,7 +416,7 @@ msgid "Sending"
 msgstr "Жөнөтүлүүдө"
 
 #: apps/broadcasts/models.py:73 apps/broadcasts/models.py:93
-#: apps/inbox/views.py:985 templates/analytics/_counter_cards.html:21
+#: apps/inbox/views.py:997 templates/analytics/_counter_cards.html:21
 #: templates/analytics/flow_detail.html:58
 #: templates/analytics/flow_detail.html:93 templates/analytics/overview.html:54
 #: templates/analytics/overview.html:93 templates/broadcasts/_counters.html:56
@@ -427,69 +448,73 @@ msgstr "«{broadcast_name}» жайылтуусу аяктады"
 msgid "{sent} sent, {failed} failed, {skipped} skipped."
 msgstr "Жөнөтүлдү: {sent}, ката: {failed}, өткөрүп жиберилди: {skipped}."
 
-#: apps/broadcasts/services.py:156 apps/broadcasts/services.py:177
+#: apps/broadcasts/services.py:157 apps/broadcasts/services.py:178
 msgid "This channel does not allow broadcasts."
 msgstr "Бул канал жайылтууларды колдобойт."
 
-#: apps/broadcasts/services.py:202
+#: apps/broadcasts/services.py:203
 msgid "Add at least one rule, or pick a saved segment."
 msgstr "Жок дегенде бир эреже кошуңуз же сакталган сегментти тандаңыз."
 
-#: apps/broadcasts/services.py:250
+#: apps/broadcasts/services.py:251
 #, python-format
 msgid "Broadcast: %(name)s"
 msgstr "Жайылтуу: %(name)s"
 
-#: apps/broadcasts/services.py:269
+#: apps/broadcasts/services.py:270
 msgid "That message cannot be sent as written."
 msgstr "Бул билдирүү ушул түрдө жөнөтүлбөйт."
 
-#: apps/broadcasts/services.py:288
+#: apps/broadcasts/services.py:289
 msgid "That template is not approved for use on this channel."
 msgstr "Бул шаблон бул каналда колдонууга бекитилген эмес."
 
-#: apps/broadcasts/services.py:307
+#: apps/broadcasts/services.py:308
 #, python-format
 msgid "This template needs a value for %(slots)s."
 msgstr "Бул шаблонго %(slots)s үчүн маани керек."
 
-#: apps/broadcasts/services.py:332
+#: apps/broadcasts/services.py:333
 msgid "That message tag is not one this channel accepts."
 msgstr "Бул билдирүү теги бул канал тарабынан кабыл алынбайт."
 
-#: apps/broadcasts/services.py:362
+#: apps/broadcasts/services.py:363
 msgid " (copy)"
 msgstr " (көчүрмө)"
 
-#: apps/broadcasts/services.py:430
+#: apps/broadcasts/services.py:431
 msgid "Cancel this broadcast before deleting it."
 msgstr "Өчүрүүдөн мурун бул жайылтууну жокко чыгарыңыз."
 
-#: apps/broadcasts/services.py:467
+#: apps/broadcasts/services.py:468
 msgid "Only a draft can be scheduled."
 msgstr "Пландаштырууга болгону долбоорду коюуга болот."
 
-#: apps/broadcasts/services.py:469
+#: apps/broadcasts/services.py:470
 msgid "Add a message before sending."
 msgstr "Жөнөтүүдөн мурун билдирүү кошуңуз."
 
-#: apps/broadcasts/services.py:472
+#: apps/broadcasts/services.py:473
 msgid "Choose who this broadcast goes to."
 msgstr "Бул жайылтуу кимге бариларын тандаңыз."
 
-#: apps/broadcasts/services.py:483
+#: apps/broadcasts/services.py:485
 msgid "Nobody matches this audience."
 msgstr "Бул аудиторияга эч ким дал келбейт."
 
-#: apps/broadcasts/services.py:492
+#: apps/broadcasts/services.py:494
 msgid "Nobody in this audience can be messaged on this channel right now."
 msgstr "Азыр бул каналда бул аудиториядан эч кимге жазууга болбойт."
 
-#: apps/broadcasts/services.py:506
+#: apps/broadcasts/services.py:508
 msgid "This broadcast is already on its way."
 msgstr "Бул жайылтуу азыр эле жөнөтүлүп жатат."
 
 #: apps/broadcasts/services.py:546
+msgid "This channel can no longer be used for broadcasts. Choose another one."
+msgstr "Бул каналды мындан ары жайылтуулар үчүн колдонууга болбойт. Башкасын тандаңыз."
+
+#: apps/broadcasts/services.py:567
 msgid ""
 "That template is no longer approved on this channel. Pick another one before "
 "sending."
@@ -497,7 +522,7 @@ msgstr ""
 "Бул шаблон бул каналда мындан ары бекитилген эмес. Жөнөтүүдөн мурун башкасын "
 "тандаңыз."
 
-#: apps/broadcasts/services.py:563
+#: apps/broadcasts/services.py:584
 #, python-format
 msgid ""
 "%(count)s of these contacts are outside the messaging window, so this send "
@@ -506,7 +531,7 @@ msgstr ""
 "%(count)s контакт билдирүү терезесинен тышкары, ошондуктан бул жөнөтүү үчүн "
 "промо эмес билдирүү тегин талап кылат."
 
-#: apps/broadcasts/services.py:571
+#: apps/broadcasts/services.py:592
 #, python-format
 msgid ""
 "%(count)s of these contacts are outside the messaging window, so this send "
@@ -515,16 +540,16 @@ msgstr ""
 "%(count)s контакт билдирүү терезесинен тышкары, ошондуктан бул жөнөтүү "
 "бекитилген шаблонду талап кылат."
 
-#: apps/broadcasts/services.py:609
+#: apps/broadcasts/services.py:630
 msgid "This broadcast has already been sent or scheduled."
 msgstr "Бул жайылтуу мурунтан эле жөнөтүлгөн же пландаштырылган."
 
-#: apps/broadcasts/services.py:639
+#: apps/broadcasts/services.py:660
 msgid "Only a scheduled or sending broadcast can be cancelled."
 msgstr ""
 "Жокко чыгарууга болгону пландаштырылган же жөнөтүлүп жаткан жайылтуу болот."
 
-#: apps/broadcasts/services.py:1028
+#: apps/broadcasts/services.py:1049
 #, python-format
 msgid ""
 "This broadcast reaches %(eligible)s people and your plan has room for "
@@ -885,7 +910,7 @@ msgid "Could not move the step"
 msgstr "Кадам жылдырылган жок"
 
 #: apps/campaigns/views.py:331 apps/flows/views_triggers.py:299
-#: apps/inbox/views.py:1842
+#: apps/inbox/views.py:1854
 msgid "Order updated"
 msgstr "Тартип жаңыртылды"
 
@@ -1799,7 +1824,7 @@ msgstr "Сапты өткөрүп жиберүү"
 msgid "Running"
 msgstr "Иштөөдө"
 
-#: apps/contacts/models.py:570 apps/inbox/views.py:591
+#: apps/contacts/models.py:570 apps/inbox/views.py:603
 #: templates/api/key_created.html:26 templates/api/webhook_secret.html:22
 #: templates/channels/secret.html:57 templates/inbox/_conversation_rows.html:81
 msgid "Done"
@@ -1896,7 +1921,7 @@ msgstr "Адегенде тег тандаңыз"
 msgid "Already tagged"
 msgstr "Мурунтан белгиленген"
 
-#: apps/contacts/views.py:709 apps/inbox/views.py:1208
+#: apps/contacts/views.py:709 apps/inbox/views.py:1220
 msgid "Tag added"
 msgstr "Тег кошулду"
 
@@ -1904,7 +1929,7 @@ msgstr "Тег кошулду"
 msgid "That tag was not on this contact"
 msgstr "Бул тег бул байланышта болгон эмес"
 
-#: apps/contacts/views.py:723 apps/inbox/views.py:1206
+#: apps/contacts/views.py:723 apps/inbox/views.py:1218
 msgid "Tag removed"
 msgstr "Тег алынды"
 
@@ -1932,7 +1957,7 @@ msgstr "Сценарий башталды"
 msgid "Nothing was running"
 msgstr "Эч нерсе иштеген жок"
 
-#: apps/contacts/views.py:836 apps/inbox/views.py:1181
+#: apps/contacts/views.py:836 apps/inbox/views.py:1193
 msgid "Automation stopped"
 msgstr "Автоматташтыруу токтотулду"
 
@@ -3903,7 +3928,7 @@ msgstr "Аткарылды деп белгилөө"
 msgid "(deleted)"
 msgstr "(өчүрүлдү)"
 
-#: apps/inbox/rendering.py:704 apps/inbox/views.py:921
+#: apps/inbox/rendering.py:704 apps/inbox/views.py:933
 #, python-format
 msgid "%(list)s or %(last)s"
 msgstr "%(list)s же %(last)s"
@@ -3977,7 +4002,7 @@ msgstr "Белгисиз аракет %(kind)r."
 msgid "That label no longer exists."
 msgstr "Бул метка мындан ары жок."
 
-#: apps/inbox/rules.py:300 apps/inbox/views.py:1108
+#: apps/inbox/rules.py:300 apps/inbox/views.py:1120
 msgid "That person is not a member of this workspace."
 msgstr "Бул адам бул иш жайынын мүчөсү эмес."
 
@@ -4047,230 +4072,230 @@ msgstr "Бул эскертүү жарактуу эмес."
 msgid "That reply has already been sent or cancelled."
 msgstr "Бул жооп мурунтан жөнөтүлгөн же жокко чыгарылган."
 
-#: apps/inbox/views.py:248
+#: apps/inbox/views.py:249
 msgid "Assigned to me"
 msgstr "Мага дайындалган"
 
-#: apps/inbox/views.py:249 apps/inbox/views.py:589 apps/inbox/views.py:1098
+#: apps/inbox/views.py:250 apps/inbox/views.py:601 apps/inbox/views.py:1110
 #: templates/inbox/_thread_header.html:60
 msgid "Unassigned"
 msgstr "Дайындалган жок"
 
-#: apps/inbox/views.py:588 apps/notifications/views.py:140
+#: apps/inbox/views.py:600 apps/notifications/views.py:140
 #: templates/media_library/library.html:116
 msgid "All"
 msgstr "Баары"
 
-#: apps/inbox/views.py:590
+#: apps/inbox/views.py:602
 msgid "Mine"
 msgstr "Меники"
 
-#: apps/inbox/views.py:870
+#: apps/inbox/views.py:882
 msgid "Nothing to send"
 msgstr "Жөнөтүүчү эч нерсе жок"
 
-#: apps/inbox/views.py:885 templates/broadcasts/_rows.html:70
+#: apps/inbox/views.py:897 templates/broadcasts/_rows.html:70
 #: templates/inbox/_deferred.html:54
 msgid "Not sent"
 msgstr "Жөнөтүлгөн жок"
 
-#: apps/inbox/views.py:886
+#: apps/inbox/views.py:898
 msgid "Note added"
 msgstr "Эскертүү кошулду"
 
-#: apps/inbox/views.py:886
+#: apps/inbox/views.py:898
 msgid "Reply sent"
 msgstr "Жооп жөнөтүлдү"
 
-#: apps/inbox/views.py:894
+#: apps/inbox/views.py:906
 #, python-format
 msgid "%(platform)s cannot carry %(items)s, so that was left off."
 msgstr "%(platform)s %(items)s алып жүрө албайт, ошондуктан ал калтырылды."
 
-#: apps/inbox/views.py:909
+#: apps/inbox/views.py:921
 msgid "an image"
 msgstr "сүрөт"
 
-#: apps/inbox/views.py:910
+#: apps/inbox/views.py:922
 msgid "an audio file"
 msgstr "аудио файл"
 
-#: apps/inbox/views.py:911
+#: apps/inbox/views.py:923
 msgid "a video"
 msgstr "видео"
 
-#: apps/inbox/views.py:912
+#: apps/inbox/views.py:924
 msgid "a file"
 msgstr "файл"
 
-#: apps/inbox/views.py:983
+#: apps/inbox/views.py:995
 msgid "Still not sent"
 msgstr "Дагы деле жөнөтүлгөн жок"
 
-#: apps/inbox/views.py:1107
+#: apps/inbox/views.py:1119
 msgid "Cannot assign"
 msgstr "Дайындоо мүмкүн эмес"
 
-#: apps/inbox/views.py:1113
+#: apps/inbox/views.py:1125
 #, python-format
 msgid "Assigned to %(name)s"
 msgstr "%(name)sга дайындалды"
 
-#: apps/inbox/views.py:1127
+#: apps/inbox/views.py:1139
 msgid "Marked done"
 msgstr "Аткарылды деп белгиленди"
 
-#: apps/inbox/views.py:1137
+#: apps/inbox/views.py:1149
 msgid "Reopened"
 msgstr "Кайра ачылды"
 
-#: apps/inbox/views.py:1139
+#: apps/inbox/views.py:1151
 msgid "Unknown state"
 msgstr "Белгисиз абал"
 
-#: apps/inbox/views.py:1139
+#: apps/inbox/views.py:1151
 msgid "A conversation is either open or done."
 msgstr "Маек же ачык, же аяктаган болот."
 
-#: apps/inbox/views.py:1156
+#: apps/inbox/views.py:1168
 msgid "Automation resumed"
 msgstr "Автоматташтыруу улантылды"
 
-#: apps/inbox/views.py:1158
+#: apps/inbox/views.py:1170
 msgid "Automation paused"
 msgstr "Автоматташтыруу тыныгууда"
 
-#: apps/inbox/views.py:1180
+#: apps/inbox/views.py:1192
 msgid "Nothing running"
 msgstr "Эч нерсе иштебейт"
 
-#: apps/inbox/views.py:1202
+#: apps/inbox/views.py:1214
 msgid "No tag selected"
 msgstr "Тег тандалган жок"
 
-#: apps/inbox/views.py:1232
+#: apps/inbox/views.py:1244
 msgid "Not labelled"
 msgstr "Метка коюлган жок"
 
-#: apps/inbox/views.py:1233
+#: apps/inbox/views.py:1245
 msgid "Labelled"
 msgstr "Меткаланды"
 
-#: apps/inbox/views.py:1244
+#: apps/inbox/views.py:1256
 msgid "Label removed"
 msgstr "Метка алынды"
 
-#: apps/inbox/views.py:1280
+#: apps/inbox/views.py:1292
 #, python-format
 msgid "Label removed from %(count)s conversation"
 msgid_plural "Label removed from %(count)s conversations"
 msgstr[0] "Метка %(count)s маектен алынды"
 
-#: apps/inbox/views.py:1282
+#: apps/inbox/views.py:1294
 #, python-format
 msgid "Label added to %(count)s conversation"
 msgid_plural "Label added to %(count)s conversations"
 msgstr[0] "Метка %(count)s маекке кошулду"
 
-#: apps/inbox/views.py:1304 apps/inbox/views.py:1324
+#: apps/inbox/views.py:1316 apps/inbox/views.py:1336
 msgid "No reminder set"
 msgstr "Эскертүү коюлган жок"
 
-#: apps/inbox/views.py:1304 apps/inbox/views.py:1355
+#: apps/inbox/views.py:1316 apps/inbox/views.py:1367
 msgid "Pick a date and time."
 msgstr "Күндү жана убакытты тандаңыз."
 
-#: apps/inbox/views.py:1325
+#: apps/inbox/views.py:1337
 msgid "Reminder set"
 msgstr "Эскертүү коюлду"
 
-#: apps/inbox/views.py:1337 apps/inbox/views.py:1406
+#: apps/inbox/views.py:1349 apps/inbox/views.py:1418
 msgid "Already gone"
 msgstr "Мурунтан жок болуп кетти"
 
-#: apps/inbox/views.py:1338
+#: apps/inbox/views.py:1350
 msgid "Reminder cancelled"
 msgstr "Эскертүү жокко чыгарылды"
 
-#: apps/inbox/views.py:1355 apps/inbox/views.py:1359 apps/inbox/views.py:1369
+#: apps/inbox/views.py:1367 apps/inbox/views.py:1371 apps/inbox/views.py:1381
 msgid "Not scheduled"
 msgstr "Пландалган жок"
 
-#: apps/inbox/views.py:1370
+#: apps/inbox/views.py:1382
 msgid "Reply scheduled"
 msgstr "Жооп пландалды"
 
-#: apps/inbox/views.py:1387 apps/inbox/views.py:1391
+#: apps/inbox/views.py:1399 apps/inbox/views.py:1403
 msgid "Not changed"
 msgstr "Өзгөртүлгөн жок"
 
-#: apps/inbox/views.py:1392
+#: apps/inbox/views.py:1404
 msgid "Scheduled reply updated"
 msgstr "Пландалган жооп жаңыртылды"
 
-#: apps/inbox/views.py:1407
+#: apps/inbox/views.py:1419
 msgid "Scheduled reply cancelled"
 msgstr "Пландалган жооп жокко чыгарылды"
 
-#: apps/inbox/views.py:1497
+#: apps/inbox/views.py:1509
 msgid "That message is too long."
 msgstr "Бул билдирүү өтө узун."
 
-#: apps/inbox/views.py:1506
+#: apps/inbox/views.py:1518
 #, python-format
 msgid "%(platform)s cannot carry that attachment."
 msgstr "%(platform)s бул тиркемени алып жүрө албайт."
 
-#: apps/inbox/views.py:1509
+#: apps/inbox/views.py:1521
 msgid "Write something first."
 msgstr "Адегенде бир нерсе жазыңыз."
 
-#: apps/inbox/views.py:1538
+#: apps/inbox/views.py:1550
 msgid "One of those attachments is no longer in the library."
 msgstr "Бул тиркемелердин бири китепканада жок болуп калды."
 
-#: apps/inbox/views.py:1620
+#: apps/inbox/views.py:1632
 msgid "Not created"
 msgstr "Түзүлгөн жок"
 
-#: apps/inbox/views.py:1621
+#: apps/inbox/views.py:1633
 msgid "Label created"
 msgstr "Метка түзүлдү"
 
-#: apps/inbox/views.py:1632 apps/inbox/views.py:1766 apps/inbox/views.py:1771
-#: apps/inbox/views.py:1792
+#: apps/inbox/views.py:1644 apps/inbox/views.py:1778 apps/inbox/views.py:1783
+#: apps/inbox/views.py:1804
 msgid "Not saved"
 msgstr "Сакталган жок"
 
-#: apps/inbox/views.py:1633
+#: apps/inbox/views.py:1645
 msgid "Label saved"
 msgstr "Метка сакталды"
 
-#: apps/inbox/views.py:1650
+#: apps/inbox/views.py:1662
 msgid "Label deleted"
 msgstr "Метка өчүрүлдү"
 
-#: apps/inbox/views.py:1766
+#: apps/inbox/views.py:1778
 msgid "A rule needs a name."
 msgstr "Эрежеге ат керек."
 
-#: apps/inbox/views.py:1794 apps/inbox/views.py:1797
+#: apps/inbox/views.py:1806 apps/inbox/views.py:1809
 msgid "Rule saved"
 msgstr "Эреже сакталды"
 
-#: apps/inbox/views.py:1811
+#: apps/inbox/views.py:1823
 msgid "Not enabled"
 msgstr "Күйгүзүлгөн жок"
 
-#: apps/inbox/views.py:1814
+#: apps/inbox/views.py:1826
 msgid "Rule enabled"
 msgstr "Эреже күйгүзүлдү"
 
-#: apps/inbox/views.py:1818
+#: apps/inbox/views.py:1830
 msgid "Rule disabled"
 msgstr "Эреже өчүрүлдү"
 
-#: apps/inbox/views.py:1827
+#: apps/inbox/views.py:1839
 msgid "Rule deleted"
 msgstr "Эреже өчүрүлдү"
 
@@ -4451,88 +4476,89 @@ msgstr "Агент"
 msgid "Viewer"
 msgstr "Көрүүчү"
 
-#: apps/members/services.py:143
+#: apps/members/services.py:150
 #, python-format
 msgid "You cannot %(verb)s a member whose role is higher than your own."
 msgstr "Ролу өзүңүздүкүнөн жогору мүчөнү %(verb)s албайсыз."
 
-#: apps/members/services.py:145
+#: apps/members/services.py:152
 #, python-format
 msgid "Only organization owners can %(verb)s an organization admin."
 msgstr "Уюм администраторун %(verb)s түзүн уюмдун ээлери гана иштете алат."
 
-#: apps/members/services.py:158
+#: apps/members/services.py:165
 msgid "That workspace does not belong to your organization."
 msgstr "Бул иш жайы сиздин уюмуңузга таандык эмес."
 
-#: apps/members/services.py:160
+#: apps/members/services.py:167
 #, python-format
 msgid "Unknown workspace role: %(role)r."
 msgstr "Иш жайына белгисиз роль: %(role)r."
 
-#: apps/members/services.py:169
+#: apps/members/services.py:176
 msgid "You cannot manage members in that workspace."
 msgstr "Бул иш жайында мүчөлөрдү башкара албайсыз."
 
-#: apps/members/services.py:171
+#: apps/members/services.py:178
 msgid ""
 "You cannot grant a workspace role higher than your own in that workspace."
 msgstr "Бул иш жайында өзүңүздүн ролуңуздан жогору роль бере албайсыз."
 
-#: apps/members/services.py:187
+#: apps/members/services.py:194
 msgid ""
 "Cannot remove the last admin of a workspace. Promote someone else first."
 msgstr ""
 "Иш жайынын акыркы администраторун өчүрүүгө болбойт. Адегенде башкасын "
 "дайындаңыз."
 
-#: apps/members/services.py:207
+#: apps/members/services.py:214
 msgid "An email address is required."
 msgstr "Email дареги керек."
 
-#: apps/members/services.py:214
+#: apps/members/services.py:221
 msgid "This person is already a member of your organization."
 msgstr "Бул адам мурунтан эле уюмуңуздун мүчөсү."
 
-#: apps/members/services.py:218
+#: apps/members/services.py:225
 msgid ""
 "An invitation is already pending for this address. You can resend it instead."
 msgstr "Бул дарекке чакыруу мурунтан эле жөнөтүлгөн. Аны кайра жөнөтө аласыз."
 
-#: apps/members/services.py:221
+#: apps/members/services.py:228
 msgid "Cannot invite someone as an organization owner."
 msgstr "Кимдир бирөөнү уюм ээси катары чакырууга болбойт."
 
-#: apps/members/services.py:225 apps/members/services.py:482
+#: apps/members/services.py:232 apps/members/services.py:393
+#: apps/members/services.py:541
 #, python-format
 msgid "Unknown org role: %(role)r."
 msgstr "Уюмда белгисиз роль: %(role)r."
 
-#: apps/members/services.py:230
+#: apps/members/services.py:237
 msgid "Only organization owners can invite someone as an admin."
 msgstr "Администратор катары чакырууну уюм ээлери гана иштете алат."
 
-#: apps/members/services.py:238
+#: apps/members/services.py:245
 msgid "Choose at least one workspace to invite this person into."
 msgstr "Бул адамды чакыруу үчүн кеминде бир иш жайын тандаңыз."
 
-#: apps/members/services.py:288
+#: apps/members/services.py:295
 msgid "This invitation is no longer available."
 msgstr "Бул чакыруу мындан ары жеткиликсиз."
 
-#: apps/members/services.py:292
+#: apps/members/services.py:299
 msgid "This invitation has already been accepted."
 msgstr "Бул чакыруу мурунтан эле кабыл алынган."
 
-#: apps/members/services.py:294
+#: apps/members/services.py:301
 msgid "This invitation has expired."
 msgstr "Чакыруунун мөөнөтү бүттү."
 
-#: apps/members/services.py:296
+#: apps/members/services.py:303
 msgid "This invitation was sent to a different email address."
 msgstr "Бул чакыруу башка email дарегине жөнөтүлгөн."
 
-#: apps/members/services.py:313
+#: apps/members/services.py:346
 #, python-format
 msgid ""
 "This account already belongs to %(org_name)s. BrightBean Chat supports one "
@@ -4543,48 +4569,52 @@ msgstr ""
 "аккаунтка бир уюмду гана колдойт — адегенде андан чыгыңыз же бул чакырууну "
 "башка аккаунттан кабыл алыңыз."
 
-#: apps/members/services.py:377
+#: apps/members/services.py:391
+msgid "Cannot add someone as an organization owner."
+msgstr "Кимдир бирөөнү уюм ээси катары кошууга болбойт."
+
+#: apps/members/services.py:436
 msgid "Cannot resend an already accepted invitation."
 msgstr "Мурунтан эле кабыл алынган чакырууну кайра жөнөтүүгө болбойт."
 
-#: apps/members/services.py:388
+#: apps/members/services.py:447
 msgid "Cannot revoke an already accepted invitation."
 msgstr "Мурунтан эле кабыл алынган чакырууну жокко чыгарууга болбойт."
 
-#: apps/members/services.py:420
+#: apps/members/services.py:479
 #, python-format
 msgid "You have been invited to %(org_name)s on BrightBean Chat"
 msgstr "Сиз BrightBean Chat'та %(org_name)s уюмуна чакырылдыңыз"
 
-#: apps/members/services.py:443
+#: apps/members/services.py:502
 msgid "You cannot remove yourself from the organization."
 msgstr "Өзүңүздү уюмдан чыгара албайсыз."
 
-#: apps/members/services.py:455
+#: apps/members/services.py:514
 msgid "Cannot remove the last organization owner."
 msgstr "Уюмдун акыркы ээсин өчүрүүгө болбойт."
 
-#: apps/members/services.py:457
+#: apps/members/services.py:516
 msgid "remove"
 msgstr "чыгаруу"
 
-#: apps/members/services.py:478
+#: apps/members/services.py:537
 msgid "Cannot promote to owner. Transfer ownership instead."
 msgstr "Ээликке чейин көтөрүүгө болбойт. Анын ордуна ээликти өткөрүп бериңиз."
 
-#: apps/members/services.py:486
+#: apps/members/services.py:545
 msgid "change"
 msgstr "өзгөртүү"
 
-#: apps/members/services.py:488
+#: apps/members/services.py:547
 msgid "Only organization owners can promote someone to admin."
 msgstr "Администратор кылып көтөрүүнү уюм ээлери гана иштете алат."
 
-#: apps/members/services.py:493
+#: apps/members/services.py:552
 msgid "Cannot change the role of the last organization owner."
 msgstr "Уюмдун акыркы ээсинин ролун өзгөртүүгө болбойт."
 
-#: apps/members/services.py:534
+#: apps/members/services.py:593
 msgid ""
 "You cannot modify a workspace membership whose role is higher than your own."
 msgstr "Ролу өзүңүздүкүнөн жогору иш жайын мүчөлүгүн өзгөртө албайсыз."
@@ -4833,37 +4863,60 @@ msgstr "Окулган жок"
 msgid "Read"
 msgstr "Окулду"
 
-#: apps/organizations/views.py:53
-msgid "An organization needs a name."
-msgstr "Уюмга ат керек."
-
-#: apps/organizations/views.py:62 apps/workspaces/views.py:368
-msgid "That is not a timezone we recognise."
-msgstr "Бул убакыт алкагы таанылган жок."
-
-#: apps/organizations/views.py:67
-msgid "Organization settings saved."
-msgstr "Уюм тууралоолору сакталды."
-
-#: apps/organizations/views.py:131 apps/workspaces/views.py:346
+#: apps/organizations/services.py:42 apps/workspaces/views.py:346
 msgid "A workspace needs a name."
 msgstr "Иш жайына ат керек."
 
-#: apps/organizations/views.py:134
+#: apps/organizations/services.py:47 apps/organizations/services.py:56
 msgid "A workspace with that name already exists."
 msgstr "Мындай аттуу иш жайы мурунтан эле бар."
 
-#: apps/organizations/views.py:149
+#: apps/organizations/services.py:85 apps/organizations/views.py:54
+msgid "An organization needs a name."
+msgstr "Уюмга ат керек."
+
+#: apps/organizations/services.py:97
+msgid "That account already belongs to an organization."
+msgstr "Бул каттоо эсеби мурдатан эле уюмга кирген."
+
+#: apps/organizations/services.py:107
+msgid "The owner account no longer exists."
+msgstr "Ээсинин каттоо эсеби мындан ары жок."
+
+#: apps/organizations/services.py:113
+msgid ""
+"The organization could not be created because of a concurrent change; retry."
+msgstr ""
+"Уюмду түзүү параллелдүү өзгөрүү себептүү ишке ашкан жок; суроону кайталаңыз."
+
+#: apps/organizations/services.py:121
+msgid "An organization with that external id was deleted."
+msgstr "Бул тышкы id менен уюм өчүрүлгөн."
+
+#: apps/organizations/services.py:128
+msgid ""
+"That external id belongs to an organization with a different name or owner."
+msgstr "Бул тышкы id башка аттагы же башка ээси бар уюмга таандык."
+
+#: apps/organizations/views.py:63 apps/workspaces/views.py:368
+msgid "That is not a timezone we recognise."
+msgstr "Бул убакыт алкагы таанылган жок."
+
+#: apps/organizations/views.py:68
+msgid "Organization settings saved."
+msgstr "Уюм тууралоолору сакталды."
+
+#: apps/organizations/views.py:135
 #, python-format
 msgid "Created %(name)s."
 msgstr "%(name)s түзүлдү."
 
-#: apps/organizations/views.py:182 apps/organizations/views.py:190
+#: apps/organizations/views.py:168 apps/organizations/views.py:176
 #, python-format
 msgid "Restored %(name)s."
 msgstr "%(name)s калыбына келтирилди."
 
-#: apps/organizations/views.py:188
+#: apps/organizations/views.py:174
 #, python-format
 msgid "Archived %(name)s."
 msgstr "%(name)s архивделди."
@@ -4993,7 +5046,7 @@ msgid "Something went wrong on our end. Please try again."
 msgstr "Биздин тарапта бир нерсе туура эмес кетти. Кайра аракет кылыңыз."
 
 #: templates/account/login.html:4 templates/account/login.html:8
-#: templates/account/login.html:38
+#: templates/account/login.html:40
 #: templates/members/_accept_invite_body.html:13
 #: templates/members/_invite_expired_body.html:8
 msgid "Sign in"
@@ -5003,17 +5056,17 @@ msgstr "Кирүү"
 msgid "Welcome back to BrightBean Chat."
 msgstr "BrightBean Chat'ка кайра кош келиңиз."
 
-#: templates/account/login.html:28 templates/account/signup.html:23
+#: templates/account/login.html:29 templates/account/signup.html:24
 #, python-format
 msgid "Continue with %(provider_name)s"
 msgstr "%(provider_name)s аркылуу улантуу"
 
-#: templates/account/login.html:31 templates/account/signup.html:26
+#: templates/account/login.html:33 templates/account/signup.html:28
 #: templates/channels/sms_connect.html:71
 msgid "or"
 msgstr "же"
 
-#: templates/account/login.html:43
+#: templates/account/login.html:45
 #, fuzzy, python-format
 #| msgid ""
 #| "No account yet? <a href=\"%(signup_url)s\" style=\"color: var(--primary);"
@@ -5034,11 +5087,11 @@ msgid ""
 "You were invited to join an organization. Signing up here adds you to it."
 msgstr "Сиз уюмга кошулууга чакырылдыңыз. Бул жерден катталуу сизди ага кошот."
 
-#: templates/account/signup.html:53
+#: templates/account/signup.html:55
 msgid "Create account"
 msgstr "Аккаунт түзүү"
 
-#: templates/account/signup.html:58
+#: templates/account/signup.html:60
 #, fuzzy, python-format
 #| msgid ""
 #| "Already have an account? <a href=\"%(login_url)s\" style=\"color: var(--"
@@ -5050,6 +5103,27 @@ msgid ""
 msgstr ""
 "Аккаунтуңуз барбы? <a href=\"%(login_url)s\" style=\"color: var(--primary);"
 "\">Кирүү</a>."
+
+#: templates/account/signup_closed.html:4
+#: templates/account/signup_closed.html:8
+msgid "Sign up is closed"
+msgstr "Катталуу жабык"
+
+#: templates/account/signup_closed.html:9
+msgid "You can't create an account this way."
+msgstr "Аккаунтту мындай жол менен түзүүгө болбойт."
+
+#: templates/account/signup_closed.html:13
+msgid ""
+"Ask the owner of your organization for an invitation, then open the link in "
+"the email and sign in from there."
+msgstr ""
+"Уюмуңуздун ээсинен чакыруу сурап, андан кийин катта турган шилтемени ачып, "
+"ошол жерден кириңиз."
+
+#: templates/account/signup_closed.html:15
+msgid "Back to sign in"
+msgstr "Кирүүгө кайтуу"
 
 #: templates/accounts/preferences.html:15
 msgid "How BrightBean Chat looks and speaks to you."
@@ -11684,32 +11758,3 @@ msgstr "Кошумча түстү тандоо"
 
 #~ msgid "Preferences"
 #~ msgstr "Жеке ырастоолор"
-
-#: templates/account/signup_closed.html
-msgid "Sign up is closed"
-msgstr "Катталуу жабык"
-
-#: templates/account/signup_closed.html
-msgid "You can't create an account this way."
-msgstr "Аккаунтту мындай жол менен түзүүгө болбойт."
-
-#: templates/account/signup_closed.html
-msgid "Ask the owner of your organization for an invitation, then open the link in the email and sign in from there."
-msgstr "Уюмуңуздун ээсинен чакыруу сурап, андан кийин катта турган шилтемени ачып, ошол жерден кириңиз."
-
-#: templates/account/signup_closed.html
-msgid "Back to sign in"
-msgstr "Кирүүгө кайтуу"
-
-#: apps/accounts/adapters.py
-msgid "An invitation is required to sign up."
-msgstr "Катталуу үчүн чакыруу керек."
-
-#: apps/accounts/adapters.py
-#, python-format
-msgid "An account with this address already exists. Sign in with your password, accept the invitation, then connect %(name)s under your connected accounts."
-msgstr "Бул даректеги аккаунт мурунтан бар. Сырсөз менен кирип, чакырууну кабыл алып, андан кийин туташкан аккаунттар бөлүмүнөн %(name)s туташтырыңыз."
-
-#: apps/accounts/adapters.py
-msgid "This account was just created. Try signing in again."
-msgstr "Бул аккаунт жаңы эле түзүлдү. Кайра кирип көрүңүз."
