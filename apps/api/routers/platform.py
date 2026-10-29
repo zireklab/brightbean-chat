@@ -47,8 +47,6 @@ from apps.workspaces.models import Workspace
 router = Router(tags=["platform"])
 
 
-#: ``code`` values the services raise that mean "this conflicts with existing
-#: state" rather than "this request is malformed".
 def _refuse(exc: Exception) -> ApiError:
     """Any coded refusal (duplicate, plan_*, other_organization, …) is a 409; uncoded is a 422."""
     code = str(getattr(exc, "code", "invalid"))

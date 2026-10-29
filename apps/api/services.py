@@ -201,12 +201,16 @@ def revoke_api_key(api_key: ApiKey) -> bool:
     Idempotent: revoking an already-revoked key returns False and leaves the
     original timestamp, so the audit trail says when it actually happened.
     """
-    if api_key.revoked_at is not None:
-        return False
     now = timezone.now()
-    api_key.revoked_at = now
-    ApiKey.objects.for_workspace(api_key.workspace_id).filter(pk=api_key.pk).update(revoked_at=now, updated_at=now)
-    return True
+    # The check is the WHERE clause, so two racing revokes keep the first timestamp.
+    revoked = (
+        ApiKey.objects.for_workspace(api_key.workspace_id)
+        .filter(pk=api_key.pk, revoked_at__isnull=True)
+        .update(revoked_at=now, updated_at=now)
+    )
+    if revoked:
+        api_key.revoked_at = now
+    return bool(revoked)
 
 
 def scope_summary(api_key: ApiKey) -> str:

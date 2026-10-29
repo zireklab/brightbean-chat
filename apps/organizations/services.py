@@ -101,7 +101,7 @@ def create_organization(
                 org_name=name,
                 workspace_name=(workspace_name or "").strip() or DEFAULT_WORKSPACE_NAME,
                 external_id=external_id,
-                workspace_description="" if workspace_name else DEFAULT_WORKSPACE_DESCRIPTION,
+                workspace_description="" if (workspace_name or "").strip() else DEFAULT_WORKSPACE_DESCRIPTION,
             )
             if org is None:
                 raise OrganizationError(gettext("The owner account no longer exists."))
