@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 16:00+0000\n"
+"POT-Creation-Date: 2026-10-29 04:15+0000\n"
 "PO-Revision-Date: 2026-09-20 12:00+0600\n"
 "Last-Translator: BrightBean Chat\n"
 "Language-Team: ru\n"
@@ -69,24 +69,24 @@ msgstr "Контакт отписан от цепочки"
 msgid "Broadcast finished"
 msgstr "Рассылка завершена"
 
-#: apps/api/models.py:80
+#: apps/api/models.py:82
 msgctxt "api scope"
 msgid "Read"
 msgstr "Чтение"
 
-#: apps/api/models.py:81
+#: apps/api/models.py:83
 msgid "Write"
 msgstr "Запись"
 
-#: apps/api/models.py:82 templates/contacts/list.html:310
+#: apps/api/models.py:84 templates/contacts/list.html:310
 msgid "Erase"
 msgstr "Удаление"
 
-#: apps/api/models.py:93
+#: apps/api/models.py:95
 msgid "Succeeded"
 msgstr "Успешно"
 
-#: apps/api/models.py:94 apps/broadcasts/models.py:94
+#: apps/api/models.py:96 apps/broadcasts/models.py:94
 #: apps/contacts/models.py:411 apps/contacts/models.py:571
 #: templates/analytics/_counter_cards.html:29
 #: templates/analytics/flow_detail.html:60
@@ -96,31 +96,31 @@ msgstr "Успешно"
 msgid "Failed"
 msgstr "Ошибка"
 
-#: apps/api/models.py:95
+#: apps/api/models.py:97
 msgid "Blocked"
 msgstr "Заблокировано"
 
-#: apps/api/services.py:73
+#: apps/api/services.py:80
 msgid "Only an organization owner or admin can issue API keys."
 msgstr ""
 "Выпускать API-ключи может только владелец или администратор организации."
 
-#: apps/api/services.py:77
+#: apps/api/services.py:84
 msgid ""
 "You need the manage_api_keys permission in that workspace to issue a key for "
 "it."
 msgstr "Для выпуска ключа в этом пространстве нужно право manage_api_keys."
 
-#: apps/api/services.py:83
+#: apps/api/services.py:90
 msgid "A key needs at least one scope."
 msgstr "Ключу нужна хотя бы одна область доступа."
 
-#: apps/api/services.py:86
+#: apps/api/services.py:93
 #, python-format
 msgid "Unknown scope: %(scopes)s."
 msgstr "Неизвестная область доступа: %(scopes)s."
 
-#: apps/api/services.py:93
+#: apps/api/services.py:100
 #, python-format
 msgid ""
 "You cannot grant the %(scope)s scope: it includes %(missing)s, which you do "
@@ -128,19 +128,19 @@ msgid ""
 msgstr ""
 "Нельзя выдать область %(scope)s: она включает %(missing)s, чего у вас нет."
 
-#: apps/api/services.py:120
+#: apps/api/services.py:127
 msgid "Give the key a name so you can recognise it later."
 msgstr "Дайте ключу имя, чтобы потом его узнать."
 
-#: apps/api/services.py:122
+#: apps/api/services.py:129
 msgid "The name is too long (100 characters maximum)."
 msgstr "Имя слишком длинное (максимум 100 символов)."
 
-#: apps/api/services.py:136
+#: apps/api/services.py:143
 msgid "A key needs an issuer."
 msgstr "Ключу нужен выпускающий."
 
-#: apps/api/services.py:173
+#: apps/api/services.py:180
 #, python-format
 msgid ""
 "This workspace already has %(limit)s active keys. Revoke one before issuing "
@@ -149,36 +149,36 @@ msgstr ""
 "В этом пространстве уже %(limit)s активных ключей. Отзовите один, прежде чем "
 "выпускать новый."
 
-#: apps/api/services.py:214
+#: apps/api/services.py:222
 #, python-format
 msgid "Unknown event: %(events)s."
 msgstr "Неизвестное событие: %(events)s."
 
-#: apps/api/services.py:216
+#: apps/api/services.py:224
 msgid "Choose at least one event to send."
 msgstr "Выберите хотя бы одно событие для отправки."
 
-#: apps/api/services.py:232
+#: apps/api/services.py:240
 msgid "Enter the URL deliveries should be sent to."
 msgstr "Укажите URL, на который отправлять доставки."
 
-#: apps/api/services.py:234
+#: apps/api/services.py:242
 msgid "That URL is too long (500 characters maximum)."
 msgstr "Этот URL слишком длинный (максимум 500 символов)."
 
-#: apps/api/services.py:237
+#: apps/api/services.py:245
 msgid "The URL must start with http:// or https://."
 msgstr "URL должен начинаться с http:// или https://."
 
-#: apps/api/services.py:241
+#: apps/api/services.py:249
 msgid "The URL must not carry a username or password."
 msgstr "URL не должен содержать имя пользователя или пароль."
 
-#: apps/api/services.py:243 apps/api/services.py:247
+#: apps/api/services.py:251 apps/api/services.py:255
 msgid "That does not look like a valid URL."
 msgstr "Это не похоже на корректный URL."
 
-#: apps/api/services.py:274
+#: apps/api/services.py:282
 #, python-format
 msgid "This workspace already has %(limit)s endpoints."
 msgstr "В этом пространстве уже %(limit)s конечных точек."
@@ -4585,92 +4585,92 @@ msgstr "Агент"
 msgid "Viewer"
 msgstr "Наблюдатель"
 
-#: apps/members/services.py:144
+#: apps/members/services.py:150
 #, python-format
 msgid "You cannot %(verb)s a member whose role is higher than your own."
 msgstr "Вы не можете %(verb)s участника с ролью выше вашей."
 
-#: apps/members/services.py:146
+#: apps/members/services.py:152
 #, python-format
 msgid "Only organization owners can %(verb)s an organization admin."
 msgstr ""
 "Только владельцы организации могут %(verb)s администратора организации."
 
-#: apps/members/services.py:159
+#: apps/members/services.py:165
 msgid "That workspace does not belong to your organization."
 msgstr "Это пространство не принадлежит вашей организации."
 
-#: apps/members/services.py:161
+#: apps/members/services.py:167
 #, python-format
 msgid "Unknown workspace role: %(role)r."
 msgstr "Неизвестная роль в пространстве: %(role)r."
 
-#: apps/members/services.py:170
+#: apps/members/services.py:176
 msgid "You cannot manage members in that workspace."
 msgstr "Вы не можете управлять участниками в этом пространстве."
 
-#: apps/members/services.py:172
+#: apps/members/services.py:178
 msgid ""
 "You cannot grant a workspace role higher than your own in that workspace."
 msgstr "Вы не можете выдать в этом пространстве роль выше вашей."
 
-#: apps/members/services.py:188
+#: apps/members/services.py:194
 msgid ""
 "Cannot remove the last admin of a workspace. Promote someone else first."
 msgstr ""
 "Нельзя удалить последнего администратора пространства. Сначала назначьте "
 "другого."
 
-#: apps/members/services.py:208
+#: apps/members/services.py:214
 msgid "An email address is required."
 msgstr "Нужен email-адрес."
 
-#: apps/members/services.py:215
+#: apps/members/services.py:221
 msgid "This person is already a member of your organization."
 msgstr "Этот человек уже состоит в вашей организации."
 
-#: apps/members/services.py:219
+#: apps/members/services.py:225
 msgid ""
 "An invitation is already pending for this address. You can resend it instead."
 msgstr ""
 "Приглашение для этого адреса уже отправлено. Вы можете отправить его "
 "повторно."
 
-#: apps/members/services.py:222
+#: apps/members/services.py:228
 msgid "Cannot invite someone as an organization owner."
 msgstr "Нельзя пригласить кого-то как владельца организации."
 
-#: apps/members/services.py:226 apps/members/services.py:386
-#: apps/members/services.py:534
+#: apps/members/services.py:232 apps/members/services.py:393
+#: apps/members/services.py:541
 #, python-format
 msgid "Unknown org role: %(role)r."
 msgstr "Неизвестная роль в организации: %(role)r."
 
-#: apps/members/services.py:231
+#: apps/members/services.py:237
 msgid "Only organization owners can invite someone as an admin."
 msgstr "Только владельцы организации могут приглашать администраторов."
 
-#: apps/members/services.py:239
+#: apps/members/services.py:245
 msgid "Choose at least one workspace to invite this person into."
 msgstr "Выберите хотя бы одно пространство, чтобы пригласить этого человека."
 
-#: apps/members/services.py:289
+#: apps/members/services.py:295
 msgid "This invitation is no longer available."
 msgstr "Это приглашение больше недоступно."
 
-#: apps/members/services.py:293
+#: apps/members/services.py:299
 msgid "This invitation has already been accepted."
 msgstr "Это приглашение уже принято."
 
-#: apps/members/services.py:295
+#: apps/members/services.py:301
 msgid "This invitation has expired."
 msgstr "Срок действия приглашения истёк."
 
-#: apps/members/services.py:297
+#: apps/members/services.py:303
 msgid "This invitation was sent to a different email address."
 msgstr "Это приглашение было отправлено на другой email-адрес."
 
-#: apps/members/services.py:340
+#: apps/members/services.py:346
 #, python-format
 msgid ""
 "This account already belongs to %(org_name)s. BrightBean Chat supports one "
@@ -4681,52 +4681,52 @@ msgstr ""
 "поддерживает только одну организацию на аккаунт — сначала покиньте ту или "
 "примите это приглашение с другого аккаунта."
 
-#: apps/members/services.py:384
+#: apps/members/services.py:391
 msgid "Cannot add someone as an organization owner."
 msgstr "Нельзя добавить кого-то как владельца организации."
 
-#: apps/members/services.py:429
+#: apps/members/services.py:436
 msgid "Cannot resend an already accepted invitation."
 msgstr "Нельзя повторно отправить уже принятое приглашение."
 
-#: apps/members/services.py:440
+#: apps/members/services.py:447
 msgid "Cannot revoke an already accepted invitation."
 msgstr "Нельзя отозвать уже принятое приглашение."
 
-#: apps/members/services.py:472
+#: apps/members/services.py:479
 #, python-format
 msgid "You have been invited to %(org_name)s on BrightBean Chat"
 msgstr "Вас пригласили в %(org_name)s в BrightBean Chat"
 
-#: apps/members/services.py:495
+#: apps/members/services.py:502
 msgid "You cannot remove yourself from the organization."
 msgstr "Вы не можете удалить себя из организации."
 
-#: apps/members/services.py:507
+#: apps/members/services.py:514
 msgid "Cannot remove the last organization owner."
 msgstr "Нельзя удалить последнего владельца организации."
 
-#: apps/members/services.py:509
+#: apps/members/services.py:516
 msgid "remove"
 msgstr "удалить"
 
-#: apps/members/services.py:530
+#: apps/members/services.py:537
 msgid "Cannot promote to owner. Transfer ownership instead."
 msgstr "Нельзя повысить до владельца. Вместо этого передайте право владения."
 
-#: apps/members/services.py:538
+#: apps/members/services.py:545
 msgid "change"
 msgstr "изменить"
 
-#: apps/members/services.py:540
+#: apps/members/services.py:547
 msgid "Only organization owners can promote someone to admin."
 msgstr "Только владельцы организации могут назначать администраторов."
 
-#: apps/members/services.py:545
+#: apps/members/services.py:552
 msgid "Cannot change the role of the last organization owner."
 msgstr "Нельзя изменить роль последнего владельца организации."
 
-#: apps/members/services.py:586
+#: apps/members/services.py:593
 msgid ""
 "You cannot modify a workspace membership whose role is higher than your own."
 msgstr "Вы не можете изменить членство в пространстве с ролью выше вашей."
@@ -4973,17 +4973,42 @@ msgstr "Непрочитано"
 msgid "Read"
 msgstr "Прочитано"
 
-#: apps/organizations/services.py:32 apps/workspaces/views.py:346
+#: apps/organizations/services.py:42 apps/workspaces/views.py:346
 msgid "A workspace needs a name."
 msgstr "Пространству нужно имя."
 
-#: apps/organizations/services.py:37 apps/organizations/services.py:46
+#: apps/organizations/services.py:47 apps/organizations/services.py:56
 msgid "A workspace with that name already exists."
 msgstr "Пространство с таким именем уже существует."
 
-#: apps/organizations/views.py:54
+#: apps/organizations/services.py:85 apps/organizations/views.py:54
 msgid "An organization needs a name."
 msgstr "Организации нужно имя."
+
+#: apps/organizations/services.py:97
+msgid "That account already belongs to an organization."
+msgstr "Этот аккаунт уже состоит в организации."
+
+#: apps/organizations/services.py:107
+msgid "The owner account no longer exists."
+msgstr "Аккаунт владельца больше не существует."
+
+#: apps/organizations/services.py:113
+msgid ""
+"The organization could not be created because of a concurrent change; retry."
+msgstr ""
+"Организацию не удалось создать из-за параллельного изменения; повторите "
+"запрос."
+
+#: apps/organizations/services.py:121
+msgid "An organization with that external id was deleted."
+msgstr "Организация с этим внешним id была удалена."
+
+#: apps/organizations/services.py:128
+msgid ""
+"That external id belongs to an organization with a different name or owner."
+msgstr ""
+"Этот внешний ID принадлежит организации с другим названием или владельцем."
 
 #: apps/organizations/views.py:63 apps/workspaces/views.py:368
 msgid "That is not a timezone we recognise."

@@ -52,7 +52,13 @@ class MembershipError(ValueError):
 
     A ``ValueError`` subclass so views can keep catching ``ValueError`` and
     rendering the message inline, while callers that care can be specific.
+    ``code`` is for the ones that need a machine-readable reason (the platform
+    API maps it to a status); views ignore it.
     """
+
+    def __init__(self, message: str, *, code: str = "invalid") -> None:
+        super().__init__(message)
+        self.code = code
 
 
 @dataclass(frozen=True)
@@ -341,7 +347,8 @@ def _attach_member(org: Any, user: Any, org_role: str, assignments: Any) -> None
                 "BrightBean Chat supports one organization per account, so leave that one first "
                 "or accept this invitation from a different account."
             )
-            % {"org_name": other.organization.name}
+            % {"org_name": other.organization.name},
+            code="other_organization",
         )
 
     OrgMembership.objects.get_or_create(
@@ -420,7 +427,7 @@ def _check_plan_allows_seat(org: Any, *, excluding_invitation: Any = None) -> No
     try:
         check_can_add_seat(org, excluding_invitation=excluding_invitation)
     except PlanLimitError as exc:
-        raise MembershipError(str(exc)) from exc
+        raise MembershipError(str(exc), code=exc.code) from exc
 
 
 def resend_invitation(invitation: Invitation) -> Invitation:
