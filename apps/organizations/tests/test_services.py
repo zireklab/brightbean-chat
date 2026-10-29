@@ -155,6 +155,12 @@ class TestProvisionOnBehalf:
 
         assert first.external_id is None and second.external_id is None
 
+    def test_saving_a_blank_external_id_stores_null(self):
+        a = Organization.objects.create(name="A", external_id="")
+        b = Organization.objects.create(name="B", external_id="  ")
+
+        assert a.external_id is None and b.external_id is None
+
     def test_names_and_external_id_are_used(self):
         user = create_user("owner@example.test")
 

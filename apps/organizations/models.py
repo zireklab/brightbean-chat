@@ -45,6 +45,11 @@ class Organization(BaseModel):
     def __str__(self) -> str:
         return self.name
 
+    def save(self, *args: Any, **kwargs: Any) -> None:
+        # "" would collide on the unique column; NULL does not (admin forms post "").
+        self.external_id = (self.external_id or "").strip() or None
+        super().save(*args, **kwargs)
+
     @property
     def is_deletion_pending(self) -> bool:
         return self.deletion_requested_at is not None and self.deleted_at is None
