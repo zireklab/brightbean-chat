@@ -3,8 +3,9 @@ name: CI
 on:
   push:
     branches: [main]
+  # No `branches:` filter: a stacked PR (base = another feature branch) gets the
+  # same checks and code review as one targeting main.
   pull_request:
-    branches: [main]
   # Lets the full suite be exercised on a feature branch before a PR exists.
   workflow_dispatch:
     inputs:
