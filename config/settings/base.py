@@ -343,6 +343,14 @@ OIDC_TRUST_EMAIL = env.bool("OIDC_TRUST_EMAIL", default=False)
 OIDC_LINK_BY_EMAIL = env.bool("OIDC_LINK_BY_EMAIL", default=True)
 #: Left empty, allauth picks from the provider's discovery document.
 OIDC_TOKEN_AUTH_METHOD = env("OIDC_TOKEN_AUTH_METHOD", default="").strip()
+#: Who may create an account at all (local form and Google; single sign-on has
+#: its own, stricter OIDC_SIGNUP). ``open``: anyone, with an organization of
+#: their own. ``invite``: only someone holding a valid organization invitation.
+#: Accounts made by an operator (createsuperuser, the admin, the platform API)
+#: are not signups and are unaffected.
+SIGNUP = env("SIGNUP", default="open").strip().lower()
+if SIGNUP not in ("open", "invite"):
+    raise ImproperlyConfigured(f"SIGNUP must be 'open' or 'invite', not {SIGNUP!r}")
 if OIDC_SIGNUP not in ("invite", "open"):
     raise ImproperlyConfigured(f"OIDC_SIGNUP must be 'invite' or 'open', not {OIDC_SIGNUP!r}")
 if OIDC_TOKEN_AUTH_METHOD not in ("", "client_secret_basic", "client_secret_post"):

@@ -133,6 +133,15 @@ def pending_invitation(request: Any) -> Any:
     return None if invitation is None or invitation.is_expired else invitation
 
 
+def signup_is_open(request: Any) -> bool:
+    """Whether this visitor may create an account: always under ``SIGNUP=open``,
+    otherwise only while their session holds a valid invitation. ``or`` order
+    matters: an open installation never queries."""
+    from django.conf import settings
+
+    return settings.SIGNUP == "open" or pending_invitation(request) is not None
+
+
 def is_sso(sociallogin: Any) -> bool:
     """Whether this social login came through the single sign-on provider."""
     from django.conf import settings

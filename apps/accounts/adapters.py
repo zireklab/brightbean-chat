@@ -15,7 +15,7 @@ from django.http import HttpRequest
 from django.shortcuts import render
 from django.utils.translation import gettext
 
-from apps.accounts.services import is_invite_only, is_sso, pending_invitation
+from apps.accounts.services import is_invite_only, is_sso, pending_invitation, signup_is_open
 from apps.members.services import MembershipError, accept_invitation
 from apps.members.signals_keys import PENDING_INVITE_SESSION_KEY
 
@@ -89,6 +89,11 @@ class AccountAdapter(DefaultAccountAdapter):
         if level < messages.ERROR:
             return
         super().add_message(request, level, message_template, message_context, extra_tags, message)
+
+    def is_open_for_signup(self, request: HttpRequest) -> bool:
+        # allauth asks this for the local form and, through the default
+        # SocialAccountAdapter, for Google too; a refusal renders signup_closed.html.
+        return signup_is_open(request)
 
     def send_mail(self, template_prefix: str, email: str, context: dict[str, Any]) -> None:
         try:
