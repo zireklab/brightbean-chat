@@ -10,7 +10,7 @@ from typing import Any
 
 import pytest
 from django.contrib.auth import get_user_model
-from django.test import RequestFactory
+from django.test import Client, RequestFactory
 from django.urls import reverse
 from django.utils import timezone
 
@@ -97,6 +97,33 @@ class TestTheLocalForm:
         assert "account/signup_closed.html" in [t.name for t in second.templates]
         assert not User.objects.filter(email="other@example.test").exists()
 
+    def test_a_link_shared_with_a_second_person_gives_them_no_account_or_organization(self, tenancy, closed):
+        """Both visitors pass the read-only check; the first spends the invitation.
+        The second must not end up with an account, nor an organization of their own."""
+        token = invitation(tenancy).raw_token
+        first, second = Client(), Client()
+        for visitor in (first, second):
+            visitor.get(f"/invite/{token}/")
+        first.post(reverse("account_signup"), FORM, follow=True)
+
+        response = second.post(reverse("account_signup"), FORM)
+
+        assert "account/signup_closed.html" in [t.name for t in response.templates]
+        assert User.objects.filter(email=FORM["email"]).count() == 1
+        assert Organization.objects.count() == 1
+
+    def test_the_address_must_be_the_invited_one(self, tenancy, client, closed):
+        """The field is read-only only in the browser; the server holds the line."""
+        client.get(f"/invite/{invitation(tenancy).raw_token}/")
+
+        response = client.post(reverse("account_signup"), {**FORM, "email": "someone-else@example.test"})
+
+        assert "account/signup_closed.html" in [t.name for t in response.templates]
+        assert not User.objects.filter(email="someone-else@example.test").exists()
+        assert Organization.objects.count() == 1
+        # A refusal does not cost the visitor their invitation.
+        assert PENDING_INVITE_SESSION_KEY in client.session
+
 
 @pytest.mark.django_db
 class TestThePredicate:
@@ -112,26 +139,35 @@ class TestThePredicate:
 
 @pytest.mark.django_db
 class TestGoogleAndSso:
-    """allauth's default social adapter defers to the account adapter."""
+    """A social login is invite-only too, through the path single sign-on already has."""
 
     @staticmethod
-    def sociallogin(provider: str) -> Any:
-        return SimpleNamespace(account=SimpleNamespace(provider=provider), email_addresses=[])
+    def sociallogin(provider: str, email: str = "invitee@example.test") -> Any:
+        return SimpleNamespace(
+            account=SimpleNamespace(provider=provider),
+            email_addresses=[SimpleNamespace(email=email, verified=True)],
+        )
 
     def test_google_is_closed_without_an_invitation(self, closed):
         adapter = SocialAccountAdapter()
 
         assert adapter.is_open_for_signup(request_with_session(), self.sociallogin("google")) is False
 
-    def test_google_is_open_with_one(self, tenancy, closed):
+    def test_google_is_open_for_the_invited_address(self, tenancy, closed):
         request = request_with_session(invitation(tenancy).raw_token)
 
         assert SocialAccountAdapter().is_open_for_signup(request, self.sociallogin("google")) is True
 
+    def test_google_is_closed_for_another_address(self, tenancy, closed):
+        request = request_with_session(invitation(tenancy).raw_token)
+
+        other = self.sociallogin("google", "someone-else@example.test")
+        assert SocialAccountAdapter().is_open_for_signup(request, other) is False
+
     def test_google_is_open_by_default(self):
         assert SocialAccountAdapter().is_open_for_signup(request_with_session(), self.sociallogin("google")) is True
 
-    def test_open_sso_still_needs_an_invitation(self, closed, settings):
+    def test_open_sso_is_invite_only_too(self, closed, settings):
         settings.OIDC_SIGNUP = "open"
 
         assert SocialAccountAdapter().is_open_for_signup(request_with_session(), self.sociallogin("sso")) is False

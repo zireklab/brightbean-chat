@@ -92,8 +92,35 @@ class AccountAdapter(DefaultAccountAdapter):
 
     def is_open_for_signup(self, request: HttpRequest) -> bool:
         # allauth asks this for the local form and, through the default
-        # SocialAccountAdapter, for Google too; a refusal renders signup_closed.html.
+        # SocialAccountAdapter, for a social login that is not invite-only; a
+        # refusal renders signup_closed.html.
         return signup_is_open(request)
+
+    def save_user(self, request: HttpRequest, user: Any, form: Any, commit: bool = True) -> Any:
+        """Under ``SIGNUP=invite`` the account and the invitation are one transaction.
+
+        ``signup_is_open`` only reads the invitation, so on its own it cannot
+        stop a link shared with a second person: both pass it, the first spends
+        the invitation, and the second would be left with an account and,
+        through ``provision_on_signup``, an organization of their own. Accepting
+        here, with the address matched against the invited one (the form field
+        is read-only only in the browser), means a refusal leaves no account.
+
+        A social signup form also arrives here, but its adapter does this itself.
+        """
+        if not is_invite_only() or getattr(form, "sociallogin", None) is not None:
+            return super().save_user(request, user, form, commit)
+        invitation = pending_invitation(request)
+        try:
+            if invitation is None:
+                raise MembershipError(gettext("An invitation is required to sign up."))
+            with transaction.atomic():
+                user = super().save_user(request, user, form, commit)
+                accept_invitation(invitation, user, require_email_match=True)
+        except MembershipError as exc:
+            raise _signup_closed(request, str(exc)) from exc
+        request.session.pop(PENDING_INVITE_SESSION_KEY, None)
+        return user
 
     def send_mail(self, template_prefix: str, email: str, context: dict[str, Any]) -> None:
         try:
