@@ -126,6 +126,25 @@ class TestTheLocalForm:
 
 
 @pytest.mark.django_db
+class TestALostRace:
+    def test_a_uniqueness_clash_is_the_closed_page_not_a_500(self, tenancy):
+        from allauth.core.exceptions import ImmediateHttpResponse
+        from django.db import IntegrityError
+
+        from apps.accounts.adapters import _create_user_and_accept_invitation
+
+        def clash() -> Any:
+            raise IntegrityError("duplicate key")
+
+        request = request_with_session(invitation(tenancy).raw_token)
+
+        with pytest.raises(ImmediateHttpResponse) as closed:
+            _create_user_and_accept_invitation(request, clash)
+
+        assert closed.value.response.status_code == 403
+
+
+@pytest.mark.django_db
 class TestThePredicate:
     def test_an_open_installation_never_queries(self, django_assert_num_queries):
         with django_assert_num_queries(0):
