@@ -133,6 +133,15 @@ def pending_invitation(request: Any) -> Any:
     return None if invitation is None or invitation.is_expired else invitation
 
 
+def signup_is_open(request: Any) -> bool:
+    """Whether this visitor may create an account: always under ``SIGNUP=open``,
+    otherwise only while their session holds a valid invitation. ``or`` order
+    matters: an open installation never queries."""
+    from django.conf import settings
+
+    return settings.SIGNUP == "open" or pending_invitation(request) is not None
+
+
 def is_sso(sociallogin: Any) -> bool:
     """Whether this social login came through the single sign-on provider."""
     from django.conf import settings
@@ -140,13 +149,18 @@ def is_sso(sociallogin: Any) -> bool:
     return sociallogin.account.provider == settings.OIDC_PROVIDER_ID
 
 
-def is_invite_only(sociallogin: Any) -> bool:
-    """Whether this login falls under ``OIDC_SIGNUP=invite``: new identities are
-    created only to honour an invitation. Google, and SSO in ``open`` mode, are
-    not."""
+def is_invite_only(sociallogin: Any = None) -> bool:
+    """Whether a new account here is created only to honour an invitation.
+
+    ``SIGNUP=invite`` says so for every signup (pass ``None`` for the local
+    form); ``OIDC_SIGNUP=invite`` says so for single sign-on alone. These are
+    the signups that get the strict path: the user and the invitation are
+    accepted in one transaction, and the address must be the invited one."""
     from django.conf import settings
 
-    return is_sso(sociallogin) and settings.OIDC_SIGNUP == "invite"
+    if settings.SIGNUP == "invite":
+        return True
+    return sociallogin is not None and is_sso(sociallogin) and settings.OIDC_SIGNUP == "invite"
 
 
 class InvalidEmailError(ValueError):

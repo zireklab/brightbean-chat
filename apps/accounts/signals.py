@@ -48,8 +48,8 @@ def provision_on_signup(sender: Any, request: Any, user: Any, **kwargs: Any) -> 
     from apps.members.services import MembershipError, accept_invitation
 
     sociallogin = kwargs.get("sociallogin")
-    if sociallogin is not None and is_invite_only(sociallogin):
-        # SocialAccountAdapter.save_user already joined the inviting organization,
+    if is_invite_only(sociallogin):
+        # The adapter's save_user already joined the inviting organization,
         # in the same transaction as the user. Falling through would, on any
         # miss, hand an SSO user an organization of their own. If that ever
         # stops being true, say so loudly: ensure_provisioned would otherwise
@@ -57,7 +57,7 @@ def provision_on_signup(sender: Any, request: Any, user: Any, **kwargs: Any) -> 
         from apps.members.models import OrgMembership
 
         if not OrgMembership.objects.filter(user=user).exists():
-            logger.error("SSO sign-up for user %s finished without an organization membership", user.pk)
+            logger.error("Invite-only sign-up for user %s finished without an organization membership", user.pk)
         return
 
     token = request.session.pop(PENDING_INVITE_SESSION_KEY, None) if request is not None else None
