@@ -4973,6 +4973,10 @@ msgstr "Непрочитано"
 msgid "Read"
 msgstr "Прочитано"
 
+#: apps/organizations/services.py
+msgid "This installation allows one workspace per organization."
+msgstr "В этой установке у организации может быть только одно рабочее пространство."
+
 #: apps/organizations/services.py:42 apps/workspaces/views.py:346
 msgid "A workspace needs a name."
 msgstr "Пространству нужно имя."

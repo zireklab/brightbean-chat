@@ -7,6 +7,7 @@ assumption and what changes if multi-org ever arrives).
 
 from typing import Any
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponse
@@ -90,7 +91,7 @@ def workspaces_view(request: OrgRequest) -> HttpResponse:
         {
             "workspaces": workspaces,
             "member_workspace_ids": member_workspace_ids,
-            "can_manage": _can_manage(request),
+            "can_change_workspaces": _can_manage(request) and not settings.SINGLE_WORKSPACE_MODE,
         },
     )
 
@@ -151,6 +152,10 @@ def set_workspace_archived(request: OrgRequest, target_id: str) -> HttpResponse:
     workspace = Workspace.objects.for_org(request.org.pk).filter(pk=target_id).first()
     if workspace is None:
         raise Http404("No such workspace.")
+
+    if refusal := services.single_workspace_refusal(settings.SINGLE_WORKSPACE_MODE):
+        messages.error(request, refusal)
+        return redirect(reverse("organizations:workspaces"))
 
     archiving = request.POST.get("archived") == "1"
     if not archiving and workspace.is_archived:

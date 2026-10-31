@@ -2,6 +2,7 @@
 
 from typing import Any
 
+from django.conf import settings
 from django.db import IntegrityError, transaction
 from django.utils.translation import gettext
 
@@ -31,12 +32,21 @@ class WorkspaceError(ValueError):
         self.code = code
 
 
+def single_workspace_refusal(enabled: bool) -> str | None:
+    """Why workspaces cannot be added or archived in single-workspace mode, or None."""
+    if not enabled:
+        return None
+    return gettext("This installation allows one workspace per organization.")
+
+
 def create_workspace(org: Any, name: str, *, creator: Any = None) -> Workspace:
     """Create a workspace in ``org``; ``creator`` (if any) becomes its admin.
 
     The count and the insert are one critical section — see
     ``apps.billing.entitlements.organization_locked``.
     """
+    if refusal := single_workspace_refusal(settings.SINGLE_WORKSPACE_MODE):
+        raise WorkspaceError(refusal, code="single_workspace")
     name = (name or "").strip()[:MAX_WORKSPACE_NAME]
     if not name:
         raise WorkspaceError(gettext("A workspace needs a name."))
