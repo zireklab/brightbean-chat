@@ -90,6 +90,24 @@ class TestOrgSettingsViews:
         tenancy.workspace.refresh_from_db()
         assert tenancy.workspace.is_archived is False
 
+    def test_single_workspace_mode_refuses_archive_restore_and_hides_controls(self, tenancy, client_for, settings):
+        settings.SINGLE_WORKSPACE_MODE = True
+        client = client_for(tenancy.owner)
+        url = f"/organization/workspaces/{tenancy.workspace.pk}/archived/"
+
+        client.post(url, {"archived": "1"})
+        tenancy.workspace.refresh_from_db()
+        assert tenancy.workspace.is_archived is False
+
+        Workspace.objects.filter(pk=tenancy.workspace.pk).update(is_archived=True)
+        client.post(url, {"archived": "0"})
+        tenancy.workspace.refresh_from_db()
+        assert tenancy.workspace.is_archived is True
+
+        page = client.get("/organization/workspaces/").content.decode()
+        assert "New workspace" not in page
+        assert "/archived/" not in page
+
     def test_another_orgs_workspace_cannot_be_archived(self, tenancy, other_tenancy, client_for):
         response = client_for(other_tenancy.owner).post(
             f"/organization/workspaces/{tenancy.workspace.pk}/archived/", {"archived": "1"}

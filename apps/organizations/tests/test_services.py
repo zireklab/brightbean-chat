@@ -25,6 +25,17 @@ class TestCreateWorkspace:
         assert workspace.name == "Support"
         assert not WorkspaceMembership.objects.filter(workspace=workspace).exists()
 
+    def test_single_workspace_mode_refuses_creation_but_not_provisioning(self, tenancy, settings):
+        settings.SINGLE_WORKSPACE_MODE = True
+
+        with pytest.raises(WorkspaceError) as exc:
+            create_workspace(tenancy.organization, "Second")
+        assert exc.value.code == "single_workspace"
+
+        newcomer = create_user("fresh@example.test")
+        org = provision_organization_and_workspace(newcomer)
+        assert Workspace.objects.filter(organization=org).count() == 1
+
     def test_the_creator_becomes_its_admin(self, tenancy):
         workspace = create_workspace(tenancy.organization, "Sales", creator=tenancy.owner)
 

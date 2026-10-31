@@ -4863,6 +4863,10 @@ msgstr "Окулган жок"
 msgid "Read"
 msgstr "Окулду"
 
+#: apps/organizations/services.py
+msgid "This installation allows one workspace per organization."
+msgstr "Бул орнотууда уюмда бир гана иш жайы болушу мүмкүн."
+
 #: apps/organizations/services.py:42 apps/workspaces/views.py:346
 msgid "A workspace needs a name."
 msgstr "Иш жайына ат керек."
