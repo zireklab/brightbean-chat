@@ -191,7 +191,11 @@ timestamps, the message's status becomes `deleted`, and the inbox renders a
 tombstone reading *"This message was deleted."* in its place.
 
 It applies in both directions — a contact unsending theirs, or the account
-unsending one of ours.
+unsending one of ours — and to everything that becomes a bubble in the thread: a
+typed DM, a tapped quick reply, a button press and a reply to a story.
+
+Rows stored before quick replies, presses and story replies carried the message
+id cannot be matched, because the id is all a deletion names.
 
 ### Follows
 

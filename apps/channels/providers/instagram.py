@@ -984,6 +984,18 @@ def _messaging_events(
     return []
 
 
+def _row_extra(mid: str) -> dict[str, Any]:
+    """What lets a later unsend find the row this event becomes (SPEC §6.3, §19).
+
+    On **every** event that becomes one, not only a typed DM: a tapped chip, a
+    button press and a reply to a story are bubbles in the same thread, and a
+    deletion names any of them by ``mid`` and nothing else. ``apps.messaging.ingest``
+    reads the key; the convention is documented there, beside the
+    delivery-receipt one it already owns.
+    """
+    return {PROVIDER_MESSAGE_ID_KEY: mid} if mid else {}
+
+
 def _message_events(
     connection: ChannelConnection,
     item: dict[str, Any],
@@ -1005,7 +1017,7 @@ def _message_events(
                 platform_user_id=sender_id,
                 provider_event_id=f"ig:del:{mid}",
                 timestamp=when,
-                payload=EventPayload(extra={PROVIDER_MESSAGE_ID_KEY: mid}),
+                payload=EventPayload(extra=_row_extra(mid)),
                 raw=item,
             )
         ]
@@ -1026,7 +1038,7 @@ def _message_events(
                     payload=EventPayload(
                         button_id=_button_id(payload),
                         text=_text(message.get("text")),
-                        extra={"payload": payload},
+                        extra={**_row_extra(mid), "payload": payload},
                     ),
                     raw=item,
                 )
@@ -1035,7 +1047,7 @@ def _message_events(
     text = _text(message.get("text"))
     attachments = _attachment_urls(message)
     kinds = _attachment_kinds(message)
-    extra: dict[str, Any] = {}
+    extra = _row_extra(mid)
     if kinds:
         extra["attachment_types"] = list(kinds)
 
@@ -1075,12 +1087,6 @@ def _message_events(
         # Nothing a contact said, so nothing to file.
         return []
 
-    if mid:
-        # Recorded so a later ``message_deletions`` delivery can find this row.
-        # ``apps.messaging.ingest`` reads the key; the convention is documented
-        # there, beside the delivery-receipt one it already owns.
-        extra[PROVIDER_MESSAGE_ID_KEY] = mid
-
     return [
         NormalizedEvent(
             type=EventType.MESSAGE,
@@ -1105,7 +1111,9 @@ def _postback_events(
     mid = _platform_id(postback.get("mid"))
     if not payload:
         return []
-    extra: dict[str, Any] = {"payload": payload}
+    # Meta: "ID for the message sent to your business" — the press itself, not the
+    # message the button was on, whose id is one of ours and unique to its row.
+    extra: dict[str, Any] = {**_row_extra(mid), "payload": payload}
     # An ig.me link that opened the thread carries its ref on the postback.
     referral = postback.get("referral")
     ref = _text(referral.get("ref"), MAX_EXTRA_CHARS) if isinstance(referral, dict) else ""

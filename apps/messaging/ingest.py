@@ -110,12 +110,13 @@ error.
 
 Two more keys travel the same way, for the same reason, and are read only here:
 
-``provider_message_id`` on a **message** event
-    The platform's own id for an *inbound* message. Optional — Telegram supplies
-    none — and stored on the row when it is there, which is what lets a later
-    ``message_deleted`` event find the message to redact. It also becomes a
-    second deduplication line under the conditional unique constraint on
-    ``(channel_connection, provider_message_id)``.
+``provider_message_id`` on any **thread** event (:data:`THREAD_EVENTS`)
+    The platform's own id for an *inbound* message, a press or a story reply
+    included. Optional — Telegram supplies none — and stored on the row when it is
+    there, which is what lets a later ``message_deleted`` event find the message
+    to redact. It also becomes a second deduplication line under the conditional
+    unique constraint on ``(channel_connection, provider_message_id)``, so it must
+    name *this* message and never one of ours it answers.
 
 ``private_reply_claimed`` on a **comment** event
     See the comment row of the table above.

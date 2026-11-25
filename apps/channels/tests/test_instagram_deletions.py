@@ -75,6 +75,51 @@ class TestRedaction:
         # The row survives, with its place in the thread.
         assert Message.objects.for_workspace(tenancy.workspace).count() == 1
 
+    @pytest.mark.parametrize(
+        ("delivery", "mid", "words"),
+        [
+            ("quick_reply", "aWdfZG1fMzox", "Yes please"),
+            ("postback", "aWdfZG1fNDox", "track"),
+            ("story_reply", "aWdfZG1fNjox", "love this"),
+        ],
+    )
+    def test_whatever_a_contact_sent_can_be_unsent(
+        self,
+        client: Client,
+        tenancy: Tenancy,
+        instagram_connection: ChannelConnection,
+        delivery: str,
+        mid: str,
+        words: str,
+    ) -> None:
+        """Not only typed DMs: a chip, a button press and a reply to a story are
+        bubbles in the same thread, and the contact can take any of them back."""
+        with fake_graph():
+            deliver(client, at_now(load_delivery(delivery)))
+        message = Message.objects.for_workspace(tenancy.workspace).get()
+        assert words in json.dumps(message.body)
+
+        unsend = at_now(load_delivery("message_deleted"))
+        unsend["entry"][0]["messaging"][0]["message"]["mid"] = mid
+        with fake_graph():
+            deliver(client, unsend)
+
+        message.refresh_from_db()
+        assert message.status == MessageStatus.DELETED
+        assert words not in json.dumps(message.body)
+
+    def test_two_presses_of_one_button_are_two_rows(
+        self, client: Client, tenancy: Tenancy, instagram_connection: ChannelConnection
+    ) -> None:
+        """The id is unique per connection, so it must be the press's own."""
+        with fake_graph():
+            deliver(client, at_now(load_delivery("postback")))
+            again = at_now(load_delivery("postback"))
+            again["entry"][0]["messaging"][0]["postback"]["mid"] = "aWdfZG1fNDoy"
+            deliver(client, again)
+
+        assert Message.objects.for_workspace(tenancy.workspace).count() == 2
+
     def test_an_outbound_message_is_redacted_too(
         self, client: Client, tenancy: Tenancy, instagram_connection: ChannelConnection
     ) -> None:

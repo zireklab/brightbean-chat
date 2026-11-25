@@ -26,6 +26,7 @@ from apps.channels.providers.instagram import (
 )
 from apps.channels.tests.instagram_support import IG_USER_ID, load_delivery, request_for
 from apps.flows.triggers.types import COMMENT_PARENT_ID_KEY, COMMENT_POST_ID_KEY
+from apps.messaging.ingest import THREAD_EVENTS
 
 pytestmark = pytest.mark.django_db
 
@@ -303,6 +304,30 @@ ALL_FIXTURES = [
     "mention_caption",
     "follow",
 ]
+
+
+class TestAnUnsendCanFindTheRow:
+    """An unsend names a message by its ``mid`` and by nothing else (SPEC §6.3, §19)."""
+
+    @pytest.mark.parametrize("name", ALL_FIXTURES)
+    def test_every_event_that_becomes_a_row_carries_its_mid(
+        self, name: str, instagram_connection: ChannelConnection
+    ) -> None:
+        """Over every recorded shape, so one added later cannot be forgotten."""
+        delivery = load_delivery(name)
+        for event in parse(delivery, instagram_connection):
+            if event.type in THREAD_EVENTS:
+                (item,) = delivery["entry"][0]["messaging"]
+                mid = (item.get("message") or item["postback"])["mid"]
+                assert event.payload.extra["provider_message_id"] == mid
+
+    @pytest.mark.parametrize(("name", "key"), [("quick_reply", "message"), ("postback", "postback")])
+    def test_without_a_mid_there_is_no_key(self, name: str, key: str, instagram_connection: ChannelConnection) -> None:
+        """Nothing to name the row by, so nothing is claimed."""
+        delivery = load_delivery(name)
+        del delivery["entry"][0]["messaging"][0][key]["mid"]
+        (event,) = parse(delivery, instagram_connection)
+        assert "provider_message_id" not in event.payload.extra
 
 
 class TestHostilePayloads:
