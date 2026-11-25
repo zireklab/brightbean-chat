@@ -1368,7 +1368,7 @@ class MessengerAdapter(Adapter):
                     payload=EventPayload(
                         button_id=_button_id(payload),
                         button_label=title,
-                        extra={**extra, "postback_payload": payload[:MAX_EXTRA_CHARS], "title": title},
+                        extra={**extra, "postback_payload": payload[:MAX_EXTRA_CHARS]},
                     ),
                     raw=item,
                 )

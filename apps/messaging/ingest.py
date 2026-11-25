@@ -647,8 +647,9 @@ def _inbound_body(event: NormalizedEvent) -> dict[str, Any]:
         "tag": None,
         "template_ref": None,
     }
-    if payload.button_id:
-        # What the contact pressed. L3-B's resume matches on it.
+    if payload.button_id or event.type == EventType.POSTBACK:
+        # What the contact pressed. L3-B's resume matches on it, and the key being
+        # there at all is what tells a press from a typed message afterwards.
         body["button_id"] = _clean(payload.button_id, 200)
     if payload.ref:
         body["ref"] = _clean(payload.ref, 2000)
