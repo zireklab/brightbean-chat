@@ -544,6 +544,18 @@ EXTERNAL_REQUEST_MAX_RESPONSE_BYTES = env.int("EXTERNAL_REQUEST_MAX_RESPONSE_BYT
 # docker-compose.prod.yml overrides it to eight (4 x 2).
 INBOUND_MEDIA_MAX_BYTES = env.int("INBOUND_MEDIA_MAX_BYTES", default=16 * 1024 * 1024)
 
+# Whether a Telegram list — quick replies the author asked to show as one — goes
+# out as a *rich message*: an expandable block of options, each a button, with
+# the header and footer set apart. Off by default, because an app too old to
+# render one shows a placeholder where the list should be, and nothing here can
+# tell which of a bot's contacts have such an app. The plain list, an ordinary
+# message with inline buttons, reads on every client.
+#
+# Read in exactly one place, apps/channels/providers/telegram.py: nothing outside
+# the adapter has a use for it (ROADMAP contract 4), and it is read at send time
+# so a change needs no code deploy.
+TELEGRAM_RICH_LISTS = env.bool("TELEGRAM_RICH_LISTS", default=False)
+
 # ---------------------------------------------------------------------------
 # Public REST API v1 and outbound webhooks (issue #25; SPEC §17)
 # ---------------------------------------------------------------------------

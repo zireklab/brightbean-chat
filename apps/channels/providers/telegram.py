@@ -54,6 +54,7 @@ failed call and never the path, and ``apps.common.logging`` scrubs the
 import hashlib
 import logging
 import threading
+from dataclasses import replace
 from datetime import UTC, datetime
 from typing import TYPE_CHECKING, Any
 from urllib.parse import quote, urljoin
@@ -142,6 +143,25 @@ MAX_TEXT_CHARS = _CAPABILITIES.max_text_len
 #: on :class:`~apps.channels.capabilities.Capabilities` — it is not something the
 #: flow builder warns about — so it is an adapter constant.
 MAX_CAPTION_CHARS = 1024
+
+#: What a rich message can show that a plain one cannot: a description under each
+#: quick reply, and a header and footer set apart from the text. The numbers are
+#: the schema's ceilings — the longest an author can write — and not Telegram's
+#: own, which are far higher, so with this row nothing of an author's is folded.
+#:
+#: A **copy** of the capability row with two numbers changed. The table in
+#: :mod:`apps.channels.capabilities` is data that other code reads — the send node
+#: recomputes its numbered options from it — and an adapter never patches it
+#: (ROADMAP contract 4). Neither number can move the numbering, which depends on
+#: the counts alone; a test holds the two tables to that.
+_RICH_CAPABILITIES: Capabilities = replace(
+    _CAPABILITIES,
+    max_quick_reply_description_len=200,
+    max_header_footer_len=200,
+)
+
+#: A rich list's header is a heading of this level (1 is the largest, 6 the smallest).
+RICH_HEADING_SIZE = 3
 
 #: ``callback_data`` is capped at 64 **bytes**, not characters.
 MAX_CALLBACK_DATA_BYTES = 64
@@ -442,7 +462,80 @@ def webhook_url() -> str:
 # ---------------------------------------------------------------------------
 
 
-def wire_calls(chat_id: str, message: OutboundMessage) -> list[tuple[str, dict[str, Any]]]:
+def _rich_lists_enabled() -> bool:
+    """Whether a list goes out as a rich message. A deployment switch, off by default.
+
+    Rich messages (Bot API 10.1, with buttons from 10.3) give a list a real
+    shape, but an app too old to render one shows a placeholder in its place and
+    that cannot be known from here — so the plain list, which every client shows,
+    is the default. Read only in this module, and at send time, for the reasons
+    ``settings.TELEGRAM_RICH_LISTS`` gives.
+    """
+    from django.conf import settings
+
+    return bool(getattr(settings, "TELEGRAM_RICH_LISTS", False))
+
+
+def _takes_rich_form(message: OutboundMessage) -> bool:
+    """Whether this is a list, and one a rich message can show in full.
+
+    The whole choice between the two forms, switch aside, and it is made before
+    anything is rendered: downgraded for the rich form, a message has its
+    descriptions, header and footer kept apart, and the plain form has no place
+    left to put them. So one option that cannot be a button sends the list plain,
+    where its description at least is in the text.
+    """
+    return bool(message.quick_replies and message.list_label.strip()) and all(
+        _label(item) and _callback_data(message.node_id, item.id) for item in message.quick_replies
+    )
+
+
+def _rich_list(
+    chat_id: str, message: OutboundMessage, calls: list[tuple[str, dict[str, Any]]]
+) -> list[tuple[str, dict[str, Any]]]:
+    """The message's last text and its quick replies as one rich message.
+
+    The last ``sendMessage`` is reclaimed as the body — the call
+    ``whatsapp._with_interactive`` makes for the same reason: the options belong
+    with the words they answer, not under something the rest of the message
+    scrolls past. A message that ends in media keeps it, and the list follows as
+    a message of its own.
+
+    The header and footer are set apart as a heading and a footer, because this
+    is the one place Telegram has for them. The options are an expandable block,
+    closed until opened, each a button that answers by id exactly as an inline
+    one does: ``callback_data`` is the same ``node_id:button_id`` from the same
+    function, so nothing downstream can tell the two apart. Buttons the message
+    also carries stay in an ordinary inline keyboard beneath.
+
+    Every option can be a button: :func:`_takes_rich_form` is asked first.
+    """
+    options: list[dict[str, Any]] = []
+    for item in message.quick_replies:
+        data = _callback_data(message.node_id, item.id)
+        label = _label(item)
+        if item.description:
+            options.append({"type": "paragraph", "text": [{"type": "bold", "text": label}, f" — {item.description}"]})
+        options.append({"type": "buttons", "buttons": [{"text": label, "callback_data": data}]})
+
+    body = str(calls.pop()[1]["text"]) if calls and calls[-1][0] == "sendMessage" else ""
+    blocks: list[dict[str, Any]] = []
+    if message.header:
+        blocks.append({"type": "heading", "text": message.header, "size": RICH_HEADING_SIZE})
+    if body:
+        blocks.append({"type": "paragraph", "text": body})
+    blocks.append({"type": "details", "summary": message.list_label, "blocks": options})
+    if message.footer:
+        blocks.append({"type": "footer", "text": message.footer})
+
+    payload: dict[str, Any] = {"chat_id": chat_id, "rich_message": {"blocks": blocks}}
+    rows = [row for row in (_inline_button(item, message.node_id) for item in message.buttons) if row]
+    if rows:
+        payload["reply_markup"] = {"inline_keyboard": [[row] for row in rows]}
+    return [*calls, ("sendRichMessage", payload)]
+
+
+def wire_calls(chat_id: str, message: OutboundMessage, *, rich: bool = False) -> list[tuple[str, dict[str, Any]]]:
     """``(method, payload)`` pairs for one already-downgraded message.
 
     Pure: no HTTP, no database, no clock. That is what lets the send-payload
@@ -453,10 +546,22 @@ def wire_calls(chat_id: str, message: OutboundMessage) -> list[tuple[str, dict[s
     :func:`apps.channels.downgrade.downgrade` already, so cards and galleries
     are gone and text is within the 4096 cap. The card/gallery branches below
     are a backstop for a caller that skipped that step, not a second renderer.
+
+    ``rich`` sends a list — quick replies the author asked to show as one — as a
+    rich message instead (see :func:`_rich_list`). It is a parameter rather than a
+    setting read here because this function is pure, and a caller that wants the
+    rich form has to have downgraded with :data:`_RICH_CAPABILITIES` too, which
+    is why :meth:`TelegramAdapter.send` decides both at once.
     """
     calls: list[tuple[str, dict[str, Any]]] = []
     for block in message.blocks:
         calls.extend(_block_calls(chat_id, block))
+    if rich and _takes_rich_form(message):
+        # A header, a footer and descriptions are something to say, though they
+        # are not blocks here: the plain form of this message has them as text.
+        said = message.header or message.footer or any(q.description for q in message.quick_replies)
+        if calls or said:
+            return _rich_list(chat_id, message, calls)
     if not calls:
         return []
 
@@ -1082,10 +1187,15 @@ class TelegramAdapter(Adapter):
             return SendResult(status=SendStatus.FAILED, error="no_chat_id")
 
         token = bot_token(connection)
-        rendered = downgrade(outbound, self.capabilities)
+        # Decided once, for the whole send: the rich form needs the renderer to
+        # keep descriptions, headers and footers as they are, so the switch picks
+        # the capability row as well as the wire shape. A message the rich form
+        # cannot show in full takes neither, whatever the switch says.
+        rich = _rich_lists_enabled() and _takes_rich_form(outbound)
+        rendered = downgrade(outbound, _RICH_CAPABILITIES if rich else self.capabilities)
         calls: list[tuple[str, dict[str, Any]]] = []
         for message in rendered.messages:
-            calls.extend(wire_calls(chat_id, message))
+            calls.extend(wire_calls(chat_id, message, rich=rich))
         if not calls:
             # Nothing sendable survived. Reported rather than silently counted
             # as sent, so contract 1's message row says what happened.

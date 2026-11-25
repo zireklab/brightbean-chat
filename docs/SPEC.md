@@ -233,7 +233,7 @@ A quick reply may carry a `description` (a second line under its label), and a m
 
 - Bot API, token from BotFather stored on the connection. Webhook set via `setWebhook` with `secret_token`; verify the `X-Telegram-Bot-Api-Secret-Token` header equals `channel_connection.webhook_secret`.
 - Inbound: messages, callback queries (button presses), /start payloads (ref-URL equivalent: `t.me/<bot>?start=<ref>` maps to the Ref URL trigger).
-- Buttons: inline keyboards (callback_data carries `node_id:button_id`). Quick replies: reply keyboards — or, when the message sets a `list_label`, an inline list answered by id exactly like buttons. A flow written without `list_label` is sent as it always was.
+- Buttons: inline keyboards (callback_data carries `node_id:button_id`). Quick replies: reply keyboards — or, when the message sets a `list_label`, an inline list answered by id exactly like buttons (and, behind `TELEGRAM_RICH_LISTS`, a rich message). A flow written without `list_label` is sent as it always was.
 - No messaging window, proactive_send true (contact must have messaged the bot once; enforce opt_in on identity). Rate limits: ~1 msg/sec per chat, ~30/sec global; on HTTP 429 honor `retry_after` and reschedule.
 
 ### 6.3 Instagram
