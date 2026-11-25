@@ -169,6 +169,20 @@ class TestSendMessage:
         assert outbound.list_label == "Options for Ada"
         assert [reply.description for reply in outbound.quick_replies] == ["To your door, Ada"]
 
+    def test_the_header_and_footer_go_through_the_shared_renderer_too(self, tenancy, facade):
+        connection = connection_for(tenancy.workspace)
+        config = {
+            "blocks": [{"type": "text", "text": "How should we deliver?"}],
+            "header": "Hello {{first_name}}",
+            "footer": "Reply STOP to opt out",
+        }
+        document = graph([node("m", "send_message", config)])
+
+        _run(tenancy.workspace, document, connection=connection)
+
+        outbound = _sent(facade)
+        assert (outbound.header, outbound.footer) == ("Hello Ada", "Reply STOP to opt out")
+
     def test_url_only_buttons_do_not_park_the_execution(self, tenancy, facade):
         """A URL button opens a link and never replies, so waiting on one is a trap.
 

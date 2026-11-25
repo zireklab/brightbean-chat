@@ -473,6 +473,14 @@ register_node_type(
                         "where the channel has one."
                     ),
                 ),
+                "header": f.string(
+                    max_length=200,
+                    description="A line above the message, set apart from the text where the channel can.",
+                ),
+                "footer": f.string(
+                    max_length=200,
+                    description="A line under the message, set apart from the text where the channel can.",
+                ),
                 "followup": f.ref("followup"),
                 "retry_unmatched": f.ref("retry_unmatched"),
                 # Additive, from issue #19. Outside WhatsApp's 24-hour window a

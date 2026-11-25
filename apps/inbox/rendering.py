@@ -367,11 +367,18 @@ def render_message(message: Message) -> RenderedMessage:
     body = message.body if isinstance(message.body, dict) else {}
     raw_blocks = body.get("blocks")
     parts: list[Part] = []
+    # The header and footer frame the blocks, as they did in the message.
+    header = _text(body.get("header"))
+    if header:
+        parts.append(Text(text=header))
     # The index is load-bearing, not decoration: a ``media`` block's delivery URL
     # addresses it by position in this list, which is how the view reads the id
     # back out of the row instead of taking it from the request.
     for index, item in enumerate(raw_blocks if isinstance(raw_blocks, list) else []):
         parts.append(_part(item, index, message))
+    footer = _text(body.get("footer"))
+    if footer:
+        parts.append(Text(text=footer))
     if is_redacted(message, body):
         # Its own reason, rather than the generic empty-body one below. "This
         # message has no displayable content" is what a reader sees for a

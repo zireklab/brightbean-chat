@@ -246,6 +246,42 @@ class TestInteractiveShapes:
         assert f"Small — {'d' * 80}" in payload["interactive"]["body"]["text"]
         assert "description" not in payload["interactive"]["action"]["sections"][0]["rows"][0]
 
+    def test_a_header_and_footer_frame_a_reply_button_message(self) -> None:
+        message = OutboundMessage(
+            blocks=(TextBlock(text="Pick"),),
+            buttons=(Button(id="a", label="A"),),
+            header="Delivery",
+            footer="Free over 2000",
+        )
+        (payload,) = wire_calls(TO, message)
+        assert payload["interactive"]["header"] == {"type": "text", "text": "Delivery"}
+        assert payload["interactive"]["footer"] == {"text": "Free over 2000"}
+
+    def test_a_header_and_footer_frame_a_list_too(self) -> None:
+        (payload,) = wire_calls(TO, self.a_list(header="Delivery", footer="Free over 2000"))
+        assert payload["interactive"]["type"] == "list"
+        assert payload["interactive"]["header"] == {"type": "text", "text": "Delivery"}
+        assert payload["interactive"]["footer"] == {"text": "Free over 2000"}
+
+    def test_a_message_with_neither_carries_neither_key(self) -> None:
+        (payload,) = wire_calls(TO, self.a_list())
+        assert "header" not in payload["interactive"]
+        assert "footer" not in payload["interactive"]
+
+    def test_whitespace_in_either_collapses_to_one_line(self) -> None:
+        (payload,) = wire_calls(TO, self.a_list(header="Deliv\nery   now", footer="Free\n\nover 2000"))
+        assert payload["interactive"]["header"]["text"] == "Deliv ery now"
+        assert payload["interactive"]["footer"]["text"] == "Free over 2000"
+
+    def test_over_the_limit_they_ride_in_the_body_instead(self) -> None:
+        long = "h" * 61
+        message = self.a_list(header=long, footer="Free over 2000")
+        rendered = downgrade(message, capabilities_for(Platform.WHATSAPP))
+        (payload,) = [call for part in rendered.messages for call in wire_calls(TO, part)]
+        assert "header" not in payload["interactive"]
+        assert payload["interactive"]["footer"] == {"text": "Free over 2000"}
+        assert payload["interactive"]["body"]["text"].startswith(long)
+
     def test_a_url_button_never_becomes_a_reply_button(self) -> None:
         """It would come back matching no handle. ``url_buttons`` is False for
         this platform so the shared renderer inlines it; this is the backstop for

@@ -375,6 +375,17 @@ class OutboundMessage:
     #: empties it on a message none survive on. Already rendered, like every
     #: author string here: an adapter must never substitute into it again.
     list_label: str = ""
+    #: A line above the message and a line under it, for a platform that sets them
+    #: apart from the text (WhatsApp's interactive messages do). Everywhere else
+    #: ``apps.channels.downgrade`` puts them *in* the text — the header ahead of the
+    #: first message, the footer after the last, numbered options included — so
+    #: they are never cut off and an adapter needs no branch for them.
+    #:
+    #: Already rendered, like every author string here. Cleared on every message
+    #: but the last, and on that one unless it still carries a control for them
+    #: to sit with.
+    header: str = ""
+    footer: str = ""
 
     def to_body(self) -> dict[str, Any]:
         """The SPEC §7.2 ``message.body`` json.
@@ -403,6 +414,8 @@ class OutboundMessage:
             "from_override": self.from_override,
             "html_body": self.html_body,
             "list_label": self.list_label,
+            "header": self.header,
+            "footer": self.footer,
         }
 
 

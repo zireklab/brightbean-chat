@@ -34,6 +34,8 @@ NODE_CONFIGS: dict[str, dict[str, Any]] = {
         ],
         "quick_replies": [{"id": "q1", "label": "Later", "description": "We will ask again tomorrow"}],
         "list_label": "Pick one",
+        "header": "Welcome",
+        "footer": "Reply STOP to opt out",
         "followup": {"enabled": True, "delay": 1, "unit": "hours"},
         "retry_unmatched": {"enabled": True, "max": 2, "text": "Please pick one of the options."},
     },

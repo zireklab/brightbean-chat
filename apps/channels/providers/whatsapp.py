@@ -563,7 +563,9 @@ def _interactive_action(message: OutboundMessage) -> dict[str, Any] | None:
                 len(rows),
                 _CAPABILITIES.max_buttons,
             )
-        return {"type": "button", "action": {"buttons": rows[: _CAPABILITIES.max_buttons]}} if rows else None
+        if not rows:
+            return None
+        return {"type": "button", **_frame(message), "action": {"buttons": rows[: _CAPABILITIES.max_buttons]}}
     if message.quick_replies:
         rows = [row for row in (_list_row(item) for item in message.quick_replies) if row]
         rows = rows[: _CAPABILITIES.max_quick_replies]
@@ -572,6 +574,7 @@ def _interactive_action(message: OutboundMessage) -> dict[str, Any] | None:
         caption = _list_caption(message.list_label)
         return {
             "type": "list",
+            **_frame(message),
             "action": {
                 "button": caption[:MAX_LIST_BUTTON_CHARS].rstrip(),
                 "sections": [{"title": caption[:MAX_SECTION_TITLE_CHARS].rstrip(), "rows": rows}],
@@ -589,6 +592,24 @@ def _pressable(message: OutboundMessage) -> list[Button]:
             len(extra),
         )
     return [*message.buttons, *extra]
+
+
+def _frame(message: OutboundMessage) -> dict[str, Any]:
+    """The ``header`` and ``footer`` an interactive message carries, if it has any.
+
+    Both are one line of text in Meta's reference, so whitespace — a line break
+    among it — is collapsed here. The renderer has already kept them to
+    ``max_header_footer_len`` (and folded the rest into the body), which
+    collapsing can only shorten.
+    """
+    frame: dict[str, Any] = {}
+    header = " ".join(message.header.split())
+    footer = " ".join(message.footer.split())
+    if header:
+        frame["header"] = {"type": "text", "text": header}
+    if footer:
+        frame["footer"] = {"text": footer}
+    return frame
 
 
 def _list_caption(label: str) -> str:

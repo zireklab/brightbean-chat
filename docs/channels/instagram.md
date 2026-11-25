@@ -236,6 +236,10 @@ duplicated and nothing is invented — but a long message with buttons arrives a
 two bubbles. A message with buttons and *no* text anywhere has nothing to hang
 them on, and they are left out with a warning in the log.
 
+**A header and a footer are part of the text**, so on a message with buttons they
+sit in it like any other words — and when the text is long enough to be split,
+the footer, being last, lands in the card's title.
+
 **Attachments have no captions.** Meta's attachment payload carries a URL and
 nothing else, so a media block's caption is sent as the message after it.
 

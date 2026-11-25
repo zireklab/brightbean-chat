@@ -131,6 +131,17 @@ class TestTheTemplatePicker:
         assert outbound.template_ref == "order_shipped/en_US"
         assert outbound.template_variables == (("body.1", "Ada"), ("body.2", "42"))
 
+    def test_a_template_send_carries_no_header_or_footer(self, tenancy: Any, facade: Any) -> None:
+        """Only the approved copy goes out, so a header or footer stored with it
+        would show in the thread and never be sent."""
+        connection = wa_connection(tenancy.workspace)
+        template = approved_template(tenancy.workspace, connection)
+
+        run(tenancy.workspace, template_config(template, header="Hi", footer="Bye"), connection=connection)
+
+        outbound = sent(facade)
+        assert (outbound.header, outbound.footer) == ("", "")
+
     def test_the_reference_comes_from_the_row_not_the_config(self, tenancy: Any, facade: Any) -> None:
         """A template renamed since the node was authored resolves to what it is
         now, rather than to a name Meta no longer knows."""

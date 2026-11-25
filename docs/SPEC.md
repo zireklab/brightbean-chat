@@ -227,7 +227,7 @@ class Adapter:
 
 The engine renders one abstract `OutboundMessage`; the adapter downgrades unsupported blocks deterministically: gallery -> sequential image+text messages; buttons unsupported -> numbered options appended to text ("Reply 1 for ..."); card -> image + text + url in text.
 
-A quick reply may carry a `description` (a second line under its label), and a message a `list_label` (the caption of the control that opens the quick replies as a list). A platform that has a place for one shows it there; every other platform gets it **in the text** — `Label — description` lines — rather than clipped. `max_quick_reply_description_len` in the capability table says how much room a platform has (0 for none), and the renderer never cuts an author's words to fit it.
+A quick reply may carry a `description` (a second line under its label), and a message a `list_label` (the caption of the control that opens the quick replies as a list), a `header` and a `footer`. A platform that has a place for one shows it there; every other platform gets it **in the text** — `Label — description` lines, the header ahead of the first message, the footer after the last (numbered options included) — rather than clipped. `max_quick_reply_description_len` and `max_header_footer_len` in the capability table say how much room a platform has (0 for none), and the renderer never cuts an author's words to fit it.
 
 ### 6.2 Telegram (build first)
 
@@ -299,7 +299,7 @@ Meta verification GET (`hub.challenge`) must be supported on the same URLs.
 
 `NormalizedEvent`: type (message, postback, comment, story_mention, story_reply, referral, follow, delivery_status, opt_out), connection, platform_user_id, provider_event_id, timestamp, payload (text, attachments, button id, comment id, media ids, ref string).
 
-`OutboundMessage.body` json: `{ blocks: [ {type: text|image|audio|video|file|card|gallery, ...}, ], buttons: [...], quick_replies: [ {id, label, description}, ... ], tag: null|HUMAN_AGENT|..., template_ref: null|id, list_label }`. The last key, and `description`, are additive: a row written without them reads back as empty strings.
+`OutboundMessage.body` json: `{ blocks: [ {type: text|image|audio|video|file|card|gallery, ...}, ], buttons: [...], quick_replies: [ {id, label, description}, ... ], tag: null|HUMAN_AGENT|..., template_ref: null|id, list_label, header, footer }`. The last three keys, and `description`, are additive: a row written without them reads back as empty strings.
 
 ---
 
@@ -399,7 +399,7 @@ Comment trigger behavior: public reply and like are executed via the platform AP
 Every node: id, type, position, config. Handles listed are the sourceHandles the builder exposes.
 
 ### 11.1 send_message
-Config: blocks[] (text with placeholders; image/audio/video/file by media library id or URL; card {image, title, subtitle, url_button}; gallery = card list), buttons[] (id, label, action: url / postback-handle), quick_replies[] (id, label, description), list_label, followup {enabled, delay, unit} routes to `timeout`, retry_unmatched {enabled, max<=5, text}. Handles: default, btn:<id>..., qr:<id>..., timeout. Behavior: renders per capability flags; if buttons/QRs present -> Wait, else Continue(default).
+Config: blocks[] (text with placeholders; image/audio/video/file by media library id or URL; card {image, title, subtitle, url_button}; gallery = card list), buttons[] (id, label, action: url / postback-handle), quick_replies[] (id, label, description), list_label, header, footer, followup {enabled, delay, unit} routes to `timeout`, retry_unmatched {enabled, max<=5, text}. Handles: default, btn:<id>..., qr:<id>..., timeout. Behavior: renders per capability flags; if buttons/QRs present -> Wait, else Continue(default).
 
 ### 11.2 action
 Config: actions[] executed in order: add_tag(tag), remove_tag, set_field(field, value|placeholder), clear_field, subscribe_sequence(sequence), unsubscribe_sequence, open_conversation, close_conversation, assign_conversation(member), notify_members(member_ids, via: email, text template). Handles: default. Always Continue.

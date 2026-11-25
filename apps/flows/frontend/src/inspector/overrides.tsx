@@ -95,6 +95,8 @@ export const OVERRIDES: Record<string, Widget> = {
 const PLACEHOLDER_PATHS = new Set([
   "send_sms:text",
   "send_message:list_label",
+  "send_message:header",
+  "send_message:footer",
   "send_email:subject",
   // `send_email:html_body` is deliberately absent: it gets RichTextEditor
   // above, which subsumes this widget's token picker.
