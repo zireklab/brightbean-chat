@@ -10489,8 +10489,12 @@ msgid "New rule"
 msgstr "Новое правило"
 
 #: templates/inbox/_rule_test.html:14
-msgid "No inbound messages yet, so there is nothing to test against."
-msgstr "Пока нет входящих сообщений, поэтому проверять не на чем."
+msgid ""
+"No inbound messages to test against yet. Button presses do not count: rules "
+"never act on them."
+msgstr ""
+"Пока нет входящих сообщений для проверки. Нажатия кнопок не считаются: "
+"правила на них не срабатывают."
 
 #: templates/inbox/_rule_test.html:17
 #, python-format

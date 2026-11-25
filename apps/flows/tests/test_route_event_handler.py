@@ -87,6 +87,16 @@ class TestSerialization:
         assert rebuilt.payload.extra["post_id"] == "p-1"
         assert rebuilt.provider_event_id == event.provider_event_id
 
+    def test_a_press_label_is_not_carried(self, tenancy, connection):
+        """Display only (``EventPayload.button_label``): routing gets the id and no
+        words it could take for an answer."""
+        event = inbound(connection, button_id="yes", button_label="Yes please")
+
+        payload = event_to_payload(event)
+
+        assert "Yes please" not in str(payload)
+        assert payload_to_event(payload, connection).payload.button_label == ""
+
     def test_raw_is_not_carried(self, tenancy, connection):
         """Unbounded, wholly attacker-controlled, read by no routing stage, and
         already stored verbatim in webhook_event_log (SECURITY-BASELINE §7)."""

@@ -8,10 +8,10 @@ buttons, quick replies, postbacks — and never a platform's. A Telegram
 the inbox, is the first line of a second implementation of the platform, and it
 shows up in review only when somebody happens to be looking at that file.
 
-``test_instagram_policy.py::TestContractFour`` holds ``apps/messaging`` to this
-for one platform's name. This holds the whole core to it for the platform with
-the most words of its own: the Bot API's method names, its keyboard and update
-vocabulary, and the adapters' package.
+``test_instagram_policy.py::TestContractFour`` holds ``apps/messaging`` to the
+platforms' names. This holds the whole core to more than a name for the platform
+with the most words of its own: the Bot API's method names, its keyboard and
+update vocabulary, and the adapters' package.
 
 The scan is an AST walk, not a grep. A docstring may say what a platform does —
 explaining a decision is the point of one — but no expression may use its words,
@@ -22,6 +22,7 @@ import ast
 import os
 import re
 from collections.abc import Iterator
+from importlib.util import resolve_name
 from pathlib import Path
 
 import pytest
@@ -79,11 +80,16 @@ BOT_API_VOCABULARY = frozenset(
 )
 _VOCABULARY_IN_TEXT = re.compile(r"\b(?:" + "|".join(sorted(BOT_API_VOCABULARY)) + r")\b")
 
-#: What the core may import from the adapters' package. Both are leaf modules
-#: that import no adapter: the provider error types a send can raise, and the
-#: HTML sanitiser an email body goes through. Anything else is the core reaching
+#: What the core may reach in the adapters' package: two leaf modules that import
+#: no adapter — the provider error types a send can raise, and the HTML sanitiser
+#: an email body goes through — and one job the hourly sweep resolves by name,
+#: lazily, because something has to name it. Anything else is the core reaching
 #: into one platform.
-ALLOWED_PROVIDER_IMPORTS = frozenset({"apps.channels.providers.exceptions", "apps.channels.providers.email_html"})
+ALLOWED_PROVIDER_IMPORTS = (
+    "apps.channels.providers.exceptions",
+    "apps.channels.providers.email_html",
+    "apps.channels.providers.whatsapp.poll_template_statuses",
+)
 
 PROVIDERS_PACKAGE = "apps.channels.providers"
 
@@ -126,14 +132,13 @@ def vocabulary_in(source: str) -> list[tuple[int, str]]:
     return found
 
 
-def _names_telegram(node: ast.expr) -> bool:
-    if isinstance(node, ast.Constant):
-        return node.value == "telegram"
-    if isinstance(node, ast.Attribute):
-        return node.attr == "TELEGRAM"
-    if isinstance(node, ast.Tuple | ast.List | ast.Set):
-        return any(_names_telegram(item) for item in node.elts)
-    return False
+def _names_telegram(node: ast.AST) -> bool:
+    """Anywhere in the expression, so ``.value``, ``str(...)`` and a set literal all count."""
+    return any(
+        (isinstance(part, ast.Constant) and part.value == "telegram")
+        or (isinstance(part, ast.Attribute) and part.attr == "TELEGRAM")
+        for part in ast.walk(node)
+    )
 
 
 def telegram_comparisons_in(source: str) -> list[int]:
@@ -144,27 +149,34 @@ def telegram_comparisons_in(source: str) -> list[int]:
     where a decision is made by name.
     """
     return [
-        node.lineno
-        for node in ast.walk(ast.parse(source))
-        if isinstance(node, ast.Compare) and any(_names_telegram(side) for side in (node.left, *node.comparators))
+        node.lineno for node in ast.walk(ast.parse(source)) if isinstance(node, ast.Compare) and _names_telegram(node)
     ]
 
 
-def provider_imports_in(source: str) -> list[tuple[int, str]]:
-    """``(line, module)`` for every import of an adapter module."""
+def _within(name: str, packages: tuple[str, ...]) -> bool:
+    return any(name == package or name.startswith(f"{package}.") for package in packages)
+
+
+def provider_imports_in(source: str, package: str = "apps.channels") -> list[tuple[int, str]]:
+    """``(line, dotted name)`` for everything ``source`` reaches in the adapters' package.
+
+    By statement — relative to ``package`` where it is written that way — or by a
+    dotted string, which is an import that has not happened yet.
+    """
+    tree = ast.parse(source)
+    docstrings = _docstring_nodes(tree)
     found: list[tuple[int, str]] = []
-    for node in ast.walk(ast.parse(source)):
-        if isinstance(node, ast.ImportFrom) and node.module:
-            if node.module == PROVIDERS_PACKAGE:
-                found.extend((node.lineno, f"{PROVIDERS_PACKAGE}.{alias.name}") for alias in node.names)
-            elif node.module.startswith(PROVIDERS_PACKAGE + "."):
-                found.append((node.lineno, node.module))
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ImportFrom):
+            module = resolve_name("." * node.level + (node.module or ""), package)
+            names = [f"{module}.{alias.name}" for alias in node.names]
         elif isinstance(node, ast.Import):
-            found.extend(
-                (node.lineno, alias.name)
-                for alias in node.names
-                if alias.name == PROVIDERS_PACKAGE or alias.name.startswith(PROVIDERS_PACKAGE + ".")
-            )
+            names = [alias.name for alias in node.names]
+        elif isinstance(node, ast.Constant) and isinstance(node.value, str) and id(node) not in docstrings:
+            names = [node.value]
+        else:
+            continue
+        found.extend((node.lineno, name) for name in names if _within(name, (PROVIDERS_PACKAGE,)))
     return found
 
 
@@ -203,8 +215,8 @@ class TestTheCoreSpeaksItsOwnVocabulary:
         offenders = [
             f"{path.relative_to(ROOT)}:{line} {module}"
             for path in core_sources()
-            for line, module in provider_imports_in(path.read_text())
-            if module not in ALLOWED_PROVIDER_IMPORTS
+            for line, module in provider_imports_in(path.read_text(), ".".join(path.relative_to(ROOT).parent.parts))
+            if not _within(module, ALLOWED_PROVIDER_IMPORTS)
         ]
         assert offenders == [], f"The core imports an adapter module: {offenders}"
 
@@ -247,6 +259,10 @@ class TestTheGuardsActuallyCatch:
             'a in ("sms", "telegram")',
             "Platform.TELEGRAM == a",
             "a in {Platform.EMAIL, Platform.TELEGRAM}",
+            "a == Platform.TELEGRAM.value",
+            "a == str(Platform.TELEGRAM)",
+            "a in frozenset({'telegram'})",
+            "a == Platform('telegram')",
         ],
     )
     def test_comparisons(self, source: str) -> None:
@@ -262,14 +278,22 @@ class TestTheGuardsActuallyCatch:
             "from apps.channels.providers import telegram",
             "import apps.channels.providers.whatsapp",
             "import apps.channels.providers.base as base",
+            "from apps.channels import providers",
+            "from .providers import telegram",
+            "from ..channels.providers.telegram import call",
+            "import_module('apps.channels.providers.telegram')",
         ],
     )
     def test_imports(self, source: str) -> None:
         assert provider_imports_in(source)
 
-    def test_the_two_permitted_modules_are_recognised_as_such(self) -> None:
+    def test_the_permitted_names_are_recognised_and_nothing_beside_them(self) -> None:
         found = provider_imports_in(
             "from apps.channels.providers.exceptions import APIError\n"
             "from apps.channels.providers.email_html import sanitize\n"
+            "JOB = 'apps.channels.providers.whatsapp.poll_template_statuses'\n"
+            "from apps.channels.providers.whatsapp import call\n"
         )
-        assert {module for _line, module in found} == ALLOWED_PROVIDER_IMPORTS
+        assert len(found) == 4
+        refused = [name for _line, name in found if not _within(name, ALLOWED_PROVIDER_IMPORTS)]
+        assert refused == ["apps.channels.providers.whatsapp.call"]
