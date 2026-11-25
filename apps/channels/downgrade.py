@@ -243,6 +243,8 @@ class _State:
         """
         if not quick_replies:
             return
+        # A placeholder can render to spaces, and a blank line is not a description.
+        quick_replies = tuple(q if q.description.strip() else replace(q, description="") for q in quick_replies)
 
         exclusive = self.caps.interaction_is_exclusive and bool(target.buttons)
         supports = self.caps.quick_replies and self.caps.max_quick_replies > 0 and not exclusive
