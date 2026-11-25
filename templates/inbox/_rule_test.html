@@ -11,7 +11,7 @@ reaches apps.inbox.routing, which is where applying lives.
   {% if error %}
     <p class="alert-error">{{ error }}</p>
   {% elif not sample %}
-    <p class="muted">{% translate "No inbound messages yet, so there is nothing to test against." %}</p>
+    <p class="muted">{% translate "No inbound messages to test against yet. Button presses do not count: rules never act on them." %}</p>
   {% else %}
     <p class="muted">
       {% blocktranslate count sample=sample with matched=matches|length %}Matched {{ matched }} of the last {{ sample }} inbound message.

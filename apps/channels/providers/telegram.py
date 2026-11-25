@@ -804,22 +804,20 @@ def _location_text(location: Any) -> str:
     return f"Shared a location: {latitude}, {longitude}"
 
 
-def _pressed_label(message: Any, data: str) -> str:
+def _pressed_label(message: dict[str, Any], data: str) -> str:
     """The label of the inline button that carried ``data``, or "".
 
     A press arrives as ``callback_data`` and no words: Telegram does not say what
     the button read. The words are on the message the button belonged to —
     ``callback_query.message.reply_markup`` — so that is where the inbox's "what
-    did they press" comes from. Without it the thread showed a bare id or, for a
-    press that carried nothing else, "no displayable content".
+    did they press" comes from.
 
-    Every level of this is a stranger's JSON, so every level is checked: the
-    message may be missing (Telegram leaves it out for an old one) or carry no
-    keyboard, and a hostile payload may put the wrong type anywhere. All of it
-    means "no label", never an exception — one odd press must not cost the
-    delivery (SECURITY-BASELINE §2).
+    Every level below the message is a stranger's JSON, so every level is checked:
+    it may carry no keyboard, and a hostile payload may put the wrong type
+    anywhere. All of it means "no label", never an exception — one odd press must
+    not cost the delivery (SECURITY-BASELINE §2).
     """
-    markup = message.get("reply_markup") if isinstance(message, dict) else None
+    markup = message.get("reply_markup")
     rows = markup.get("inline_keyboard") if isinstance(markup, dict) else None
     for row in rows if isinstance(rows, list) else ():
         for button in row if isinstance(row, list) else ():
@@ -979,8 +977,9 @@ class TelegramAdapter(Adapter):
         # Bounded by what we could ever have sent: anything longer was not
         # produced by _callback_data and will not match a handle either way.
         data = _text(query.get("data"), MAX_CALLBACK_DATA_BYTES)
-        source_message = query.get("message")
-        chat_id = _private_chat_id(source_message.get("chat") if isinstance(source_message, dict) else None)
+        raw_message = query.get("message")
+        source_message: dict[str, Any] = raw_message if isinstance(raw_message, dict) else {}
+        chat_id = _private_chat_id(source_message.get("chat"))
         if not chat_id or not data:
             # No fallback to ``callback_query.from``. That is a User rather than
             # a Chat and carries no ``type``, so it cannot be checked against
@@ -999,7 +998,7 @@ class TelegramAdapter(Adapter):
                 connection=connection,
                 platform_user_id=chat_id,
                 provider_event_id=provider_event_id,
-                timestamp=_timestamp(source_message.get("date") if isinstance(source_message, dict) else None),
+                timestamp=_timestamp(source_message.get("date")),
                 payload=EventPayload(
                     button_id=_button_id(data),
                     button_label=_pressed_label(source_message, data),

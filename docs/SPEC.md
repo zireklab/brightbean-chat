@@ -295,7 +295,7 @@ Meta verification GET (`hub.challenge`) must be supported on the same URLs.
 
 ### 7.2 Normalized schemas
 
-`NormalizedEvent`: type (message, postback, comment, story_mention, story_reply, referral, follow, delivery_status, opt_out), connection, platform_user_id, provider_event_id, timestamp, payload (text, attachments, button id, comment id, media ids, ref string).
+`NormalizedEvent`: type (message, postback, comment, story_mention, story_reply, referral, follow, delivery_status, opt_out), connection, platform_user_id, provider_event_id, timestamp, payload (text, attachments, button id, button label, comment id, media ids, ref string). The button label is what a pressed control said, where the platform tells us: it is shown in the thread and read by nothing that routes. A new adapter puts it there and never in `text`, which is matched as a typed answer.
 
 `OutboundMessage.body` json: `{ blocks: [ {type: text|image|audio|video|file|card|gallery, ...}, ], buttons: [...], quick_replies: [...], tag: null|HUMAN_AGENT|..., template_ref: null|id }`.
 
