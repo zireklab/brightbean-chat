@@ -4846,8 +4846,8 @@ kbd {
   font-size: 0.6875rem;
   color: var(--text-secondary);
 }
-/* The second line of a quick reply that has one: the words that sit under the
-   label in the contact's own list, kept as quiet as the rest of the chip. */
+/* A quick reply's description. Beside the label, after the same dash a platform
+   with no place for one gets it in: a chip is one line, whatever the contact saw. */
 .ib-chip-note { color: var(--text-tertiary); }
 .ib-chip-note::before { content: "— "; }
 .ib-bubble-out .ib-chip-note { color: color-mix(in srgb, var(--text-inverse) 70%, transparent); }

@@ -389,6 +389,15 @@ class TestQuickReplyDescriptions:
         assert result.messages[0].quick_replies[0].description == ""
         assert texts(result.messages[0]) == [f"Pick one\n\nCourier — {long}"]
 
+    @pytest.mark.parametrize(("label", "native"), [("L" * 24, True), ("L" * 25, False)])
+    def test_a_label_that_needs_the_description_line_leaves_no_room_on_it(self, label: str, native: bool) -> None:
+        caps = replace(self.NATIVE, max_described_label_len=24)
+        result = downgrade(self.asking(QuickReply(id="c", label=label, description="tomorrow")), caps)
+        (reply,) = result.messages[0].quick_replies
+        assert reply.description == ("tomorrow" if native else "")
+        assert texts(result.messages[0]) == ["Pick one" if native else f"Pick one\n\n{label} — tomorrow"]
+        assert downgrade(result.messages[0], caps).messages == result.messages
+
     def test_a_numbered_option_carries_its_description_on_its_own_line(self) -> None:
         result = downgrade(self.asking(QuickReply(id="c", label="Courier", description="tomorrow")), TEXT_ONLY)
         assert texts(result.messages[0]) == ["Pick one\n\nReply 1 for Courier — tomorrow"]

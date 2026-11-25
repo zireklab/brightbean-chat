@@ -236,8 +236,9 @@ class _State:
 
         **A description goes where the platform can show it, or into the text.**
         ``max_quick_reply_description_len`` is the room under the label (0 when
-        there is none); a longer description is folded into the message as
-        ``Label — description`` and cleared from the reply, so no platform ever
+        there is none, or when the label needs that line — see
+        :meth:`description_room`); a longer description is folded into the message
+        as ``Label — description`` and cleared from the reply, so no platform ever
         clips an author's words. A numbered option carries its description on the
         same line, which keeps the wording SPEC §6.1 fixes and keeps the numbering
         a function of the replies alone — the send node recomputes it from here.
@@ -256,7 +257,7 @@ class _State:
         folded = 0
         for item in quick_replies[:room]:
             kept = item
-            if len(item.description) > self.caps.max_quick_reply_description_len:
+            if len(item.description) > self.description_room(item):
                 target.trailer.append(
                     DESCRIBED_OPTION.format(label=item.label or item.id, description=item.description)
                 )
@@ -279,6 +280,13 @@ class _State:
         for quick_reply in overflow:
             line = self.number(quick_reply.id, quick_reply.label)
             target.trailer.append(f"{line} — {quick_reply.description}" if quick_reply.description else line)
+
+    def description_room(self, item: QuickReply) -> int:
+        """How long this reply's description may be, which is nothing once its label needs the line."""
+        longest = self.caps.max_described_label_len
+        if longest and len(item.label or item.id) > longest:
+            return 0
+        return self.caps.max_quick_reply_description_len
 
     def number(self, target_id: str, label: str) -> str:
         """Allocate the next reply number to ``target_id`` and return its line."""

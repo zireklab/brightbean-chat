@@ -87,6 +87,11 @@ class Capabilities:
     #: is where an author's words are kept whole.
     max_quick_reply_description_len: int = 0
 
+    #: How long a quick reply's label may be and still leave that line free: past
+    #: it the platform shows the whole label there, so a description goes into the
+    #: text instead. 0 is "no such limit". Means nothing without the number above.
+    max_described_label_len: int = 0
+
     #: How long a header or a footer may be on a platform that sets them apart
     #: from the text; 0 where it does not. Read as the description room is: past
     #: it, or with 0, the renderer puts the line in the text instead of cutting it.
@@ -291,6 +296,8 @@ CAPABILITIES: dict[str, Capabilities] = {
         interaction_is_exclusive=True,
         # A list row's own description slot, from Meta's interactive-list reference.
         max_quick_reply_description_len=72,
+        # A row title's own limit; a longer label is repeated whole in that slot.
+        max_described_label_len=24,
         # `header` and `footer` of an interactive message: 60 characters each.
         max_header_footer_len=60,
         # url_buttons False, and not an oversight. A WhatsApp *session* message
