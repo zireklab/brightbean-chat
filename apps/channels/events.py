@@ -88,7 +88,7 @@ class EventType(StrEnum):
 
 @dataclass(frozen=True)
 class EventPayload:
-    """SPEC §7.2's payload: "text, attachments, button id, comment id, media ids, ref string".
+    """SPEC §7.2's payload: "text, attachments, button id, button label, comment id, media ids, ref string".
 
     Every field is optional and defaulted. Webhook payloads are
     attacker-controlled (SECURITY-BASELINE §2), so an adapter that finds a
@@ -130,6 +130,18 @@ class EventPayload:
     #: Media that *does* need a credential goes in ``media_ids`` — see above.
     attachments: tuple[str, ...] = ()
     button_id: str = ""
+    #: What the pressed control *said* — the button's label, as the contact saw
+    #: it — for the platforms that tell us.
+    #:
+    #: **Display only, and deliberately not** ``text``. The engine takes ``text``
+    #: for a typed reply and matches it by its words
+    #: (``apps.flows.engine.waits._match_choice``), so a press that carries its
+    #: label there can answer a question it was never for: a stale "Yes" under an
+    #: earlier one, or the words a ``data_collection`` saves. (WhatsApp replies and
+    #: Meta quick replies predate this field and still do.) This field is read by
+    #: the inbox and by nothing that routes, which is also why
+    #: ``apps.flows.triggers`` does not carry it onto the queue.
+    button_label: str = ""
     comment_id: str = ""
     #: Opaque per-platform identifiers for media only a credentialed fetch can
     #: reach. Resolved on demand by :mod:`apps.channels.media`; see above.

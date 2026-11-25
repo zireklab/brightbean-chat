@@ -1116,7 +1116,12 @@ def _postback_events(
             platform_user_id=sender_id,
             provider_event_id=_event_id(item, mid, "ig:pb:"),
             timestamp=when,
-            payload=EventPayload(button_id=_button_id(payload), ref=ref, extra=extra),
+            payload=EventPayload(
+                button_id=_button_id(payload),
+                button_label=_text(postback.get("title"), MAX_EXTRA_CHARS),
+                ref=ref,
+                extra=extra,
+            ),
             raw=item,
         )
     ]

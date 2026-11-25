@@ -41,6 +41,16 @@ def _rule(workspace: Any, name: str = "Refunds", **overrides: Any) -> InboxRule:
     return rule
 
 
+def _press(connection: Any, *, button_id: str) -> None:
+    """A button press, stored the way a real one is."""
+    from apps.channels.events import EventType
+    from apps.flows.tests.support import inbound as event
+    from apps.messaging.ingest import persist_events
+
+    press = event(connection, button_id=button_id, button_label="Refund", kind=EventType.POSTBACK, user="u1")
+    persist_events(connection, [press])
+
+
 class TestPermissions:
     def test_an_agent_cannot_open_the_rules_page(self, agent_client, url_for):
         assert agent_client.get(url_for("rule_settings")).status_code == 403
@@ -188,6 +198,28 @@ class TestTheDryRun:
         assert response.status_code == 200
         assert response.context["sample"] == 2
         assert len(response.context["matches"]) == 1
+
+    @pytest.mark.parametrize("button_id", ["refund", ""])
+    def test_it_does_not_score_a_button_press(self, tenancy, connection, identity, inbound, button_id):
+        """A press is stored with its label as text, and the live hook never sees
+        one: ``RULE_EVENTS`` is messages and story replies. Scoring it here would
+        show a rule matching traffic it will never touch."""
+        typed = inbound(text="i would like a refund")
+        _press(connection, button_id=button_id)
+
+        matched, sample = selectors.dry_run(tenancy.workspace, {"keywords": [{"text": "refund", "mode": "contains"}]})
+
+        assert sample == 1
+        assert [message.pk for message in matched] == [typed.pk]
+
+    def test_presses_alone_are_not_called_no_messages(self, admin_client, url_for, connection, identity):
+        """The thread is full of them, so the page has to say why they do not count."""
+        _press(connection, button_id="refund")
+
+        response = admin_client.post(url_for("rule_test"), {"keyword_text": ["refund"], "keyword_mode": ["contains"]})
+
+        assert response.context["sample"] == 0
+        assert "Button presses do not count" in response.content.decode()
 
     def test_it_agrees_with_the_live_hook(self, tenancy, conversation, connection, identity, inbound):
         """The acceptance criterion, as a property rather than a promise: the

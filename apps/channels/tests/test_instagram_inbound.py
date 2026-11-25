@@ -62,6 +62,14 @@ class TestRecordedShapes:
         # The text is kept too: it is what the contact\'s bubble actually says.
         assert event.payload.text == "Yes please"
 
+    def test_a_postback_carries_its_title_for_display_only(self, instagram_connection: ChannelConnection) -> None:
+        """Meta sends the button's words with the press, and the thread shows them
+        rather than an empty bubble. They are not ``text``: that is what a contact
+        *typed*, and the engine matches typed words."""
+        (event,) = parse(load_delivery("postback"), instagram_connection)
+        assert event.payload.button_label == "Track my order"
+        assert event.payload.text == ""
+
     def test_postback(self, instagram_connection: ChannelConnection) -> None:
         (event,) = parse(load_delivery("postback"), instagram_connection)
         assert event.type == EventType.POSTBACK

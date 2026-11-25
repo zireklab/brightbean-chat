@@ -236,6 +236,7 @@ def inbound(
     *,
     text: str = "",
     button_id: str = "",
+    button_label: str = "",
     event_id: str = "evt-1",
     kind: Any = None,
     ref: str = "",
@@ -268,6 +269,7 @@ def inbound(
         payload=EventPayload(
             text=text,
             button_id=button_id,
+            button_label=button_label,
             ref=ref,
             comment_id=comment_id,
             extra=dict(extra or {}),

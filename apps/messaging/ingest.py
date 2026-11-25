@@ -604,7 +604,10 @@ def _inbound_body(event: NormalizedEvent) -> dict[str, Any]:
     """
     payload = event.payload
     blocks: list[dict[str, Any]] = []
-    text = _clean(payload.text, MAX_TEXT_CHARS)
+    # A press has no words of its own, so the thread shows the label it carried.
+    # ``button_label`` is display-only (see ``EventPayload``): it is stored here,
+    # for people, and was never offered to anything that routes.
+    text = _clean(payload.text, MAX_TEXT_CHARS) or _clean(payload.button_label, MAX_TEXT_CHARS)
     if text:
         blocks.append({"type": "text", "text": text})
     # Type-checked before slicing, not assumed. EventPayload's contract is that
@@ -644,8 +647,9 @@ def _inbound_body(event: NormalizedEvent) -> dict[str, Any]:
         "tag": None,
         "template_ref": None,
     }
-    if payload.button_id:
-        # What the contact pressed. L3-B's resume matches on it.
+    if payload.button_id or event.type == EventType.POSTBACK:
+        # What the contact pressed. L3-B's resume matches on it, and the key being
+        # there at all is what tells a press from a typed message afterwards.
         body["button_id"] = _clean(payload.button_id, 200)
     if payload.ref:
         body["ref"] = _clean(payload.ref, 2000)

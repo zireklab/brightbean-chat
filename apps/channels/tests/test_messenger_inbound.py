@@ -132,6 +132,15 @@ class TestPostbacks:
         assert event.payload.button_id == "buy"
         assert event.payload.extra["postback_payload"] == "node-3:buy"
 
+    def test_a_flow_button_carries_its_title_for_display_only(self, page: ChannelConnection) -> None:
+        """The words go to the thread, not to ``text``: that is what a contact
+        *typed*, and the engine matches typed words."""
+        (event,) = parse_fixture("postback_button", page)
+        assert event.payload.button_label == "Buy now"
+        assert event.payload.text == ""
+        # ``extra`` goes onto the routing queue, so a copy there would be one too.
+        assert "Buy now" not in event.payload.extra.values()
+
     def test_two_presses_of_one_button_are_two_events(self, page: ChannelConnection) -> None:
         """Meta sends no id for a postback, so one is derived — from the timestamp too.
 

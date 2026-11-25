@@ -367,6 +367,52 @@ class TestBodyShape:
         persist_events(connection, [make_event(connection, kind=EventType.POSTBACK, payload=payload)])
         assert messages(tenancy.workspace).get().body["button_id"] == "btn:yes"
 
+    def test_a_press_is_shown_as_the_label_it_carried(self, tenancy: Any, connection: Any) -> None:
+        """A press has no words of its own, and a thread of "no displayable
+        content" bubbles is what the inbox showed for one."""
+        payload = EventPayload(button_id="yes", button_label="Yes please")
+        persist_events(connection, [make_event(connection, kind=EventType.POSTBACK, payload=payload)])
+        body = messages(tenancy.workspace).get().body
+        assert body["blocks"] == [{"type": "text", "text": "Yes please"}]
+        assert body["button_id"] == "yes"
+
+    def test_typed_words_win_over_a_label(self, tenancy: Any, connection: Any) -> None:
+        payload = EventPayload(text="actually, no", button_id="yes", button_label="Yes please")
+        persist_events(connection, [make_event(connection, kind=EventType.POSTBACK, payload=payload)])
+        assert messages(tenancy.workspace).get().body["blocks"] == [{"type": "text", "text": "actually, no"}]
+
+    @pytest.mark.parametrize("unusable", [42, ["x"], "\x00", ""])
+    def test_unusable_text_does_not_hide_a_label(self, tenancy: Any, connection: Any, unusable: Any) -> None:
+        """Each is cleaned before one is chosen: a truthy value that cleans to
+        nothing must not stand in the way of a label that has something to say."""
+        payload = EventPayload(text=unusable, button_id="yes", button_label="Yes please")
+        persist_events(connection, [make_event(connection, kind=EventType.POSTBACK, payload=payload)])
+        assert messages(tenancy.workspace).get().body["blocks"] == [{"type": "text", "text": "Yes please"}]
+
+    def test_a_press_whose_id_comes_out_empty_is_still_stored_as_a_press(self, tenancy: Any, connection: Any) -> None:
+        """A payload ending in its first colon decodes to no id, and the key is how
+        everything after this tells a press from a typed message."""
+        payload = EventPayload(button_label="Refund")
+        persist_events(connection, [make_event(connection, kind=EventType.POSTBACK, payload=payload)])
+        body = messages(tenancy.workspace).get().body
+        assert body["button_id"] == ""
+        assert body["blocks"] == [{"type": "text", "text": "Refund"}]
+
+    def test_a_typed_message_is_not_marked_as_a_press(self, tenancy: Any, connection: Any) -> None:
+        persist_events(connection, [make_event(connection, text="refund")])
+        assert "button_id" not in messages(tenancy.workspace).get().body
+
+    def test_a_press_with_no_label_stays_empty(self, tenancy: Any, connection: Any) -> None:
+        payload = EventPayload(button_id="yes")
+        persist_events(connection, [make_event(connection, kind=EventType.POSTBACK, payload=payload)])
+        assert messages(tenancy.workspace).get().body["blocks"] == []
+
+    def test_a_label_is_stored_as_text_and_nothing_else(self, tenancy: Any, connection: Any) -> None:
+        """NUL cannot live in a Postgres text field; the rest is escaped at render."""
+        payload = EventPayload(button_id="yes", button_label="Ye\x00s <b>")
+        persist_events(connection, [make_event(connection, kind=EventType.POSTBACK, payload=payload)])
+        assert messages(tenancy.workspace).get().body["blocks"] == [{"type": "text", "text": "Yes <b>"}]
+
     def test_a_ref_string_survives_for_the_ref_url_trigger(self, tenancy: Any, connection: Any) -> None:
         payload = EventPayload(text="/start", ref="promo-42")
         persist_events(connection, [make_event(connection, payload=payload)])

@@ -515,3 +515,77 @@ class TestPrivateChatsOnly:
         del update["callback_query"]["message"]
         with fake_bot_api():
             assert parse(update, telegram_connection) == []
+
+
+class TestPressedLabel:
+    """What was pressed, as the inbox shows it — and nothing that routes reads it.
+
+    A press arrives as ``callback_data`` and no words. The words are on the
+    message the button belonged to, and the thread used to show "This message has
+    no displayable content." for a press that carried nothing else.
+    """
+
+    @staticmethod
+    def press(markup: Any, data: str = "node_ask:btn_yes") -> dict[str, Any]:
+        update = load_update("callback_query")
+        update["callback_query"]["data"] = data
+        update["callback_query"]["message"]["reply_markup"] = markup
+        return update
+
+    def test_the_label_is_the_one_on_the_button_that_carried_the_data(
+        self, telegram_connection: ChannelConnection
+    ) -> None:
+        markup = {
+            "inline_keyboard": [
+                [{"text": "No", "callback_data": "node_ask:btn_no"}],
+                [{"text": "Yes", "callback_data": "node_ask:btn_yes"}],
+            ]
+        }
+        with fake_bot_api():
+            (event,) = parse(self.press(markup), telegram_connection)
+        assert event.payload.button_label == "Yes"
+        assert event.payload.button_id == "btn_yes"
+
+    def test_it_is_display_only(self, telegram_connection: ChannelConnection) -> None:
+        """``text`` is what a contact *typed*, and the engine matches a typed reply
+        by its words. A label there could answer a question the press was never for."""
+        markup = {"inline_keyboard": [[{"text": "Yes", "callback_data": "node_ask:btn_yes"}]]}
+        with fake_bot_api():
+            (event,) = parse(self.press(markup), telegram_connection)
+        assert event.payload.text == ""
+
+    def test_a_message_with_no_keyboard_gives_no_label(self, telegram_connection: ChannelConnection) -> None:
+        """The recorded fixture has none, which is also what Telegram sends for a
+        message too old to include its keyboard."""
+        with fake_bot_api():
+            (event,) = parse(load_update("callback_query"), telegram_connection)
+        assert event.payload.button_label == ""
+        assert event.payload.button_id == "btn_yes"
+
+    @pytest.mark.parametrize(
+        "markup",
+        [
+            None,
+            "x",
+            5,
+            [],
+            {},
+            {"inline_keyboard": None},
+            {"inline_keyboard": "x"},
+            {"inline_keyboard": [None, 5, "x", {}, [None, 5, "x", {"callback_data": "node_ask:btn_yes", "text": 5}]]},
+            {"inline_keyboard": [[{"callback_data": "node_ask:btn_yes"}]]},
+        ],
+    )
+    def test_a_hostile_keyboard_means_no_label_and_never_an_error(
+        self, telegram_connection: ChannelConnection, markup: Any
+    ) -> None:
+        with fake_bot_api():
+            (event,) = parse(self.press(markup), telegram_connection)
+        assert event.payload.button_label == ""
+        assert event.payload.button_id == "btn_yes"
+
+    def test_a_label_is_bounded(self, telegram_connection: ChannelConnection) -> None:
+        markup = {"inline_keyboard": [[{"text": "я" * 5000, "callback_data": "node_ask:btn_yes"}]]}
+        with fake_bot_api():
+            (event,) = parse(self.press(markup), telegram_connection)
+        assert len(event.payload.button_label) == telegram_module.MAX_EXTRA_CHARS
