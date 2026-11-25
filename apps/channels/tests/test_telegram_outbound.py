@@ -178,6 +178,120 @@ class TestKeyboards:
         assert payload["reply_markup"]["inline_keyboard"][0][0]["text"] == "only-id"
 
 
+class TestLists:
+    """Quick replies that ask to be a list (``list_label``) ride as an inline keyboard.
+
+    A reply keyboard answers with the label as typed text; an inline one answers
+    with the id, which is what a list is for. Everything written before
+    ``list_label`` existed still gets the reply keyboard, so nothing already
+    running changes shape.
+    """
+
+    @staticmethod
+    def asking(**fields: Any) -> OutboundMessage:
+        return OutboundMessage(
+            blocks=(TextBlock(text="Delivery?"),),
+            quick_replies=(
+                QuickReply(id="c", label="Courier", description="tomorrow by 6pm"),
+                QuickReply(id="p", label="Pickup"),
+            ),
+            node_id="ask",
+            **fields,
+        )
+
+    def test_a_list_is_an_inline_keyboard_answered_by_id(self) -> None:
+        (_method, payload) = rendered(self.asking(list_label="Delivery"))[0]
+        assert payload["reply_markup"] == {
+            "inline_keyboard": [
+                [{"text": "Courier", "callback_data": "ask:c"}],
+                [{"text": "Pickup", "callback_data": "ask:p"}],
+            ]
+        }
+
+    def test_the_descriptions_ride_in_the_text(self) -> None:
+        """Telegram has no second line under a button, so the shared renderer
+        folds it into the message."""
+        (_method, payload) = rendered(self.asking(list_label="Delivery"))[0]
+        assert payload["text"] == "Delivery?\n\nCourier — tomorrow by 6pm"
+
+    def test_without_a_list_label_it_is_the_reply_keyboard_it_always_was(self) -> None:
+        (_method, payload) = rendered(self.asking())[0]
+        assert payload["reply_markup"] == {
+            "keyboard": [[{"text": "Courier"}], [{"text": "Pickup"}]],
+            "one_time_keyboard": True,
+            "resize_keyboard": True,
+        }
+        assert "callback_data" not in str(payload["reply_markup"])
+
+    def test_a_message_that_never_heard_of_lists_is_sent_exactly_as_before(self) -> None:
+        """The promise to every flow already running: no list_label, no description,
+        no change — down to the payload."""
+        message = OutboundMessage(
+            blocks=(TextBlock(text="How was it?"),),
+            quick_replies=(QuickReply(id="good", label="Good"), QuickReply(id="bad", label="Bad")),
+        )
+        assert rendered(message) == [
+            (
+                "sendMessage",
+                {
+                    "chat_id": CHAT,
+                    "text": "How was it?",
+                    "reply_markup": {
+                        "keyboard": [[{"text": "Good"}], [{"text": "Bad"}]],
+                        "one_time_keyboard": True,
+                        "resize_keyboard": True,
+                    },
+                },
+            )
+        ]
+
+    def test_a_list_and_buttons_share_one_keyboard_with_the_buttons_first(self) -> None:
+        message = OutboundMessage(
+            blocks=(TextBlock(text="x"),),
+            buttons=(Button(id="b", label="Docs"),),
+            quick_replies=(QuickReply(id="q", label="Later"),),
+            list_label="More",
+            node_id="n",
+        )
+        (_method, payload) = rendered(message)[0]
+        assert payload["reply_markup"]["inline_keyboard"] == [
+            [{"text": "Docs", "callback_data": "n:b"}],
+            [{"text": "Later", "callback_data": "n:q"}],
+        ]
+
+    def test_with_no_text_the_keyboard_rides_on_the_media(self) -> None:
+        message = OutboundMessage(
+            blocks=(MediaBlock(kind="image", url="https://x.test/a.png"),),
+            quick_replies=(QuickReply(id="q", label="Later"),),
+            list_label="More",
+            node_id="n",
+        )
+        (method, payload) = rendered(message)[0]
+        assert method == "sendPhoto"
+        assert payload["reply_markup"]["inline_keyboard"] == [[{"text": "Later", "callback_data": "n:q"}]]
+
+    def test_options_past_the_cap_are_numbered_with_their_descriptions(self) -> None:
+        replies = tuple(
+            QuickReply(id=f"q{n}", label=f"Option {n}", description=f"About {n}")
+            for n in range(CAPS.max_quick_replies + 2)
+        )
+        message = OutboundMessage(
+            blocks=(TextBlock(text="Pick"),), quick_replies=replies, list_label="Pick", node_id="n"
+        )
+        (_method, payload) = rendered(message)[-1]
+        assert len(payload["reply_markup"]["inline_keyboard"]) == CAPS.max_quick_replies
+        assert "Reply 1 for Option 10 — About 10" in payload["text"]
+        assert "Reply 2 for Option 11 — About 11" in payload["text"]
+
+    def test_a_list_survives_the_round_trip_through_the_stored_body(self) -> None:
+        """A retry rebuilds the message from the row hours later, and has to put
+        the same keyboard in the same chat."""
+        from apps.messaging.rendering import outbound_from_body
+
+        original = self.asking(list_label="Delivery")
+        assert rendered(outbound_from_body(original.to_body())) == rendered(original)
+
+
 class TestCallbackData:
     def test_a_long_pair_drops_the_node_prefix_and_keeps_the_button(self) -> None:
         """SPEC §6.2 asks for node_id:button_id and Telegram caps the field at 64
@@ -199,6 +313,29 @@ class TestCallbackData:
         reachable from a hand-built OutboundMessage — but a keyboard entry that
         Telegram would reject must not go on the wire."""
         message = OutboundMessage(blocks=(TextBlock(text="x"),), buttons=(Button(id="é" * 60, label="Y"),))
+        (_method, payload) = rendered(message)[0]
+        assert "reply_markup" not in payload
+
+    def test_an_id_at_the_schema_ceiling_is_sent_bare(self) -> None:
+        """The schema allows 64 characters and ``":"`` plus 64 is 65 bytes. Leaving
+        the button out gave a contact nothing to tap; the bare id is what
+        ``_button_id`` already reads back as itself."""
+        identifier = "a" * 64
+        message = OutboundMessage(
+            blocks=(TextBlock(text="x"),), buttons=(Button(id=identifier, label="Y"),), node_id="n1"
+        )
+        (_method, payload) = rendered(message)[0]
+        data = payload["reply_markup"]["inline_keyboard"][0][0]["callback_data"]
+        assert data == identifier
+        assert _button_id(data) == identifier
+        assert len(data.encode()) <= MAX_CALLBACK_DATA_BYTES
+
+    def test_a_colon_in_an_id_that_only_fits_bare_is_left_out_rather_than_misread(self) -> None:
+        """Bare, ``a:bbb…`` would decode as ``bbb…`` and match no handle."""
+        identifier = "a:" + "b" * 62
+        message = OutboundMessage(
+            blocks=(TextBlock(text="x"),), buttons=(Button(id=identifier, label="Y"),), node_id="n1"
+        )
         (_method, payload) = rendered(message)[0]
         assert "reply_markup" not in payload
 

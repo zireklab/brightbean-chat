@@ -302,3 +302,75 @@ class TestRateLimiting:
             handle_send_retry(action.payload, action)
 
         assert second.payloads("sendMessage")[0]["reply_markup"] == attempted
+
+
+LIST_FLOW = graph(
+    [
+        node(
+            "ask",
+            "send_message",
+            {
+                "blocks": [{"type": "text", "text": "How should we deliver?"}],
+                "quick_replies": [
+                    {"id": "courier", "label": "Courier", "description": "Tomorrow by 6pm"},
+                    {"id": "pickup", "label": "Pickup"},
+                ],
+                "list_label": "Delivery",
+            },
+        ),
+        node("said_courier", "send_message", {"blocks": [{"type": "text", "text": "Courier it is."}]}, x=200),
+        node("said_pickup", "send_message", {"blocks": [{"type": "text", "text": "See you at the shop."}]}, x=400),
+    ],
+    [edge("ask", "qr:courier", "said_courier"), edge("ask", "qr:pickup", "said_pickup")],
+)
+
+
+class TestTheListLoop:
+    """A list is answered by the id of its row, and the thread says which row."""
+
+    @pytest.fixture
+    def welcome_flow(self, tenancy: Tenancy) -> Flow:
+        from apps.flows.services import create_flow, publish, save_draft
+
+        flow = create_flow(workspace=tenancy.workspace, name="Delivery")
+        save_draft(flow, LIST_FLOW)
+        publish(flow)
+        flow.refresh_from_db()
+        return flow
+
+    def test_a_press_on_a_row_takes_that_rows_branch(
+        self, client: Client, tenancy: Tenancy, telegram_connection: ChannelConnection, bot_secret: str
+    ) -> None:
+        with fake_bot_api() as fake:
+            assert post(client, start_update(), secret=bot_secret).status_code == 200
+
+            (question,) = fake.payloads("sendMessage")
+            assert question["text"] == "How should we deliver?\n\nCourier — Tomorrow by 6pm"
+            assert question["reply_markup"]["inline_keyboard"] == [
+                [{"text": "Courier", "callback_data": "ask:courier"}],
+                [{"text": "Pickup", "callback_data": "ask:pickup"}],
+            ]
+
+            # Telegram sends the keyboard back on the message the button belonged to.
+            update = press("pickup")
+            update["callback_query"]["message"]["reply_markup"] = question["reply_markup"]
+            assert post(client, update, secret=bot_secret).status_code == 200
+
+        assert fake.payloads("sendMessage")[-1]["text"] == "See you at the shop."
+        execution = FlowExecution.objects.unscoped().get()
+        assert execution.current_node_id == "said_pickup"
+
+        # The thread shows which row it was, not "no displayable content" — and the
+        # id is what the flow matched on, recorded beside it.
+        pressed = Message.objects.unscoped().filter(direction=MessageDirection.IN).order_by("created_at").last()
+        assert pressed is not None
+        assert pressed.body["blocks"] == [{"type": "text", "text": "Pickup"}]
+        assert pressed.body["button_id"] == "pickup"
+
+    def test_the_other_row_takes_the_other_branch(
+        self, client: Client, tenancy: Tenancy, telegram_connection: ChannelConnection, bot_secret: str
+    ) -> None:
+        with fake_bot_api() as fake:
+            post(client, start_update(), secret=bot_secret)
+            post(client, press("courier"), secret=bot_secret)
+        assert fake.payloads("sendMessage")[-1]["text"] == "Courier it is."

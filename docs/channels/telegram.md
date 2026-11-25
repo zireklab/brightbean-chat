@@ -124,10 +124,13 @@ Buttons become an **inline keyboard**, one button per row. A postback button's
 even for a message with no node behind it — an inbox reply or an API send
 encodes as `:button_id` — so the decoding is unambiguous whatever a button id
 contains. When the two ids together exceed 64 bytes the node id is dropped,
-because the button id is the half the engine matches on. Quick replies alone become a **one-time reply keyboard**; when a
-message has both, the quick replies join the inline keyboard, since Telegram
-allows only one `reply_markup` per message and a quick reply comes back as a
-`button_id` either way.
+because the button id is the half the engine matches on. A colon-free id that
+would still not fit with the separator (the schema allows 64 characters, and
+`:` plus 64 is 65 bytes) is sent bare, which `_button_id` reads back as itself.
+Quick replies alone become a **one-time reply keyboard**; when a message has
+both, the quick replies join the inline keyboard, since Telegram allows only one
+`reply_markup` per message and a quick reply comes back as a `button_id` either
+way.
 
 Buttons beyond the tenth are appended to the text as numbered options ("Reply 1
 for ..."), and the number is matchable: the sending node records the same
@@ -148,6 +151,30 @@ message row, which is a decision for every adapter rather than this one.
 Media is addressed by URL or by `file_id` in the same field — Telegram accepts
 both. A media-library asset arrives as its signed delivery URL, minted upstream
 at send time.
+
+### Lists and descriptions
+
+A quick reply can carry a **description**, and a message can carry a **list
+caption** — the same fields WhatsApp's interactive lists use, so one flow reads
+the same on both.
+
+- **A list** is quick replies on a message that sets a list caption. They are sent
+  as an inline keyboard and answered by id, exactly like buttons, instead of as a
+  reply keyboard whose answer is the label as typed text. A message **without** a
+  list caption is sent as it always was, byte for byte, so nothing already running
+  changes shape. Telegram has no control to open a list, so the caption itself is
+  not shown in the plain form.
+- **Descriptions** have no place of their own in a plain message, so they are part
+  of its text: `Label — description` lines under the message (before any numbered
+  options). They are never cut; a long one makes a longer message, which the usual
+  4096-character split handles.
+- **In the inbox** a press shows the label it carried, with the id the flow matched
+  on beside it. The label is for people only: it is stored with the message and never offered
+  to the flow engine, which matches on the id (a typed answer is matched by its
+  words, and a label that looked like one could answer a question it was never for).
+
+A press on a list answers with a `postback`, not a message, so keyword triggers,
+the default reply and inbox rules do not see it — the same as a button.
 
 ## Rate limits
 

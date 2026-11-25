@@ -538,10 +538,13 @@ def _reply_markup(message: OutboundMessage) -> dict[str, Any] | None:
     alongside them are folded into the same inline keyboard rather than dropped
     — a :class:`~apps.channels.events.QuickReply` comes back as
     ``EventPayload.button_id`` exactly like a postback button does, so the
-    semantics survive the change of clothes. Quick replies **alone** get the
-    one-time reply keyboard SPEC §6.2 asks for.
+    semantics survive the change of clothes. So do quick replies on a message
+    that asked for a list (``list_label``): they come back by id, which a typed
+    label never can, and that is what the author asked for. Quick replies
+    **alone** get the one-time reply keyboard SPEC §6.2 asks for — which is what
+    every message written before ``list_label`` existed still gets, unchanged.
     """
-    if message.buttons:
+    if message.buttons or (message.quick_replies and message.list_label):
         rows = [row for row in (_inline_button(item, message.node_id) for item in _pressable(message)) if row]
         return {"inline_keyboard": [[row] for row in rows]} if rows else None
     if message.quick_replies:
@@ -557,7 +560,7 @@ def _pressable(message: OutboundMessage) -> list[Button]:
     extra = [Button(id=item.id, label=item.label) for item in message.quick_replies]
     if extra:
         logger.debug(
-            "Telegram: %s quick repl(ies) sent as inline buttons because the message also has buttons.",
+            "Telegram: %s quick repl(ies) sent as inline buttons: the message also has buttons or asked for a list.",
             len(extra),
         )
     return [*message.buttons, *extra]
@@ -598,6 +601,12 @@ def _callback_data(node_id: str, button_id: str) -> str | None:
     matches a press on the button id against the *waiting* node's handles, and a
     contact has one live execution — while the button id has to survive.
 
+    A colon-free id that still does not fit with the separator goes **bare**:
+    the schema allows 64 characters, ``":"`` plus 64 is 65 bytes, and without the
+    separator the id still decodes to itself — :func:`_button_id` takes a string
+    with no colon whole. An id *with* a colon cannot take that way out, because
+    bare it would decode as whatever follows the colon.
+
     None means the button cannot be represented and is left out of the keyboard
     entirely, which is visible, rather than sent with a payload Telegram would
     reject or that would come back unmatchable.
@@ -611,6 +620,9 @@ def _callback_data(node_id: str, button_id: str) -> str | None:
     if len(bare.encode("utf-8")) <= MAX_CALLBACK_DATA_BYTES:
         logger.debug("Telegram: callback_data for %r dropped its node prefix to fit 64 bytes.", button_id)
         return bare
+    if ":" not in button_id and len(button_id.encode("utf-8")) <= MAX_CALLBACK_DATA_BYTES:
+        logger.debug("Telegram: callback_data for %r is the bare id: even the separator would not fit.", button_id)
+        return button_id
     logger.warning(
         "Telegram: button id is over %s bytes and cannot be sent as callback_data; "
         "the button was left out of the keyboard.",
