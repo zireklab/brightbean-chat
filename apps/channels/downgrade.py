@@ -91,6 +91,8 @@ class _Pending:
     #: Lines destined for the end of this message's text: numbered options and
     #: inlined URLs.
     trailer: list[str] = field(default_factory=list)
+    #: A footer folded into the text: the last thing read, after the trailer.
+    tail: str = ""
 
     def is_empty(self) -> bool:
         return not (self.blocks or self.buttons or self.quick_replies or self.trailer)
@@ -307,10 +309,12 @@ class _State:
         was one: without it a gallery's buttons lost the node they came from and
         Telegram's ``callback_data`` fell back to the bare button id.
 
-        What is decided here is the content (blocks, buttons, quick replies) and
+        What is decided here is the content (blocks, buttons, quick replies);
         ``list_label``, which only means something while a quick reply survives
-        to be opened from.
+        to be opened from; and where the header and footer go
+        (:meth:`place_frame`).
         """
+        carrier, header, footer = self.place_frame(outbound)
         messages: list[OutboundMessage] = []
         for pending in self.pending:
             self.append_trailer(pending)
@@ -322,6 +326,8 @@ class _State:
                     buttons=tuple(pending.buttons),
                     quick_replies=tuple(pending.quick_replies),
                     list_label=outbound.list_label if pending.quick_replies else "",
+                    header=header if pending is carrier else "",
+                    footer=footer if pending is carrier else "",
                 )
             )
 
@@ -338,22 +344,73 @@ class _State:
             notes=tuple(self.notes),
         )
 
+    def place_frame(self, outbound: OutboundMessage) -> tuple[_Pending, str, str]:
+        """Decide where the header and the footer go, folding the ones that cannot stay.
+
+        ``(the message that carries them natively, its header, its footer)``.
+
+        A line stays a header or footer only on the **last** message, only while
+        that message still has a control for it to sit with (a button or a quick
+        reply), and only if it fits the room the platform has for it
+        (``max_header_footer_len``). Anything else is part of the text: the header
+        ahead of the first message's, the footer after the last message's —
+        numbered options included, so it stays the last thing read. Each line is
+        judged on its own, and none is ever cut, for the reason a description is
+        not: keeping an author's words whole is this renderer's job.
+
+        Both ends are found among the messages that will survive. A gallery card
+        with nothing in it is dropped further down, and a header folded into it
+        would go with it.
+        """
+        live = [pending for pending in self.pending if not pending.is_empty()] or [self.pending[-1]]
+        first, last = live[0], live[-1]
+        room = self.caps.max_header_footer_len if (last.buttons or last.quick_replies) else 0
+        header = outbound.header if outbound.header.strip() and len(outbound.header) <= room else ""
+        footer = outbound.footer if outbound.footer.strip() and len(outbound.footer) <= room else ""
+        if outbound.header.strip() and not header:
+            self.prepend(first, outbound.header)
+            self.notes.append("header: added to the top of the text")
+        if outbound.footer.strip() and not footer:
+            last.tail = outbound.footer
+            self.notes.append("footer: added to the end of the text")
+        return last, header, footer
+
+    @staticmethod
+    def prepend(pending: _Pending, text: str) -> None:
+        """Put ``text`` at the top of the message: in its leading text, or ahead of media."""
+        first = pending.blocks[0] if pending.blocks else None
+        if isinstance(first, TextBlock):
+            pending.blocks[0] = TextBlock(text="\n\n".join(part for part in (text, first.text) if part.strip()))
+        else:
+            pending.blocks.insert(0, TextBlock(text=text))
+
     @staticmethod
     def append_trailer(pending: _Pending) -> None:
-        """Put the numbered options at the end of the message's text."""
-        if not pending.trailer:
-            return
-        trailer = "\n".join(pending.trailer)
-        for index in range(len(pending.blocks) - 1, -1, -1):
-            block = pending.blocks[index]
-            if isinstance(block, TextBlock):
-                pending.blocks[index] = TextBlock(text=f"{block.text}\n\n{trailer}")
-                pending.trailer = []
-                return
-        # Nothing to append to — a media-only message, say. The options still
-        # have to reach the contact, so they get a block of their own.
-        pending.blocks.append(TextBlock(text=trailer))
-        pending.trailer = []
+        """Put the numbered options at the end of the text, and the folded footer at the end of the message.
+
+        The same place unless the message ends in something else — an image after
+        its text, say. The options belong with the words they answer; the footer is
+        the last thing read, so there it is a block of its own.
+        """
+        if pending.trailer:
+            trailer = "\n".join(pending.trailer)
+            pending.trailer = []
+            for index in range(len(pending.blocks) - 1, -1, -1):
+                block = pending.blocks[index]
+                if isinstance(block, TextBlock):
+                    pending.blocks[index] = TextBlock(text=f"{block.text}\n\n{trailer}")
+                    break
+            else:
+                # Nothing to append to — a media-only message, say. The options
+                # still have to reach the contact, so they get a block of their own.
+                pending.blocks.append(TextBlock(text=trailer))
+        if pending.tail:
+            last = pending.blocks[-1] if pending.blocks else None
+            if isinstance(last, TextBlock):
+                pending.blocks[-1] = TextBlock(text=f"{last.text}\n\n{pending.tail}")
+            else:
+                pending.blocks.append(TextBlock(text=pending.tail))
+            pending.tail = ""
 
     def apply_text_cap(self, blocks: list[Block]) -> list[Block]:
         """Split over-long text on word boundaries (SPEC §6.1's max_text_len)."""

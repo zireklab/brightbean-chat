@@ -91,6 +91,11 @@ class Capabilities:
     #: it the platform shows the whole label there, so a description goes into the
     #: text instead. 0 is "no such limit". Means nothing without the number above.
     max_described_label_len: int = 0
+
+    #: How long a header or a footer may be on a platform that sets them apart
+    #: from the text; 0 where it does not. Read as the description room is: past
+    #: it, or with 0, the renderer puts the line in the text instead of cutting it.
+    max_header_footer_len: int = 0
     proactive_send: bool = False
     broadcast_allowed: bool = False
 
@@ -293,6 +298,8 @@ CAPABILITIES: dict[str, Capabilities] = {
         max_quick_reply_description_len=72,
         # A row title's own limit; a longer label is repeated whole in that slot.
         max_described_label_len=24,
+        # `header` and `footer` of an interactive message: 60 characters each.
+        max_header_footer_len=60,
         # url_buttons False, and not an oversight. A WhatsApp *session* message
         # has no URL-button set: `interactive.button` rows are reply buttons
         # only, and the one shape that carries a link — `cta_url` — takes

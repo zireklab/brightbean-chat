@@ -152,11 +152,11 @@ Media is addressed by URL or by `file_id` in the same field — Telegram accepts
 both. A media-library asset arrives as its signed delivery URL, minted upstream
 at send time.
 
-### Lists and descriptions
+### Lists, headers and footers
 
 A quick reply can carry a **description**, and a message can carry a **list
-caption** — the same fields WhatsApp's interactive lists use, so one flow reads
-the same on both.
+caption**, a **header** and a **footer** — the same fields WhatsApp's interactive
+lists use, so one flow reads the same on both.
 
 - **A list** is quick replies on a message that sets a list caption. They are sent
   as an inline keyboard and answered by id, exactly like buttons, instead of as a
@@ -164,8 +164,9 @@ the same on both.
   list caption is sent as it always was, byte for byte, so nothing already running
   changes shape. Telegram has no control to open a list, so the caption itself is
   not shown in the plain form.
-- **Descriptions** have no place of their own in a plain message, so they are part
-  of its text: `Label — description` lines under the message (before any numbered
+- **Descriptions, header and footer** have no place of their own in a plain
+  message, so they are part of its text: `Label — description` lines under the
+  message, the header ahead of it and the footer after it (after any numbered
   options). They are never cut; a long one makes a longer message, which the usual
   4096-character split handles.
 - **In the inbox** a press shows the label it carried, with the id the flow matched

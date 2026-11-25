@@ -464,6 +464,159 @@ class TestQuickReplyDescriptions:
             assert again.numeric_replies == {}, platform
 
 
+class TestHeaderAndFooter:
+    """A line above the message and a line under it.
+
+    A platform that sets them apart from the text keeps them there — on the last
+    message, and only while a control is there for them to sit with. Anywhere else
+    they are part of the text: never cut, and never a platform branch.
+    """
+
+    FRAMED = Capabilities(
+        buttons=True,
+        quick_replies=True,
+        max_buttons=3,
+        max_quick_replies=10,
+        max_header_footer_len=60,
+        max_text_len=4096,
+    )
+    PLAIN = Capabilities(buttons=True, max_buttons=3, max_text_len=4096)
+
+    @staticmethod
+    def framed(**fields: object) -> OutboundMessage:
+        values: dict[str, object] = {
+            "blocks": (TextBlock(text="Pick one"),),
+            "buttons": (Button(id="b", label="Docs"),),
+            "header": "Delivery",
+            "footer": "Free over 2000",
+        }
+        return OutboundMessage(**{**values, **fields})  # type: ignore[arg-type]
+
+    def test_a_platform_that_sets_them_apart_keeps_them_there(self) -> None:
+        result = downgrade(self.framed(), self.FRAMED)
+        (message,) = result.messages
+        assert (message.header, message.footer) == ("Delivery", "Free over 2000")
+        assert texts(message) == ["Pick one"]
+        assert result.notes == ()
+
+    def test_a_platform_that_does_not_puts_them_in_the_text(self) -> None:
+        result = downgrade(self.framed(), self.PLAIN)
+        (message,) = result.messages
+        assert (message.header, message.footer) == ("", "")
+        assert texts(message) == ["Delivery\n\nPick one\n\nFree over 2000"]
+        assert [note.split(":")[0] for note in result.notes] == ["header", "footer"]
+
+    def test_with_no_control_to_sit_with_they_fold_even_where_they_could_stay(self) -> None:
+        (message,) = downgrade(self.framed(buttons=()), self.FRAMED).messages
+        assert (message.header, message.footer) == ("", "")
+        assert texts(message) == ["Delivery\n\nPick one\n\nFree over 2000"]
+
+    def test_each_line_is_judged_on_its_own(self) -> None:
+        long = "x" * 61
+        (message,) = downgrade(self.framed(footer=long), self.FRAMED).messages
+        assert (message.header, message.footer) == ("Delivery", "")
+        assert texts(message) == [f"Pick one\n\n{long}"]
+
+    def test_the_limit_itself_is_still_native(self) -> None:
+        exact = "x" * 60
+        (message,) = downgrade(self.framed(header=exact), self.FRAMED).messages
+        assert message.header == exact
+
+    def test_the_footer_comes_after_the_numbered_options(self) -> None:
+        message = OutboundMessage(
+            blocks=(TextBlock(text="Pick one"),),
+            buttons=(Button(id="p", label="Pricing"),),
+            footer="Free over 2000",
+        )
+        result = downgrade(message, TEXT_ONLY)
+        assert texts(result.messages[0]) == ["Pick one\n\nReply 1 for Pricing\n\nFree over 2000"]
+
+    def test_a_gallery_gets_the_header_on_its_first_message_and_the_footer_on_its_last(self) -> None:
+        caps = Capabilities(image=True, max_text_len=4096)
+        message = OutboundMessage(
+            blocks=(GalleryBlock(cards=(Card(title="A"), Card(title="B"), Card(title="C"))),),
+            header="Top",
+            footer="Bottom",
+        )
+        result = downgrade(message, caps)
+        assert [texts(m) for m in result.messages] == [["Top\n\nA"], ["B"], ["C\n\nBottom"]]
+
+    def test_a_header_ahead_of_media_is_a_block_of_its_own(self) -> None:
+        caps = Capabilities(image=True, max_text_len=4096)
+        message = OutboundMessage(blocks=(MediaBlock(kind="image", url="https://x.test/i.png"),), header="Look")
+        (rendered,) = downgrade(message, caps).messages
+        assert isinstance(rendered.blocks[0], TextBlock)
+        assert rendered.blocks[0].text == "Look"
+        assert isinstance(rendered.blocks[1], MediaBlock)
+
+    def test_a_footer_after_media_is_still_the_last_thing_read(self) -> None:
+        """The options belong with the words they answer; the footer ends the message."""
+        message = OutboundMessage(
+            blocks=(TextBlock(text="Look"), MediaBlock(kind="image", url="https://x.test/i.png")),
+            buttons=(Button(id="p", label="Pricing"),),
+            footer="Bottom",
+        )
+        (rendered,) = downgrade(message, Capabilities(image=True, max_text_len=4096)).messages
+        assert [block.kind for block in rendered.blocks] == ["text", "image", "text"]
+        assert texts(rendered) == ["Look\n\nReply 1 for Pricing", "Bottom"]
+
+    @pytest.mark.parametrize("platform", Platform.values)
+    def test_a_blank_header_or_footer_is_nothing_at_all(self, platform: str) -> None:
+        """A placeholder can render to spaces, and a platform refuses a blank line."""
+        blank = OutboundMessage(
+            blocks=(MediaBlock(kind="image", url="https://x.test/i.png"),),
+            buttons=(Button(id="b", label="Docs"),),
+            header=" ",
+            footer="\n",
+        )
+        caps = capabilities_for(platform)
+        assert downgrade(blank, caps).messages == downgrade(replace(blank, header="", footer=""), caps).messages
+
+    def test_folded_text_is_still_held_to_the_length_cap(self) -> None:
+        caps = Capabilities(max_text_len=30)
+        message = OutboundMessage(blocks=(TextBlock(text="short"),), header="h" * 25, footer="f" * 25)
+        result = downgrade(message, caps)
+        assert all(len(text) <= 30 for part in result.messages for text in texts(part))
+        assert "h" * 25 in all_text(result)
+        assert "f" * 25 in all_text(result)
+
+    def test_a_message_with_neither_is_untouched(self) -> None:
+        message = OutboundMessage(blocks=(TextBlock(text="hi"),), buttons=(Button(id="b", label="Docs"),))
+        assert downgrade(message, self.FRAMED).messages == (message,)
+
+    @pytest.mark.parametrize("platform", Platform.values)
+    def test_every_platform_keeps_both_lines_exactly_once(self, platform: str) -> None:
+        """Whether native or folded, the words reach the contact — once."""
+        caps = capabilities_for(platform)
+        message = OutboundMessage(
+            blocks=(TextBlock(text="Pick"), GalleryBlock(cards=(CARD, Card(title="Plan B")))),
+            buttons=(Button(id="b", label="Docs"),),
+            quick_replies=(QuickReply(id="q", label="Later", description="Ask again tomorrow"),),
+            header="HEADERLINE",
+            footer="FOOTERLINE",
+        )
+        rendered = downgrade(message, caps).messages
+        everything = [text for part in rendered for text in texts(part)]
+        everything += [part.header for part in rendered] + [part.footer for part in rendered]
+        assert "".join(everything).count("HEADERLINE") == 1, platform
+        assert "".join(everything).count("FOOTERLINE") == 1, platform
+
+    @pytest.mark.parametrize("platform", Platform.values)
+    def test_every_platform_is_idempotent_with_a_header_and_footer(self, platform: str) -> None:
+        caps = capabilities_for(platform)
+        message = OutboundMessage(
+            blocks=(TextBlock(text="Pick"), GalleryBlock(cards=(CARD, Card(title="Plan B")))),
+            buttons=(Button(id="b", label="Docs"),),
+            quick_replies=tuple(QuickReply(id=f"q{n}", label=f"Option {n}") for n in range(14)),
+            header="HEADERLINE",
+            footer="FOOTERLINE",
+        )
+        for rendered in downgrade(message, caps).messages:
+            again = downgrade(rendered, caps)
+            assert again.messages == (rendered,), platform
+            assert again.numeric_replies == {}, platform
+
+
 class TestFieldsTheRendererDoesNotDecideRideAlong:
     """``finish`` rebuilds each message with ``replace``, so a new field cannot be forgotten."""
 

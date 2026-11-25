@@ -99,6 +99,11 @@ class TestTheListFields:
     def test_the_list_caption_has_a_ceiling(self):
         assert self.errors({**self.BASE, "list_label": "x" * 81}) == ["invalid_config_value"]
 
+    def test_a_header_and_footer_are_accepted_and_bounded(self):
+        assert self.errors({**self.BASE, "header": "Delivery", "footer": "Free over 2000"}) == []
+        assert self.errors({**self.BASE, "header": "x" * 201}) == ["invalid_config_value"]
+        assert self.errors({**self.BASE, "footer": "x" * 201}) == ["invalid_config_value"]
+
     def test_an_unknown_key_beside_them_is_still_refused(self):
         assert self.errors({**self.BASE, "inline_keyboard": []}) == ["unknown_config_key"]
 

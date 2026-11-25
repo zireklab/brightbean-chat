@@ -60,6 +60,8 @@ def outbound_from_body(body: Any) -> OutboundMessage:
         # Absent from every row written before the list fields, which reads back
         # as "": the same thing every send that did not ask for a list stores.
         list_label=_text(body.get("list_label")),
+        header=_text(body.get("header")),
+        footer=_text(body.get("footer")),
     )
 
 

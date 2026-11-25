@@ -1646,6 +1646,16 @@
             "followup": {
               "$ref": "#/$defs/followup"
             },
+            "footer": {
+              "description": "A line under the message, set apart from the text where the channel can.",
+              "maxLength": 200,
+              "type": "string"
+            },
+            "header": {
+              "description": "A line above the message, set apart from the text where the channel can.",
+              "maxLength": 200,
+              "type": "string"
+            },
             "list_label": {
               "description": "Shows the quick replies as a list and names the button that opens it, where the channel has one.",
               "maxLength": 80,

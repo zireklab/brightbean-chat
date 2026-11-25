@@ -209,6 +209,32 @@ class TestHostileUrls:
         assert card.url == ""
         assert card.buttons[0].url == ""
 
+    def test_the_header_and_footer_frame_the_blocks(self, conversation: Conversation) -> None:
+        message = Message(
+            conversation=conversation,
+            direction=MessageDirection.OUT,
+            status=MessageStatus.SENT,
+            body={
+                "header": "Delivery",
+                "blocks": [{"type": "text", "text": "How?"}],
+                "footer": "Free over 2000",
+            },
+        )
+
+        parts = render_message(message).parts
+
+        assert [part.text for part in parts if isinstance(part, Text)] == ["Delivery", "How?", "Free over 2000"]
+
+    @pytest.mark.parametrize("payload", INJECTIONS)
+    def test_a_header_and_footer_are_inert(
+        self, payload: str, agent_client: Any, url_for: Any, conversation: Conversation, inbound: Any
+    ) -> None:
+        message = inbound("Pick one")
+        message.body = {**message.body, "header": payload, "footer": payload}
+        message.save(update_fields=["body"])
+
+        assert_escaped(payload, _thread(agent_client, url_for, conversation))
+
     def test_a_quick_reply_description_is_kept_for_the_reader(self, conversation: Conversation) -> None:
         message = Message(
             conversation=conversation,

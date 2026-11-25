@@ -87,6 +87,10 @@ class SendMessageNode(Node):
             template_ref=template.reference,
             template_variables=template.variables,
             list_label=ctx.render(ctx.config.get("list_label")),
+            # A template send puts only the approved copy on the wire, so a header
+            # or footer stored with it would show in the thread and never be sent.
+            header="" if template.reference else ctx.render(ctx.config.get("header")),
+            footer="" if template.reference else ctx.render(ctx.config.get("footer")),
         )
         try:
             outcome = deliver(ctx.execution, outbound, node_id=ctx.node_id)

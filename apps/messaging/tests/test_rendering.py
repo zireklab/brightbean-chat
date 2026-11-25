@@ -52,6 +52,8 @@ SHAPES = {
             QuickReply(id="q2", label="Pickup"),
         ),
         list_label="Delivery",
+        header="Pick a delivery",
+        footer="Free over 2000",
     ),
     "templated": OutboundMessage(template_ref="tpl-1"),
     "everything": OutboundMessage(
