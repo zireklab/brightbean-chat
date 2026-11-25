@@ -398,6 +398,14 @@ class TestQuickReplyDescriptions:
         assert texts(result.messages[0]) == ["Pick one" if native else f"Pick one\n\n{label} — tomorrow"]
         assert downgrade(result.messages[0], caps).messages == result.messages
 
+    @pytest.mark.parametrize("platform", Platform.values)
+    def test_a_blank_description_is_none_at_all(self, platform: str) -> None:
+        """A placeholder can render to spaces, and a platform refuses a blank line."""
+        caps = capabilities_for(platform)
+        replies = tuple(QuickReply(id=f"q{n}", label=f"Option {n}") for n in range(14))
+        blank = tuple(replace(reply, description=" ") for reply in replies)
+        assert downgrade(self.asking(*blank), caps) == downgrade(self.asking(*replies), caps)
+
     def test_a_numbered_option_carries_its_description_on_its_own_line(self) -> None:
         result = downgrade(self.asking(QuickReply(id="c", label="Courier", description="tomorrow")), TEXT_ONLY)
         assert texts(result.messages[0]) == ["Pick one\n\nReply 1 for Courier — tomorrow"]
