@@ -93,7 +93,7 @@ export function addOneLabel(propertyName: string): string | undefined {
  * whatever language was active when this module loaded.
  */
 export const ADD_GROUPS: readonly { key: string; keys: readonly string[] }[] = [
-  { key: "tappable", keys: ["buttons", "quick_replies"] },
+  { key: "tappable", keys: ["buttons", "quick_replies", "list_label"] },
   { key: "ifTheyGoQuiet", keys: ["followup", "retry_unmatched", "retry", "timeout"] },
   { key: "whatsappOnly", keys: ["whatsapp_template", "template"] },
   { key: "more", keys: [] },

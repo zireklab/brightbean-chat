@@ -152,6 +152,23 @@ class TestSendMessage:
         assert [reply.label for reply in outbound.quick_replies] == ["Later"]
         assert execution.status == ExecutionStatus.WAITING_REPLY
 
+    def test_the_list_caption_and_descriptions_go_through_the_shared_renderer(self, tenancy, facade):
+        """Both are author text, so both are substituted by ``ctx.render`` and
+        nowhere else (SECURITY-BASELINE §3) — the adapter receives finished strings."""
+        connection = connection_for(tenancy.workspace)
+        config = {
+            "blocks": [{"type": "text", "text": "How should we deliver?"}],
+            "quick_replies": [{"id": "c", "label": "Courier", "description": "To your door, {{first_name}}"}],
+            "list_label": "Options for {{first_name}}",
+        }
+        document = graph([node("m", "send_message", config)])
+
+        _run(tenancy.workspace, document, connection=connection)
+
+        outbound = _sent(facade)
+        assert outbound.list_label == "Options for Ada"
+        assert [reply.description for reply in outbound.quick_replies] == ["To your door, Ada"]
+
     def test_url_only_buttons_do_not_park_the_execution(self, tenancy, facade):
         """A URL button opens a link and never replies, so waiting on one is a trap.
 

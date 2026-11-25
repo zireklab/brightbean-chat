@@ -70,6 +70,39 @@ class TestRegistry:
                 assert schema.get("additionalProperties") is False, name
 
 
+class TestTheListFields:
+    """A quick reply's description and the list caption: optional author text, bounded like the rest."""
+
+    @staticmethod
+    def errors(config):
+        from apps.flows.tests.support import graph, node
+
+        return [issue.code for issue in validate_graph(graph([node("m", "send_message", config)])).errors]
+
+    BASE = {
+        "blocks": [{"type": "text", "text": "Pick"}],
+        "quick_replies": [{"id": "q", "label": "Courier", "description": "To your door"}],
+        "list_label": "Delivery",
+    }
+
+    def test_they_are_accepted(self):
+        assert self.errors(self.BASE) == []
+
+    def test_they_are_optional_and_may_be_empty(self):
+        config = {**self.BASE, "quick_replies": [{"id": "q", "label": "Courier", "description": ""}], "list_label": ""}
+        assert self.errors(config) == []
+
+    def test_a_description_has_a_ceiling(self):
+        config = {**self.BASE, "quick_replies": [{"id": "q", "label": "L", "description": "x" * 201}]}
+        assert self.errors(config) == ["invalid_config_value"]
+
+    def test_the_list_caption_has_a_ceiling(self):
+        assert self.errors({**self.BASE, "list_label": "x" * 81}) == ["invalid_config_value"]
+
+    def test_an_unknown_key_beside_them_is_still_refused(self):
+        assert self.errors({**self.BASE, "inline_keyboard": []}) == ["unknown_config_key"]
+
+
 class TestHandles:
     @pytest.mark.parametrize(
         "raw",

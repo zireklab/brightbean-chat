@@ -169,6 +169,28 @@ describe("what a newly added item contains", () => {
     expect(JSON.stringify(buttons)).not.toContain("…");
   });
 
+  it("starts a quick reply's description empty, so nothing is sent that the author did not write", () => {
+    // A seeded word here would reach the contact under their reply.
+    withoutOverrides();
+    const { store, id } = openMinimal("send_message");
+
+    fireEvent.click(screen.getByRole("button", { name: "+ Quick replies" }));
+    fireEvent.click(screen.getByRole("button", { name: "Add to Quick replies" }));
+    fireEvent.click(screen.getByRole("button", { name: "+ Description" }));
+
+    const replies = (store.getState().config[id] as { quick_replies: Record<string, unknown>[] }).quick_replies;
+    expect(replies[0]?.["description"]).toBe("");
+  });
+
+  it("offers the list caption beside the other things they can tap", () => {
+    withoutOverrides();
+    openMinimal("send_message");
+
+    const heading = screen.getByText("Things they can tap");
+    const group = heading.parentElement as HTMLElement;
+    expect(within(group).getByRole("button", { name: "+ List button" })).toBeInTheDocument();
+  });
+
   it("gives each item a distinct id, so two buttons cannot share a handle", () => {
     withoutOverrides();
     const { store, id } = openMinimal("send_message");

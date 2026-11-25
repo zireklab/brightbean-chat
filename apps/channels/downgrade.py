@@ -28,7 +28,7 @@ before cards downgrade, cards before media, media before buttons, buttons before
 the length cap — because every step can create work for the next.
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 
 from apps.channels.capabilities import Capabilities
 from apps.channels.events import (
@@ -46,6 +46,10 @@ __all__ = ["DowngradeResult", "downgrade", "split_text"]
 
 #: How a numbered option reads. SPEC §6.1 fixes the wording.
 NUMBERED_OPTION = "Reply {number} for {label}"
+
+#: How a quick reply's description reads once folded into the text. A numbered
+#: option that has one ends in the same dash.
+DESCRIBED_OPTION = "{label} — {description}"
 
 #: How a URL button reads once inlined into the text.
 INLINE_URL = "{label}: {url}"
@@ -107,12 +111,7 @@ def downgrade(outbound: OutboundMessage, capabilities: Capabilities) -> Downgrad
 
     # 3. Text: numbering appended, then the length cap — in that order, because
     #    the numbering is text too.
-    return state.finish(
-        tag=outbound.tag,
-        template_ref=outbound.template_ref,
-        template_variables=outbound.template_variables,
-        node_id=outbound.node_id,
-    )
+    return state.finish(outbound)
 
 
 class _State:
@@ -232,6 +231,14 @@ class _State:
         numbered them. Numbering them here is visible, reaches the contact, and
         keeps the reply mapping in ``numeric_replies`` where the waiting node
         can match it.
+
+        **A description goes where the platform can show it, or into the text.**
+        ``max_quick_reply_description_len`` is the room under the label (0 when
+        there is none); a longer description is folded into the message as
+        ``Label — description`` and cleared from the reply, so no platform ever
+        clips an author's words. A numbered option carries its description on the
+        same line, which keeps the wording SPEC §6.1 fixes and keeps the numbering
+        a function of the replies alone — the send node recomputes it from here.
         """
         if not quick_replies:
             return
@@ -244,7 +251,18 @@ class _State:
         # once for the message), and the asymmetry would overfill the moment
         # anything else contributed quick replies.
         room = max(0, self.caps.max_quick_replies - len(target.quick_replies)) if supports else 0
-        target.quick_replies.extend(quick_replies[:room])
+        folded = 0
+        for item in quick_replies[:room]:
+            kept = item
+            if len(item.description) > self.caps.max_quick_reply_description_len:
+                target.trailer.append(
+                    DESCRIBED_OPTION.format(label=item.label or item.id, description=item.description)
+                )
+                kept = replace(item, description="")
+                folded += 1
+            target.quick_replies.append(kept)
+        if folded:
+            self.notes.append(f"quick replies: {folded} description(s) appended to the text")
         overflow = quick_replies[room:]
 
         if not overflow:
@@ -257,7 +275,8 @@ class _State:
             reason = f"over the {room}-reply limit"
         self.notes.append(f"quick replies: {len(overflow)} {reason}, appended to the text")
         for quick_reply in overflow:
-            target.trailer.append(self.number(quick_reply.id, quick_reply.label))
+            line = self.number(quick_reply.id, quick_reply.label)
+            target.trailer.append(f"{line} — {quick_reply.description}" if quick_reply.description else line)
 
     def number(self, target_id: str, label: str) -> str:
         """Allocate the next reply number to ``target_id`` and return its line."""
@@ -267,37 +286,32 @@ class _State:
 
     # -- assembly -----------------------------------------------------------
 
-    def finish(
-        self,
-        *,
-        tag: str | None,
-        template_ref: str | None,
-        template_variables: tuple[tuple[str, str], ...] = (),
-        node_id: str = "",
-    ) -> DowngradeResult:
+    def finish(self, outbound: OutboundMessage) -> DowngradeResult:
         """Append trailers, apply the length cap, and freeze into messages.
 
-        Every field of the input that is not itself a downgrade decision has to
-        be copied onto each output message, because this rebuilds the dataclass
-        rather than mutating it — a field added to ``OutboundMessage`` and not
-        listed here is silently dropped on the send path, and only for platforms
-        that downgrade something. ``node_id`` is one such field: without it a
-        gallery's buttons would lose the node they came from and Telegram's
-        ``callback_data`` would fall back to the bare button id.
+        Each output is ``replace(outbound, ...)``, so **every field this renderer
+        does not decide for itself rides along**. This used to rebuild the
+        dataclass from a list of the fields to carry, and a field added to
+        ``OutboundMessage`` and not added to that list was silently dropped on the
+        send path — and only for platforms that downgrade something. ``node_id``
+        was one: without it a gallery's buttons lost the node they came from and
+        Telegram's ``callback_data`` fell back to the bare button id.
+
+        What is decided here is the content (blocks, buttons, quick replies) and
+        ``list_label``, which only means something while a quick reply survives
+        to be opened from.
         """
         messages: list[OutboundMessage] = []
         for pending in self.pending:
             self.append_trailer(pending)
             blocks = self.apply_text_cap(pending.blocks)
             messages.append(
-                OutboundMessage(
+                replace(
+                    outbound,
                     blocks=tuple(blocks),
                     buttons=tuple(pending.buttons),
                     quick_replies=tuple(pending.quick_replies),
-                    tag=tag,
-                    template_ref=template_ref,
-                    template_variables=template_variables,
-                    node_id=node_id,
+                    list_label=outbound.list_label if pending.quick_replies else "",
                 )
             )
 

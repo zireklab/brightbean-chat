@@ -7,6 +7,8 @@ differ again when the buttons overflow. Written as prose tests, the combinations
 that matter are the ones nobody writes.
 """
 
+from dataclasses import replace
+
 import pytest
 
 from apps.channels.capabilities import Capabilities, capabilities_for
@@ -340,3 +342,133 @@ class TestPurity:
         first = downgrade(message, TEXT_ONLY)
         second = downgrade(message, TEXT_ONLY)
         assert first == second
+
+
+class TestQuickReplyDescriptions:
+    """A description is a second line under a quick reply's label.
+
+    A platform with a place for it keeps what fits there. Anything else is folded
+    into the message, so what an author wrote is never cut off by a platform's
+    clipping and nothing here depends on which platform it is.
+    """
+
+    NATIVE = Capabilities(
+        quick_replies=True, max_quick_replies=10, max_quick_reply_description_len=72, max_text_len=4096
+    )
+    PLAIN = Capabilities(quick_replies=True, max_quick_replies=10, max_text_len=4096)
+
+    @staticmethod
+    def asking(*replies: QuickReply, **fields: object) -> OutboundMessage:
+        return OutboundMessage(blocks=(TextBlock(text="Pick one"),), quick_replies=replies, **fields)  # type: ignore[arg-type]
+
+    def test_a_description_that_fits_stays_on_the_reply(self) -> None:
+        reply = QuickReply(id="c", label="Courier", description="tomorrow by 6pm")
+        result = downgrade(self.asking(reply), self.NATIVE)
+        assert result.messages[0].quick_replies == (reply,)
+        assert texts(result.messages[0]) == ["Pick one"]
+        assert result.notes == ()
+
+    def test_a_platform_with_no_place_for_it_folds_it_into_the_text(self) -> None:
+        result = downgrade(
+            self.asking(
+                QuickReply(id="c", label="Courier", description="tomorrow"), QuickReply(id="p", label="Pickup")
+            ),
+            self.PLAIN,
+        )
+        message = result.messages[0]
+        # Both chips stay — they are still what the contact taps — but the second
+        # line moved, and only the reply that had one is spelled out.
+        assert [(reply.id, reply.description) for reply in message.quick_replies] == [("c", ""), ("p", "")]
+        assert texts(message) == ["Pick one\n\nCourier — tomorrow"]
+        assert result.numeric_replies == {}
+        assert any("description" in note for note in result.notes)
+
+    def test_a_description_over_the_limit_is_folded_rather_than_cut(self) -> None:
+        long = "x" * 73
+        result = downgrade(self.asking(QuickReply(id="c", label="Courier", description=long)), self.NATIVE)
+        assert result.messages[0].quick_replies[0].description == ""
+        assert texts(result.messages[0]) == [f"Pick one\n\nCourier — {long}"]
+
+    def test_a_numbered_option_carries_its_description_on_its_own_line(self) -> None:
+        result = downgrade(self.asking(QuickReply(id="c", label="Courier", description="tomorrow")), TEXT_ONLY)
+        assert texts(result.messages[0]) == ["Pick one\n\nReply 1 for Courier — tomorrow"]
+        assert result.numeric_replies == {"1": "c"}
+        assert result.messages[0].quick_replies == ()
+
+    def test_an_empty_label_is_spelled_with_its_id(self) -> None:
+        result = downgrade(self.asking(QuickReply(id="c", label="", description="tomorrow")), self.PLAIN)
+        assert texts(result.messages[0]) == ["Pick one\n\nc — tomorrow"]
+
+    @pytest.mark.parametrize("platform", Platform.values)
+    def test_descriptions_never_change_the_numbering(self, platform: str) -> None:
+        """``send_message._numbered_options`` recomputes the numbering from this
+        function so the number a contact types resolves. If a description could
+        move it, that answer key and the message would disagree."""
+        caps = capabilities_for(platform)
+        plain = tuple(QuickReply(id=f"q{n}", label=f"Option {n}") for n in range(14))
+        described = tuple(replace(reply, description=f"About {reply.label} " * 8) for reply in plain)
+        buttons = (Button(id="b", label="Pick"),)
+
+        bare = downgrade(OutboundMessage(blocks=(TextBlock(text="?"),), buttons=buttons, quick_replies=plain), caps)
+        full = downgrade(OutboundMessage(blocks=(TextBlock(text="?"),), buttons=buttons, quick_replies=described), caps)
+
+        assert bare.numeric_replies == full.numeric_replies
+
+    def test_the_list_label_survives_only_with_a_reply_to_open(self) -> None:
+        reply = QuickReply(id="c", label="Courier")
+        message = self.asking(reply, list_label="Delivery")
+        assert downgrade(message, self.NATIVE).messages[0].list_label == "Delivery"
+        # Every reply became a numbered line, so there is nothing for it to open.
+        assert downgrade(message, TEXT_ONLY).messages[0].list_label == ""
+
+    def test_only_the_message_that_carries_the_replies_keeps_the_list_label(self) -> None:
+        caps = Capabilities(image=True, quick_replies=True, max_quick_replies=5, max_text_len=4096)
+        message = OutboundMessage(
+            blocks=(GalleryBlock(cards=(CARD, Card(title="Plan B"))),),
+            quick_replies=(QuickReply(id="c", label="Courier"),),
+            list_label="Delivery",
+        )
+        result = downgrade(message, caps)
+        assert [m.list_label for m in result.messages] == ["", "Delivery"]
+
+    @pytest.mark.parametrize("platform", Platform.values)
+    def test_every_platform_is_idempotent_with_descriptions_and_a_list_label(self, platform: str) -> None:
+        caps = capabilities_for(platform)
+        message = OutboundMessage(
+            blocks=(TextBlock(text="Pick"), GalleryBlock(cards=(CARD, Card(title="Plan B")))),
+            quick_replies=tuple(
+                QuickReply(id=f"q{n}", label=f"Option {n}", description="about it " * (n + 1)) for n in range(14)
+            ),
+            list_label="Choose",
+        )
+        for rendered in downgrade(message, caps).messages:
+            again = downgrade(rendered, caps)
+            assert again.messages == (rendered,), platform
+            assert again.numeric_replies == {}, platform
+
+
+class TestFieldsTheRendererDoesNotDecideRideAlong:
+    """``finish`` rebuilds each message with ``replace``, so a new field cannot be forgotten."""
+
+    @pytest.mark.parametrize("platform", Platform.values)
+    def test_every_such_field_reaches_every_message(self, platform: str) -> None:
+        message = OutboundMessage(
+            blocks=(TextBlock(text="x"), GalleryBlock(cards=(CARD, Card(title="Plan B")))),
+            tag="ACCOUNT_UPDATE",
+            template_ref="tpl",
+            template_variables=(("body.1", "a"),),
+            node_id="n1",
+            subject="Subject",
+            from_override="sender@example.test",
+            html_body="<p>x</p>",
+        )
+        for rendered in downgrade(message, capabilities_for(platform)).messages:
+            assert rendered.tag == "ACCOUNT_UPDATE"
+            assert rendered.template_ref == "tpl"
+            assert rendered.template_variables == (("body.1", "a"),)
+            assert rendered.node_id == "n1"
+            assert (rendered.subject, rendered.from_override, rendered.html_body) == (
+                "Subject",
+                "sender@example.test",
+                "<p>x</p>",
+            )

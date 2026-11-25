@@ -34,6 +34,7 @@ from apps.channels.events import (
 from apps.channels.providers.exceptions import APIError, RateLimitError
 from apps.channels.providers.whatsapp import (
     INTERACTIVE_BODY_FALLBACK,
+    LIST_BUTTON_LABEL,
     MAX_INTERACTIVE_BODY_CHARS,
     WhatsAppAdapter,
     wire_calls,
@@ -193,6 +194,57 @@ class TestInteractiveShapes:
         row = payload["interactive"]["action"]["sections"][0]["rows"][0]
         assert len(row["title"]) <= 24
         assert row["description"].startswith("A very long")
+
+    @staticmethod
+    def a_list(**fields: Any) -> OutboundMessage:
+        return OutboundMessage(
+            blocks=(TextBlock(text="Size?"),),
+            quick_replies=(QuickReply(id="s", label="Small", description=fields.pop("description", "")),),
+            **fields,
+        )
+
+    def test_the_list_takes_its_caption_from_the_message(self) -> None:
+        (payload,) = wire_calls(TO, self.a_list(list_label="Pick a size"))
+        action = payload["interactive"]["action"]
+        assert action["button"] == "Pick a size"
+        assert action["sections"][0]["title"] == "Pick a size"
+
+    def test_without_a_caption_the_default_stands(self) -> None:
+        (payload,) = wire_calls(TO, self.a_list())
+        assert payload["interactive"]["action"]["button"] == LIST_BUTTON_LABEL
+
+    def test_a_long_or_multiline_caption_is_put_on_one_line_and_clipped(self) -> None:
+        """Meta takes no line break in a caption and rejects the message over 20
+        characters (24 for the section title)."""
+        (payload,) = wire_calls(TO, self.a_list(list_label="Choose\nthe size you would\nlike today"))
+        action = payload["interactive"]["action"]
+        assert action["button"] == "Choose the size you"
+        assert action["sections"][0]["title"] == "Choose the size you woul"
+        assert "\n" not in json.dumps(action)
+
+    def test_a_row_carries_its_description(self) -> None:
+        (payload,) = wire_calls(TO, self.a_list(description="Fits up to 170 cm"))
+        row = payload["interactive"]["action"]["sections"][0]["rows"][0]
+        assert row == {"id": "s", "title": "Small", "description": "Fits up to 170 cm"}
+
+    def test_a_long_label_and_a_description_share_the_one_slot(self) -> None:
+        label = "A label far too long to fit a row title"
+        message = OutboundMessage(
+            blocks=(TextBlock(text="?"),),
+            quick_replies=(QuickReply(id="s", label=label, description="Fits up to 170 cm"),),
+        )
+        (payload,) = wire_calls(TO, message)
+        row = payload["interactive"]["action"]["sections"][0]["rows"][0]
+        assert row["title"] == label[:24]
+        assert row["description"] == f"{label} — Fits up to 170 cm"
+        assert len(row["description"]) <= 72
+
+    def test_a_description_over_the_limit_moves_into_the_body_instead(self) -> None:
+        message = self.a_list(description="d" * 80)
+        rendered = downgrade(message, capabilities_for(Platform.WHATSAPP))
+        (payload,) = [call for part in rendered.messages for call in wire_calls(TO, part)]
+        assert f"Small — {'d' * 80}" in payload["interactive"]["body"]["text"]
+        assert "description" not in payload["interactive"]["action"]["sections"][0]["rows"][0]
 
     def test_a_url_button_never_becomes_a_reply_button(self) -> None:
         """It would come back matching no handle. ``url_buttons`` is False for

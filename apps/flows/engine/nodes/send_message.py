@@ -86,6 +86,7 @@ class SendMessageNode(Node):
             quick_replies=tuple(quick_replies),
             template_ref=template.reference,
             template_variables=template.variables,
+            list_label=ctx.render(ctx.config.get("list_label")),
         )
         try:
             outcome = deliver(ctx.execution, outbound, node_id=ctx.node_id)
@@ -321,7 +322,11 @@ def _buttons(ctx: NodeContext) -> list[Button]:
 
 def _quick_replies(ctx: NodeContext) -> list[QuickReply]:
     return [
-        QuickReply(id=reply["id"], label=ctx.render(reply.get("label")))
+        QuickReply(
+            id=reply["id"],
+            label=ctx.render(reply.get("label")),
+            description=ctx.render(reply.get("description")),
+        )
         for reply in ctx.config.get("quick_replies") or []
         if isinstance(reply, dict) and isinstance(reply.get("id"), str)
     ]

@@ -93,7 +93,11 @@ class TestContractFieldsAreExactlyAsWritten:
     #: ``max_buttons`` and ``max_quick_replies`` independently on a platform
     #: that can show only one of them produced a message whose extra options the
     #: adapter could only drop, unnumbered and unreachable.
-    RENDERING_FIELDS = {"interaction_is_exclusive"}
+    #:
+    #: ``max_quick_reply_description_len`` is the same kind of field: whether a
+    #: platform has a place for a quick reply's second line, which decides if the
+    #: renderer keeps it on the reply or folds it into the text.
+    RENDERING_FIELDS = {"interaction_is_exclusive", "max_quick_reply_description_len"}
 
     #: Also beyond §6.1, added by issue #23. ``counts_segments`` says a message on
     #: this platform is billed by GSM 03.38 segment, which the two composers that
@@ -106,6 +110,13 @@ class TestContractFieldsAreExactlyAsWritten:
     def test_capabilities_carries_every_spec_6_1_flag(self) -> None:
         fields = {f.name for f in dataclasses.fields(Capabilities)}
         assert fields == (self.SPEC_6_1_FLAGS | self.MEDIA_CEILING_FIELDS | self.RENDERING_FIELDS | self.BILLING_FIELDS)
+
+    def test_a_description_room_is_published_only_for_a_platform_that_shows_quick_replies(self) -> None:
+        """Room for a second line under a reply that cannot exist is a number nobody reads."""
+        for platform in Platform.values:
+            capabilities = capabilities_for(platform)
+            if capabilities.max_quick_reply_description_len:
+                assert capabilities.quick_replies, f"{platform} has room for a description and no replies"
 
     def test_only_a_segment_billed_platform_declares_it(self) -> None:
         """SPEC §6.6 names one: SMS. A second would need its own §6 subsection."""

@@ -45,6 +45,14 @@ SHAPES = {
     ),
     "gallery": OutboundMessage(blocks=(GalleryBlock(cards=(Card(title="one"), Card(title="two"))),)),
     "tagged": OutboundMessage(blocks=(TextBlock(text="hi"),), tag="ACCOUNT_UPDATE"),
+    "list": OutboundMessage(
+        blocks=(TextBlock(text="pick"),),
+        quick_replies=(
+            QuickReply(id="q1", label="Courier", description="tomorrow by 6pm"),
+            QuickReply(id="q2", label="Pickup"),
+        ),
+        list_label="Delivery",
+    ),
     "templated": OutboundMessage(template_ref="tpl-1"),
     "everything": OutboundMessage(
         blocks=(TextBlock(text="hi"), MediaBlock(kind="video", url="https://x.test/v.mp4")),
@@ -76,6 +84,20 @@ class TestDefensiveness:
         body = {"blocks": [{"type": "hologram", "payload": "?"}, {"type": "text", "text": "kept"}]}
         result = outbound_from_body(body)
         assert len(result.blocks) == 1
+
+    def test_a_body_from_before_the_list_fields_reads_as_it_always_did(self) -> None:
+        """Rows written by an older release have neither key, and a retry of one
+        must rebuild the message it stored."""
+        result = outbound_from_body({"quick_replies": [{"id": "q", "label": "L"}]})
+        assert result.quick_replies == (QuickReply(id="q", label="L"),)
+        assert result.list_label == ""
+
+    @pytest.mark.parametrize("value", [None, 5, [], {}])
+    def test_a_description_or_list_label_of_the_wrong_type_is_empty(self, value: Any) -> None:
+        body = {"quick_replies": [{"id": "q", "label": "L", "description": value}], "list_label": value}
+        result = outbound_from_body(body)
+        assert result.quick_replies[0].description == ""
+        assert result.list_label == ""
 
     def test_a_button_with_no_id_is_dropped(self) -> None:
         """It could never be matched when it came back as a postback, so it

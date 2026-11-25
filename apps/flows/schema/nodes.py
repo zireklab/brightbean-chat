@@ -270,6 +270,10 @@ register_defs(
         {
             "id": f.string(min_length=1, max_length=64, description="The id in this reply's qr:<id> handle."),
             "label": f.string(min_length=1, max_length=80),
+            "description": f.string(
+                max_length=200,
+                description="A second line under the quick reply, where the channel can show one.",
+            ),
         },
         required=["id", "label"],
     ),
@@ -462,6 +466,13 @@ register_node_type(
                 "blocks": f.array(f.ref("message_block"), min_items=1, max_items=20),
                 "buttons": f.array(f.ref("message_button"), max_items=20),
                 "quick_replies": f.array(f.ref("quick_reply"), max_items=20),
+                "list_label": f.string(
+                    max_length=80,
+                    description=(
+                        "Shows the quick replies as a list and names the button that opens it, "
+                        "where the channel has one."
+                    ),
+                ),
                 "followup": f.ref("followup"),
                 "retry_unmatched": f.ref("retry_unmatched"),
                 # Additive, from issue #19. Outside WhatsApp's 24-hour window a

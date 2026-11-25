@@ -79,6 +79,13 @@ class Capabilities:
     #: is what lets :mod:`apps.channels.downgrade` number them instead, which is
     #: the whole point of the renderer being shared.
     interaction_is_exclusive: bool = False
+
+    #: How long a quick reply's description may be on a platform that shows one
+    #: under the label. 0 means the platform has no place for it, which — like
+    #: ``max_buttons`` — is read as "fold it into the text" rather than "refuse
+    #: it". Anything longer than this is folded too, never clipped: the renderer
+    #: is where an author's words are kept whole.
+    max_quick_reply_description_len: int = 0
     proactive_send: bool = False
     broadcast_allowed: bool = False
 
@@ -277,6 +284,8 @@ CAPABILITIES: dict[str, Capabilities] = {
         # A message declaring both kinds gets the buttons natively and its
         # quick replies as numbered text.
         interaction_is_exclusive=True,
+        # A list row's own description slot, from Meta's interactive-list reference.
+        max_quick_reply_description_len=72,
         # url_buttons False, and not an oversight. A WhatsApp *session* message
         # has no URL-button set: `interactive.button` rows are reply buttons
         # only, and the one shape that carries a link — `cta_url` — takes
