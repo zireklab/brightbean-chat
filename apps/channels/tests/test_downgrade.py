@@ -541,6 +541,29 @@ class TestHeaderAndFooter:
         assert rendered.blocks[0].text == "Look"
         assert isinstance(rendered.blocks[1], MediaBlock)
 
+    def test_a_footer_after_media_is_still_the_last_thing_read(self) -> None:
+        """The options belong with the words they answer; the footer ends the message."""
+        message = OutboundMessage(
+            blocks=(TextBlock(text="Look"), MediaBlock(kind="image", url="https://x.test/i.png")),
+            buttons=(Button(id="p", label="Pricing"),),
+            footer="Bottom",
+        )
+        (rendered,) = downgrade(message, Capabilities(image=True, max_text_len=4096)).messages
+        assert [block.kind for block in rendered.blocks] == ["text", "image", "text"]
+        assert texts(rendered) == ["Look\n\nReply 1 for Pricing", "Bottom"]
+
+    @pytest.mark.parametrize("platform", Platform.values)
+    def test_a_blank_header_or_footer_is_nothing_at_all(self, platform: str) -> None:
+        """A placeholder can render to spaces, and a platform refuses a blank line."""
+        blank = OutboundMessage(
+            blocks=(MediaBlock(kind="image", url="https://x.test/i.png"),),
+            buttons=(Button(id="b", label="Docs"),),
+            header=" ",
+            footer="\n",
+        )
+        caps = capabilities_for(platform)
+        assert downgrade(blank, caps).messages == downgrade(replace(blank, header="", footer=""), caps).messages
+
     def test_folded_text_is_still_held_to_the_length_cap(self) -> None:
         caps = Capabilities(max_text_len=30)
         message = OutboundMessage(blocks=(TextBlock(text="short"),), header="h" * 25, footer="f" * 25)
