@@ -496,3 +496,229 @@ class TestSend:
         with fake_bot_api() as fake, pytest.raises(APIError):
             TelegramAdapter().send(telegram_connection, Identity(), OutboundMessage(blocks=(TextBlock(text="hi"),)))
         assert fake.calls == []
+
+
+@pytest.mark.django_db
+class TestRichLists:
+    """A list as a rich message, behind ``TELEGRAM_RICH_LISTS`` and off by default.
+
+    Everything here is held against the Bot API reference rather than against a
+    live bot: ``sendRichMessage`` takes ``rich_message.blocks``, a ``details``
+    block holds blocks, and a ``buttons`` block holds one to eight buttons whose
+    ``callback_data`` is one to sixty-four bytes. What a client does with it is
+    not something a test here can know, which is why the switch is off.
+    """
+
+    @staticmethod
+    def listing(**fields: Any) -> OutboundMessage:
+        return OutboundMessage(
+            blocks=(TextBlock(text="How should we deliver?"),),
+            quick_replies=(
+                QuickReply(id="c", label="Courier", description="Tomorrow by 6pm"),
+                QuickReply(id="p", label="Pickup"),
+            ),
+            list_label="Delivery",
+            node_id="ask",
+            **fields,
+        )
+
+    @staticmethod
+    def rich(message: OutboundMessage) -> list[tuple[str, dict[str, Any]]]:
+        from apps.channels.providers.telegram import _RICH_CAPABILITIES
+
+        calls: list[tuple[str, dict[str, Any]]] = []
+        for part in downgrade(message, _RICH_CAPABILITIES).messages:
+            calls.extend(wire_calls(CHAT, part, rich=True))
+        return calls
+
+    @pytest.fixture
+    def telegram_connection(self, connection: ChannelConnection) -> ChannelConnection:
+        store_bot_token(connection, BOT_TOKEN)
+        connection.save(update_fields=["credentials", "updated_at"])
+        return connection
+
+    def test_a_list_becomes_one_rich_message(self) -> None:
+        message = self.listing(header="Delivery options", footer="Free over 2000")
+        assert self.rich(message) == [
+            (
+                "sendRichMessage",
+                {
+                    "chat_id": CHAT,
+                    "rich_message": {
+                        "blocks": [
+                            {"type": "heading", "text": "Delivery options", "size": 3},
+                            {"type": "paragraph", "text": "How should we deliver?"},
+                            {
+                                "type": "details",
+                                "summary": "Delivery",
+                                "blocks": [
+                                    {
+                                        "type": "paragraph",
+                                        "text": [{"type": "bold", "text": "Courier"}, " — Tomorrow by 6pm"],
+                                    },
+                                    {"type": "buttons", "buttons": [{"text": "Courier", "callback_data": "ask:c"}]},
+                                    {"type": "buttons", "buttons": [{"text": "Pickup", "callback_data": "ask:p"}]},
+                                ],
+                            },
+                            {"type": "footer", "text": "Free over 2000"},
+                        ]
+                    },
+                },
+            )
+        ]
+
+    def test_an_option_answers_by_the_same_callback_data_an_inline_button_does(self) -> None:
+        """So nothing downstream can tell the two apart."""
+        (_method, rich_payload) = self.rich(self.listing())[0]
+        options = rich_payload["rich_message"]["blocks"][-1]["blocks"]
+        rich_data = [b["buttons"][0]["callback_data"] for b in options if b["type"] == "buttons"]
+        (_method, plain_payload) = rendered(self.listing())[0]
+        plain_data = [row[0]["callback_data"] for row in plain_payload["reply_markup"]["inline_keyboard"]]
+        assert rich_data == plain_data == ["ask:c", "ask:p"]
+
+    def test_buttons_stay_in_an_inline_keyboard_beside_the_list(self) -> None:
+        message = self.listing(buttons=(Button(id="docs", label="Docs", url="https://x.test/docs"),))
+        (_method, payload) = self.rich(message)[0]
+        assert payload["reply_markup"] == {"inline_keyboard": [[{"text": "Docs", "url": "https://x.test/docs"}]]}
+
+    def test_media_goes_first_and_the_list_follows(self) -> None:
+        message = OutboundMessage(
+            blocks=(MediaBlock(kind="image", url="https://x.test/a.png"),),
+            quick_replies=(QuickReply(id="q", label="Later"),),
+            list_label="More",
+            node_id="n",
+        )
+        assert [method for method, _payload in self.rich(message)] == ["sendPhoto", "sendRichMessage"]
+
+    def test_an_option_that_cannot_be_represented_is_left_out(self) -> None:
+        message = OutboundMessage(
+            blocks=(TextBlock(text="x"),),
+            quick_replies=(QuickReply(id="é" * 60, label="Too long"), QuickReply(id="ok", label="Fine")),
+            list_label="More",
+            node_id="n",
+        )
+        (_method, payload) = self.rich(message)[0]
+        options = payload["rich_message"]["blocks"][-1]["blocks"]
+        assert [block["buttons"][0]["text"] for block in options] == ["Fine"]
+
+    def test_with_nothing_to_list_the_plain_form_is_sent_and_said(self, caplog: Any) -> None:
+        """Not reachable from a flow — the schema bounds ids to what always fits —
+        but a hand-built message can get here, and the plain form has no place for
+        a header the renderer kept apart for the rich one. That is logged, not silent."""
+        message = OutboundMessage(
+            blocks=(TextBlock(text="x"),),
+            quick_replies=(QuickReply(id="é" * 60, label="Too long"),),
+            list_label="More",
+            header="Top",
+            node_id="n",
+        )
+        with caplog.at_level("WARNING"):
+            methods = [method for method, _payload in self.rich(message)]
+        assert methods == ["sendMessage"]
+        assert "plain form" in caplog.text
+
+    def test_without_a_list_label_nothing_changes_even_asking_for_rich(self) -> None:
+        message = OutboundMessage(
+            blocks=(TextBlock(text="How was it?"),),
+            quick_replies=(QuickReply(id="good", label="Good"),),
+            node_id="n",
+        )
+        assert wire_calls(CHAT, message, rich=True) == wire_calls(CHAT, message)
+
+    def test_the_two_capability_tables_number_alike(self) -> None:
+        """The send node recomputes the numbered options from the static table
+        while this adapter downgrades with its own copy, so the two have to agree
+        on every option. Descriptions, headers and footers cannot move them."""
+        from apps.channels.providers.telegram import _RICH_CAPABILITIES
+
+        replies = tuple(QuickReply(id=f"q{n}", label=f"Option {n}", description=f"About {n}") for n in range(14))
+        message = OutboundMessage(
+            blocks=(TextBlock(text="Pick"),),
+            buttons=(Button(id="b", label="Docs"),),
+            quick_replies=replies,
+            list_label="Pick",
+            header="Top",
+            footer="Bottom",
+        )
+        assert downgrade(message, _RICH_CAPABILITIES).numeric_replies == downgrade(message, CAPS).numeric_replies
+
+    def test_the_switch_is_off_unless_set(self, settings: Any) -> None:
+        assert settings.TELEGRAM_RICH_LISTS is False
+
+    def test_a_send_is_the_plain_list_while_the_switch_is_off(
+        self, telegram_connection: ChannelConnection, settings: Any
+    ) -> None:
+        settings.TELEGRAM_RICH_LISTS = False
+        with fake_bot_api() as fake:
+            TelegramAdapter().send(telegram_connection, Identity(), self.listing())
+        assert fake.methods() == ["sendMessage"]
+        assert "inline_keyboard" in fake.payloads("sendMessage")[0]["reply_markup"]
+
+    def test_a_send_is_a_rich_message_once_the_switch_is_on(
+        self, telegram_connection: ChannelConnection, settings: Any
+    ) -> None:
+        settings.TELEGRAM_RICH_LISTS = True
+        with fake_bot_api() as fake:
+            result = TelegramAdapter().send(telegram_connection, Identity(), self.listing())
+        assert result.status == SendStatus.SENT
+        assert fake.methods() == ["sendRichMessage"]
+
+    def test_a_message_that_is_not_a_list_is_unaffected_by_the_switch(
+        self, telegram_connection: ChannelConnection, settings: Any
+    ) -> None:
+        settings.TELEGRAM_RICH_LISTS = True
+        with fake_bot_api() as fake:
+            TelegramAdapter().send(
+                telegram_connection,
+                Identity(),
+                OutboundMessage(
+                    blocks=(TextBlock(text="Pick"),), buttons=(Button(id="a", label="A"),), header="H", footer="F"
+                ),
+            )
+        assert fake.methods() == ["sendMessage"]
+        # No rich capability row either: the header and footer are text, as ever.
+        assert fake.payloads("sendMessage")[0]["text"] == "H\n\nPick\n\nF"
+
+    @pytest.mark.parametrize("status", [400, 404])
+    def test_a_refusal_is_reported_and_never_papered_over_with_the_plain_form(
+        self, telegram_connection: ChannelConnection, settings: Any, status: int
+    ) -> None:
+        """A client or an API that cannot take the rich form must say so out loud:
+        the send fails, the flow follows ``default`` (SPEC §9.5), and nothing is
+        sent a second way behind anyone's back."""
+        settings.TELEGRAM_RICH_LISTS = True
+        with (
+            fake_bot_api(lambda fake: fake.reply("sendRichMessage", Reply(status=status))) as fake,
+            pytest.raises(APIError) as caught,
+        ):
+            TelegramAdapter().send(telegram_connection, Identity(), self.listing())
+        assert caught.value.status_code == status
+        assert fake.methods() == ["sendRichMessage"]
+
+    def test_a_429_is_rescheduled_not_failed(self, telegram_connection: ChannelConnection, settings: Any) -> None:
+        settings.TELEGRAM_RICH_LISTS = True
+        body = {"ok": False, "error_code": 429, "parameters": {"retry_after": 9}}
+        with (
+            fake_bot_api(lambda fake: fake.reply("sendRichMessage", Reply(status=429, body=body))),
+            pytest.raises(RateLimitError) as caught,
+        ):
+            TelegramAdapter().send(telegram_connection, Identity(), self.listing())
+        assert caught.value.retry_after == 9
+
+    def test_a_403_still_records_the_opt_out(
+        self, telegram_connection: ChannelConnection, settings: Any, monkeypatch: Any
+    ) -> None:
+        from apps.channels import ingest as channels_ingest
+        from apps.channels.events import EventType
+
+        settings.TELEGRAM_RICH_LISTS = True
+        seen: list[list[str]] = []
+        monkeypatch.setattr(
+            channels_ingest, "process_events", lambda connection, events: seen.append([e.type for e in events])
+        )
+        with (
+            fake_bot_api(lambda fake: fake.reply("sendRichMessage", Reply(status=403))),
+            pytest.raises(APIError),
+        ):
+            TelegramAdapter().send(telegram_connection, Identity(), self.listing())
+        assert seen == [[EventType.OPT_OUT]]

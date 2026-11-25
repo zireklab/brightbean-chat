@@ -177,6 +177,24 @@ lists use, so one flow reads the same on both.
 A press on a list answers with a `postback`, not a message, so keyword triggers,
 the default reply and inbox rules do not see it — the same as a button.
 
+### Rich lists (off by default)
+
+`TELEGRAM_RICH_LISTS=true` sends a list as a **rich message** (Bot API 10.1, with
+buttons from 10.3) instead: the header as a heading, the options in an expandable
+block under the list caption — each with its description and a button — and the
+footer as a footer. Buttons the message also has stay in an inline keyboard beneath.
+Each option answers with the same `callback_data` as the plain form.
+
+It is off because an app too old to render a rich message shows a placeholder in its
+place, and a bot cannot tell which of its contacts have such an app. If Telegram
+refuses the rich form the send **fails** — the flow follows `default` and the reason
+is on the message — rather than being quietly resent another way. Only messages that
+set a list caption are affected.
+
+Not yet checked against a live bot: how old clients render it, and whether the
+message comes back with a press on it (which is where the inbox gets a press's
+label). Try it on a test bot before turning it on.
+
 ## Rate limits
 
 Telegram publishes roughly **1 message per second per chat** and roughly **30
