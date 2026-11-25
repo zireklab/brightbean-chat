@@ -187,8 +187,8 @@ class Button:
 
     label: str
     url: str = ""
-    #: The second line of a quick reply that has one. Plain text like the rest;
-    #: the template escapes it.
+    #: A quick reply's description, shown after its label. Plain text like the
+    #: rest; the template escapes it.
     description: str = ""
 
 

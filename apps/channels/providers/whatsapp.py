@@ -651,10 +651,10 @@ def _list_row(item: QuickReply) -> dict[str, Any] | None:
         return None
     row: dict[str, Any] = {"id": item.id, "title": label[:MAX_ROW_TITLE_CHARS]}
     # The row has one description slot and two claimants. The author's own is
-    # what it is for; a label too long for the title takes it as well, in front,
-    # so the words clipped off the title are not lost. Past 72 characters in all
-    # it is the tail that goes, which is the author's description and not their
-    # label.
+    # what it is for; a label too long for the title takes it instead, so the
+    # words clipped off the title are not lost, and the renderer has then put the
+    # description in the text (``max_described_label_len``). Both together are for
+    # a message that skipped the renderer.
     detail = item.description
     if len(label) > MAX_ROW_TITLE_CHARS:
         detail = f"{label} — {detail}" if detail else label

@@ -471,3 +471,36 @@ describe("adding a section to a step", () => {
     expect(screen.queryByRole("button", { name: "+ Quick replies" })).toBeNull();
   });
 });
+
+describe("a widget registered for a property of a named shape", () => {
+  // `$quick_reply.description` names the shape, not the way to it: reached
+  // through an array item, a plain property or a union branch, it is the same
+  // field and gets the same control.
+  it.each([
+    ["an array item", "quick_replies-0-description", { quick_replies: [{ id: "a", label: "A", description: "x" }] }],
+    ["a property", "retry_unmatched-text", { retry_unmatched: { enabled: true, text: "x" } }],
+    ["a union branch", "blocks-0-text", {}],
+  ])("is used for %s", (_where, fieldKey, extra) => {
+    const store = makeStore(
+      makeDetail({
+        schema: 1,
+        nodes: [
+          {
+            id: "n1",
+            type: "send_message",
+            position: { x: 0, y: 0 },
+            config: { ...(sampleConfig("send_message") as Record<string, unknown>), ...extra },
+          },
+        ],
+        edges: [],
+      }),
+    );
+    store.getState().setSelection({ nodes: ["n1"], edges: [] });
+    const { container } = renderWith(store, <StepEditor />);
+
+    const input = container.querySelector(`#fb-${fieldKey}`) as HTMLInputElement;
+    expect(input).not.toBeNull();
+    fireEvent.change(input, { target: { value: "{{", selectionStart: 2 } });
+    expect(screen.getByRole("option", { name: "{{first_name}}" })).toBeTruthy();
+  });
+});

@@ -227,7 +227,7 @@ class Adapter:
 
 The engine renders one abstract `OutboundMessage`; the adapter downgrades unsupported blocks deterministically: gallery -> sequential image+text messages; buttons unsupported -> numbered options appended to text ("Reply 1 for ..."); card -> image + text + url in text.
 
-A quick reply may carry a `description` (a second line under its label), and a message a `list_label` (the caption of the control that opens the quick replies as a list). A platform that has a place for one shows it there; every other platform gets it **in the text** — `Label — description` lines — rather than clipped. `max_quick_reply_description_len` in the capability table says how much room a platform has (0 for none), and the renderer never cuts an author's words to fit it.
+A quick reply may carry a `description` (a second line under its label), and a message a `list_label` (the caption of the control that opens the quick replies as a list). A platform that has a place for one shows it there; every other platform gets it **in the text** — `Label — description` lines — rather than clipped. `max_quick_reply_description_len` in the capability table says how much room a platform has (0 for none) and `max_described_label_len` how long a label may be before it needs that room itself, and the renderer never cuts an author's words to fit it.
 
 ### 6.2 Telegram (build first)
 
