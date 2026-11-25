@@ -17,6 +17,10 @@ from .base import *  # noqa: E402, F401, F403
 DEBUG = False
 ALLOWED_HOSTS = ["*"]
 
+# Pinned like DEBUG above: a developer trying it in their .env must not change
+# what the suite sends.
+TELEGRAM_RICH_LISTS = False
+
 # ---------------------------------------------------------------------------
 # One test database per checkout
 # ---------------------------------------------------------------------------

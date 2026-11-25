@@ -8,6 +8,7 @@ that matter are the ones nobody writes.
 """
 
 from dataclasses import replace
+from typing import Any
 
 import pytest
 
@@ -571,6 +572,90 @@ class TestHeaderAndFooter:
         )
         caps = capabilities_for(platform)
         assert downgrade(blank, caps).messages == downgrade(replace(blank, header="", footer=""), caps).messages
+
+    def test_a_folded_header_is_above_the_options_too(self) -> None:
+        """The options belong with the words they answer, and a header folded first
+        was mistaken for those words on a message with no text of its own."""
+        picture = MediaBlock(kind="image", url="https://x.test/i.png", caption="Which size?")
+        message = OutboundMessage(
+            blocks=(picture,),
+            buttons=(Button(id="s", label="Small"),),
+            header="Delivery",
+            footer="Bottom",
+        )
+        (rendered,) = downgrade(message, Capabilities(image=True, max_text_len=4096)).messages
+        assert rendered.blocks == (TextBlock("Delivery"), picture, TextBlock("Reply 1 for Small\n\nBottom"))
+
+    @pytest.mark.parametrize(
+        "blocks",
+        [
+            (TextBlock("Intro"), MediaBlock(kind="image", url="https://x.test/i.png"), TextBlock("Outro")),
+            (MediaBlock(kind="image", url="https://x.test/i.png", caption="Look"),),
+            (TextBlock("word " * 1000),),
+        ],
+    )
+    def test_a_header_over_more_than_one_bubble_is_folded_above_the_first(self, blocks: tuple[Any, ...]) -> None:
+        """Set apart, it sits on the last bubble, which is not above the message."""
+        (message,) = downgrade(self.framed(blocks=blocks), replace(self.FRAMED, image=True)).messages
+        assert (message.header, message.footer) == ("", "Free over 2000")
+        first = message.blocks[0]
+        assert isinstance(first, TextBlock)
+        assert first.text.startswith("Delivery")
+
+    def test_over_several_messages_the_header_opens_the_first(self) -> None:
+        message = self.framed(blocks=(GalleryBlock(cards=(Card(title="A"), Card(title="B"))),))
+        first, last = downgrade(message, replace(self.FRAMED, image=True)).messages
+        assert (first.header, first.footer, texts(first)) == ("", "", ["Delivery\n\nA"])
+        assert (last.header, last.footer, texts(last)) == ("", "Free over 2000", ["B"])
+
+    def test_with_only_controls_nothing_will_show_the_lines_fold(self) -> None:
+        """A label can render to spaces, and every platform leaves such a control out."""
+        for controls in ({"buttons": (Button(id="b", label=" "),)}, {"quick_replies": (QuickReply("q", " "),)}):
+            (message,) = downgrade(self.framed(**{"buttons": (), **controls}), self.FRAMED).messages
+            assert (message.header, message.footer) == ("", "")
+            assert texts(message) == ["Delivery\n\nPick one\n\nFree over 2000"]
+
+    def test_a_description_under_a_label_nothing_will_show_goes_into_the_text(self) -> None:
+        caps = replace(self.FRAMED, max_quick_reply_description_len=72)
+        replies = (QuickReply("a", " ", "tomorrow"), QuickReply("c", "Courier", "today"))
+        (message,) = downgrade(OutboundMessage(blocks=(TextBlock("Pick"),), quick_replies=replies), caps).messages
+        assert texts(message) == ["Pick\n\ntomorrow"]
+        assert [reply.description for reply in message.quick_replies] == ["", "today"]
+
+    @pytest.mark.parametrize(
+        ("body", "header", "footer", "expected"),
+        [
+            # All of it fits beside the buttons: one text, as anywhere else.
+            ("Pick", "Top", "End", ["Top\n\nPick\n\nEnd"]),
+            # To the last character, and one past it, where the header goes ahead and
+            # the question keeps the buttons.
+            ("q" * 32, "h" * 30, "f" * 14, ["h" * 30 + "\n\n" + "q" * 32 + "\n\n" + "f" * 14]),
+            ("q" * 32, "h" * 30, "f" * 15, ["h" * 30, "q" * 32 + "\n\n" + "f" * 15]),
+            # The footer is: it follows, and the question is not cut to make room.
+            ("q" * 60, "", "f" * 30, ["q" * 60, "f" * 30]),
+            ("q" * 60, "Top", "f" * 30, ["Top\n\n" + "q" * 60, "f" * 30]),
+            # A text over the limit is split whatever is ahead of it, and at the same place.
+            ("q" * 100, "Top", "", ["Top\n\n" + "q" * 100]),
+        ],
+    )
+    def test_a_folded_line_never_pushes_the_text_over_what_fits_with_buttons(
+        self, body: str, header: str, footer: str, expected: list[str]
+    ) -> None:
+        caps = Capabilities(buttons=True, max_buttons=3, max_text_len=1000, max_buttons_text_len=80)
+        message = self.framed(blocks=(TextBlock(body),), header=header, footer=footer)
+        (rendered,) = downgrade(message, caps).messages
+        assert texts(rendered) == expected
+        # Media after the text has no words, so the buttons are beside the text still.
+        picture = MediaBlock(kind="image", url="https://x.test/i.png")
+        (beside,) = downgrade(replace(message, blocks=(TextBlock(body), picture)), replace(caps, image=True)).messages
+        assert all(len(text) <= 80 for text in texts(beside)) or len(body) > 80
+        # Without buttons there is nothing to fit beside.
+        (plain,) = downgrade(replace(message, buttons=()), caps).messages
+        assert len(texts(plain)) == 1
+
+    def test_a_text_of_spaces_leaves_no_blank_line(self) -> None:
+        message = OutboundMessage(blocks=(TextBlock(" "),), buttons=(Button(id="p", label="Pricing"),), footer="End")
+        assert texts(downgrade(message, TEXT_ONLY).messages[0]) == ["Reply 1 for Pricing\n\nEnd"]
 
     def test_folded_text_is_still_held_to_the_length_cap(self) -> None:
         caps = Capabilities(max_text_len=30)

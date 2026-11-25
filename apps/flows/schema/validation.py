@@ -474,6 +474,17 @@ def _send_message_warnings(
                 f"config.blocks[{index}].text",
             )
 
+    caption = config.get("list_label")
+    # The length of a placeholder says nothing about what it will render to.
+    if isinstance(caption, str) and "{{" not in caption and 0 < capabilities.max_list_label_len < len(caption):
+        yield _warn(
+            "capability_limit_exceeded",
+            gettext("%(platform)s shows the first %(limit)s characters of the list button and this one is %(length)s.")
+            % {"platform": platform, "limit": capabilities.max_list_label_len, "length": len(caption)},
+            node,
+            "config.list_label",
+        )
+
     if capabilities.interaction_is_exclusive and (config.get("buttons") or []) and (config.get("quick_replies") or []):
         # Otherwise the panel says "WhatsApp allows 10 quick replies" and stays
         # quiet, while every one of them actually arrives as numbered text

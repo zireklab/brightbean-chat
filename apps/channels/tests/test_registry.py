@@ -100,12 +100,15 @@ class TestContractFieldsAreExactlyAsWritten:
     #:
     #: ``max_header_footer_len`` likewise: whether a platform can set a line apart
     #: above or below the message, which decides if the renderer keeps it or folds
-    #: it into the text.
+    #: it into the text. ``max_buttons_text_len`` is the room a folded one has beside
+    #: buttons, and ``max_list_label_len`` how much of a list's caption is shown.
     RENDERING_FIELDS = {
         "interaction_is_exclusive",
         "max_quick_reply_description_len",
         "max_described_label_len",
         "max_header_footer_len",
+        "max_buttons_text_len",
+        "max_list_label_len",
     }
 
     #: Also beyond §6.1, added by issue #23. ``counts_segments`` says a message on
@@ -137,6 +140,12 @@ class TestContractFieldsAreExactlyAsWritten:
             capabilities = capabilities_for(platform)
             if capabilities.max_header_footer_len:
                 assert capabilities.buttons or capabilities.quick_replies, platform
+
+    def test_a_number_about_a_control_is_published_only_for_a_platform_that_has_it(self) -> None:
+        for platform in Platform.values:
+            capabilities = capabilities_for(platform)
+            assert capabilities.buttons or not capabilities.max_buttons_text_len, platform
+            assert capabilities.quick_replies or not capabilities.max_list_label_len, platform
 
     def test_only_a_segment_billed_platform_declares_it(self) -> None:
         """SPEC §6.6 names one: SMS. A second would need its own §6 subsection."""

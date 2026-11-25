@@ -130,7 +130,7 @@ Inside the 24-hour window, ordinary **session messages**:
 | image / video / audio / file | `type: image` / `video` / `audio` / `document` with a `link` |
 | up to 3 buttons | `interactive` `type: button` — reply buttons |
 | up to 10 quick replies | `interactive` `type: list` — a list with 10 rows; the message's list caption names the opening button |
-| a quick reply's description | the row's `description`, up to 72 characters; longer, or sharing the slot with an over-long label, see below |
+| a quick reply's description | the row's `description`, up to 72 characters; longer, or under a label over 24, it is in the text: see below |
 | a header and a footer | the interactive message's `header` (text) and `footer`, 60 characters each, on one line |
 | a 4th button, a URL button, a card, a gallery | numbered text options, produced by the shared downgrade renderer |
 
@@ -144,9 +144,11 @@ builder warns about it at edit time rather than leaving it to be discovered.
 characters, or a header or footer over 60, is put in the message text instead
 (`Label — description`; the header ahead of the text, the footer after it), where
 the shared renderer keeps it whole. A header or footer on a message with nothing
-to press is text too: they exist only on an interactive message. A row whose
-label is too long for its title shares the one description slot with the author's
-own description (`label — description`, 72 characters in all).
+to press is text too: they exist only on an interactive message. So is a header on
+a message of several bubbles — several blocks, a gallery, a body over 1024
+characters — because the interactive one comes last and the header is the line
+above all of them. A label over 24 characters is repeated in its row's description
+slot, and the author's own description is then in the text.
 
 Link previews are off. Turning them on would make Meta fetch whatever URL a flow
 author put in the text and render a card from it.

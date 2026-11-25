@@ -76,6 +76,7 @@ from apps.channels import security
 from apps.channels.capabilities import Capabilities, capabilities_for
 from apps.channels.downgrade import downgrade, split_text
 from apps.channels.events import (
+    DEFAULT_LIST_LABEL,
     Button,
     CardBlock,
     EventPayload,
@@ -172,7 +173,7 @@ MAX_REPLY_ID_CHARS = 256
 #: What the list's own opener button says. Meta requires one and gives it no
 #: default; this is the label a contact taps to see the rows. It is what the
 #: opener says when the author gave ``OutboundMessage.list_label`` nothing.
-LIST_BUTTON_LABEL = "Choose"
+LIST_BUTTON_LABEL = DEFAULT_LIST_LABEL
 
 #: What an interactive message says when the author gave it no text of its own.
 #: Meta requires a body on both interactive shapes, so the alternative to a word
@@ -672,13 +673,11 @@ def _list_row(item: QuickReply) -> dict[str, Any] | None:
         return None
     row: dict[str, Any] = {"id": item.id, "title": label[:MAX_ROW_TITLE_CHARS]}
     # The row has one description slot and two claimants. The author's own is
-    # what it is for; a label too long for the title takes it instead, so the
-    # words clipped off the title are not lost, and the renderer has then put the
-    # description in the text (``max_described_label_len``). Both together are for
-    # a message that skipped the renderer.
-    detail = item.description
-    if len(label) > MAX_ROW_TITLE_CHARS:
-        detail = f"{label} — {detail}" if detail else label
+    # what it is for, on one line as every other caption here; a label too long for
+    # the title takes it instead, so the words clipped off the title are not lost,
+    # and the renderer has then put the description in the text
+    # (``max_described_label_len``).
+    detail = label if len(label) > MAX_ROW_TITLE_CHARS else " ".join(item.description.split())
     if detail:
         row["description"] = detail[:MAX_ROW_DESCRIPTION_CHARS]
     return row
@@ -714,11 +713,17 @@ def _with_interactive(to: str, payloads: list[dict[str, Any]], action: dict[str,
         body = str(payloads.pop()["text"]["body"])
 
     parts = split_text(body, MAX_INTERACTIVE_BODY_CHARS) if body else []
-    if len(parts) > 1:
-        # Everything but the tail goes back as ordinary text, keeping the order
-        # the author wrote it in.
-        payloads.extend(_text_payloads(to, "\n\n".join(parts[:-1])))
     tail = parts[-1] if parts else INTERACTIVE_BODY_FALLBACK
+    if len(parts) > 1:
+        # Everything but the tail goes back as ordinary text, as it was written:
+        # the parts are this limit's, and a break between them is not the author's.
+        # A header goes with it, being the line above the whole message.
+        head = body[: len(body) - len(tail)].rstrip()
+        header = action.get("header")
+        if header:
+            head = f"{header['text']}\n\n{head}"
+            action = {key: value for key, value in action.items() if key != "header"}
+        payloads.extend(_text_payloads(to, head))
 
     payloads.append({**_envelope(to, "interactive"), "interactive": {**action, "body": {"text": tail}}})
     return payloads
