@@ -36,6 +36,8 @@ from apps.channels.providers.whatsapp import (
     INTERACTIVE_BODY_FALLBACK,
     LIST_BUTTON_LABEL,
     MAX_INTERACTIVE_BODY_CHARS,
+    MAX_ROW_DESCRIPTION_CHARS,
+    MAX_ROW_TITLE_CHARS,
     WhatsAppAdapter,
     wire_calls,
 )
@@ -245,6 +247,30 @@ class TestInteractiveShapes:
         (payload,) = [call for part in rendered.messages for call in wire_calls(TO, part)]
         assert f"Small — {'d' * 80}" in payload["interactive"]["body"]["text"]
         assert "description" not in payload["interactive"]["action"]["sections"][0]["rows"][0]
+
+    @pytest.mark.parametrize("length", [24, 25, 40, 60, 72])
+    def test_a_description_is_never_clipped_by_a_long_label(self, length: int) -> None:
+        """A label over the title's 24 characters takes the row's one other line, and
+        what does not fit beside it must be in the body rather than cut off."""
+        label = "L" * length
+        message = OutboundMessage(
+            blocks=(TextBlock(text="?"),),
+            quick_replies=(QuickReply(id="s", label=label, description="Fits up to 170 cm"),),
+        )
+        rendered = downgrade(message, capabilities_for(Platform.WHATSAPP))
+        (payload,) = [call for part in rendered.messages for call in wire_calls(TO, part)]
+        row = payload["interactive"]["action"]["sections"][0]["rows"][0]
+        if length <= 24:
+            assert row["description"] == "Fits up to 170 cm"
+            assert payload["interactive"]["body"]["text"] == "?"
+        else:
+            assert row["description"] == label
+            assert payload["interactive"]["body"]["text"] == f"?\n\n{label} — Fits up to 170 cm"
+
+    def test_the_renderer_and_the_row_agree_on_the_numbers(self) -> None:
+        capabilities = capabilities_for(Platform.WHATSAPP)
+        assert capabilities.max_described_label_len == MAX_ROW_TITLE_CHARS
+        assert capabilities.max_quick_reply_description_len == MAX_ROW_DESCRIPTION_CHARS
 
     def test_a_url_button_never_becomes_a_reply_button(self) -> None:
         """It would come back matching no handle. ``url_buttons`` is False for

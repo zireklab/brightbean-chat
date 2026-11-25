@@ -97,7 +97,7 @@ class TestContractFieldsAreExactlyAsWritten:
     #: ``max_quick_reply_description_len`` is the same kind of field: whether a
     #: platform has a place for a quick reply's second line, which decides if the
     #: renderer keeps it on the reply or folds it into the text.
-    RENDERING_FIELDS = {"interaction_is_exclusive", "max_quick_reply_description_len"}
+    RENDERING_FIELDS = {"interaction_is_exclusive", "max_quick_reply_description_len", "max_described_label_len"}
 
     #: Also beyond §6.1, added by issue #23. ``counts_segments`` says a message on
     #: this platform is billed by GSM 03.38 segment, which the two composers that
@@ -117,6 +117,10 @@ class TestContractFieldsAreExactlyAsWritten:
             capabilities = capabilities_for(platform)
             if capabilities.max_quick_reply_description_len:
                 assert capabilities.quick_replies, f"{platform} has room for a description and no replies"
+            if capabilities.max_described_label_len:
+                assert capabilities.max_quick_reply_description_len, (
+                    f"{platform} limits a label that has no description"
+                )
 
     def test_only_a_segment_billed_platform_declares_it(self) -> None:
         """SPEC §6.6 names one: SMS. A second would need its own §6 subsection."""
