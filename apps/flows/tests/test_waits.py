@@ -369,6 +369,21 @@ class TestDataCollectionResume:
         assert contact.email == "ada@example.test"
         assert _tags(contact) == {"answered"}
 
+    def test_a_press_is_not_saved_as_the_answer_by_its_label(self, tenancy, facade):
+        """A button from an earlier message pressed while a question is open: the
+        label is what it *said*, and nobody typed it."""
+        connection = connection_for(tenancy.workspace)
+        flow = self._flow(tenancy.workspace, reply_type="text")
+        contact, execution = _parked(tenancy.workspace, flow, connection)
+
+        attempt_resume(execution, inbound(connection, button_id="earlier_yes", button_label="Yes"))
+
+        contact.refresh_from_db()
+        assert contact.email == ""
+        execution.refresh_from_db()
+        assert execution.status == ExecutionStatus.WAITING_REPLY
+        assert _tags(contact) == set()
+
     def test_an_email_answer_records_consent_through_the_facade(self, tenancy, facade):
         """SPEC §11.8's audit trail — the reason this goes through contract 1."""
         connection = connection_for(tenancy.workspace)

@@ -10291,9 +10291,12 @@ msgid "New rule"
 msgstr "Жаңы эреже"
 
 #: templates/inbox/_rule_test.html:14
-msgid "No inbound messages yet, so there is nothing to test against."
+msgid ""
+"No inbound messages to test against yet. Button presses do not count: rules "
+"never act on them."
 msgstr ""
-"Азырынча кирген билдирүүлөр жок, ошондуктан текшере турган эч нерсе жок."
+"Азырынча текшерүү үчүн кирген билдирүүлөр жок. Баскычтарды басуу эсепке "
+"алынбайт: эрежелер аларга иштебейт."
 
 #: templates/inbox/_rule_test.html:17
 #, python-format
