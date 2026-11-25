@@ -181,7 +181,7 @@ are until they are sniffed at fetch time.
                 <span class="ib-chip">{{ button.label }}</span>
               {% endif %}
             {% endfor %}
-            {% for reply in item.quick_replies %}<span class="ib-chip">{{ reply.label }}</span>{% endfor %}
+            {% for reply in item.quick_replies %}<span class="ib-chip">{{ reply.label }}{% if reply.description %}<span class="ib-chip-note">{{ reply.description }}</span>{% endif %}</span>{% endfor %}
           </div>
         {% endif %}
       </div>

@@ -187,6 +187,9 @@ class Button:
 
     label: str
     url: str = ""
+    #: A quick reply's description, shown after its label. Plain text like the
+    #: rest; the template escapes it.
+    description: str = ""
 
 
 @dataclass(frozen=True)
@@ -559,7 +562,13 @@ def _buttons(value: Any) -> tuple[Button, ...]:
             continue
         label = _text(item.get("label"))
         url = _text(item.get("url"))
-        out.append(Button(label=label, url=url if is_renderable_url(url) else ""))
+        out.append(
+            Button(
+                label=label,
+                url=url if is_renderable_url(url) else "",
+                description=_text(item.get("description")),
+            )
+        )
     return tuple(out)
 
 

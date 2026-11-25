@@ -4846,6 +4846,11 @@ kbd {
   font-size: 0.6875rem;
   color: var(--text-secondary);
 }
+/* A quick reply's description. Beside the label, after the same dash a platform
+   with no place for one gets it in: a chip is one line, whatever the contact saw. */
+.ib-chip-note { color: var(--text-tertiary); }
+.ib-chip-note::before { content: "— "; }
+.ib-bubble-out .ib-chip-note { color: color-mix(in srgb, var(--text-inverse) 70%, transparent); }
 
 /* --- Issue #24: labels, deferred work and the rules manager ---------------
  *

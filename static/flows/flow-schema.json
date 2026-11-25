@@ -1646,6 +1646,11 @@
             "followup": {
               "$ref": "#/$defs/followup"
             },
+            "list_label": {
+              "description": "Shows the quick replies as a list and names the button that opens it, where the channel has one.",
+              "maxLength": 80,
+              "type": "string"
+            },
             "quick_replies": {
               "items": {
                 "$ref": "#/$defs/quick_reply"
@@ -1836,6 +1841,11 @@
     "quick_reply": {
       "additionalProperties": false,
       "properties": {
+        "description": {
+          "description": "A second line under the quick reply, where the channel can show one.",
+          "maxLength": 200,
+          "type": "string"
+        },
         "id": {
           "description": "The id in this reply's qr:<id> handle.",
           "maxLength": 64,

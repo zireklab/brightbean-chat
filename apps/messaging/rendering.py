@@ -57,6 +57,9 @@ def outbound_from_body(body: Any) -> OutboundMessage:
         subject=_text(body.get("subject")),
         from_override=_text(body.get("from_override")),
         html_body=_text(body.get("html_body")),
+        # Absent from every row written before the list fields, which reads back
+        # as "": the same thing every send that did not ask for a list stores.
+        list_label=_text(body.get("list_label")),
     )
 
 
@@ -122,4 +125,6 @@ def _button(item: dict[str, Any]) -> Button | None:
 
 def _quick_reply(item: dict[str, Any]) -> QuickReply | None:
     identifier = _text(item.get("id"))
-    return QuickReply(id=identifier, label=_text(item.get("label"))) if identifier else None
+    if not identifier:
+        return None
+    return QuickReply(id=identifier, label=_text(item.get("label")), description=_text(item.get("description")))

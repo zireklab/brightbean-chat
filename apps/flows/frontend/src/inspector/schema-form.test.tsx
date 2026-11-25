@@ -169,6 +169,28 @@ describe("what a newly added item contains", () => {
     expect(JSON.stringify(buttons)).not.toContain("…");
   });
 
+  it("starts a quick reply's description empty, so nothing is sent that the author did not write", () => {
+    // A seeded word here would reach the contact under their reply.
+    withoutOverrides();
+    const { store, id } = openMinimal("send_message");
+
+    fireEvent.click(screen.getByRole("button", { name: "+ Quick replies" }));
+    fireEvent.click(screen.getByRole("button", { name: "Add to Quick replies" }));
+    fireEvent.click(screen.getByRole("button", { name: "+ Description" }));
+
+    const replies = (store.getState().config[id] as { quick_replies: Record<string, unknown>[] }).quick_replies;
+    expect(replies[0]?.["description"]).toBe("");
+  });
+
+  it("offers the list caption beside the other things they can tap", () => {
+    withoutOverrides();
+    openMinimal("send_message");
+
+    const heading = screen.getByText("Things they can tap");
+    const group = heading.parentElement as HTMLElement;
+    expect(within(group).getByRole("button", { name: "+ List button" })).toBeInTheDocument();
+  });
+
   it("gives each item a distinct id, so two buttons cannot share a handle", () => {
     withoutOverrides();
     const { store, id } = openMinimal("send_message");
@@ -447,5 +469,38 @@ describe("adding a section to a step", () => {
 
     expect(store.getState().config[id]).toHaveProperty("quick_replies");
     expect(screen.queryByRole("button", { name: "+ Quick replies" })).toBeNull();
+  });
+});
+
+describe("a widget registered for a property of a named shape", () => {
+  // `$quick_reply.description` names the shape, not the way to it: reached
+  // through an array item, a plain property or a union branch, it is the same
+  // field and gets the same control.
+  it.each([
+    ["an array item", "quick_replies-0-description", { quick_replies: [{ id: "a", label: "A", description: "x" }] }],
+    ["a property", "retry_unmatched-text", { retry_unmatched: { enabled: true, text: "x" } }],
+    ["a union branch", "blocks-0-text", {}],
+  ])("is used for %s", (_where, fieldKey, extra) => {
+    const store = makeStore(
+      makeDetail({
+        schema: 1,
+        nodes: [
+          {
+            id: "n1",
+            type: "send_message",
+            position: { x: 0, y: 0 },
+            config: { ...(sampleConfig("send_message") as Record<string, unknown>), ...extra },
+          },
+        ],
+        edges: [],
+      }),
+    );
+    store.getState().setSelection({ nodes: ["n1"], edges: [] });
+    const { container } = renderWith(store, <StepEditor />);
+
+    const input = container.querySelector(`#fb-${fieldKey}`) as HTMLInputElement;
+    expect(input).not.toBeNull();
+    fireEvent.change(input, { target: { value: "{{", selectionStart: 2 } });
+    expect(screen.getByRole("option", { name: "{{first_name}}" })).toBeTruthy();
   });
 });

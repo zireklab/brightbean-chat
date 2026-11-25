@@ -111,7 +111,7 @@ export function SchemaField({
     return <ArrayField {...props} />;
   }
   if (types.includes("object") || resolved.properties) {
-    return <ObjectField {...props} hideLabel={hideLabel} />;
+    return <ObjectField {...props} selfDefs={selfDefs} hideLabel={hideLabel} />;
   }
   if (types.includes("boolean") && types.length === 1) {
     return <ToggleField {...props} />;

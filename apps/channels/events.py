@@ -230,6 +230,12 @@ class QuickReply:
 
     id: str
     label: str
+    #: A second line under the label, for a platform with a place to show one.
+    #: Where there is none — or the text is longer than the place takes —
+    #: ``apps.channels.downgrade`` folds it into the message as ``Label —
+    #: description``, so what an author wrote is never cut off by a platform's
+    #: clipping. Empty is the ordinary case and means "nothing to add".
+    description: str = ""
 
 
 @dataclass(frozen=True)
@@ -359,6 +365,16 @@ class OutboundMessage:
     #: Set it *and* a ``TextBlock`` holding the plain-text equivalent: the blocks
     #: are what the inbox thread renders, and they should not be raw markup.
     html_body: str = ""
+    #: The caption of the control that opens the quick replies as a list, where
+    #: the platform has one. Setting it is also how an author **asks** for the
+    #: list: a platform that can show quick replies more than one way keeps its
+    #: usual one until the message says otherwise, so a flow written before this
+    #: field existed is sent exactly as it was.
+    #:
+    #: Only meaningful beside quick replies, and ``apps.channels.downgrade``
+    #: empties it on a message none survive on. Already rendered, like every
+    #: author string here: an adapter must never substitute into it again.
+    list_label: str = ""
 
     def to_body(self) -> dict[str, Any]:
         """The SPEC §7.2 ``message.body`` json.
@@ -374,7 +390,9 @@ class OutboundMessage:
         return {
             "blocks": [_block_json(block) for block in self.blocks],
             "buttons": [_button_json(button) for button in self.buttons],
-            "quick_replies": [{"id": qr.id, "label": qr.label} for qr in self.quick_replies],
+            "quick_replies": [
+                {"id": qr.id, "label": qr.label, "description": qr.description} for qr in self.quick_replies
+            ],
             "tag": self.tag,
             "template_ref": self.template_ref,
             # As a list of two-element lists: json has no tuples, and a dict
@@ -384,6 +402,7 @@ class OutboundMessage:
             "subject": self.subject,
             "from_override": self.from_override,
             "html_body": self.html_body,
+            "list_label": self.list_label,
         }
 
 

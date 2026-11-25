@@ -166,10 +166,12 @@ MAX_BUTTON_TITLE_CHARS = 20
 MAX_ROW_TITLE_CHARS = 24
 MAX_ROW_DESCRIPTION_CHARS = 72
 MAX_LIST_BUTTON_CHARS = 20
+MAX_SECTION_TITLE_CHARS = 24
 MAX_REPLY_ID_CHARS = 256
 
 #: What the list's own opener button says. Meta requires one and gives it no
-#: default; this is the label a contact taps to see the rows.
+#: default; this is the label a contact taps to see the rows. It is what the
+#: opener says when the author gave ``OutboundMessage.list_label`` nothing.
 LIST_BUTTON_LABEL = "Choose"
 
 #: What an interactive message says when the author gave it no text of its own.
@@ -567,9 +569,13 @@ def _interactive_action(message: OutboundMessage) -> dict[str, Any] | None:
         rows = rows[: _CAPABILITIES.max_quick_replies]
         if not rows:
             return None
+        caption = _list_caption(message.list_label)
         return {
             "type": "list",
-            "action": {"button": LIST_BUTTON_LABEL, "sections": [{"title": LIST_BUTTON_LABEL, "rows": rows}]},
+            "action": {
+                "button": caption[:MAX_LIST_BUTTON_CHARS].rstrip(),
+                "sections": [{"title": caption[:MAX_SECTION_TITLE_CHARS].rstrip(), "rows": rows}],
+            },
         }
     return None
 
@@ -583,6 +589,17 @@ def _pressable(message: OutboundMessage) -> list[Button]:
             len(extra),
         )
     return [*message.buttons, *extra]
+
+
+def _list_caption(label: str) -> str:
+    """What the list's opener says: the author's words on one line, else the default.
+
+    Meta takes no line break in a button caption and rejects the whole message
+    over 20 characters (24 for a section title), so the words are put on one line
+    here and clipped where they are used. Clipping a caption loses nothing a
+    contact needs — the rows are what they opened it for.
+    """
+    return " ".join((label or "").split()) or LIST_BUTTON_LABEL
 
 
 def _reply_button(button: Button) -> dict[str, Any] | None:
@@ -633,8 +650,16 @@ def _list_row(item: QuickReply) -> dict[str, Any] | None:
         )
         return None
     row: dict[str, Any] = {"id": item.id, "title": label[:MAX_ROW_TITLE_CHARS]}
+    # The row has one description slot and two claimants. The author's own is
+    # what it is for; a label too long for the title takes it instead, so the
+    # words clipped off the title are not lost, and the renderer has then put the
+    # description in the text (``max_described_label_len``). Both together are for
+    # a message that skipped the renderer.
+    detail = item.description
     if len(label) > MAX_ROW_TITLE_CHARS:
-        row["description"] = label[:MAX_ROW_DESCRIPTION_CHARS]
+        detail = f"{label} — {detail}" if detail else label
+    if detail:
+        row["description"] = detail[:MAX_ROW_DESCRIPTION_CHARS]
     return row
 
 
