@@ -520,12 +520,12 @@ def _rich_list(
 
     body = str(calls.pop()[1]["text"]) if calls and calls[-1][0] == "sendMessage" else ""
     blocks: list[dict[str, Any]] = []
-    if message.header.strip():
+    if message.header:
         blocks.append({"type": "heading", "text": message.header, "size": RICH_HEADING_SIZE})
     if body:
         blocks.append({"type": "paragraph", "text": body})
     blocks.append({"type": "details", "summary": message.list_label, "blocks": options})
-    if message.footer.strip():
+    if message.footer:
         blocks.append({"type": "footer", "text": message.footer})
 
     payload: dict[str, Any] = {"chat_id": chat_id, "rich_message": {"blocks": blocks}}
@@ -559,7 +559,7 @@ def wire_calls(chat_id: str, message: OutboundMessage, *, rich: bool = False) ->
     if rich and _takes_rich_form(message):
         # A header, a footer and descriptions are something to say, though they
         # are not blocks here: the plain form of this message has them as text.
-        said = message.header.strip() or message.footer.strip() or any(q.description for q in message.quick_replies)
+        said = message.header or message.footer or any(q.description for q in message.quick_replies)
         if calls or said:
             return _rich_list(chat_id, message, calls)
     if not calls:
