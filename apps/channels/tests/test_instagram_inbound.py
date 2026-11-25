@@ -24,7 +24,7 @@ from apps.channels.providers.instagram import (
     MAX_PLATFORM_ID_CHARS,
     InstagramAdapter,
 )
-from apps.channels.tests.instagram_support import IG_USER_ID, load_delivery, request_for
+from apps.channels.tests.instagram_support import FIXTURES, IG_USER_ID, load_delivery, request_for
 from apps.flows.triggers.types import COMMENT_PARENT_ID_KEY, COMMENT_POST_ID_KEY
 from apps.messaging.ingest import THREAD_EVENTS
 
@@ -288,38 +288,25 @@ def _walk(node: Any, replace: Any) -> Any:
     return replace
 
 
-ALL_FIXTURES = [
-    "message_text",
-    "message_attachment",
-    "quick_reply",
-    "postback",
-    "referral",
-    "story_mention",
-    "story_reply",
-    "message_deleted",
-    "echo",
-    "comment",
-    "comment_reply",
-    "mention_comment",
-    "mention_caption",
-    "follow",
-]
+ALL_FIXTURES = sorted(path.stem for path in FIXTURES.glob("*.json"))
 
 
 class TestAnUnsendCanFindTheRow:
     """An unsend names a message by its ``mid`` and by nothing else (SPEC §6.3, §19)."""
 
-    @pytest.mark.parametrize("name", ALL_FIXTURES)
-    def test_every_event_that_becomes_a_row_carries_its_mid(
-        self, name: str, instagram_connection: ChannelConnection
-    ) -> None:
-        """Over every recorded shape, so one added later cannot be forgotten."""
-        delivery = load_delivery(name)
-        for event in parse(delivery, instagram_connection):
-            if event.type in THREAD_EVENTS:
-                (item,) = delivery["entry"][0]["messaging"]
-                mid = (item.get("message") or item["postback"])["mid"]
-                assert event.payload.extra["provider_message_id"] == mid
+    def test_every_event_that_becomes_a_row_carries_its_mid(self, instagram_connection: ChannelConnection) -> None:
+        """Over every recorded shape there is. Which ones become a row is spelled
+        out, so a shape that starts or stops being one is noticed here."""
+        rows = set()
+        for name in ALL_FIXTURES:
+            delivery = load_delivery(name)
+            for event in parse(delivery, instagram_connection):
+                if event.type in THREAD_EVENTS:
+                    (item,) = delivery["entry"][0]["messaging"]
+                    mid = (item.get("message") or item["postback"])["mid"]
+                    assert event.payload.extra["provider_message_id"] == mid, name
+                    rows.add(name)
+        assert rows == {"message_attachment", "message_text", "postback", "quick_reply", "story_reply"}
 
     @pytest.mark.parametrize(("name", "key"), [("quick_reply", "message"), ("postback", "postback")])
     def test_without_a_mid_there_is_no_key(self, name: str, key: str, instagram_connection: ChannelConnection) -> None:

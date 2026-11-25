@@ -131,6 +131,76 @@ class TestIdempotency:
         assert messages(tenancy.workspace).count() == 2
 
 
+class TestAProviderIdAlreadyTaken:
+    """The id is unique per connection and is the platform's word; the contact's message is not worth losing over it."""
+
+    @staticmethod
+    def event(connection: Any, event_id: str = "e1") -> Any:
+        payload = EventPayload(button_id="yes", extra={"provider_message_id": "pm-1"})
+        return make_event(connection, kind=EventType.POSTBACK, event_id=event_id, payload=payload)
+
+    @pytest.fixture
+    def ours(self, tenancy: Any, connection: Any) -> Any:
+        """One of our messages, already holding the id."""
+        persist_events(connection, [make_event(connection, event_id="e0")])
+        conversation = Conversation.objects.for_workspace(tenancy.workspace).get()
+        return Message.objects.create(
+            conversation=conversation,
+            direction=MessageDirection.OUT,
+            source=MessageSource.AGENT,
+            status=MessageStatus.SENT,
+            provider_message_id="pm-1",
+            body={"blocks": []},
+        )
+
+    def test_the_message_is_kept_and_the_id_is_dropped_loudly(
+        self, tenancy: Any, connection: Any, ours: Any, caplog: Any
+    ) -> None:
+        with caplog.at_level("WARNING", logger="apps.messaging.ingest"):
+            persist_events(connection, [self.event(connection)])
+
+        stored = messages(tenancy.workspace).get(idempotency_key="in:e1")
+        assert stored.body["button_id"] == "yes"
+        assert stored.provider_message_id == ""
+        ours.refresh_from_db()
+        assert ours.provider_message_id == "pm-1"
+        assert "already in use" in caplog.text
+
+    def test_the_contact_still_gets_consent_and_a_window(self, tenancy: Any, connection: Any) -> None:
+        """What a lost row really cost: routing starts a flow and compliance refuses its answer."""
+        persist_events(
+            connection, [make_event(connection, user="other", event_id="e0", payload=self.event(connection).payload)]
+        )
+        persist_events(connection, [self.event(connection)])
+
+        identity = ContactChannelIdentity.objects.for_workspace(tenancy.workspace).get(platform_user_id="u1")
+        assert identity.opt_in is True
+        assert identity.last_inbound_at is not None
+
+    def test_a_redelivery_is_still_one_row(self, tenancy: Any, connection: Any, ours: Any) -> None:
+        """Both of one whose id was dropped and of one that kept it."""
+        for _ in range(2):
+            persist_events(connection, [self.event(connection)])
+        payload = EventPayload(text="hi", extra={"provider_message_id": "pm-2"})
+        for _ in range(2):
+            persist_events(connection, [make_event(connection, event_id="e2", payload=payload)])
+
+        assert messages(tenancy.workspace).filter(idempotency_key="in:e1").count() == 1
+        assert messages(tenancy.workspace).filter(idempotency_key="in:e2").count() == 1
+
+    def test_a_redelivery_into_another_conversation_is_still_one_row(self, tenancy: Any, connection: Any) -> None:
+        """The second line of deduplication: the event's own key is unique per
+        conversation, and a merge can move the contact to a new one."""
+        persist_events(connection, [self.event(connection)])
+        stored = messages(tenancy.workspace).get()
+        other = Contact.objects.create(workspace=tenancy.workspace, first_name="Merged")
+        ContactChannelIdentity.objects.for_workspace(tenancy.workspace).update(contact=other)
+
+        persist_events(connection, [self.event(connection)])
+
+        assert messages(tenancy.workspace).get().pk == stored.pk
+
+
 class TestInboundKeyBounds:
     def test_two_long_ids_sharing_a_prefix_are_two_messages(self, tenancy: Any, connection: Any) -> None:
         """Slicing the key to fit the column meant two genuinely different

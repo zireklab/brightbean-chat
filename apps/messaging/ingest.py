@@ -115,8 +115,9 @@ Two more keys travel the same way, for the same reason, and are read only here:
     included. Optional — Telegram supplies none — and stored on the row when it is
     there, which is what lets a later ``message_deleted`` event find the message
     to redact. It also becomes a second deduplication line under the conditional
-    unique constraint on ``(channel_connection, provider_message_id)``, so it must
-    name *this* message and never one of ours it answers.
+    unique constraint on ``(channel_connection, provider_message_id)``. It should
+    name *this* message and never one of ours it answers; one that is on another
+    row already is dropped and the message kept (:func:`_insert_inbound`).
 
 ``private_reply_claimed`` on a **comment** event
     See the comment row of the table above.
@@ -577,20 +578,52 @@ def _inbound_provider_message_id(event: NormalizedEvent) -> str:
 
 
 def _insert_inbound(conversation: Conversation, event: NormalizedEvent) -> Message | None:
-    """Insert the inbound row, or return None if this event is already stored."""
+    """Insert the inbound row, or return None if this event is already stored.
+
+    Two constraints can refuse it and they mean different things. The
+    idempotency key is this event's own, so a row with it is this event. The
+    provider's id is the platform's word, and some *other* row holding it says
+    nothing about this one: the contact still did what they did. So the message
+    is kept and the id is dropped, loudly — the call ``services._finalize`` makes
+    for an outbound id, and for the same reason. A row an unsend cannot find is a
+    smaller loss than a press with no consent and no window behind it.
+    """
+    key = inbound_idempotency_key(event)
+    provider_id = _inbound_provider_message_id(event)
+    message = _save_inbound(conversation, event, key, provider_id)
+    if message is None and provider_id:
+        # By the event's key, not by conversation: a contact merged since is in
+        # another one now, and a redelivery there is still this event.
+        taken = (
+            Message.objects.for_workspace(conversation.workspace_id)
+            .filter(channel_connection=conversation.channel_connection_id, provider_message_id=provider_id)
+            .exclude(idempotency_key=key)
+        )
+        if taken.exists():
+            logger.warning(
+                "Provider message id of inbound event %s is already in use on connection %s; it is stored without one.",
+                event.provider_event_id,
+                conversation.channel_connection_id,
+            )
+            message = _save_inbound(conversation, event, key, "")
+    if message is None:
+        logger.debug("Inbound event %s was already persisted; skipping.", event.provider_event_id)
+    return message
+
+
+def _save_inbound(conversation: Conversation, event: NormalizedEvent, key: str, provider_id: str) -> Message | None:
     message = Message(
         conversation=conversation,
         direction=MessageDirection.IN,
         body=_inbound_body(event),
         status=MessageStatus.DELIVERED,
-        idempotency_key=inbound_idempotency_key(event),
-        provider_message_id=_inbound_provider_message_id(event),
+        idempotency_key=key,
+        provider_message_id=provider_id,
     )
     try:
         with transaction.atomic():
             message.save()
     except IntegrityError:
-        logger.debug("Inbound event %s was already persisted; skipping.", event.provider_event_id)
         return None
     return message
 
@@ -798,11 +831,10 @@ def _apply_delivery_status(connection: Any, event: NormalizedEvent) -> None:
         .filter(
             channel_connection=connection,
             provider_message_id=provider_id,
-            # Outbound only. An inbound row carries no provider id today, so
-            # this cannot match one — but a receipt is by definition about a
-            # message *we* sent, and saying so keeps a future adapter that
-            # records inbound provider ids from walking a received message up
-            # the delivery ladder.
+            # Outbound only. An inbound row can carry its platform's id too
+            # (Instagram's do), and a receipt is by definition about a message
+            # *we* sent: this is what keeps one from walking a received message
+            # up the delivery ladder.
             direction=MessageDirection.OUT,
         )
         .first()

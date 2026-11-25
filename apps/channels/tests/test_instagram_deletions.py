@@ -108,17 +108,33 @@ class TestRedaction:
         assert message.status == MessageStatus.DELETED
         assert words not in json.dumps(message.body)
 
-    def test_two_presses_of_one_button_are_two_rows(
+    def test_a_press_named_by_one_of_our_ids_is_not_lost(
         self, client: Client, tenancy: Tenancy, instagram_connection: ChannelConnection
     ) -> None:
-        """The id is unique per connection, so it must be the press's own."""
-        with fake_graph():
-            deliver(client, at_now(load_delivery("postback")))
-            again = at_now(load_delivery("postback"))
-            again["entry"][0]["messaging"][0]["postback"]["mid"] = "aWdfZG1fNDoy"
-            deliver(client, again)
+        """Meta documents ``postback.mid`` as the press's own id. If it ever is the
+        id of the message the button was on, the contact's press must survive it."""
+        from apps.messaging.models import ContactChannelIdentity
 
-        assert Message.objects.for_workspace(tenancy.workspace).count() == 2
+        with fake_graph():
+            deliver(client, at_now(load_delivery("message_text")))
+            conversation = Message.objects.for_workspace(tenancy.workspace).get().conversation
+            ours = Message.objects.create(
+                conversation=conversation,
+                direction=MessageDirection.OUT,
+                source=MessageSource.AGENT,
+                status=MessageStatus.SENT,
+                provider_message_id="aWdfZG1fNDox",
+                body={"blocks": [{"type": "text", "text": "Anything else?"}]},
+            )
+            ContactChannelIdentity.objects.for_workspace(tenancy.workspace).update(last_inbound_at=None)
+            deliver(client, at_now(load_delivery("postback")))
+
+        press = Message.objects.for_workspace(tenancy.workspace).get(body__button_id="track")
+        assert press.provider_message_id == ""
+        ours.refresh_from_db()
+        assert (ours.provider_message_id, ours.status) == ("aWdfZG1fNDox", MessageStatus.SENT)
+        identity = ContactChannelIdentity.objects.for_workspace(tenancy.workspace).get()
+        assert identity.last_inbound_at is not None
 
     def test_an_outbound_message_is_redacted_too(
         self, client: Client, tenancy: Tenancy, instagram_connection: ChannelConnection
