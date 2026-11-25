@@ -381,6 +381,14 @@ class TestBodyShape:
         persist_events(connection, [make_event(connection, kind=EventType.POSTBACK, payload=payload)])
         assert messages(tenancy.workspace).get().body["blocks"] == [{"type": "text", "text": "actually, no"}]
 
+    @pytest.mark.parametrize("unusable", [42, ["x"], "\x00", ""])
+    def test_unusable_text_does_not_hide_a_label(self, tenancy: Any, connection: Any, unusable: Any) -> None:
+        """Each is cleaned before one is chosen: a truthy value that cleans to
+        nothing must not stand in the way of a label that has something to say."""
+        payload = EventPayload(text=unusable, button_id="yes", button_label="Yes please")
+        persist_events(connection, [make_event(connection, kind=EventType.POSTBACK, payload=payload)])
+        assert messages(tenancy.workspace).get().body["blocks"] == [{"type": "text", "text": "Yes please"}]
+
     def test_a_press_with_no_label_stays_empty(self, tenancy: Any, connection: Any) -> None:
         payload = EventPayload(button_id="yes")
         persist_events(connection, [make_event(connection, kind=EventType.POSTBACK, payload=payload)])
