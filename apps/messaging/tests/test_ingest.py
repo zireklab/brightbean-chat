@@ -389,6 +389,19 @@ class TestBodyShape:
         persist_events(connection, [make_event(connection, kind=EventType.POSTBACK, payload=payload)])
         assert messages(tenancy.workspace).get().body["blocks"] == [{"type": "text", "text": "Yes please"}]
 
+    def test_a_press_whose_id_comes_out_empty_is_still_stored_as_a_press(self, tenancy: Any, connection: Any) -> None:
+        """A payload ending in its first colon decodes to no id, and the key is how
+        everything after this tells a press from a typed message."""
+        payload = EventPayload(button_label="Refund")
+        persist_events(connection, [make_event(connection, kind=EventType.POSTBACK, payload=payload)])
+        body = messages(tenancy.workspace).get().body
+        assert body["button_id"] == ""
+        assert body["blocks"] == [{"type": "text", "text": "Refund"}]
+
+    def test_a_typed_message_is_not_marked_as_a_press(self, tenancy: Any, connection: Any) -> None:
+        persist_events(connection, [make_event(connection, text="refund")])
+        assert "button_id" not in messages(tenancy.workspace).get().body
+
     def test_a_press_with_no_label_stays_empty(self, tenancy: Any, connection: Any) -> None:
         payload = EventPayload(button_id="yes")
         persist_events(connection, [make_event(connection, kind=EventType.POSTBACK, payload=payload)])
