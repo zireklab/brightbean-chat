@@ -389,6 +389,15 @@ class TestQuickReplyDescriptions:
         assert result.messages[0].quick_replies[0].description == ""
         assert texts(result.messages[0]) == [f"Pick one\n\nCourier — {long}"]
 
+    @pytest.mark.parametrize(("label", "native"), [("L" * 24, True), ("L" * 25, False)])
+    def test_a_label_that_needs_the_description_line_leaves_no_room_on_it(self, label: str, native: bool) -> None:
+        caps = replace(self.NATIVE, max_described_label_len=24)
+        result = downgrade(self.asking(QuickReply(id="c", label=label, description="tomorrow")), caps)
+        (reply,) = result.messages[0].quick_replies
+        assert reply.description == ("tomorrow" if native else "")
+        assert texts(result.messages[0]) == ["Pick one" if native else f"Pick one\n\n{label} — tomorrow"]
+        assert downgrade(result.messages[0], caps).messages == result.messages
+
     def test_a_numbered_option_carries_its_description_on_its_own_line(self) -> None:
         result = downgrade(self.asking(QuickReply(id="c", label="Courier", description="tomorrow")), TEXT_ONLY)
         assert texts(result.messages[0]) == ["Pick one\n\nReply 1 for Courier — tomorrow"]
@@ -531,6 +540,29 @@ class TestHeaderAndFooter:
         assert isinstance(rendered.blocks[0], TextBlock)
         assert rendered.blocks[0].text == "Look"
         assert isinstance(rendered.blocks[1], MediaBlock)
+
+    def test_a_footer_after_media_is_still_the_last_thing_read(self) -> None:
+        """The options belong with the words they answer; the footer ends the message."""
+        message = OutboundMessage(
+            blocks=(TextBlock(text="Look"), MediaBlock(kind="image", url="https://x.test/i.png")),
+            buttons=(Button(id="p", label="Pricing"),),
+            footer="Bottom",
+        )
+        (rendered,) = downgrade(message, Capabilities(image=True, max_text_len=4096)).messages
+        assert [block.kind for block in rendered.blocks] == ["text", "image", "text"]
+        assert texts(rendered) == ["Look\n\nReply 1 for Pricing", "Bottom"]
+
+    @pytest.mark.parametrize("platform", Platform.values)
+    def test_a_blank_header_or_footer_is_nothing_at_all(self, platform: str) -> None:
+        """A placeholder can render to spaces, and a platform refuses a blank line."""
+        blank = OutboundMessage(
+            blocks=(MediaBlock(kind="image", url="https://x.test/i.png"),),
+            buttons=(Button(id="b", label="Docs"),),
+            header=" ",
+            footer="\n",
+        )
+        caps = capabilities_for(platform)
+        assert downgrade(blank, caps).messages == downgrade(replace(blank, header="", footer=""), caps).messages
 
     def test_folded_text_is_still_held_to_the_length_cap(self) -> None:
         caps = Capabilities(max_text_len=30)

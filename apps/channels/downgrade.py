@@ -236,8 +236,9 @@ class _State:
 
         **A description goes where the platform can show it, or into the text.**
         ``max_quick_reply_description_len`` is the room under the label (0 when
-        there is none); a longer description is folded into the message as
-        ``Label — description`` and cleared from the reply, so no platform ever
+        there is none, or when the label needs that line — see
+        :meth:`description_room`); a longer description is folded into the message
+        as ``Label — description`` and cleared from the reply, so no platform ever
         clips an author's words. A numbered option carries its description on the
         same line, which keeps the wording SPEC §6.1 fixes and keeps the numbering
         a function of the replies alone — the send node recomputes it from here.
@@ -256,7 +257,7 @@ class _State:
         folded = 0
         for item in quick_replies[:room]:
             kept = item
-            if len(item.description) > self.caps.max_quick_reply_description_len:
+            if len(item.description) > self.description_room(item):
                 target.trailer.append(
                     DESCRIBED_OPTION.format(label=item.label or item.id, description=item.description)
                 )
@@ -279,6 +280,13 @@ class _State:
         for quick_reply in overflow:
             line = self.number(quick_reply.id, quick_reply.label)
             target.trailer.append(f"{line} — {quick_reply.description}" if quick_reply.description else line)
+
+    def description_room(self, item: QuickReply) -> int:
+        """How long this reply's description may be, which is nothing once its label needs the line."""
+        longest = self.caps.max_described_label_len
+        if longest and len(item.label or item.id) > longest:
+            return 0
+        return self.caps.max_quick_reply_description_len
 
     def number(self, target_id: str, label: str) -> str:
         """Allocate the next reply number to ``target_id`` and return its line."""
@@ -355,12 +363,12 @@ class _State:
         live = [pending for pending in self.pending if not pending.is_empty()] or [self.pending[-1]]
         first, last = live[0], live[-1]
         room = self.caps.max_header_footer_len if (last.buttons or last.quick_replies) else 0
-        header = outbound.header if outbound.header and len(outbound.header) <= room else ""
-        footer = outbound.footer if outbound.footer and len(outbound.footer) <= room else ""
-        if outbound.header and not header:
+        header = outbound.header if outbound.header.strip() and len(outbound.header) <= room else ""
+        footer = outbound.footer if outbound.footer.strip() and len(outbound.footer) <= room else ""
+        if outbound.header.strip() and not header:
             self.prepend(first, outbound.header)
             self.notes.append("header: added to the top of the text")
-        if outbound.footer and not footer:
+        if outbound.footer.strip() and not footer:
             last.tail = outbound.footer
             self.notes.append("footer: added to the end of the text")
         return last, header, footer
@@ -376,23 +384,31 @@ class _State:
 
     @staticmethod
     def append_trailer(pending: _Pending) -> None:
-        """Put the numbered options, then the folded footer, at the end of the message's text."""
-        parts = ["\n".join(pending.trailer)] if pending.trailer else []
+        """Put the numbered options at the end of the text, and the folded footer at the end of the message.
+
+        The same place unless the message ends in something else — an image after
+        its text, say. The options belong with the words they answer; the footer is
+        the last thing read, so there it is a block of its own.
+        """
+        if pending.trailer:
+            trailer = "\n".join(pending.trailer)
+            pending.trailer = []
+            for index in range(len(pending.blocks) - 1, -1, -1):
+                block = pending.blocks[index]
+                if isinstance(block, TextBlock):
+                    pending.blocks[index] = TextBlock(text=f"{block.text}\n\n{trailer}")
+                    break
+            else:
+                # Nothing to append to — a media-only message, say. The options
+                # still have to reach the contact, so they get a block of their own.
+                pending.blocks.append(TextBlock(text=trailer))
         if pending.tail:
-            parts.append(pending.tail)
-        if not parts:
-            return
-        trailer = "\n\n".join(parts)
-        pending.trailer = []
-        pending.tail = ""
-        for index in range(len(pending.blocks) - 1, -1, -1):
-            block = pending.blocks[index]
-            if isinstance(block, TextBlock):
-                pending.blocks[index] = TextBlock(text=f"{block.text}\n\n{trailer}")
-                return
-        # Nothing to append to — a media-only message, say. The options still
-        # have to reach the contact, so they get a block of their own.
-        pending.blocks.append(TextBlock(text=trailer))
+            last = pending.blocks[-1] if pending.blocks else None
+            if isinstance(last, TextBlock):
+                pending.blocks[-1] = TextBlock(text=f"{last.text}\n\n{pending.tail}")
+            else:
+                pending.blocks.append(TextBlock(text=pending.tail))
+            pending.tail = ""
 
     def apply_text_cap(self, blocks: list[Block]) -> list[Block]:
         """Split over-long text on word boundaries (SPEC §6.1's max_text_len)."""

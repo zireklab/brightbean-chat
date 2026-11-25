@@ -101,7 +101,12 @@ class TestContractFieldsAreExactlyAsWritten:
     #: ``max_header_footer_len`` likewise: whether a platform can set a line apart
     #: above or below the message, which decides if the renderer keeps it or folds
     #: it into the text.
-    RENDERING_FIELDS = {"interaction_is_exclusive", "max_quick_reply_description_len", "max_header_footer_len"}
+    RENDERING_FIELDS = {
+        "interaction_is_exclusive",
+        "max_quick_reply_description_len",
+        "max_described_label_len",
+        "max_header_footer_len",
+    }
 
     #: Also beyond §6.1, added by issue #23. ``counts_segments`` says a message on
     #: this platform is billed by GSM 03.38 segment, which the two composers that
@@ -121,6 +126,10 @@ class TestContractFieldsAreExactlyAsWritten:
             capabilities = capabilities_for(platform)
             if capabilities.max_quick_reply_description_len:
                 assert capabilities.quick_replies, f"{platform} has room for a description and no replies"
+            if capabilities.max_described_label_len:
+                assert capabilities.max_quick_reply_description_len, (
+                    f"{platform} limits a label that has no description"
+                )
 
     def test_a_header_room_is_published_only_for_a_platform_with_controls_to_hang_it_on(self) -> None:
         """A header sits with a button or a quick reply, so room without either is a number nobody reads."""
