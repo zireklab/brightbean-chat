@@ -804,6 +804,30 @@ def _location_text(location: Any) -> str:
     return f"Shared a location: {latitude}, {longitude}"
 
 
+def _pressed_label(message: Any, data: str) -> str:
+    """The label of the inline button that carried ``data``, or "".
+
+    A press arrives as ``callback_data`` and no words: Telegram does not say what
+    the button read. The words are on the message the button belonged to —
+    ``callback_query.message.reply_markup`` — so that is where the inbox's "what
+    did they press" comes from. Without it the thread showed a bare id or, for a
+    press that carried nothing else, "no displayable content".
+
+    Every level of this is a stranger's JSON, so every level is checked: the
+    message may be missing (Telegram leaves it out for an old one) or carry no
+    keyboard, and a hostile payload may put the wrong type anywhere. All of it
+    means "no label", never an exception — one odd press must not cost the
+    delivery (SECURITY-BASELINE §2).
+    """
+    markup = message.get("reply_markup") if isinstance(message, dict) else None
+    rows = markup.get("inline_keyboard") if isinstance(markup, dict) else None
+    for row in rows if isinstance(rows, list) else ():
+        for button in row if isinstance(row, list) else ():
+            if isinstance(button, dict) and button.get("callback_data") == data:
+                return _text(button.get("text"), MAX_EXTRA_CHARS)
+    return ""
+
+
 def _button_id(data: str) -> str:
     """The button half of ``callback_data``.
 
@@ -978,6 +1002,7 @@ class TelegramAdapter(Adapter):
                 timestamp=_timestamp(source_message.get("date") if isinstance(source_message, dict) else None),
                 payload=EventPayload(
                     button_id=_button_id(data),
+                    button_label=_pressed_label(source_message, data),
                     extra={**_sender_extra(query.get("from"), None), "callback_data": data},
                 ),
                 raw=raw,

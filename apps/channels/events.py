@@ -130,6 +130,18 @@ class EventPayload:
     #: Media that *does* need a credential goes in ``media_ids`` — see above.
     attachments: tuple[str, ...] = ()
     button_id: str = ""
+    #: What the pressed control *said* — the button's label, as the contact saw
+    #: it — for the platforms that tell us.
+    #:
+    #: **Display only, and deliberately not** ``text``. ``text`` is what a contact
+    #: *typed*, and the engine matches a typed reply by its words
+    #: (``apps.flows.engine.waits._match_choice``). A press that carried its label
+    #: there could be taken for a typed answer: a stale "Yes" under an earlier
+    #: question would answer the current one, and a ``data_collection`` would
+    #: save the label as the contact's reply. This field is read by the inbox and
+    #: by nothing that routes, which is also why ``apps.flows.triggers`` does not
+    #: carry it onto the queue.
+    button_label: str = ""
     comment_id: str = ""
     #: Opaque per-platform identifiers for media only a credentialed fetch can
     #: reach. Resolved on demand by :mod:`apps.channels.media`; see above.

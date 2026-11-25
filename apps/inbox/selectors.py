@@ -576,17 +576,22 @@ def dry_run(workspace: Any, condition: dict[str, Any]) -> tuple[list[Message], i
     messages cost one query rather than fifty. That is also why the halves are
     split: ``matches()`` would fold the contact clause into the per-message loop.
 
-    The sample is inbound, non-internal and recent, because that is the only
-    traffic the hook ever sees — scoring the team's own replies would look
+    The sample is inbound, non-internal, not a button press and recent, because
+    that is the only traffic the hook ever sees — scoring the team's own replies would look
     broken. It is **not** a replay: today's contact state is evaluated against
     old messages, and the page says so rather than implying otherwise.
     """
     from apps.contacts.conditions import evaluate_many
     from apps.inbox.rules import RuleInput, compile_rule, matches_shallow
 
+    # A press is stored as a message and carries its label as text, but the live
+    # hook never sees one: ``RULE_EVENTS`` is messages and story replies. Scoring
+    # presses here would show a rule matching traffic it will never touch, which
+    # is the one thing this page promises not to do.
     sample = list(
         Message.objects.for_workspace(workspace)
         .filter(direction=MessageDirection.IN, internal=False)
+        .exclude(body__has_key="button_id")
         .select_related("conversation", "conversation__contact", "channel_connection")
         .order_by("-created_at")[:DRY_RUN_SAMPLE]
     )

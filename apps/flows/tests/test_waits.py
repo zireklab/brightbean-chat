@@ -151,6 +151,24 @@ class TestButtonAndQuickReplyMatching:
 
         assert set(execution.wait_config["handles"]) == {"talk"}
 
+    def test_a_stale_press_is_not_matched_by_its_label(self, tenancy, facade):
+        """A press from an earlier message names an id this wait never offered.
+
+        Its *label* may be one this wait offers too — "Yes" under two questions —
+        but the label is display-only (``EventPayload.button_label``). Matching on
+        it would answer this question with an old press.
+        """
+        connection = connection_for(tenancy.workspace)
+        flow = _choice_flow(tenancy.workspace, buttons=[{"id": "yes", "label": "Yes", "action": "postback"}])
+        contact, execution = _parked(tenancy.workspace, flow, connection)
+
+        outcome = attempt_resume(execution, inbound(connection, button_id="earlier_yes", button_label="Yes"))
+
+        assert isinstance(outcome, NotConsumed)
+        execution.refresh_from_db()
+        assert execution.status == ExecutionStatus.WAITING_REPLY
+        assert _tags(contact) == set()
+
 
 @pytest.mark.django_db
 class TestUnmatchedInput:

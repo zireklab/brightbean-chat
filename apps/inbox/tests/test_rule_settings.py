@@ -20,6 +20,7 @@ import pytest
 
 from apps.inbox import selectors, services
 from apps.inbox.models import ConversationLabel, InboxRule
+from apps.messaging.models import Message, MessageDirection, MessageStatus
 
 pytestmark = pytest.mark.django_db
 
@@ -188,6 +189,24 @@ class TestTheDryRun:
         assert response.status_code == 200
         assert response.context["sample"] == 2
         assert len(response.context["matches"]) == 1
+
+    def test_it_does_not_score_a_button_press(self, tenancy, conversation, inbound):
+        """A press is stored with its label as text, and the live hook never sees
+        one: ``RULE_EVENTS`` is messages and story replies. Scoring it here would
+        show a rule matching traffic it will never touch."""
+        typed = inbound(text="i would like a refund")
+        Message.objects.create(
+            conversation=conversation,
+            direction=MessageDirection.IN,
+            status=MessageStatus.DELIVERED,
+            body={"blocks": [{"type": "text", "text": "Refund"}], "button_id": "refund"},
+            idempotency_key="in:press",
+        )
+
+        matched, sample = selectors.dry_run(tenancy.workspace, {"keywords": [{"text": "refund", "mode": "contains"}]})
+
+        assert sample == 1
+        assert [message.pk for message in matched] == [typed.pk]
 
     def test_it_agrees_with_the_live_hook(self, tenancy, conversation, connection, identity, inbound):
         """The acceptance criterion, as a property rather than a promise: the

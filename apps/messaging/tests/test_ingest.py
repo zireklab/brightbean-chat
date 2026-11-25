@@ -367,6 +367,31 @@ class TestBodyShape:
         persist_events(connection, [make_event(connection, kind=EventType.POSTBACK, payload=payload)])
         assert messages(tenancy.workspace).get().body["button_id"] == "btn:yes"
 
+    def test_a_press_is_shown_as_the_label_it_carried(self, tenancy: Any, connection: Any) -> None:
+        """A press has no words of its own, and a thread of "no displayable
+        content" bubbles is what the inbox showed for one."""
+        payload = EventPayload(button_id="yes", button_label="Yes please")
+        persist_events(connection, [make_event(connection, kind=EventType.POSTBACK, payload=payload)])
+        body = messages(tenancy.workspace).get().body
+        assert body["blocks"] == [{"type": "text", "text": "Yes please"}]
+        assert body["button_id"] == "yes"
+
+    def test_typed_words_win_over_a_label(self, tenancy: Any, connection: Any) -> None:
+        payload = EventPayload(text="actually, no", button_id="yes", button_label="Yes please")
+        persist_events(connection, [make_event(connection, kind=EventType.POSTBACK, payload=payload)])
+        assert messages(tenancy.workspace).get().body["blocks"] == [{"type": "text", "text": "actually, no"}]
+
+    def test_a_press_with_no_label_stays_empty(self, tenancy: Any, connection: Any) -> None:
+        payload = EventPayload(button_id="yes")
+        persist_events(connection, [make_event(connection, kind=EventType.POSTBACK, payload=payload)])
+        assert messages(tenancy.workspace).get().body["blocks"] == []
+
+    def test_a_label_is_stored_as_text_and_nothing_else(self, tenancy: Any, connection: Any) -> None:
+        """NUL cannot live in a Postgres text field; the rest is escaped at render."""
+        payload = EventPayload(button_id="yes", button_label="Ye\x00s <b>")
+        persist_events(connection, [make_event(connection, kind=EventType.POSTBACK, payload=payload)])
+        assert messages(tenancy.workspace).get().body["blocks"] == [{"type": "text", "text": "Yes <b>"}]
+
     def test_a_ref_string_survives_for_the_ref_url_trigger(self, tenancy: Any, connection: Any) -> None:
         payload = EventPayload(text="/start", ref="promo-42")
         persist_events(connection, [make_event(connection, payload=payload)])
