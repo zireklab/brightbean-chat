@@ -607,7 +607,7 @@ def _inbound_body(event: NormalizedEvent) -> dict[str, Any]:
     # A press has no words of its own, so the thread shows the label it carried.
     # ``button_label`` is display-only (see ``EventPayload``): it is stored here,
     # for people, and was never offered to anything that routes.
-    text = _clean(payload.text or payload.button_label, MAX_TEXT_CHARS)
+    text = _clean(payload.text, MAX_TEXT_CHARS) or _clean(payload.button_label, MAX_TEXT_CHARS)
     if text:
         blocks.append({"type": "text", "text": text})
     # Type-checked before slicing, not assumed. EventPayload's contract is that
