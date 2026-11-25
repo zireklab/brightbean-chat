@@ -476,10 +476,24 @@ def _rich_lists_enabled() -> bool:
     return bool(getattr(settings, "TELEGRAM_RICH_LISTS", False))
 
 
+def _takes_rich_form(message: OutboundMessage) -> bool:
+    """Whether this is a list, and one a rich message can show in full.
+
+    The whole choice between the two forms, switch aside, and it is made before
+    anything is rendered: downgraded for the rich form, a message has its
+    descriptions, header and footer kept apart, and the plain form has no place
+    left to put them. So one option that cannot be a button sends the list plain,
+    where its description at least is in the text.
+    """
+    return bool(message.quick_replies and message.list_label.strip()) and all(
+        _label(item) and _callback_data(message.node_id, item.id) for item in message.quick_replies
+    )
+
+
 def _rich_list(
     chat_id: str, message: OutboundMessage, calls: list[tuple[str, dict[str, Any]]]
-) -> list[tuple[str, dict[str, Any]]] | None:
-    """The message's last text and its quick replies as one rich message, or None.
+) -> list[tuple[str, dict[str, Any]]]:
+    """The message's last text and its quick replies as one rich message.
 
     The last ``sendMessage`` is reclaimed as the body — the call
     ``whatsapp._with_interactive`` makes for the same reason: the options belong
@@ -494,37 +508,24 @@ def _rich_list(
     function, so nothing downstream can tell the two apart. Buttons the message
     also carries stay in an ordinary inline keyboard beneath.
 
-    ``None`` means there is nothing to list — every option was one that cannot be
-    represented — and the caller sends the plain form. ``calls`` is left alone
-    in that case.
+    Every option can be a button: :func:`_takes_rich_form` is asked first.
     """
     options: list[dict[str, Any]] = []
     for item in message.quick_replies:
         data = _callback_data(message.node_id, item.id)
         label = _label(item)
-        if data is None or not label:
-            continue
         if item.description:
             options.append({"type": "paragraph", "text": [{"type": "bold", "text": label}, f" — {item.description}"]})
         options.append({"type": "buttons", "buttons": [{"text": label, "callback_data": data}]})
-    if not options:
-        # Not reachable from a flow — the schema bounds ids to what always fits —
-        # but a message built by hand can get here, and its plain form has no
-        # place for a header or footer the renderer kept apart for the rich one.
-        logger.warning(
-            "Telegram: none of a list's options can be represented; it is sent in its plain form, "
-            "without a header or footer set apart for the rich one."
-        )
-        return None
 
-    body = str(calls.pop()[1]["text"]) if calls[-1][0] == "sendMessage" else ""
+    body = str(calls.pop()[1]["text"]) if calls and calls[-1][0] == "sendMessage" else ""
     blocks: list[dict[str, Any]] = []
-    if message.header:
+    if message.header.strip():
         blocks.append({"type": "heading", "text": message.header, "size": RICH_HEADING_SIZE})
     if body:
         blocks.append({"type": "paragraph", "text": body})
     blocks.append({"type": "details", "summary": message.list_label, "blocks": options})
-    if message.footer:
+    if message.footer.strip():
         blocks.append({"type": "footer", "text": message.footer})
 
     payload: dict[str, Any] = {"chat_id": chat_id, "rich_message": {"blocks": blocks}}
@@ -555,12 +556,14 @@ def wire_calls(chat_id: str, message: OutboundMessage, *, rich: bool = False) ->
     calls: list[tuple[str, dict[str, Any]]] = []
     for block in message.blocks:
         calls.extend(_block_calls(chat_id, block))
+    if rich and _takes_rich_form(message):
+        # A header, a footer and descriptions are something to say, though they
+        # are not blocks here: the plain form of this message has them as text.
+        said = message.header.strip() or message.footer.strip() or any(q.description for q in message.quick_replies)
+        if calls or said:
+            return _rich_list(chat_id, message, calls)
     if not calls:
         return []
-    if rich and message.quick_replies and message.list_label:
-        listed = _rich_list(chat_id, message, calls)
-        if listed is not None:
-            return listed
 
     markup = _reply_markup(message)
     if markup is not None:
@@ -1187,9 +1190,9 @@ class TelegramAdapter(Adapter):
         token = bot_token(connection)
         # Decided once, for the whole send: the rich form needs the renderer to
         # keep descriptions, headers and footers as they are, so the switch picks
-        # the capability row as well as the wire shape. A message that is not a
-        # list takes neither, whatever the switch says.
-        rich = _rich_lists_enabled() and bool(outbound.quick_replies and outbound.list_label)
+        # the capability row as well as the wire shape. A message the rich form
+        # cannot show in full takes neither, whatever the switch says.
+        rich = _rich_lists_enabled() and _takes_rich_form(outbound)
         rendered = downgrade(outbound, _RICH_CAPABILITIES if rich else self.capabilities)
         calls: list[tuple[str, dict[str, Any]]] = []
         for message in rendered.messages:

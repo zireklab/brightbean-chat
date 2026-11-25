@@ -189,7 +189,9 @@ It is off because an app too old to render a rich message shows a placeholder in
 place, and a bot cannot tell which of its contacts have such an app. If Telegram
 refuses the rich form the send **fails** — the flow follows `default` and the reason
 is on the message — rather than being quietly resent another way. Only messages that
-set a list caption are affected.
+set a list caption are affected, and a list with an option that cannot be a button (a
+label that renders to nothing, say) is sent in the plain form from the start, where
+its description, header and footer are text.
 
 Not yet checked against a live bot: how old clients render it, and whether the
 message comes back with a press on it (which is where the inbox gets a press's

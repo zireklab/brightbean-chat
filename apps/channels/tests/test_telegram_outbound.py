@@ -11,6 +11,7 @@ which is what the adapter does, so they pin the *combination* of the shared
 renderer and this adapter rather than either alone.
 """
 
+import json
 from typing import Any
 
 import pytest
@@ -590,32 +591,82 @@ class TestRichLists:
         )
         assert [method for method, _payload in self.rich(message)] == ["sendPhoto", "sendRichMessage"]
 
-    def test_an_option_that_cannot_be_represented_is_left_out(self) -> None:
+    @pytest.mark.parametrize(
+        ("fields", "method"),
+        [
+            pytest.param(
+                {"quick_replies": (QuickReply(id="é" * 60, label="Courier", description="Tomorrow"),)},
+                "sendMessage",
+                id="no-option-can-be-a-button",
+            ),
+            pytest.param(
+                {
+                    "quick_replies": (
+                        QuickReply(id="é" * 60, label="Courier", description="Tomorrow"),
+                        QuickReply(id="p", label="Pickup", description="Today"),
+                    )
+                },
+                "sendMessage",
+                id="one-option-cannot-be-a-button",
+            ),
+            pytest.param(
+                {"quick_replies": (QuickReply(id="c", label=" ", description="Tomorrow"),)},
+                "sendMessage",
+                id="an-option-has-a-blank-label",
+            ),
+            pytest.param({"list_label": " "}, "sendMessage", id="the-caption-is-blank"),
+            pytest.param({"blocks": (TextBlock(text=" "),)}, "sendRichMessage", id="the-text-is-blank"),
+            pytest.param({"blocks": ()}, "sendRichMessage", id="there-is-no-text"),
+            pytest.param({"blocks": (), "header": "", "footer": ""}, "sendRichMessage", id="only-a-description"),
+            pytest.param(
+                {"blocks": (GalleryBlock(cards=(Card(title="First card"), Card())),)},
+                "sendRichMessage",
+                id="a-gallery-ends-in-an-empty-card",
+            ),
+        ],
+    )
+    def test_the_switch_never_costs_a_word_the_plain_form_delivers(
+        self, telegram_connection: ChannelConnection, settings: Any, fields: dict[str, Any], method: str
+    ) -> None:
+        """The renderer keeps descriptions, a header and a footer apart for the rich
+        form, so a message that then cannot take it would have nowhere to put them."""
         message = OutboundMessage(
-            blocks=(TextBlock(text="x"),),
-            quick_replies=(QuickReply(id="é" * 60, label="Too long"), QuickReply(id="ok", label="Fine")),
-            list_label="More",
-            node_id="n",
+            **{
+                "blocks": (TextBlock(text="How?"),),
+                "quick_replies": (QuickReply(id="c", label="Courier", description="Tomorrow"),),
+                "list_label": "Delivery",
+                "header": "Options",
+                "footer": "Free over 2000",
+                "node_id": "ask",
+                **fields,
+            }
         )
-        (_method, payload) = self.rich(message)[0]
-        options = payload["rich_message"]["blocks"][-1]["blocks"]
-        assert [block["buttons"][0]["text"] for block in options] == ["Fine"]
+        written = [message.header, message.footer, *(item.description for item in message.quick_replies)]
+        for switch in (False, True):
+            settings.TELEGRAM_RICH_LISTS = switch
+            with fake_bot_api() as fake:
+                result = TelegramAdapter().send(telegram_connection, Identity(), message)
+            assert result.status == SendStatus.SENT
+            assert fake.methods()[-1] == (method if switch else "sendMessage")
+            wire = json.dumps(fake.calls, ensure_ascii=False)
+            assert [words for words in written if words not in wire] == []
 
-    def test_with_nothing_to_list_the_plain_form_is_sent_and_said(self, caplog: Any) -> None:
-        """Not reachable from a flow — the schema bounds ids to what always fits —
-        but a hand-built message can get here, and the plain form has no place for
-        a header the renderer kept apart for the rich one. That is logged, not silent."""
+    @pytest.mark.parametrize("switch", [False, True])
+    def test_options_with_nothing_said_are_still_an_empty_message(
+        self, telegram_connection: ChannelConnection, settings: Any, switch: bool
+    ) -> None:
+        settings.TELEGRAM_RICH_LISTS = switch
         message = OutboundMessage(
-            blocks=(TextBlock(text="x"),),
-            quick_replies=(QuickReply(id="é" * 60, label="Too long"),),
-            list_label="More",
-            header="Top",
-            node_id="n",
+            blocks=(TextBlock(text=" "),), quick_replies=(QuickReply(id="c", label="Courier"),), list_label="Delivery"
         )
-        with caplog.at_level("WARNING"):
-            methods = [method for method, _payload in self.rich(message)]
-        assert methods == ["sendMessage"]
-        assert "plain form" in caplog.text
+        with fake_bot_api() as fake:
+            result = TelegramAdapter().send(telegram_connection, Identity(), message)
+        assert (result.status, result.error) == (SendStatus.FAILED, "empty_message")
+        assert fake.methods() == []
+
+    def test_a_blank_header_or_footer_is_not_a_block(self) -> None:
+        (_method, payload) = self.rich(self.listing(header=" ", footer="\n"))[0]
+        assert [block["type"] for block in payload["rich_message"]["blocks"]] == ["paragraph", "details"]
 
     def test_without_a_list_label_nothing_changes_even_asking_for_rich(self) -> None:
         message = OutboundMessage(
