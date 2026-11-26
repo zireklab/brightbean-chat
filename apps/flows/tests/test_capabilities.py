@@ -125,6 +125,62 @@ class TestLimits:
         assert [issue.code for issue in result.warnings] == ["capability_limit_exceeded"]
 
 
+class TestListCaption:
+    @staticmethod
+    def warnings(caption: str, platform: Platform) -> list[str | None]:
+        graph = empty_graph()
+        node = node_fixture("send_message", node_id="ask")
+        node["config"] = {
+            "blocks": [{"type": "text", "text": "Pick"}],
+            "quick_replies": [{"id": "a", "label": "A"}],
+            "list_label": caption,
+        }
+        graph["nodes"] = [node]
+        result = validate_graph(graph, platforms=[platform])
+        assert result.errors == []
+        return [issue.path for issue in result.warnings]
+
+    def test_a_caption_the_platform_will_cut_is_a_warning(self):
+        assert self.warnings("Choose the size you would like", Platform.WHATSAPP) == ["config.list_label"]
+
+    def test_one_that_fits_is_not(self):
+        assert self.warnings("x" * 20, Platform.WHATSAPP) == []
+
+    def test_a_platform_that_never_shows_it_has_nothing_to_cut(self):
+        assert self.warnings("Choose the size you would like", Platform.TELEGRAM) == []
+
+    def test_spaces_are_counted_as_the_button_shows_them(self):
+        assert self.warnings("Choose     the     size", Platform.WHATSAPP) == []
+
+    def test_the_words_around_a_placeholder_still_count(self):
+        assert self.warnings("Choose the size you would like {{name}}", Platform.WHATSAPP) == ["config.list_label"]
+
+    def test_a_caption_nothing_will_show_is_not_warned_about(self):
+        graph = empty_graph()
+        node = node_fixture("send_message", node_id="ask")
+        node["config"] = {
+            "blocks": [{"type": "text", "text": "Pick"}],
+            "buttons": [{"id": "b", "label": "B", "action": "postback"}],
+            "quick_replies": [{"id": "a", "label": "A"}],
+            "list_label": "Choose the size you would like",
+        }
+        graph["nodes"] = [node]
+        result = validate_graph(graph, platforms=[Platform.WHATSAPP])
+        assert "config.list_label" not in [issue.path for issue in result.warnings]
+
+    def test_the_length_of_a_placeholder_says_nothing(self):
+        assert self.warnings("For {{a_custom_field_with_a_name}}", Platform.WHATSAPP) == []
+
+    def test_without_quick_replies_there_is_no_list(self):
+        graph = empty_graph()
+        node = node_fixture("send_message", node_id="ask")
+        node["config"] = {"blocks": [{"type": "text", "text": "Pick"}], "list_label": "Choose the size you would like"}
+        graph["nodes"] = [node]
+        assert "config.list_label" not in [
+            issue.path for issue in validate_graph(graph, platforms=[Platform.WHATSAPP]).warnings
+        ]
+
+
 class TestExclusiveInteraction:
     """A platform that shows buttons *or* quick replies has to say so.
 

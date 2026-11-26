@@ -31,7 +31,16 @@ from uuid import UUID
 
 from apps.channels.capabilities import capabilities_for
 from apps.channels.downgrade import downgrade
-from apps.channels.events import Button, Card, CardBlock, GalleryBlock, MediaBlock, OutboundMessage, QuickReply
+from apps.channels.events import (
+    DEFAULT_LIST_LABEL,
+    Button,
+    Card,
+    CardBlock,
+    GalleryBlock,
+    MediaBlock,
+    OutboundMessage,
+    QuickReply,
+)
 from apps.channels.events import TextBlock as OutboundText
 from apps.flows.engine.context import NodeContext
 from apps.flows.engine.nodes.base import Node
@@ -86,11 +95,12 @@ class SendMessageNode(Node):
             quick_replies=tuple(quick_replies),
             template_ref=template.reference,
             template_variables=template.variables,
-            list_label=ctx.render(ctx.config.get("list_label")),
+            list_label=_list_label(ctx),
             # A template send puts only the approved copy on the wire, so a header
             # or footer stored with it would show in the thread and never be sent.
-            header="" if template.reference else ctx.render(ctx.config.get("header")),
-            footer="" if template.reference else ctx.render(ctx.config.get("footer")),
+            # Nor is a line of spaces, which is what an empty placeholder leaves.
+            header="" if template.reference else ctx.render(ctx.config.get("header")).strip(),
+            footer="" if template.reference else ctx.render(ctx.config.get("footer")).strip(),
         )
         try:
             outcome = deliver(ctx.execution, outbound, node_id=ctx.node_id)
@@ -324,12 +334,25 @@ def _buttons(ctx: NodeContext) -> list[Button]:
     return buttons
 
 
+def _list_label(ctx: NodeContext) -> str:
+    """The list's caption, or the default one when the author's renders to nothing.
+
+    The caption is also how an author *asks* for the list, and that must not depend
+    on what is known about one contact: a placeholder with no value would turn the
+    list into quick replies, and the press into typed words.
+    """
+    caption = ctx.config.get("list_label")
+    if not isinstance(caption, str) or not caption.strip():
+        return ""
+    return ctx.render(caption).strip() or DEFAULT_LIST_LABEL
+
+
 def _quick_replies(ctx: NodeContext) -> list[QuickReply]:
     return [
         QuickReply(
             id=reply["id"],
             label=ctx.render(reply.get("label")),
-            description=ctx.render(reply.get("description")),
+            description=ctx.render(reply.get("description")).strip(),
         )
         for reply in ctx.config.get("quick_replies") or []
         if isinstance(reply, dict) and isinstance(reply.get("id"), str)

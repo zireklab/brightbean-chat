@@ -3204,6 +3204,15 @@ msgstr ""
 #: apps/flows/schema/validation.py:484
 #, python-format
 msgid ""
+"%(platform)s shows the first %(limit)s characters of the list button and this "
+"one is %(length)s."
+msgstr ""
+"%(platform)s тизме баскычынын алгачкы %(limit)s символун көрсөтөт, ал эми бул "
+"баскыч — %(length)s."
+
+#: apps/flows/schema/validation.py:484
+#, python-format
+msgid ""
 "%(platform)s shows buttons or quick replies, not both. The quick replies "
 "will arrive as a numbered list at the end of the message instead."
 msgstr ""

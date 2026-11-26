@@ -519,3 +519,9 @@ class TestLifecycle:
         with fake_graph() as graph:
             MessengerAdapter().on_webhook_secret_rotated(page, "a-new-secret")
         assert graph.calls == []
+
+
+def test_the_button_text_limit_the_renderer_uses_is_the_one_here() -> None:
+    from apps.channels.capabilities import capabilities_for
+
+    assert capabilities_for("messenger").max_buttons_text_len == MAX_BUTTON_TEMPLATE_TEXT_CHARS

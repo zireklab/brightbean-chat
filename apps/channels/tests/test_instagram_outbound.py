@@ -267,6 +267,51 @@ class TestWirePayloads:
         assert by_comment[0]["recipient"] == {"comment_id": "17900000000000101"}
 
 
+class TestHeaderAndFooterBesideButtons:
+    """A card's title is eighty characters, and the renderer knows it: a line folded
+    into the text must not be what splits the author's sentence over two bubbles."""
+
+    @staticmethod
+    def sent(**fields: Any) -> list[str]:
+        from apps.channels.capabilities import capabilities_for
+        from apps.channels.downgrade import downgrade
+
+        message = OutboundMessage(
+            buttons=(Button(id="a", label="A"), Button(id="b", label="B")),
+            **{"blocks": (TextBlock(text="How should we deliver it to you?"),), **fields},
+        )
+        bubbles: list[str] = []
+        for part in downgrade(message, capabilities_for("instagram")).messages:
+            for wire in wire_messages({"id": IG_USER_ID}, part):
+                body = wire["message"]
+                bubbles.append(
+                    body["text"] if "text" in body else body["attachment"]["payload"]["elements"][0]["title"]
+                )
+        return bubbles
+
+    def test_a_header_that_does_not_fit_goes_ahead_whole(self) -> None:
+        assert self.sent(header="Delivery options for your order", footer="Free over 2000") == [
+            "Delivery options for your order",
+            "How should we deliver it to you?\n\nFree over 2000",
+        ]
+
+    def test_a_footer_that_does_not_fit_follows_whole(self) -> None:
+        footer = "Reply STOP to unsubscribe at any time. Message rates may apply."
+        assert self.sent(footer=footer) == ["How should we deliver it to you?", footer]
+
+    def test_a_message_with_neither_is_split_as_it_always_was(self) -> None:
+        text = "First paragraph, which is long enough to matter here.\n\nSecond one, which carries the question?"
+        assert self.sent(blocks=(TextBlock(text=text),)) == [
+            "First paragraph,",
+            "which is long enough to matter here.\n\nSecond one, which carries the question?",
+        ]
+
+    def test_the_limit_the_renderer_uses_is_the_one_here(self) -> None:
+        from apps.channels.capabilities import capabilities_for
+
+        assert capabilities_for("instagram").max_buttons_text_len == MAX_TITLE_CHARS
+
+
 class TestSending:
     def test_a_send_calls_the_messages_endpoint(self, instagram_connection: ChannelConnection) -> None:
         with fake_graph() as graph:

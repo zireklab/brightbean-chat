@@ -179,8 +179,8 @@ the default reply and inbox rules do not see it — the same as a button.
 
 ### Rich lists (off by default)
 
-`TELEGRAM_RICH_LISTS=true` sends a list as a **rich message** (Bot API 10.1, with
-buttons from 10.3) instead: the header as a heading, the options in an expandable
+`TELEGRAM_RICH_LISTS=true` sends a list as a **rich message** (Bot API 10.1; `blocks`
+from 10.2, buttons from 10.3) instead: the header as a heading, the options in an expandable
 block under the list caption — each with its description and a button — and the
 footer as a footer. Buttons the message also has stay in an inline keyboard beneath.
 Each option answers with the same `callback_data` as the plain form.

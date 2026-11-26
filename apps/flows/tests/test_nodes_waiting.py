@@ -13,6 +13,7 @@ import pytest
 from django.utils import timezone
 
 from apps.channels.capabilities import capabilities_for
+from apps.channels.events import DEFAULT_LIST_LABEL
 from apps.common.platforms import Platform
 from apps.contacts.services import create_custom_field, set_field_value
 from apps.flows import messaging
@@ -168,6 +169,35 @@ class TestSendMessage:
         outbound = _sent(facade)
         assert outbound.list_label == "Options for Ada"
         assert [reply.description for reply in outbound.quick_replies] == ["To your door, Ada"]
+
+    def test_a_caption_with_nothing_to_show_still_asks_for_the_list(self, tenancy, facade):
+        """Whether a contact gets a list must not depend on what is known about them:
+        without it the answer comes back as typed words and not as a press."""
+        connection = connection_for(tenancy.workspace)
+        config = {
+            "blocks": [{"type": "text", "text": "How?"}],
+            "quick_replies": [{"id": "c", "label": "Courier", "description": "{{nothing}} {{nothing}}"}],
+            "list_label": "{{nothing}} {{nothing}}",
+            "header": "{{nothing}} {{nothing}}",
+            "footer": " ",
+        }
+        _run(tenancy.workspace, graph([node("m", "send_message", config)]), connection=connection)
+
+        outbound = _sent(facade)
+        assert outbound.list_label == DEFAULT_LIST_LABEL
+        # The rest are lines with nothing to say, and are stored as none: the thread
+        # shows what was sent.
+        assert (outbound.header, outbound.footer, outbound.quick_replies[0].description) == ("", "", "")
+
+    @pytest.mark.parametrize("caption", ["", "  ", None])
+    def test_no_caption_asks_for_nothing(self, tenancy, facade, caption):
+        connection = connection_for(tenancy.workspace)
+        config = {"blocks": [{"type": "text", "text": "How?"}], "quick_replies": [{"id": "c", "label": "C"}]}
+        if caption is not None:
+            config["list_label"] = caption
+        _run(tenancy.workspace, graph([node("m", "send_message", config)]), connection=connection)
+
+        assert _sent(facade).list_label == ""
 
     def test_the_header_and_footer_go_through_the_shared_renderer_too(self, tenancy, facade):
         connection = connection_for(tenancy.workspace)

@@ -33,6 +33,7 @@ if TYPE_CHECKING:
     from apps.channels.models import ChannelConnection
 
 __all__ = [
+    "DEFAULT_LIST_LABEL",
     "Button",
     "Card",
     "CardBlock",
@@ -282,6 +283,13 @@ class GalleryBlock:
 
 #: Anything that may appear in ``OutboundMessage.blocks``.
 type Block = TextBlock | MediaBlock | CardBlock | GalleryBlock
+
+
+#: What a list's caption says when its author's says nothing: they asked for a
+#: list (``OutboundMessage.list_label``), and a platform that shows a caption has
+#: to show something. A sign and not a word, because what language a contact
+#: reads is not known here.
+DEFAULT_LIST_LABEL = "☰"
 
 
 @dataclass(frozen=True)

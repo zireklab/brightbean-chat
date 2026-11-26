@@ -293,6 +293,29 @@ class TestLists:
         assert rendered(outbound_from_body(original.to_body())) == rendered(original)
 
 
+class TestAroundAList:
+    def test_the_header_the_picture_and_the_options_come_in_that_order(self) -> None:
+        message = OutboundMessage(
+            blocks=(MediaBlock(kind="image", url="https://x.test/i.png", caption="Which size?"),),
+            quick_replies=(QuickReply(id="s", label="Small", description="Up to 170 cm"),),
+            list_label="Size",
+            header="Delivery",
+        )
+        assert [(method, payload.get("text") or payload.get("caption")) for method, payload in rendered(message)] == [
+            ("sendMessage", "Delivery"),
+            ("sendPhoto", "Which size?"),
+            ("sendMessage", "Small — Up to 170 cm"),
+        ]
+
+    def test_a_caption_of_spaces_is_no_caption_in_either_form(self) -> None:
+        """One check, so the plain form and the rich one cannot disagree on what a list is."""
+        message = OutboundMessage(
+            blocks=(TextBlock(text="Pick"),), quick_replies=(QuickReply(id="a", label="A"),), list_label=" "
+        )
+        (_method, payload) = rendered(message)[-1]
+        assert "keyboard" in payload["reply_markup"]
+
+
 class TestCallbackData:
     def test_a_long_pair_drops_the_node_prefix_and_keeps_the_button(self) -> None:
         """SPEC §6.2 asks for node_id:button_id and Telegram caps the field at 64

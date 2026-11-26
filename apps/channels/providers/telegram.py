@@ -476,6 +476,11 @@ def _rich_lists_enabled() -> bool:
     return bool(getattr(settings, "TELEGRAM_RICH_LISTS", False))
 
 
+def _is_list(message: OutboundMessage) -> bool:
+    """Whether the author asked for the quick replies as a list. One check for both forms of it."""
+    return bool(message.quick_replies and message.list_label.strip())
+
+
 def _takes_rich_form(message: OutboundMessage) -> bool:
     """Whether this is a list, and one a rich message can show in full.
 
@@ -485,7 +490,7 @@ def _takes_rich_form(message: OutboundMessage) -> bool:
     left to put them. So one option that cannot be a button sends the list plain,
     where its description at least is in the text.
     """
-    return bool(message.quick_replies and message.list_label.strip()) and all(
+    return _is_list(message) and all(
         _label(item) and _callback_data(message.node_id, item.id) for item in message.quick_replies
     )
 
@@ -649,7 +654,7 @@ def _reply_markup(message: OutboundMessage) -> dict[str, Any] | None:
     **alone** get the one-time reply keyboard SPEC §6.2 asks for — which is what
     every message written before ``list_label`` existed still gets, unchanged.
     """
-    if message.buttons or (message.quick_replies and message.list_label):
+    if message.buttons or _is_list(message):
         rows = [row for row in (_inline_button(item, message.node_id) for item in _pressable(message)) if row]
         return {"inline_keyboard": [[row] for row in rows]} if rows else None
     if message.quick_replies:

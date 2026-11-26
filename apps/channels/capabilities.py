@@ -96,6 +96,20 @@ class Capabilities:
     #: from the text; 0 where it does not. Read as the description room is: past
     #: it, or with 0, the renderer puts the line in the text instead of cutting it.
     max_header_footer_len: int = 0
+
+    #: How much text one bubble holds together with buttons, where that is less
+    #: than a message holds; longer is split by the adapter, the tail staying with
+    #: the buttons. 0 is "no such limit". Read only for a header or a footer that
+    #: goes into the text: it must not be what splits the author's sentence.
+    max_buttons_text_len: int = 0
+
+    #: The same for quick replies shown as a list.
+    max_list_text_len: int = 0
+
+    #: How much of a list's caption the platform shows; 0 where it shows none, or
+    #: all of it. The builder warns past it — clipping a caption loses nothing a
+    #: contact needs, but its author should know.
+    max_list_label_len: int = 0
     proactive_send: bool = False
     broadcast_allowed: bool = False
 
@@ -239,6 +253,8 @@ CAPABILITIES: dict[str, Capabilities] = {
         typing_indicator=True,
         window_hours=24,
         tags_supported=(_HUMAN_AGENT,),
+        # Buttons live on a card, and this is its title.
+        max_buttons_text_len=80,
         max_buttons=3,
         max_quick_replies=13,
         broadcast_allowed=True,
@@ -266,6 +282,8 @@ CAPABILITIES: dict[str, Capabilities] = {
         window_hours=24,
         tags_supported=_MESSENGER_TAGS,
         broadcast_allowed=True,
+        # A button template's own text.
+        max_buttons_text_len=640,
         max_buttons=3,
         max_quick_replies=13,
         max_text_len=2000,
@@ -296,8 +314,13 @@ CAPABILITIES: dict[str, Capabilities] = {
         interaction_is_exclusive=True,
         # A list row's own description slot, from Meta's interactive-list reference.
         max_quick_reply_description_len=72,
+        # Both interactive shapes carry a body of 1024 characters.
+        max_buttons_text_len=1024,
+        max_list_text_len=1024,
         # A row title's own limit; a longer label is repeated whole in that slot.
         max_described_label_len=24,
+        # The button that opens an interactive list.
+        max_list_label_len=20,
         # `header` and `footer` of an interactive message: 60 characters each.
         max_header_footer_len=60,
         # url_buttons False, and not an oversight. A WhatsApp *session* message
