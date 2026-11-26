@@ -20,6 +20,7 @@ runtime protects itself with the ``blocks_since_pause`` cap (§9.2) rather than
 with a validator that cannot tell a loop from a retry.
 """
 
+import re
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass, field
 from typing import Any
@@ -27,6 +28,7 @@ from typing import Any
 from django.utils.translation import gettext, ngettext
 
 from apps.flows.capabilities import capabilities_for
+from apps.flows.rendering import PLACEHOLDER_PATTERN
 from apps.flows.schema.envelope import validate_document
 from apps.flows.schema.handles import parse_handle
 from apps.flows.schema.issues import Issue
@@ -475,15 +477,21 @@ def _send_message_warnings(
             )
 
     caption = config.get("list_label")
-    # The length of a placeholder says nothing about what it will render to.
-    if isinstance(caption, str) and "{{" not in caption and 0 < capabilities.max_list_label_len < len(caption):
-        yield _warn(
-            "capability_limit_exceeded",
-            gettext("%(platform)s shows the first %(limit)s characters of the list button and this one is %(length)s.")
-            % {"platform": platform, "limit": capabilities.max_list_label_len, "length": len(caption)},
-            node,
-            "config.list_label",
-        )
+    shown = bool(config.get("quick_replies")) and not (capabilities.interaction_is_exclusive and config.get("buttons"))
+    if isinstance(caption, str) and shown and capabilities.max_list_label_len:
+        # As the button shows it: on one line, and of a placeholder only the words
+        # around it, since what it renders to is not known here.
+        words = " ".join(re.sub(PLACEHOLDER_PATTERN, " ", caption).split())
+        if len(words) > capabilities.max_list_label_len:
+            yield _warn(
+                "capability_limit_exceeded",
+                gettext(
+                    "%(platform)s shows the first %(limit)s characters of the list button and this one is %(length)s."
+                )
+                % {"platform": platform, "limit": capabilities.max_list_label_len, "length": len(words)},
+                node,
+                "config.list_label",
+            )
 
     if capabilities.interaction_is_exclusive and (config.get("buttons") or []) and (config.get("quick_replies") or []):
         # Otherwise the panel says "WhatsApp allows 10 quick replies" and stays

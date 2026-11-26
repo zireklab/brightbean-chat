@@ -103,6 +103,9 @@ class Capabilities:
     #: goes into the text: it must not be what splits the author's sentence.
     max_buttons_text_len: int = 0
 
+    #: The same for quick replies shown as a list.
+    max_list_text_len: int = 0
+
     #: How much of a list's caption the platform shows; 0 where it shows none, or
     #: all of it. The builder warns past it — clipping a caption loses nothing a
     #: contact needs, but its author should know.
@@ -311,6 +314,9 @@ CAPABILITIES: dict[str, Capabilities] = {
         interaction_is_exclusive=True,
         # A list row's own description slot, from Meta's interactive-list reference.
         max_quick_reply_description_len=72,
+        # Both interactive shapes carry a body of 1024 characters.
+        max_buttons_text_len=1024,
+        max_list_text_len=1024,
         # A row title's own limit; a longer label is repeated whole in that slot.
         max_described_label_len=24,
         # The button that opens an interactive list.

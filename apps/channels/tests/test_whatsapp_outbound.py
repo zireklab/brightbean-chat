@@ -341,6 +341,21 @@ class TestInteractiveShapes:
         bodies = [p["text"]["body"] for p in payloads[:-1]] + [payloads[-1]["interactive"]["body"]["text"]]
         assert " ".join(bodies) == words
 
+    def test_a_body_ending_in_blank_lines_is_sent_once(self) -> None:
+        """The last part of a split is the text's own tail only up to its whitespace."""
+        body = "x" * 10 + " " + "p" * 1020 + "\n\n\n\n\n"
+        payloads = wire_calls(TO, OutboundMessage(blocks=(TextBlock(text=body),), buttons=(Button(id="b", label="B"),)))
+        sent = [p["text"]["body"] for p in payloads[:-1]] + [payloads[-1]["interactive"]["body"]["text"]]
+        assert sent == ["x" * 10, "p" * 1020]
+
+    def test_its_interactive_shapes_publish_their_body_limit(self) -> None:
+        capabilities = capabilities_for(Platform.WHATSAPP)
+        assert capabilities.max_buttons_text_len == capabilities.max_list_text_len == MAX_INTERACTIVE_BODY_CHARS
+
+    def test_a_list_with_no_caption_still_says_choose(self) -> None:
+        """What a flow written before captions sends, unchanged."""
+        assert LIST_BUTTON_LABEL == "Choose"
+
     def test_a_row_description_is_one_line(self) -> None:
         (payload,) = wire_calls(TO, self.a_list(description="Fits up\nto   170 cm"))
         row = payload["interactive"]["action"]["sections"][0]["rows"][0]

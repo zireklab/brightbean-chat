@@ -76,7 +76,6 @@ from apps.channels import security
 from apps.channels.capabilities import Capabilities, capabilities_for
 from apps.channels.downgrade import downgrade, split_text
 from apps.channels.events import (
-    DEFAULT_LIST_LABEL,
     Button,
     CardBlock,
     EventPayload,
@@ -173,7 +172,7 @@ MAX_REPLY_ID_CHARS = 256
 #: What the list's own opener button says. Meta requires one and gives it no
 #: default; this is the label a contact taps to see the rows. It is what the
 #: opener says when the author gave ``OutboundMessage.list_label`` nothing.
-LIST_BUTTON_LABEL = DEFAULT_LIST_LABEL
+LIST_BUTTON_LABEL = "Choose"
 
 #: What an interactive message says when the author gave it no text of its own.
 #: Meta requires a body on both interactive shapes, so the alternative to a word
@@ -657,9 +656,11 @@ def _list_row(item: QuickReply) -> dict[str, Any] | None:
 
     The label is **shortened, not dropped**, when it is over the 24-character
     row limit: Meta rejects the whole message on an over-long title, so the
-    choice is a clipped option or no message at all. The full text goes in the
-    row's description, which WhatsApp shows underneath, so nothing an author
-    wrote is actually lost.
+    choice is a clipped option or no message at all. The full label goes in the
+    row's description, which WhatsApp shows underneath. The author's own
+    description is then in the body: the renderer put it there
+    (``max_described_label_len``), and a message that skipped the renderer loses
+    it here.
     """
     label = _label(item)
     if not label or not item.id:
@@ -718,7 +719,7 @@ def _with_interactive(to: str, payloads: list[dict[str, Any]], action: dict[str,
         # Everything but the tail goes back as ordinary text, as it was written:
         # the parts are this limit's, and a break between them is not the author's.
         # A header goes with it, being the line above the whole message.
-        head = body[: len(body) - len(tail)].rstrip()
+        head = body[: body.rindex(tail)].rstrip()
         header = action.get("header")
         if header:
             head = f"{header['text']}\n\n{head}"

@@ -657,6 +657,60 @@ class TestHeaderAndFooter:
         message = OutboundMessage(blocks=(TextBlock(" "),), buttons=(Button(id="p", label="Pricing"),), footer="End")
         assert texts(downgrade(message, TEXT_ONLY).messages[0]) == ["Reply 1 for Pricing\n\nEnd"]
 
+    @pytest.mark.parametrize(
+        "controls",
+        [{"buttons": (Button(id="b", label="B"),)}, {"quick_replies": (QuickReply("q", "Q"),), "list_label": "L"}],
+    )
+    def test_a_list_and_a_button_set_both_have_their_room(self, controls: dict[str, Any]) -> None:
+        """Both of WhatsApp's interactive shapes hold 1024 characters of body."""
+        caps = replace(self.FRAMED, max_buttons_text_len=1024, max_list_text_len=1024)
+        body = "word " * 199 + "When?"
+        message = OutboundMessage(blocks=(TextBlock(body),), header="h" * 64, **controls)
+        (rendered,) = downgrade(message, caps).messages
+        assert texts(rendered) == ["h" * 64, body]
+
+    @pytest.mark.parametrize(("header", "footer"), [("Delivery options today", ""), ("", "Free over 2000, today")])
+    def test_a_line_never_pushes_the_text_over_the_platforms_own_cap(self, header: str, footer: str) -> None:
+        """Split from its start, the text would move every break and the buttons'
+        place with it; the line goes in a bubble of its own instead."""
+        caps = Capabilities(buttons=True, max_buttons=3, max_text_len=1000)
+        body = "word " * 197 + "When?"
+        message = self.framed(blocks=(TextBlock(body),), header=header, footer=footer)
+        (rendered,) = downgrade(message, caps).messages
+        assert body in texts(rendered)
+        assert all(len(text) <= 1000 for text in texts(rendered))
+
+    def test_buttons_nobody_will_see_leave_the_text_its_room(self) -> None:
+        caps = Capabilities(buttons=True, max_buttons=3, max_text_len=1000, max_buttons_text_len=80)
+        message = self.framed(blocks=(TextBlock("q" * 60),), buttons=(Button(id="b", label=" "),), footer="f" * 30)
+        (rendered,) = downgrade(message, caps).messages
+        assert texts(rendered) == ["Delivery\n\n" + "q" * 60 + "\n\n" + "f" * 30]
+
+    def test_options_follow_a_picture_that_asks_the_question(self) -> None:
+        """The question is the caption, so what answers it comes after it."""
+        picture = MediaBlock(kind="image", url="https://x.test/i.png", caption="Which size?")
+        message = OutboundMessage(blocks=(TextBlock("Our menu"), picture), buttons=(Button(id="s", label="Small"),))
+        (rendered,) = downgrade(message, Capabilities(image=True, max_text_len=4096)).messages
+        assert rendered.blocks == (TextBlock("Our menu"), picture, TextBlock("Reply 1 for Small"))
+
+    def test_a_picture_with_no_caption_does_not_move_them(self) -> None:
+        picture = MediaBlock(kind="image", url="https://x.test/i.png")
+        message = OutboundMessage(blocks=(TextBlock("Pick one"), picture), buttons=(Button(id="s", label="Small"),))
+        (rendered,) = downgrade(message, Capabilities(image=True, max_text_len=4096)).messages
+        assert rendered.blocks == (TextBlock("Pick one\n\nReply 1 for Small"), picture)
+
+    @pytest.mark.parametrize("label", ["", "  "])
+    def test_an_option_with_nothing_to_say_is_named_by_its_id(self, label: str) -> None:
+        message = OutboundMessage(
+            blocks=(TextBlock("Pick"),),
+            buttons=(Button(id="yes", label=label), Button(id="u", label=label, url="https://x.test/u")),
+        )
+        assert texts(downgrade(message, TEXT_ONLY).messages[0]) == ["Pick\n\nReply 1 for yes\nhttps://x.test/u"]
+
+    def test_a_text_of_spaces_leaves_no_blank_line_on_its_own_either(self) -> None:
+        message = OutboundMessage(blocks=(TextBlock(" "),), buttons=(Button(id="p", label="Pricing"),))
+        assert texts(downgrade(message, TEXT_ONLY).messages[0]) == ["Reply 1 for Pricing"]
+
     def test_folded_text_is_still_held_to_the_length_cap(self) -> None:
         caps = Capabilities(max_text_len=30)
         message = OutboundMessage(blocks=(TextBlock(text="short"),), header="h" * 25, footer="f" * 25)

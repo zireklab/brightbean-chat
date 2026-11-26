@@ -108,6 +108,7 @@ class TestContractFieldsAreExactlyAsWritten:
         "max_described_label_len",
         "max_header_footer_len",
         "max_buttons_text_len",
+        "max_list_text_len",
         "max_list_label_len",
     }
 
@@ -146,6 +147,7 @@ class TestContractFieldsAreExactlyAsWritten:
             capabilities = capabilities_for(platform)
             assert capabilities.buttons or not capabilities.max_buttons_text_len, platform
             assert capabilities.quick_replies or not capabilities.max_list_label_len, platform
+            assert capabilities.quick_replies or not capabilities.max_list_text_len, platform
 
     def test_only_a_segment_billed_platform_declares_it(self) -> None:
         """SPEC §6.6 names one: SMS. A second would need its own §6 subsection."""
