@@ -305,7 +305,7 @@ msgstr "1 колдонуучу"
 
 #: apps/billing/plans.py:189 apps/billing/plans.py:203
 msgid "Shared inbox, labels and reminders"
-msgstr "Жалпы кабар куту, белгилер жана эскертүүлөр"
+msgstr "Жалпы кабар кутусу, белгилер жана эскертүүлөр"
 
 #: apps/billing/plans.py:190 apps/billing/plans.py:204
 msgid "Contacts, tags and segments"
@@ -1667,7 +1667,7 @@ msgstr "Башкы бет"
 #: apps/common/context_processors.py:443 templates/inbox/list.html:26
 #: templates/inbox/list.html:31
 msgid "Inbox"
-msgstr "Кабар куту"
+msgstr "Кабар кутусу"
 
 #: apps/common/context_processors.py:456 apps/common/context_processors.py:527
 #: templates/analytics/overview.html:45 templates/flows/list.html:27
