@@ -305,7 +305,7 @@ msgstr "1 колдонуучу"
 
 #: apps/billing/plans.py:189 apps/billing/plans.py:203
 msgid "Shared inbox, labels and reminders"
-msgstr "Жалпы инбокс, белгилер жана эскертүүлөр"
+msgstr "Жалпы кабар куту, белгилер жана эскертүүлөр"
 
 #: apps/billing/plans.py:190 apps/billing/plans.py:204
 msgid "Contacts, tags and segments"
@@ -980,7 +980,7 @@ msgstr "Аккаунттун идентификатору"
 
 #: apps/channels/forms.py:51
 msgid "How this channel appears in the inbox and the flow builder."
-msgstr "Бул канал кирген катта жана сценарий түзгүчтө кандай көрүнөт."
+msgstr "Бул канал кабар кутусунда жана сценарий түзгүчтө кандай көрүнөт."
 
 #: apps/channels/forms.py:53
 msgid ""
@@ -1008,7 +1008,7 @@ msgstr "Номердин өзү эмес, номердин API идентифи�
 
 #: apps/channels/forms_whatsapp.py:70
 msgid "Permanent access token"
-msgstr "Туруктуу мүмкүнчүлүк токени"
+msgstr "Туруктуу кирүү токени"
 
 #: apps/channels/forms_whatsapp.py:74
 msgid ""
@@ -1616,7 +1616,7 @@ msgstr "Белгилер"
 #: apps/common/context_processors.py:324 templates/inbox/rule_settings.html:3
 #: templates/inbox/rule_settings.html:29
 msgid "Inbox rules"
-msgstr "Кирүүчү кат эрежелери"
+msgstr "Кабар кутусунун эрежелери"
 
 #: apps/common/context_processors.py:336 templates/inbox/_sidebar.html:169
 msgid "Fields"
@@ -1667,7 +1667,7 @@ msgstr "Башкы бет"
 #: apps/common/context_processors.py:443 templates/inbox/list.html:26
 #: templates/inbox/list.html:31
 msgid "Inbox"
-msgstr "Кирүүчү кабарлар"
+msgstr "Кабар куту"
 
 #: apps/common/context_processors.py:456 apps/common/context_processors.py:527
 #: templates/analytics/overview.html:45 templates/flows/list.html:27
@@ -2698,7 +2698,7 @@ msgstr ""
 
 #: apps/flows/portability/library.py:258
 msgid "Early access to the launch"
-msgstr "Чыгарууга эрте мүмкүнчүлүк"
+msgstr "Ачылышына чейин көрүү"
 
 #: apps/flows/portability/library.py:259
 msgid ""
@@ -4670,8 +4670,7 @@ msgstr "Байланыштагы адам жакында жазган, анды�
 #: apps/messaging/codes.py:101
 msgid "Sent under the human-agent allowance, available to inbox replies only."
 msgstr ""
-"Адам-агент уруксаты менен жөнөтүлдү — бул кирген кат-кабарлардан жооп "
-"берүүдө гана мүмкүн."
+"Адам-агент уруксаты менен жөнөтүлдү — бул кабар кутусунан жооп бергенде гана мүмкүн."
 
 #: apps/messaging/codes.py:102
 msgid "Sent outside the window under an approved message tag."
@@ -4989,7 +4988,7 @@ msgstr "Командаңызды чакырыңыз"
 
 #: apps/workspaces/views.py:202
 msgid "Share the inbox so every reply does not land on you."
-msgstr "Ар бир жооп өзүңүзгө түшпөшү үчүн кирүүчүлөрдү бөлүшүңүз."
+msgstr "Ар бир жооп өзүңүзгө түшпөшү үчүн кабар кутусун бөлүшүңүз."
 
 #: apps/workspaces/views.py:203
 msgid "Invite people"
@@ -5422,7 +5421,7 @@ msgstr "Ачкыч чыгаруу"
 
 #: templates/api/keys_list.html:53
 msgid "Scopes"
-msgstr "Мүмкүнчүлүк чөйрөлөрү"
+msgstr "Уруксаттар"
 
 #: templates/api/keys_list.html:61
 msgid ""
@@ -7388,7 +7387,7 @@ msgstr "Азырынча туташтырылган каналдар жок"
 
 #: templates/channels/list.html:125
 msgid "Connect the first one and messages start arriving in your inbox."
-msgstr "Биринчисин туташтырыңыз — билдирүүлөр кирген катка келе баштайт."
+msgstr "Биринчисин туташтырыңыз — билдирүүлөр кабар кутуңузга келе баштайт."
 
 #: templates/channels/list.html:139
 msgid "Add another channel"
@@ -7429,7 +7428,7 @@ msgid ""
 "token encrypted. It is never shown again."
 msgstr ""
 "Messenger Facebook Login for Business аркылуу туташат. Сиз Facebook'ко "
-"кирип, туташтыра турган баракты тандайсыз, ал эми биз ошол барактын access "
+"кирип, туташтыра турган баракты тандайсыз, ал эми биз ошол барактын кирүү "
 "токенин шифрленген түрдө сактайбыз. Ал кайра эч качан көрсөтүлбөйт."
 
 #: templates/channels/messenger_connect.html:38
@@ -8258,7 +8257,7 @@ msgstr "Ички эскертүү"
 
 #: templates/contacts/_activity.html:108
 msgid "Open in inbox"
-msgstr "Кирген катта ачуу"
+msgstr "Кабар кутусунда ачуу"
 
 #: templates/contacts/_activity.html:111
 msgid "No text"
@@ -9449,7 +9448,7 @@ msgid ""
 "across every flow in this workspace, not just this one."
 msgstr ""
 "Бул сценарийди эмне иштетет. Кичине номерлер биринчи иштейт, биринчи дал "
-"келген жеңет — бул жумуш мейкиндигиндеги бардык сценарийлер боюнча, жалгыз "
+"келген жеңет — бул иш жайындагы бардык сценарийлер боюнча, жалгыз "
 "ушул эмес."
 
 #: templates/flows/_triggers_panel.html:37
@@ -10094,7 +10093,7 @@ msgstr "Эскертүү"
 
 #: templates/inbox/_composer.html:240
 msgid "You can read this inbox but not reply to it."
-msgstr "Сиз бул кирген катты оки аласыз, бирок жооп бере албайсыз."
+msgstr "Сиз бул кабар кутусун окуй аласыз, бирок жооп бере албайсыз."
 
 #: templates/inbox/_conversation_rows.html:11
 msgid "No conversations match these filters."
@@ -10912,8 +10911,7 @@ msgid ""
 "Everybody in this organization, what they can do across it, and which "
 "workspaces they can reach."
 msgstr ""
-"Бул уюмдагы бардык адамдар, алар эмне кыла алышат жана кайсы мейкиндиктерге "
-"жетише алышат."
+"Бул уюмдагы бардык адамдар, алар эмне кыла алышат жана кайсы иш жайларына кире алышат."
 
 #: templates/members/list.html:29 templates/members/list.html:34
 msgid "Invite someone"
@@ -10925,7 +10923,7 @@ msgstr "Уюмдагы ролу"
 
 #: templates/members/list.html:52 templates/members/manage_workspaces.html:3
 msgid "Workspace access"
-msgstr "Мейкиндикке мүмкүнчүлүк"
+msgstr "Иш жайына кирүү мүмкүнчүлүгү"
 
 #: templates/members/list.html:59 templates/members/manage_workspaces.html:21
 #, python-format
@@ -10934,7 +10932,7 @@ msgstr "%(name)s ичиндеги ролу"
 
 #: templates/members/list.html:67
 msgid "You cannot manage members in any workspace yet."
-msgstr "Азырынча эч бир мейкиндикте мүчөлөрдү башкара албайсыз."
+msgstr "Азырынча эч бир иш жайында мүчөлөрдү башкара албайсыз."
 
 #: templates/members/list.html:73
 msgid "Send invitation"
@@ -10942,7 +10940,7 @@ msgstr "Чакырууну жөнөтүү"
 
 #: templates/members/list.html:94
 msgid "Manage access"
-msgstr "Мүмкүнчүлүктү башкаруу"
+msgstr "Кирүү мүмкүнчүлүгүн башкаруу"
 
 #: templates/members/list.html:102
 msgid "Change role…"
@@ -10988,15 +10986,15 @@ msgstr "Сиз жөнөткөн чакыруулар кабыл алынганг
 #: templates/members/manage_workspaces.html:4
 #, python-format
 msgid "Workspace access for %(name)s"
-msgstr "%(name)s үчүн мейкиндикке мүмкүнчүлүк"
+msgstr "%(name)s үчүн иш жайына кирүү мүмкүнчүлүгү"
 
 #: templates/members/manage_workspaces.html:29
 msgid "You cannot manage members in any workspace."
-msgstr "Эч бир мейкиндикте мүчөлөрдү башкара албайсыз."
+msgstr "Эч бир иш жайында мүчөлөрдү башкара албайсыз."
 
 #: templates/members/manage_workspaces.html:31
 msgid "Save access"
-msgstr "Мүмкүнчүлүктү сактоо"
+msgstr "Кирүү мүмкүнчүлүгүн сактоо"
 
 #: templates/members/manage_workspaces.html:34
 msgid "Back to team members"
@@ -11005,7 +11003,7 @@ msgstr "Команда мүчөлөрүнө кайтуу"
 #: templates/notifications/email/notification.html:58
 #, python-format
 msgid "Workspace: %(workspace_name)s"
-msgstr "Жумуш мейкиндиги: %(workspace_name)s"
+msgstr "Иш жайы: %(workspace_name)s"
 
 #: templates/notifications/email/notification.html:63
 #: templates/notifications/email/notification.txt:5
@@ -11179,7 +11177,7 @@ msgstr "Уюм"
 
 #: templates/organizations/settings.html:20
 msgid "The account every workspace in it belongs to."
-msgstr "Бардык мейкиндиктер таандык болгон аккаунт."
+msgstr "Бардык иш жайлары таандык болгон аккаунт."
 
 #: templates/organizations/settings.html:31
 #: templates/organizations/settings.html:55
@@ -11188,7 +11186,7 @@ msgstr "Демейки убакыт алкагы"
 
 #: templates/organizations/settings.html:37
 msgid "Every workspace that has not set its own clock keeps this one."
-msgstr "Өз убакыт алкагын коё элек ар бир мейкиндик ушуну колдонот."
+msgstr "Өз убакыт алкагын коё элек ар бир иш жайы ушуну колдонот."
 
 #: templates/organizations/settings.html:40
 msgid "Logo URL"
@@ -11200,21 +11198,21 @@ msgstr "Муну уюм администраторлору гана өзгөрт
 
 #: templates/organizations/workspaces.html:24
 msgid "Each workspace has its own channels, contacts and inbox."
-msgstr "Ар бир иш жайынын өз каналдары, байланыштары жана кириш кабарлары бар."
+msgstr "Ар бир иш жайынын өз каналдары, байланыштары жана кабар кутусу бар."
 
 #: templates/organizations/workspaces.html:24
 msgid ""
 "Each workspace has its own channels, contacts and inbox. Archiving one keeps "
 "everything and takes it out of the switcher."
 msgstr ""
-"Ар бир мейкиндиктин өз каналдары, байланыштары жана кирүүчүлөрү бар. "
+"Ар бир иш жайынын өз каналдары, байланыштары жана кабар кутусу бар. "
 "Архивдөө баарын сактайт жана которгучтан алып салат."
 
 #: templates/organizations/workspaces.html:28
 #: templates/organizations/workspaces.html:33
 #: templates/partials/_app_sidebar.html:164
 msgid "New workspace"
-msgstr "Жаңы жумуш мейкиндиги"
+msgstr "Жаңы иш жайы"
 
 #: templates/organizations/workspaces.html:39
 msgid "What is it called?"
@@ -11225,10 +11223,8 @@ msgid "Acme EU"
 msgstr ""
 
 #: templates/organizations/workspaces.html:45
-#, fuzzy
-#| msgid "New workspace"
 msgid "Create workspace"
-msgstr "Жаңы жумуш мейкиндиги"
+msgstr "Иш жайын түзүү"
 
 #: templates/organizations/workspaces.html:63
 msgid "You are a member"
@@ -11236,30 +11232,30 @@ msgstr "Сиз мүчөсүз"
 
 #: templates/organizations/workspaces.html:63
 msgid "You do not have access"
-msgstr "Сизде мүмкүнчүлүк жок"
+msgstr "Сизге кирүүгө болбойт"
 
 #: templates/organizations/workspaces.html:89
 msgid "No workspaces yet"
-msgstr "Азырынча мейкиндиктер жок"
+msgstr "Азырынча иш жайлары жок"
 
 #: templates/organizations/workspaces.html:90
 msgid "A workspace is one shop, brand or team, with its own inbox."
-msgstr "Мейкиндик — бул өз кирүүчүлөрү бар бир дүкөн, бренд же команда."
+msgstr "Иш жайы — бул өз кабар кутусу бар бир дүкөн, бренд же команда."
 
 #: templates/partials/_app_sidebar.html:110
 #, python-format
 msgid "Back to %(name)s"
-msgstr "%(name)s мейкиндигине кайтуу"
+msgstr "%(name)s иш жайына кайтуу"
 
 #: templates/partials/_app_sidebar.html:124
 #, python-format
 msgid "Switch workspace (currently %(name)s)"
-msgstr "Мейкиндикти которуу (учурда: %(name)s)"
+msgstr "Иш жайын которуу (учурда: %(name)s)"
 
 #: templates/partials/_app_sidebar.html:185
 #: templates/workspaces/settings.html:22 templates/workspaces/settings.html:27
 msgid "Workspace settings"
-msgstr "Мейкиндик тууралоолору"
+msgstr "Иш жайын жөндөө"
 
 #: templates/partials/_app_sidebar.html:217
 msgid "Main"
@@ -11405,7 +11401,7 @@ msgstr "Сизди эч нерсе күтпөйт."
 
 #: templates/workspaces/settings.html:28
 msgid "What this workspace is called, and what clock it keeps."
-msgstr "Бул мейкиндик кандай аталат жана кайсы убакыт алкагын колдонот."
+msgstr "Иш жайынын аталышы жана саат алкагы."
 
 #: templates/workspaces/settings.html:34
 msgid "Name and description"
@@ -11417,7 +11413,7 @@ msgstr "Белги"
 
 #: templates/workspaces/settings.html:42
 msgid "One emoji. It sits beside the name in the workspace switcher."
-msgstr "Бир эмодзи. Мейкиндик которгучунда аттын жанында турат."
+msgstr "Бир быйтыкча. Иш жайын которгуч менен атынын жанында"
 
 #: templates/workspaces/settings.html:45
 msgid "Description"
@@ -11450,7 +11446,7 @@ msgstr "Түстөр"
 
 #: templates/workspaces/settings.html:68
 msgid "Kept for a white-labelled inbox."
-msgstr "White-label кирүүчүлөр үчүн сакталат."
+msgstr "White-label кабар кутусу үчүн сакталат."
 
 #: templates/workspaces/settings.html:71
 msgid "Primary"
