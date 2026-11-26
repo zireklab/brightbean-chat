@@ -4922,7 +4922,7 @@ msgstr "Бул убакыт алкагы таанылган жок."
 
 #: apps/organizations/views.py:68
 msgid "Organization settings saved."
-msgstr "Уюм тууралоолору сакталды."
+msgstr "Уюмдун жөндөөлөрү сакталды."
 
 #: apps/organizations/views.py:140
 #, python-format
@@ -5532,7 +5532,7 @@ msgstr ""
 #: templates/api/webhook_detail.html:24
 #: templates/partials/_app_sidebar.html:217
 msgid "Settings"
-msgstr "Тууралоолор"
+msgstr "Жөндөөлөр"
 
 #: templates/api/webhook_detail.html:27 templates/api/webhooks_list.html:39
 msgid "URL"
@@ -11158,8 +11158,7 @@ msgid ""
 "Every feature is available, with no limits and nothing counted. There is no "
 "plan to be on and no payment provider to configure."
 msgstr ""
-"Бардык функциялар чектөөсүз жана эсепсиз жеткиликтүү. Тариф да, төлөм "
-"провайдерин тууралоо да керек эмес."
+"Бардык функциялар чектөөсүз жана эсепсиз жеткиликтүү. Тариф да, төлөм провайдерин жөндөө да керек эмес."
 
 #: templates/organizations/billing.html:158
 msgid "Usage"
@@ -11275,7 +11274,7 @@ msgstr "Команданы башкаруу"
 
 #: templates/partials/_app_sidebar.html:343
 msgid "Organization Settings"
-msgstr "Уюм тууралоолору"
+msgstr "Уюмду жөндөө"
 
 #: templates/partials/_app_sidebar.html:352
 msgid "Sign out"
@@ -11337,7 +11336,7 @@ msgstr "%(workspace_name)s. Бул жердеги ролуңуз: %(role)s."
 
 #: templates/workspaces/dashboard.html:52
 msgid "Finish setting up"
-msgstr "Тууралоону бүтүрүңүз"
+msgstr "Жөндөөнү аяктоо"
 
 #: templates/workspaces/dashboard.html:54
 #, python-format
