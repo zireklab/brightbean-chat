@@ -158,7 +158,7 @@ triggers on that connection are kept.
 | Mentions the account in their story | `story_mention` | Opens the 24-hour window |
 | Replies to one of the account's stories | `story_reply` | Carries the reply text, so keywords work |
 | Comments on a post | `comment` | Comment id, post id, parent id, body |
-| Unsends a DM | — | The stored message is redacted; see below |
+| Unsends a DM, a quick reply, a button press or a story reply | — | The stored message is redacted; see below |
 
 **Echoes are filtered.** Messages the account sends — from this product or from
 the Instagram app on a phone — come back as deliveries flagged `is_echo`, and
@@ -191,7 +191,14 @@ timestamps, the message's status becomes `deleted`, and the inbox renders a
 tombstone reading *"This message was deleted."* in its place.
 
 It applies in both directions — a contact unsending theirs, or the account
-unsending one of ours.
+unsending one of ours — and to everything that becomes a bubble in the thread: a
+typed DM, a tapped quick reply, a button press and a reply to a story.
+
+Quick replies, presses and story replies stored before they carried the message id
+are not matched. Most still have it in `idempotency_key` (`in:ig:<mid>`, or
+`in:ig:pb:<mid>` for a press), so they could be backfilled; nothing does that today.
+Not all: a key over 200 characters is stored hashed (`in:sha256:…`), and merging two
+contacts clears the key of a row whose key the other already had.
 
 ### Follows
 

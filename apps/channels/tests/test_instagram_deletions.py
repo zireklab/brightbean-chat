@@ -75,6 +75,71 @@ class TestRedaction:
         # The row survives, with its place in the thread.
         assert Message.objects.for_workspace(tenancy.workspace).count() == 1
 
+    @pytest.mark.parametrize(
+        ("delivery", "mid", "words"),
+        [
+            ("quick_reply", "aWdfZG1fMzox", "Yes please"),
+            ("postback", "aWdfZG1fNDox", "track"),
+            ("story_reply", "aWdfZG1fNjox", "love this"),
+        ],
+    )
+    def test_whatever_a_contact_sent_can_be_unsent(
+        self,
+        client: Client,
+        tenancy: Tenancy,
+        instagram_connection: ChannelConnection,
+        delivery: str,
+        mid: str,
+        words: str,
+    ) -> None:
+        """Not only typed DMs: a chip, a button press and a reply to a story are
+        bubbles in the same thread, and the contact can take any of them back."""
+        with fake_graph():
+            deliver(client, at_now(load_delivery(delivery)))
+        message = Message.objects.for_workspace(tenancy.workspace).get()
+        assert words in json.dumps(message.body)
+
+        unsend = at_now(load_delivery("message_deleted"))
+        unsend["entry"][0]["messaging"][0]["message"]["mid"] = mid
+        with fake_graph():
+            deliver(client, unsend)
+
+        message.refresh_from_db()
+        assert message.status == MessageStatus.DELETED
+        assert words not in json.dumps(message.body)
+
+    def test_a_press_named_by_one_of_our_ids_is_not_lost(
+        self, client: Client, tenancy: Tenancy, instagram_connection: ChannelConnection
+    ) -> None:
+        """Meta documents ``postback.mid`` as the press's own id. If it ever is the
+        id of the message the button was on, the first press still reaches the
+        thread with its consent and window. A second press on that message would
+        then share its event id and be taken for a redelivery a step earlier, in
+        the event log; and an unsend of either would find our message. Neither is
+        handled, because neither is what Meta documents."""
+        from apps.messaging.models import ContactChannelIdentity
+
+        with fake_graph():
+            deliver(client, at_now(load_delivery("message_text")))
+            conversation = Message.objects.for_workspace(tenancy.workspace).get().conversation
+            ours = Message.objects.create(
+                conversation=conversation,
+                direction=MessageDirection.OUT,
+                source=MessageSource.AGENT,
+                status=MessageStatus.SENT,
+                provider_message_id="aWdfZG1fNDox",
+                body={"blocks": [{"type": "text", "text": "Anything else?"}]},
+            )
+            ContactChannelIdentity.objects.for_workspace(tenancy.workspace).update(last_inbound_at=None)
+            deliver(client, at_now(load_delivery("postback")))
+
+        press = Message.objects.for_workspace(tenancy.workspace).get(body__button_id="track")
+        assert press.provider_message_id == ""
+        ours.refresh_from_db()
+        assert (ours.provider_message_id, ours.status) == ("aWdfZG1fNDox", MessageStatus.SENT)
+        identity = ContactChannelIdentity.objects.for_workspace(tenancy.workspace).get()
+        assert identity.last_inbound_at is not None
+
     def test_an_outbound_message_is_redacted_too(
         self, client: Client, tenancy: Tenancy, instagram_connection: ChannelConnection
     ) -> None:
