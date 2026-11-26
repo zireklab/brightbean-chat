@@ -112,7 +112,11 @@ class TestRedaction:
         self, client: Client, tenancy: Tenancy, instagram_connection: ChannelConnection
     ) -> None:
         """Meta documents ``postback.mid`` as the press's own id. If it ever is the
-        id of the message the button was on, the contact's press must survive it."""
+        id of the message the button was on, the first press still reaches the
+        thread with its consent and window. A second press on that message would
+        then share its event id and be taken for a redelivery a step earlier, in
+        the event log; and an unsend of either would find our message. Neither is
+        handled, because neither is what Meta documents."""
         from apps.messaging.models import ContactChannelIdentity
 
         with fake_graph():

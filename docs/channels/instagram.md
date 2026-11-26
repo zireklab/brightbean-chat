@@ -195,8 +195,10 @@ unsending one of ours — and to everything that becomes a bubble in the thread:
 typed DM, a tapped quick reply, a button press and a reply to a story.
 
 Quick replies, presses and story replies stored before they carried the message id
-are not matched. Their id is still in `idempotency_key` (`in:ig:<mid>`, or
+are not matched. Most still have it in `idempotency_key` (`in:ig:<mid>`, or
 `in:ig:pb:<mid>` for a press), so they could be backfilled; nothing does that today.
+Not all: a key over 200 characters is stored hashed (`in:sha256:…`), and merging two
+contacts clears the key of a row whose key the other already had.
 
 ### Follows
 

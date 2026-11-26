@@ -164,7 +164,19 @@ class TestAProviderIdAlreadyTaken:
         assert stored.provider_message_id == ""
         ours.refresh_from_db()
         assert ours.provider_message_id == "pm-1"
-        assert "already in use" in caplog.text
+        (record,) = [r for r in caplog.records if r.levelname == "WARNING"]
+        assert "already in use" in record.getMessage()
+        # The platform's words do not reach a log line (see persist_events); ours do.
+        assert "pm-1" not in record.getMessage()
+        assert str(stored.pk) in record.getMessage()
+
+    def test_a_redelivery_of_it_says_nothing(self, connection: Any, ours: Any, caplog: Any) -> None:
+        """Nothing is stored the second time, so there is nothing to warn about."""
+        persist_events(connection, [self.event(connection)])
+        caplog.clear()
+        with caplog.at_level("WARNING", logger="apps.messaging.ingest"):
+            persist_events(connection, [self.event(connection)])
+        assert [r for r in caplog.records if r.levelname == "WARNING"] == []
 
     def test_the_contact_still_gets_consent_and_a_window(self, tenancy: Any, connection: Any) -> None:
         """What a lost row really cost: routing starts a flow and compliance refuses its answer."""
@@ -189,8 +201,9 @@ class TestAProviderIdAlreadyTaken:
         assert messages(tenancy.workspace).filter(idempotency_key="in:e2").count() == 1
 
     def test_a_redelivery_into_another_conversation_is_still_one_row(self, tenancy: Any, connection: Any) -> None:
-        """The second line of deduplication: the event's own key is unique per
-        conversation, and a merge can move the contact to a new one."""
+        """The event's own key is unique per conversation, so a row of it is looked
+        for on the whole connection. A merge moves the rows with the contact; this
+        holds whatever else leaves a contact in a conversation without them."""
         persist_events(connection, [self.event(connection)])
         stored = messages(tenancy.workspace).get()
         other = Contact.objects.create(workspace=tenancy.workspace, first_name="Merged")
@@ -199,6 +212,50 @@ class TestAProviderIdAlreadyTaken:
         persist_events(connection, [self.event(connection)])
 
         assert messages(tenancy.workspace).get().pk == stored.pk
+
+    def test_so_is_one_whose_id_was_dropped(self, tenancy: Any, connection: Any, ours: Any) -> None:
+        persist_events(connection, [self.event(connection)])
+        stored = messages(tenancy.workspace).get(idempotency_key="in:e1")
+        other = Contact.objects.create(workspace=tenancy.workspace, first_name="Moved")
+        ContactChannelIdentity.objects.for_workspace(tenancy.workspace).update(contact=other)
+
+        persist_events(connection, [self.event(connection)])
+
+        assert list(messages(tenancy.workspace).filter(idempotency_key="in:e1")) == [stored]
+
+
+class TestADeletionFindsALongId:
+    """An id over the column is stored two ways — hashed on an inbound row, cut on
+    one of ours (``services._finalize``) — and a deletion names it as delivered."""
+
+    LONG = "m" * 300
+
+    def deletion(self, connection: Any) -> Any:
+        payload = EventPayload(extra={"provider_message_id": self.LONG})
+        return make_event(connection, kind=EventType.MESSAGE_DELETED, event_id="del", payload=payload)
+
+    def test_an_inbound_one(self, tenancy: Any, connection: Any) -> None:
+        payload = EventPayload(text="secret", extra={"provider_message_id": self.LONG})
+        persist_events(connection, [make_event(connection, payload=payload)])
+        persist_events(connection, [self.deletion(connection)])
+        message = messages(tenancy.workspace).get()
+        assert message.status == MessageStatus.DELETED
+        assert "secret" not in str(message.body)
+
+    def test_one_of_ours(self, tenancy: Any, connection: Any) -> None:
+        persist_events(connection, [make_event(connection, event_id="e0")])
+        conversation = Conversation.objects.for_workspace(tenancy.workspace).get()
+        ours = Message.objects.create(
+            conversation=conversation,
+            direction=MessageDirection.OUT,
+            source=MessageSource.AGENT,
+            status=MessageStatus.SENT,
+            provider_message_id=self.LONG[:200],
+            body={"blocks": [{"type": "text", "text": "secret"}]},
+        )
+        persist_events(connection, [self.deletion(connection)])
+        ours.refresh_from_db()
+        assert ours.status == MessageStatus.DELETED
 
 
 class TestInboundKeyBounds:

@@ -114,10 +114,10 @@ Two more keys travel the same way, for the same reason, and are read only here:
     The platform's own id for an *inbound* message, a press or a story reply
     included. Optional — Telegram supplies none — and stored on the row when it is
     there, which is what lets a later ``message_deleted`` event find the message
-    to redact. It also becomes a second deduplication line under the conditional
-    unique constraint on ``(channel_connection, provider_message_id)``. It should
-    name *this* message and never one of ours it answers; one that is on another
-    row already is dropped and the message kept (:func:`_insert_inbound`).
+    to redact. It should name *this* message and never one of ours it answers:
+    one that another row holds already is dropped, and the message kept
+    (:func:`_insert_inbound`). So it does not deduplicate on its own — one message
+    delivered under two event ids is two rows — and the event's key is what does.
 
 ``private_reply_claimed`` on a **comment** event
     See the comment row of the table above.
@@ -563,10 +563,8 @@ def inbound_idempotency_key(event: NormalizedEvent) -> str:
 def _inbound_provider_message_id(event: NormalizedEvent) -> str:
     """The platform's own id for an inbound message, where an adapter sent one.
 
-    Optional by design — Telegram supplies none — and stored when it is there for
-    two reasons: a later ``message_deleted`` event names the message by it, and
-    the conditional unique constraint on ``(channel_connection,
-    provider_message_id)`` then dedups a redelivery a second way.
+    Optional by design — Telegram supplies none — and stored when it is there,
+    because a later ``message_deleted`` event names the message by it.
 
     Bounded by **hashing** rather than truncation, like every other identifier
     here: two ids agreeing on a long prefix would otherwise collide in that
@@ -591,24 +589,29 @@ def _insert_inbound(conversation: Conversation, event: NormalizedEvent) -> Messa
     key = inbound_idempotency_key(event)
     provider_id = _inbound_provider_message_id(event)
     message = _save_inbound(conversation, event, key, provider_id)
-    if message is None and provider_id:
-        # By the event's key, not by conversation: a contact merged since is in
-        # another one now, and a redelivery there is still this event.
-        taken = (
-            Message.objects.for_workspace(conversation.workspace_id)
-            .filter(channel_connection=conversation.channel_connection_id, provider_message_id=provider_id)
-            .exclude(idempotency_key=key)
-        )
-        if taken.exists():
+    # Looked for on the whole connection: the key is unique per conversation, and
+    # the contact may be in another one than the row of this event is.
+    if message is None and provider_id and not _is_stored(conversation, key):
+        message = _save_inbound(conversation, event, key, "")
+        if message is not None:
+            # Ours only: nothing a platform sent reaches a log line (persist_events).
             logger.warning(
-                "Provider message id of inbound event %s is already in use on connection %s; it is stored without one.",
-                event.provider_event_id,
+                "An inbound message's provider id is already in use on connection %s; message %s is stored without one.",
                 conversation.channel_connection_id,
+                message.pk,
             )
-            message = _save_inbound(conversation, event, key, "")
     if message is None:
         logger.debug("Inbound event %s was already persisted; skipping.", event.provider_event_id)
     return message
+
+
+def _is_stored(conversation: Conversation, key: str) -> bool:
+    """Whether a row of this event is on the connection already, in any conversation."""
+    return (
+        Message.objects.for_workspace(conversation.workspace_id)
+        .filter(channel_connection=conversation.channel_connection_id, idempotency_key=key)
+        .exists()
+    )
 
 
 def _save_inbound(conversation: Conversation, event: NormalizedEvent, key: str, provider_id: str) -> Message | None:
@@ -832,9 +835,9 @@ def _apply_delivery_status(connection: Any, event: NormalizedEvent) -> None:
             channel_connection=connection,
             provider_message_id=provider_id,
             # Outbound only. An inbound row can carry its platform's id too
-            # (Instagram's do), and a receipt is by definition about a message
-            # *we* sent: this is what keeps one from walking a received message
-            # up the delivery ladder.
+            # (``PROVIDER_MESSAGE_ID_KEY``), and a receipt is by definition about
+            # a message *we* sent: this is what keeps one from walking a received
+            # message up the delivery ladder.
             direction=MessageDirection.OUT,
         )
         .first()
@@ -908,14 +911,17 @@ def _apply_deletion(connection: Any, event: NormalizedEvent) -> None:
     delivery ladder because ``DELETED`` is not in :data:`DELIVERY_PROGRESS`.
     """
     extra = event.payload.extra if isinstance(event.payload.extra, dict) else {}
-    provider_id = _clean(extra.get(PROVIDER_MESSAGE_ID_KEY), 200)
-    if not provider_id:
+    named = _clean(extra.get(PROVIDER_MESSAGE_ID_KEY), 500)
+    # An id over the column is kept two ways: hashed on an inbound row
+    # (_inbound_provider_message_id), cut on one of ours (services._finalize).
+    stored = {named[:200], bounded_key(named, limit=MAX_EVENT_ID_CHARS)} - {""}
+    if not stored:
         logger.debug("Unusable message_deleted payload on connection %s; ignored.", connection.pk)
         return
 
     updated = (
         Message.objects.for_workspace(connection.workspace_id)
-        .filter(channel_connection=connection, provider_message_id=provider_id)
+        .filter(channel_connection=connection, provider_message_id__in=stored)
         .exclude(status=MessageStatus.DELETED)
         .update(body=redacted_body(), status=MessageStatus.DELETED, updated_at=timezone.now())
     )

@@ -1047,7 +1047,7 @@ def _message_events(
     text = _text(message.get("text"))
     attachments = _attachment_urls(message)
     kinds = _attachment_kinds(message)
-    extra = _row_extra(mid)
+    extra: dict[str, Any] = {}
     if kinds:
         extra["attachment_types"] = list(kinds)
 
@@ -1077,7 +1077,7 @@ def _message_events(
                 platform_user_id=sender_id,
                 provider_event_id=_event_id(item, mid, "ig:"),
                 timestamp=when,
-                payload=EventPayload(text=text, attachments=attachments, extra={**extra, **story}),
+                payload=EventPayload(text=text, attachments=attachments, extra={**_row_extra(mid), **extra, **story}),
                 raw=item,
             )
         ]
@@ -1094,7 +1094,7 @@ def _message_events(
             platform_user_id=sender_id,
             provider_event_id=_event_id(item, mid, "ig:"),
             timestamp=when,
-            payload=EventPayload(text=text, attachments=attachments, extra=extra),
+            payload=EventPayload(text=text, attachments=attachments, extra={**_row_extra(mid), **extra}),
             raw=item,
         )
     ]

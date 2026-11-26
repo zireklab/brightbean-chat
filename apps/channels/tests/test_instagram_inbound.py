@@ -306,6 +306,9 @@ class TestAnUnsendCanFindTheRow:
                     mid = (item.get("message") or item["postback"])["mid"]
                     assert event.payload.extra["provider_message_id"] == mid, name
                     rows.add(name)
+                elif event.type != EventType.MESSAGE_DELETED:
+                    # Nothing will be found by it, so nothing claims it.
+                    assert "provider_message_id" not in event.payload.extra, name
         assert rows == {"message_attachment", "message_text", "postback", "quick_reply", "story_reply"}
 
     @pytest.mark.parametrize(("name", "key"), [("quick_reply", "message"), ("postback", "postback")])
